@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RegistroController">
+   <children>
+      <AnchorPane prefHeight="548.0" prefWidth="455.0">
+         <children>
+            <Pane layoutY="3.0" prefHeight="637.0" prefWidth="455.0" style="-fx-background-color: white;">
+               <children>
+                  <Label layoutX="124.0" layoutY="27.0" text="Crear cuenta nueva">
+                     <font>
+                        <Font name="System Bold" size="23.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="67.0" layoutY="84.0" text="Usuario">
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtUsuario" layoutX="65.0" layoutY="117.0" prefHeight="34.0" prefWidth="326.0" promptText="pepon23" />
+                  <TextField fx:id="txtCorreo" layoutX="65.0" layoutY="201.0" prefHeight="34.0" prefWidth="326.0" promptText="pepe@ejemplo.com" />
+                  <TextField fx:id="txtNombre" layoutX="65.0" layoutY="290.0" prefHeight="34.0" prefWidth="326.0" promptText="Pepe" />
+                  <Label layoutX="65.0" layoutY="166.0" text="Correo">
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="65.0" layoutY="254.0" text="Nombre">
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="65.0" layoutY="338.0" text="Contraseña">
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="btnRegistrarse" alignment="CENTER" layoutX="141.0" layoutY="520.0" mnemonicParsing="false" onMousePressed="#buttonRegistrarsePressed" prefHeight="41.0" prefWidth="175.0" stylesheets="@application.css" text="Registrarse" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="19.0" />
+                     </font>
+                  </Button>
+                  <PasswordField fx:id="pwContrasena" layoutX="65.0" layoutY="375.0" prefHeight="34.0" prefWidth="326.0" promptText="12345678" />
+                  <Label layoutX="65.0" layoutY="426.0" text="Repetir Contraseña">
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font>
+                  </Label>
+                  <PasswordField fx:id="pwRepetirContrasena" layoutX="65.0" layoutY="463.0" prefHeight="34.0" prefWidth="326.0" promptText="12345678" />
+               </children>
+            </Pane>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

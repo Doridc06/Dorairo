@@ -1,0 +1,25 @@
+/* Boton de registro en el Registro */
+#btnRegistrarse {
+	-fx-background-color: #9EE6FD;
+	-fx-effect: dropshadow(gaussian , rgba(0.0,0.0,0.0,0.3) , 10.0,0.0,3.0,3.0);
+}
+
+/* Boton de logeo en el Login */
+#btnLogin {
+	-fx-background-color: #C1D2FE;
+	-fx-effect: dropshadow(gaussian , rgba(0.0,0.0,0.0,0.3) , 10.0,0.0,3.0,3.0);
+}
+
+/* Imagen de logo del Login */
+#stackPaneLogo {
+	-fx-padding: 2.0;
+	-fx-background-color: black;
+	-fx-background-radius: 5.0;
+	-fx-effect: dropshadow(gaussian , rgba(0.0,0.0,0.0,0.3) , 10.0,0.0,3.0,3.0);
+}
+
+/* Imagen de portada del Login */
+#stackPanePortada {
+	-fx-effect: dropshadow(gaussian , rgba(0.0,0.0,0.0,0.3) , 10.0,0.0,-3.0,0.0);
+}
+

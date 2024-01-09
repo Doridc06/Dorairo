@@ -1,8 +1,219 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1">
-	<!-- TODO Add Nodes -->
+<AnchorPane prefHeight="795.0" prefWidth="1105.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane layoutY="-6.0" prefHeight="807.0" prefWidth="1105.0" style="-fx-background-color: #b5ffff;">
+         <children>
+            <Pane layoutY="2.0" prefHeight="160.0" prefWidth="1105.0" style="-fx-background-color: #00A9FF;">
+               <children>
+                  <ImageView fitHeight="125.0" fitWidth="123.0" layoutX="27.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/application/images/logoDorairo.jpg" />
+                     </image>
+                  </ImageView>
+                  <Pane layoutX="178.0" layoutY="55.0" prefHeight="42.0" prefWidth="131.0" style="-fx-background-color: #FE72FF;">
+                     <children>
+                        <Text layoutX="38.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Inicio">
+                           <font>
+                              <Font name="System Bold" size="21.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </Pane>
+                  <Pane layoutX="657.0" layoutY="55.0" prefHeight="42.0" prefWidth="131.0" style="-fx-background-color: #FE72FF;">
+                     <children>
+                        <Text layoutX="38.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Perfil">
+                           <font>
+                              <Font name="System Bold" size="21.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </Pane>
+                  <Pane layoutX="499.0" layoutY="55.0" prefHeight="42.0" prefWidth="131.0" style="-fx-background-color: #FE72FF;">
+                     <children>
+                        <Text layoutX="38.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Series">
+                           <font>
+                              <Font name="System Bold" size="21.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </Pane>
+                  <Pane layoutX="339.0" layoutY="55.0" prefHeight="42.0" prefWidth="131.0" style="-fx-background-color: #FE72FF;">
+                     <children>
+                        <Text layoutX="23.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Películas">
+                           <font>
+                              <Font name="System Bold" size="21.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </Pane>
+                  <Pane layoutX="838.0" layoutY="55.0" prefHeight="42.0" prefWidth="210.0" style="-fx-background-color: #FE72FF;">
+                     <children>
+                        <Text layoutX="43.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Buscador">
+                           <font>
+                              <Font name="System Bold" size="21.0" />
+                           </font>
+                        </Text>
+                        <ImageView fitHeight="35.0" fitWidth="44.0" layoutX="148.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../resources/application/images/lupa.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+               </children>
+            </Pane>
+            <ScrollPane layoutX="14.0" layoutY="171.0" prefHeight="696.0" prefWidth="1088.0" style="-fx-background-color: #b5ffff;">
+               <content>
+                  <VBox prefHeight="718.0" prefWidth="1076.0" style="-fx-background-color: #b5ffff;">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="MI LISTA">
+                           <font>
+                              <Font name="System Bold" size="19.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Text>
+                        <ScrollPane prefHeight="250.0" prefWidth="582.0">
+                           <VBox.margin>
+                              <Insets right="500.0" top="20.0" />
+                           </VBox.margin>
+                           <content>
+                              <HBox prefHeight="203.0" prefWidth="792.0" style="-fx-background-color: #b5ffff;">
+                                 <children>
+                                    <ImageView fitHeight="250.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resources/application/images/aquaman.jpg" />
+                                       </image>
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </ImageView>
+                                    <ImageView fitHeight="250.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resources/application/images/aquaman.jpg" />
+                                       </image>
+                                       <HBox.margin>
+                                          <Insets left="30.0" />
+                                       </HBox.margin>
+                                    </ImageView>
+                                    <ImageView fitHeight="250.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resources/application/images/aquaman.jpg" />
+                                       </image>
+                                       <HBox.margin>
+                                          <Insets left="30.0" />
+                                       </HBox.margin>
+                                    </ImageView>
+                                    <ImageView fitHeight="250.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resources/application/images/aquaman.jpg" />
+                                       </image>
+                                       <HBox.margin>
+                                          <Insets left="30.0" />
+                                       </HBox.margin>
+                                    </ImageView>
+                                 </children>
+                              </HBox>
+                           </content>
+                        </ScrollPane>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="PELÍCULAS VISTAS">
+                           <font>
+                              <Font name="System Bold" size="19.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
+                        </Text>
+                        <ScrollPane prefHeight="266.0" prefWidth="1021.0" style="-fx-background-color: #b5ffff;">
+                           <content>
+                              <HBox prefHeight="198.0" prefWidth="1010.0" style="-fx-background-color: #b5ffff;">
+                                 <children>
+                                    <ImageView fitHeight="250.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resources/application/images/aquaman.jpg" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="250.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                       <HBox.margin>
+                                          <Insets left="30.0" />
+                                       </HBox.margin>
+                                       <image>
+                                          <Image url="@../../resources/application/images/aquaman.jpg" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="250.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                       <HBox.margin>
+                                          <Insets left="30.0" />
+                                       </HBox.margin>
+                                       <image>
+                                          <Image url="@../../resources/application/images/aquaman.jpg" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="250.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resources/application/images/aquaman.jpg" />
+                                       </image>
+                                       <HBox.margin>
+                                          <Insets left="30.0" />
+                                       </HBox.margin>
+                                    </ImageView>
+                                    <ImageView fitHeight="250.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resources/application/images/aquaman.jpg" />
+                                       </image>
+                                       <HBox.margin>
+                                          <Insets left="30.0" />
+                                       </HBox.margin>
+                                    </ImageView>
+                                    <ImageView fitHeight="250.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resources/application/images/aquaman.jpg" />
+                                       </image>
+                                       <HBox.margin>
+                                          <Insets left="30.0" />
+                                       </HBox.margin>
+                                    </ImageView>
+                                    <ImageView fitHeight="250.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resources/application/images/aquaman.jpg" />
+                                       </image>
+                                       <HBox.margin>
+                                          <Insets left="30.0" />
+                                       </HBox.margin>
+                                    </ImageView>
+                                    <ImageView fitHeight="250.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resources/application/images/aquaman.jpg" />
+                                       </image>
+                                       <HBox.margin>
+                                          <Insets left="30.0" />
+                                       </HBox.margin>
+                                    </ImageView>
+                                 </children>
+                              </HBox>
+                           </content>
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
+                        </ScrollPane>
+                     </children>
+                  </VBox>
+               </content>
+            </ScrollPane>
+         </children>
+      </AnchorPane>
+   </children>
 </AnchorPane>
-

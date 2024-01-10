@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -86,12 +87,17 @@
                               <Insets />
                            </VBox.margin>
                         </Text>
+                        <TextArea prefHeight="74.0" prefWidth="396.0" promptText="Generos:  ">
+                           <VBox.margin>
+                              <Insets left="600.0" right="30.0" />
+                           </VBox.margin>
+                        </TextArea>
                         <ScrollPane prefHeight="250.0" prefWidth="582.0">
                            <VBox.margin>
                               <Insets right="500.0" top="20.0" />
                            </VBox.margin>
                            <content>
-                              <HBox prefHeight="203.0" prefWidth="792.0" style="-fx-background-color: #b5ffff;">
+                              <HBox prefHeight="230.0" prefWidth="537.0" style="-fx-background-color: #b5ffff;">
                                  <children>
                                     <ImageView fitHeight="250.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -99,14 +105,6 @@
                                        </image>
                                        <HBox.margin>
                                           <Insets />
-                                       </HBox.margin>
-                                    </ImageView>
-                                    <ImageView fitHeight="250.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
-                                       <HBox.margin>
-                                          <Insets left="30.0" />
                                        </HBox.margin>
                                     </ImageView>
                                     <ImageView fitHeight="250.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">

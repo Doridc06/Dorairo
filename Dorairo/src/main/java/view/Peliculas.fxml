@@ -89,7 +89,7 @@
                         </Text>
                         <TextArea prefHeight="74.0" prefWidth="396.0" promptText="Generos:  ">
                            <VBox.margin>
-                              <Insets left="600.0" right="30.0" />
+                              <Insets left="600.0" right="50.0" />
                            </VBox.margin>
                         </TextArea>
                         <ScrollPane prefHeight="250.0" prefWidth="582.0">

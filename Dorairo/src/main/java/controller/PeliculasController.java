@@ -5,7 +5,7 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 
-public class InicioController {
+public class PeliculasController {
 
     @FXML
     private ResourceBundle resources;

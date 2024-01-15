@@ -63,11 +63,11 @@ public class Main extends Application {
 	 */
 	public void muestraLogin(Stage primaryStage) throws IOException {
 		// Ruta al Login
-		FXMLLoader loginLoader = new FXMLLoader(getClass().getResource(Constants.URL_LOGIN_FXML));
+		FXMLLoader loginLoader = new FXMLLoader(getClass().getResource(Constants.URL_PELICULA_FXML));
 		Parent loginRoot = loginLoader.load();
 
 		// Configura la ventana para mostrar el login con unas medidas determinadas
-		Scene scene = new Scene(loginRoot, 920, 619);
+		Scene scene = new Scene(loginRoot, 1110, 1000);
 		primaryStage.setScene(scene);
 
 		// Cambia el icono de la ventana

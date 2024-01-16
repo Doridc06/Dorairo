@@ -67,7 +67,7 @@ public class Main extends Application {
 		Parent loginRoot = loginLoader.load();
 
 		// Configura la ventana para mostrar el login con unas medidas determinadas
-		Scene scene = new Scene(loginRoot, 1110, 1000);
+		Scene scene = new Scene(loginRoot, 1512, 982);
 		primaryStage.setScene(scene);
 
 		// Cambia el icono de la ventana

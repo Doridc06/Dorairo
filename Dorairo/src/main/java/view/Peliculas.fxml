@@ -12,18 +12,18 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="795.0" prefWidth="1105.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="982.0" prefWidth="1512.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <AnchorPane layoutY="-6.0" prefHeight="1500.0" prefWidth="1106.0" style="-fx-background-color: #b5ffff;">
+      <AnchorPane layoutY="-6.0" prefHeight="982.0" prefWidth="1512.0" style="-fx-background-color: #b5ffff;">
          <children>
-            <Pane layoutY="2.0" prefHeight="180.0" prefWidth="1106.0" style="-fx-background-color: #00A9FF;">
+            <Pane layoutY="2.0" prefHeight="150.0" prefWidth="1512.0" style="-fx-background-color: #00A9FF;">
                <children>
-                  <ImageView fitHeight="125.0" fitWidth="123.0" layoutX="27.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="125.0" fitWidth="125.0" layoutX="27.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../resources/application/images/logoDorairo.jpg" />
                      </image>
                   </ImageView>
-                  <Pane layoutX="178.0" layoutY="55.0" prefHeight="42.0" prefWidth="131.0" style="-fx-background-color: #FE72FF;">
+                  <Pane layoutX="199.0" layoutY="55.0" prefHeight="42.0" prefWidth="131.0" style="-fx-background-color: #FE72FF;">
                      <children>
                         <Text layoutX="38.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Inicio">
                            <font>
@@ -32,7 +32,7 @@
                         </Text>
                      </children>
                   </Pane>
-                  <Pane layoutX="657.0" layoutY="55.0" prefHeight="42.0" prefWidth="131.0" style="-fx-background-color: #FE72FF;">
+                  <Pane layoutX="778.0" layoutY="54.0" prefHeight="42.0" prefWidth="131.0" style="-fx-background-color: #FE72FF;">
                      <children>
                         <Text layoutX="38.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Perfil">
                            <font>
@@ -41,7 +41,7 @@
                         </Text>
                      </children>
                   </Pane>
-                  <Pane layoutX="499.0" layoutY="55.0" prefHeight="42.0" prefWidth="131.0" style="-fx-background-color: #FE72FF;">
+                  <Pane layoutX="588.0" layoutY="55.0" prefHeight="42.0" prefWidth="131.0" style="-fx-background-color: #FE72FF;">
                      <children>
                         <Text layoutX="38.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Series">
                            <font>
@@ -50,7 +50,7 @@
                         </Text>
                      </children>
                   </Pane>
-                  <Pane layoutX="339.0" layoutY="55.0" prefHeight="42.0" prefWidth="131.0" style="-fx-background-color: #FE72FF;">
+                  <Pane layoutX="393.0" layoutY="54.0" prefHeight="42.0" prefWidth="131.0" style="-fx-background-color: #FE72FF;">
                      <children>
                         <Text layoutX="23.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Películas">
                            <font>
@@ -59,7 +59,7 @@
                         </Text>
                      </children>
                   </Pane>
-                  <Pane layoutX="838.0" layoutY="55.0" prefHeight="42.0" prefWidth="210.0" style="-fx-background-color: #FE72FF;">
+                  <Pane layoutX="1265.0" layoutY="54.0" prefHeight="42.0" prefWidth="210.0" style="-fx-background-color: #FE72FF;">
                      <children>
                         <Text layoutX="43.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Buscador">
                            <font>
@@ -75,11 +75,11 @@
                   </Pane>
                </children>
             </Pane>
-            <ScrollPane layoutY="163.0" prefHeight="1318.0" prefWidth="1106.0" style="-fx-background-color: #b5ffff;">
+            <ScrollPane layoutY="151.0" prefHeight="1310.0" prefWidth="1512.0" style="-fx-background-color: #b5ffff;">
                <content>
-                  <VBox prefHeight="1316.0" prefWidth="1106.0" style="-fx-background-color: #b5ffff;">
+                  <VBox prefHeight="1310.0" prefWidth="1513.0" style="-fx-background-color: #b5ffff;">
                      <children>
-                        <Pane prefHeight="130.0" prefWidth="1106.0" style="-fx-background-color: pink;">
+                        <Pane prefHeight="89.0" prefWidth="1513.0" style="-fx-background-color: pink;">
                            <children>
                               <Text layoutX="33.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Géneros:">
                                  <font>
@@ -91,47 +91,47 @@
                                     <Font size="16.0" />
                                  </font>
                               </CheckBox>
-                              <CheckBox fx:id="GeneroSuspenso" layoutX="167.0" layoutY="51.0" mnemonicParsing="false" text="Suspenso">
+                              <CheckBox fx:id="GeneroSuspenso" layoutX="150.0" layoutY="51.0" mnemonicParsing="false" text="Suspenso">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </CheckBox>
-                              <CheckBox fx:id="GeneroMisterio" layoutX="330.0" layoutY="51.0" mnemonicParsing="false" text="Misterio">
+                              <CheckBox fx:id="GeneroMisterio" layoutX="286.0" layoutY="51.0" mnemonicParsing="false" text="Misterio">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </CheckBox>
-                              <CheckBox fx:id="GeneroMusical" layoutX="483.0" layoutY="51.0" mnemonicParsing="false" text="Musical">
+                              <CheckBox fx:id="GeneroMusical" layoutX="420.0" layoutY="51.0" mnemonicParsing="false" text="Musical">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </CheckBox>
-                              <CheckBox fx:id="GeneroAventura" layoutX="645.0" layoutY="51.0" mnemonicParsing="false" text="Aventura">
+                              <CheckBox fx:id="GeneroAventura" layoutX="554.0" layoutY="51.0" mnemonicParsing="false" text="Aventura">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </CheckBox>
-                              <CheckBox fx:id="GeneroTerror" layoutX="794.0" layoutY="51.0" mnemonicParsing="false" text="Terror">
+                              <CheckBox fx:id="GeneroTerror" layoutX="694.0" layoutY="51.0" mnemonicParsing="false" text="Terror">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </CheckBox>
-                              <CheckBox fx:id="GeneroCienciaFiccion" layoutX="922.0" layoutY="51.0" mnemonicParsing="false" text="Ciencia Ficción">
+                              <CheckBox fx:id="GeneroCienciaFiccion" layoutX="805.0" layoutY="50.0" mnemonicParsing="false" text="Ciencia Ficción">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </CheckBox>
-                              <CheckBox fx:id="GeneroAnimacion" layoutX="31.0" layoutY="90.0" mnemonicParsing="false" text="Animacion">
+                              <CheckBox fx:id="GeneroAnimacion" layoutX="981.0" layoutY="48.0" mnemonicParsing="false" text="Animación">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </CheckBox>
-                              <CheckBox fx:id="GeneroAccion" layoutX="167.0" layoutY="90.0" mnemonicParsing="false" text="Acción">
+                              <CheckBox fx:id="GeneroAccion" layoutX="1122.0" layoutY="49.0" mnemonicParsing="false" text="Acción">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </CheckBox>
-                              <CheckBox fx:id="GeneroComedia" layoutX="330.0" layoutY="94.0" mnemonicParsing="false" text="Comedia">
+                              <CheckBox fx:id="GeneroComedia" layoutX="1237.0" layoutY="48.0" mnemonicParsing="false" text="Comedia">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -141,7 +141,7 @@
                               <Insets bottom="20.0" />
                            </VBox.margin>
                         </Pane>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="MI LISTA">
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="PRÓXIMAMENTE">
                            <font>
                               <Font name="System Bold" size="19.0" />
                            </font>
@@ -149,14 +149,206 @@
                               <Insets />
                            </VBox.margin>
                         </Text>
-                        <ScrollPane prefHeight="263.0" prefWidth="1106.0">
+                        <ScrollPane prefHeight="242.0" prefWidth="1513.0">
                            <VBox.margin>
                               <Insets top="20.0" />
                            </VBox.margin>
                            <content>
-                              <HBox prefHeight="230.0" prefWidth="537.0" style="-fx-background-color: #b5ffff;">
+                              <HBox prefHeight="220.0" prefWidth="1830.0" style="-fx-background-color: #b5ffff;">
                                  <children>
-                                    <ImageView fitHeight="250.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resources/application/images/aquaman.jpg" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resources/application/images/aquaman.jpg" />
+                                       </image>
+                                       <HBox.margin>
+                                          <Insets left="30.0" />
+                                       </HBox.margin>
+                                    </ImageView>
+                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resources/application/images/aquaman.jpg" />
+                                       </image>
+                                       <HBox.margin>
+                                          <Insets left="30.0" />
+                                       </HBox.margin>
+                                    </ImageView>
+                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resources/application/images/aquaman.jpg" />
+                                       </image>
+                                       <HBox.margin>
+                                          <Insets left="30.0" />
+                                       </HBox.margin>
+                                    </ImageView>
+                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resources/application/images/aquaman.jpg" />
+                                       </image>
+                                       <HBox.margin>
+                                          <Insets left="30.0" />
+                                       </HBox.margin>
+                                    </ImageView>
+                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resources/application/images/aquaman.jpg" />
+                                       </image>
+                                       <HBox.margin>
+                                          <Insets left="30.0" />
+                                       </HBox.margin>
+                                    </ImageView>
+                                    <ImageView fitHeight="230.0" fitWidth="161.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resources/application/images/aquaman.jpg" />
+                                       </image>
+                                       <HBox.margin>
+                                          <Insets left="30.0" />
+                                       </HBox.margin>
+                                    </ImageView>
+                                    <ImageView fitHeight="230.0" fitWidth="171.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resources/application/images/aquaman.jpg" />
+                                       </image>
+                                       <HBox.margin>
+                                          <Insets left="30.0" />
+                                       </HBox.margin>
+                                    </ImageView>
+                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resources/application/images/aquaman.jpg" />
+                                       </image>
+                                       <HBox.margin>
+                                          <Insets left="30.0" />
+                                       </HBox.margin>
+                                    </ImageView>
+                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resources/application/images/aquaman.jpg" />
+                                       </image>
+                                       <HBox.margin>
+                                          <Insets left="30.0" />
+                                       </HBox.margin>
+                                    </ImageView>
+                                 </children>
+                              </HBox>
+                           </content>
+                        </ScrollPane>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="TENDENCIAS">
+                           <font>
+                              <Font name="System Bold" size="19.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
+                        </Text>
+                        <ScrollPane prefHeight="245.0" prefWidth="1513.0" style="-fx-background-color: #b5ffff;">
+                           <content>
+                              <HBox prefHeight="198.0" prefWidth="1010.0" style="-fx-background-color: #b5ffff;">
+                                 <children>
+                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resources/application/images/aquaman.jpg" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                       <HBox.margin>
+                                          <Insets left="30.0" />
+                                       </HBox.margin>
+                                       <image>
+                                          <Image url="@../../resources/application/images/aquaman.jpg" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resources/application/images/aquaman.jpg" />
+                                       </image>
+                                       <HBox.margin>
+                                          <Insets left="30.0" />
+                                       </HBox.margin>
+                                    </ImageView>
+                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                       <HBox.margin>
+                                          <Insets left="30.0" />
+                                       </HBox.margin>
+                                       <image>
+                                          <Image url="@../../resources/application/images/aquaman.jpg" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                       <HBox.margin>
+                                          <Insets left="30.0" />
+                                       </HBox.margin>
+                                       <image>
+                                          <Image url="@../../resources/application/images/aquaman.jpg" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resources/application/images/aquaman.jpg" />
+                                       </image>
+                                       <HBox.margin>
+                                          <Insets left="30.0" />
+                                       </HBox.margin>
+                                    </ImageView>
+                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resources/application/images/aquaman.jpg" />
+                                       </image>
+                                       <HBox.margin>
+                                          <Insets left="30.0" />
+                                       </HBox.margin>
+                                    </ImageView>
+                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resources/application/images/aquaman.jpg" />
+                                       </image>
+                                       <HBox.margin>
+                                          <Insets left="30.0" />
+                                       </HBox.margin>
+                                    </ImageView>
+                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resources/application/images/aquaman.jpg" />
+                                       </image>
+                                       <HBox.margin>
+                                          <Insets left="30.0" />
+                                       </HBox.margin>
+                                    </ImageView>
+                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resources/application/images/aquaman.jpg" />
+                                       </image>
+                                       <HBox.margin>
+                                          <Insets left="30.0" />
+                                       </HBox.margin>
+                                    </ImageView>
+                                 </children>
+                              </HBox>
+                           </content>
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
+                        </ScrollPane>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="MI LISTA">
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="System Bold" size="19.0" />
+                           </font>
+                        </Text>
+                        <ScrollPane prefHeight="244.0" prefWidth="1513.0">
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
+                           <content>
+                              <HBox prefHeight="258.0" prefWidth="1120.0" style="-fx-background-color: #b5ffff;">
+                                 <children>
+                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../../resources/application/images/aquaman.jpg" />
                                        </image>
@@ -164,7 +356,7 @@
                                           <Insets />
                                        </HBox.margin>
                                     </ImageView>
-                                    <ImageView fitHeight="250.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../../resources/application/images/aquaman.jpg" />
                                        </image>
@@ -172,7 +364,15 @@
                                           <Insets left="30.0" />
                                        </HBox.margin>
                                     </ImageView>
-                                    <ImageView fitHeight="250.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                       <HBox.margin>
+                                          <Insets left="30.0" />
+                                       </HBox.margin>
+                                       <image>
+                                          <Image url="@../../resources/application/images/aquaman.jpg" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../../resources/application/images/aquaman.jpg" />
                                        </image>
@@ -180,7 +380,7 @@
                                           <Insets left="30.0" />
                                        </HBox.margin>
                                     </ImageView>
-                                    <ImageView fitHeight="250.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../../resources/application/images/aquaman.jpg" />
                                        </image>
@@ -188,7 +388,7 @@
                                           <Insets left="30.0" />
                                        </HBox.margin>
                                     </ImageView>
-                                    <ImageView fitHeight="250.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../../resources/application/images/aquaman.jpg" />
                                        </image>
@@ -196,7 +396,7 @@
                                           <Insets left="30.0" />
                                        </HBox.margin>
                                     </ImageView>
-                                    <ImageView fitHeight="250.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../../resources/application/images/aquaman.jpg" />
                                        </image>
@@ -204,7 +404,7 @@
                                           <Insets left="30.0" />
                                        </HBox.margin>
                                     </ImageView>
-                                    <ImageView fitHeight="250.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../../resources/application/images/aquaman.jpg" />
                                        </image>
@@ -212,7 +412,15 @@
                                           <Insets left="30.0" />
                                        </HBox.margin>
                                     </ImageView>
-                                    <ImageView fitHeight="250.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resources/application/images/aquaman.jpg" />
+                                       </image>
+                                       <HBox.margin>
+                                          <Insets left="30.0" />
+                                       </HBox.margin>
+                                    </ImageView>
+                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../../resources/application/images/aquaman.jpg" />
                                        </image>
@@ -229,97 +437,14 @@
                               <Font name="System Bold" size="19.0" />
                            </font>
                            <VBox.margin>
-                              <Insets top="20.0" />
+                              <Insets bottom="20.0" top="20.0" />
                            </VBox.margin>
                         </Text>
-                        <ScrollPane prefHeight="264.0" prefWidth="1106.0" style="-fx-background-color: #b5ffff;">
-                           <content>
-                              <HBox prefHeight="198.0" prefWidth="1010.0" style="-fx-background-color: #b5ffff;">
-                                 <children>
-                                    <ImageView fitHeight="250.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
-                                    </ImageView>
-                                    <ImageView fitHeight="250.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
-                                       <HBox.margin>
-                                          <Insets left="30.0" />
-                                       </HBox.margin>
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
-                                    </ImageView>
-                                    <ImageView fitHeight="250.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
-                                       <HBox.margin>
-                                          <Insets left="30.0" />
-                                       </HBox.margin>
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
-                                    </ImageView>
-                                    <ImageView fitHeight="250.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
-                                       <HBox.margin>
-                                          <Insets left="30.0" />
-                                       </HBox.margin>
-                                    </ImageView>
-                                    <ImageView fitHeight="250.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
-                                       <HBox.margin>
-                                          <Insets left="30.0" />
-                                       </HBox.margin>
-                                    </ImageView>
-                                    <ImageView fitHeight="250.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
-                                       <HBox.margin>
-                                          <Insets left="30.0" />
-                                       </HBox.margin>
-                                    </ImageView>
-                                    <ImageView fitHeight="250.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
-                                       <HBox.margin>
-                                          <Insets left="30.0" />
-                                       </HBox.margin>
-                                    </ImageView>
-                                    <ImageView fitHeight="250.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
-                                       <HBox.margin>
-                                          <Insets left="30.0" />
-                                       </HBox.margin>
-                                    </ImageView>
-                                 </children>
-                              </HBox>
-                           </content>
-                           <VBox.margin>
-                              <Insets top="20.0" />
-                           </VBox.margin>
-                        </ScrollPane>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="PROXIMAMENTE">
-                           <VBox.margin>
-                              <Insets top="20.0" />
-                           </VBox.margin>
-                           <font>
-                              <Font name="System Bold" size="19.0" />
-                           </font>
-                        </Text>
-                        <ScrollPane prefHeight="264.0" prefWidth="1106.0">
-                           <VBox.margin>
-                              <Insets top="20.0" />
-                           </VBox.margin>
+                        <ScrollPane prefHeight="244.0" prefWidth="1513.0">
                            <content>
                               <HBox prefHeight="258.0" prefWidth="1120.0" style="-fx-background-color: #b5ffff;">
                                  <children>
-                                    <ImageView fitHeight="250.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../../resources/application/images/aquaman.jpg" />
                                        </image>
@@ -327,7 +452,7 @@
                                           <Insets />
                                        </HBox.margin>
                                     </ImageView>
-                                    <ImageView fitHeight="250.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../../resources/application/images/aquaman.jpg" />
                                        </image>
@@ -335,7 +460,15 @@
                                           <Insets left="30.0" />
                                        </HBox.margin>
                                     </ImageView>
-                                    <ImageView fitHeight="250.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                       <HBox.margin>
+                                          <Insets left="30.0" />
+                                       </HBox.margin>
+                                       <image>
+                                          <Image url="@../../resources/application/images/aquaman.jpg" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../../resources/application/images/aquaman.jpg" />
                                        </image>
@@ -343,7 +476,7 @@
                                           <Insets left="30.0" />
                                        </HBox.margin>
                                     </ImageView>
-                                    <ImageView fitHeight="250.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../../resources/application/images/aquaman.jpg" />
                                        </image>
@@ -351,7 +484,7 @@
                                           <Insets left="30.0" />
                                        </HBox.margin>
                                     </ImageView>
-                                    <ImageView fitHeight="250.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../../resources/application/images/aquaman.jpg" />
                                        </image>
@@ -359,7 +492,7 @@
                                           <Insets left="30.0" />
                                        </HBox.margin>
                                     </ImageView>
-                                    <ImageView fitHeight="250.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../../resources/application/images/aquaman.jpg" />
                                        </image>
@@ -367,7 +500,7 @@
                                           <Insets left="30.0" />
                                        </HBox.margin>
                                     </ImageView>
-                                    <ImageView fitHeight="250.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../../resources/application/images/aquaman.jpg" />
                                        </image>
@@ -375,7 +508,15 @@
                                           <Insets left="30.0" />
                                        </HBox.margin>
                                     </ImageView>
-                                    <ImageView fitHeight="250.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resources/application/images/aquaman.jpg" />
+                                       </image>
+                                       <HBox.margin>
+                                          <Insets left="30.0" />
+                                       </HBox.margin>
+                                    </ImageView>
+                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../../resources/application/images/aquaman.jpg" />
                                        </image>

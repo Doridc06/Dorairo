@@ -42,5 +42,8 @@ public class Constants {
 	
 	/** Ruta al documento fxml de pelicula */
 	public static final String URL_PELICULA_FXML = "/view/Peliculas.fxml";
+	
+	/** Ruta al documento fxml de Detalles */
+	public static final String URL_DETALLES_FXML = "/view/Detalles.fxml";
 
 }

@@ -13,7 +13,7 @@
 /* Imagen de logo del Login */
 #stackPaneLogo {
 	-fx-padding: 2.0;
-	-fx-background-color: black;
+	-fx-background-color: #010b15;
 	-fx-background-radius: 5.0;
 	-fx-effect: dropshadow(gaussian , rgba(0.0,0.0,0.0,0.3) , 10.0,0.0,3.0,3.0);
 }
@@ -23,3 +23,9 @@
 	-fx-effect: dropshadow(gaussian , rgba(0.0,0.0,0.0,0.3) , 10.0,0.0,-3.0,0.0);
 }
 
+#stackPaneLogoCabecera {
+	-fx-padding: 5.0;
+	-fx-background-color: #010b15;
+	-fx-background-radius: 60.0;
+	-fx-effect: dropshadow(gaussian , rgba(0.0,0.0,0.0,0.3) , 10.0,0.0,3.0,3.0);
+}

@@ -23,9 +23,24 @@
 	-fx-effect: dropshadow(gaussian , rgba(0.0,0.0,0.0,0.3) , 10.0,0.0,-3.0,0.0);
 }
 
+/* Panel de cabecera */
+#paneCabecera {
+	-fx-background-color: #6CACF8;
+	-fx-effect: dropshadow(gaussian , rgba(0.0,0.0,0.0,0.3) , 10.0,0.0,3.0,3.0);
+	}
+
+/* Panel del logo de la cabecera */
 #stackPaneLogoCabecera {
 	-fx-padding: 5.0;
 	-fx-background-color: #010b15;
 	-fx-background-radius: 60.0;
 	-fx-effect: dropshadow(gaussian , rgba(0.0,0.0,0.0,0.3) , 10.0,0.0,3.0,3.0);
 }
+
+/* Panel boton inicio cabecera */
+.cabeceraBotones {
+	-fx-background-color: #F473D8;
+	-fx-background-radius: 20.0;
+	-fx-effect: dropshadow(gaussian , rgba(0.0,0.0,0.0,0.3) , 10.0,0.0,3.0,3.0);
+}
+

@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="982.0" prefWidth="1512.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="982.0" prefWidth="1512.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
             <Pane layoutY="2.0" prefHeight="150.0" prefWidth="1512.0" style="-fx-background-color: #00A9FF;">
                <children>
@@ -154,79 +154,48 @@
                            <content>
                               <HBox prefHeight="220.0" prefWidth="1830.0" style="-fx-background-color: #b5ffff;">
                                  <children>
+                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true" />
                                     <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
-                                    </ImageView>
-                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
                                        <HBox.margin>
                                           <Insets left="30.0" />
                                        </HBox.margin>
                                     </ImageView>
                                     <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
                                        <HBox.margin>
                                           <Insets left="30.0" />
                                        </HBox.margin>
                                     </ImageView>
                                     <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
                                        <HBox.margin>
                                           <Insets left="30.0" />
                                        </HBox.margin>
                                     </ImageView>
                                     <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
                                        <HBox.margin>
                                           <Insets left="30.0" />
                                        </HBox.margin>
                                     </ImageView>
                                     <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
                                        <HBox.margin>
                                           <Insets left="30.0" />
                                        </HBox.margin>
                                     </ImageView>
                                     <ImageView fitHeight="230.0" fitWidth="161.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
                                        <HBox.margin>
                                           <Insets left="30.0" />
                                        </HBox.margin>
                                     </ImageView>
                                     <ImageView fitHeight="230.0" fitWidth="171.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
                                        <HBox.margin>
                                           <Insets left="30.0" />
                                        </HBox.margin>
                                     </ImageView>
                                     <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
                                        <HBox.margin>
                                           <Insets left="30.0" />
                                        </HBox.margin>
                                     </ImageView>
                                     <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
                                        <HBox.margin>
                                           <Insets left="30.0" />
                                        </HBox.margin>
@@ -250,23 +219,13 @@
                            <content>
                               <HBox prefHeight="198.0" prefWidth="1010.0" style="-fx-background-color: #b5ffff;">
                                  <children>
-                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
-                                    </ImageView>
+                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true" />
                                     <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
                                        <HBox.margin>
                                           <Insets left="30.0" />
                                        </HBox.margin>
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
                                     </ImageView>
                                     <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
                                        <HBox.margin>
                                           <Insets left="30.0" />
                                        </HBox.margin>
@@ -275,54 +234,33 @@
                                        <HBox.margin>
                                           <Insets left="30.0" />
                                        </HBox.margin>
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
                                     </ImageView>
                                     <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
                                        <HBox.margin>
                                           <Insets left="30.0" />
                                        </HBox.margin>
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
                                     </ImageView>
                                     <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
                                        <HBox.margin>
                                           <Insets left="30.0" />
                                        </HBox.margin>
                                     </ImageView>
                                     <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
                                        <HBox.margin>
                                           <Insets left="30.0" />
                                        </HBox.margin>
                                     </ImageView>
                                     <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
                                        <HBox.margin>
                                           <Insets left="30.0" />
                                        </HBox.margin>
                                     </ImageView>
                                     <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
                                        <HBox.margin>
                                           <Insets left="30.0" />
                                        </HBox.margin>
                                     </ImageView>
                                     <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
                                        <HBox.margin>
                                           <Insets left="30.0" />
                                        </HBox.margin>
@@ -353,17 +291,11 @@
                               <HBox prefHeight="258.0" prefWidth="1120.0" style="-fx-background-color: #b5ffff;">
                                  <children>
                                     <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
                                        <HBox.margin>
                                           <Insets />
                                        </HBox.margin>
                                     </ImageView>
                                     <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
                                        <HBox.margin>
                                           <Insets left="30.0" />
                                        </HBox.margin>
@@ -372,62 +304,38 @@
                                        <HBox.margin>
                                           <Insets left="30.0" />
                                        </HBox.margin>
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
                                     </ImageView>
                                     <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
                                        <HBox.margin>
                                           <Insets left="30.0" />
                                        </HBox.margin>
                                     </ImageView>
                                     <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
                                        <HBox.margin>
                                           <Insets left="30.0" />
                                        </HBox.margin>
                                     </ImageView>
                                     <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
                                        <HBox.margin>
                                           <Insets left="30.0" />
                                        </HBox.margin>
                                     </ImageView>
                                     <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
                                        <HBox.margin>
                                           <Insets left="30.0" />
                                        </HBox.margin>
                                     </ImageView>
                                     <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
                                        <HBox.margin>
                                           <Insets left="30.0" />
                                        </HBox.margin>
                                     </ImageView>
                                     <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
                                        <HBox.margin>
                                           <Insets left="30.0" />
                                        </HBox.margin>
                                     </ImageView>
                                     <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
                                        <HBox.margin>
                                           <Insets left="30.0" />
                                        </HBox.margin>
@@ -452,16 +360,33 @@
                               <HBox prefHeight="258.0" prefWidth="1120.0" style="-fx-background-color: #b5ffff;">
                                  <children>
                                     <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
                                        <HBox.margin>
                                           <Insets />
                                        </HBox.margin>
                                     </ImageView>
                                     <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                       <HBox.margin>
+                                          <Insets left="30.0" />
+                                       </HBox.margin>
+                                    </ImageView>
+                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                       <HBox.margin>
+                                          <Insets left="30.0" />
+                                       </HBox.margin>
+                                    </ImageView>
+                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                       <HBox.margin>
+                                          <Insets left="30.0" />
+                                       </HBox.margin>
+                                    </ImageView>
+                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                                       <HBox.margin>
+                                          <Insets left="30.0" />
+                                       </HBox.margin>
+                                    </ImageView>
+                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
+                                          <Image url="@./" />
                                        </image>
                                        <HBox.margin>
                                           <Insets left="30.0" />
@@ -471,62 +396,18 @@
                                        <HBox.margin>
                                           <Insets left="30.0" />
                                        </HBox.margin>
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
                                     </ImageView>
                                     <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
                                        <HBox.margin>
                                           <Insets left="30.0" />
                                        </HBox.margin>
                                     </ImageView>
                                     <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
                                        <HBox.margin>
                                           <Insets left="30.0" />
                                        </HBox.margin>
                                     </ImageView>
                                     <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
-                                       <HBox.margin>
-                                          <Insets left="30.0" />
-                                       </HBox.margin>
-                                    </ImageView>
-                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
-                                       <HBox.margin>
-                                          <Insets left="30.0" />
-                                       </HBox.margin>
-                                    </ImageView>
-                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
-                                       <HBox.margin>
-                                          <Insets left="30.0" />
-                                       </HBox.margin>
-                                    </ImageView>
-                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
-                                       <HBox.margin>
-                                          <Insets left="30.0" />
-                                       </HBox.margin>
-                                    </ImageView>
-                                    <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../resources/application/images/aquaman.jpg" />
-                                       </image>
                                        <HBox.margin>
                                           <Insets left="30.0" />
                                        </HBox.margin>

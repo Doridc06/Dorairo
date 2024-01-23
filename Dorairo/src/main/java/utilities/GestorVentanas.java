@@ -67,7 +67,14 @@ public class GestorVentanas {
 
 			// Asigna la ventana al nuevo stage
 			Stage stage = new Stage();
-			Scene scene = new Scene(root);
+			Scene scene = null;
+
+			// Comprueba si es Registro o Inicio para dejarlos con sus tamaños por defecto
+			if (titulo.equalsIgnoreCase("Registro") || titulo.equalsIgnoreCase("Dorairo")) {
+				scene = new Scene(root);
+			} else {
+				scene = new Scene(root, 1512, 982);
+			}
 			stage.setScene(scene);
 
 			// Cambia el icono de la ventana

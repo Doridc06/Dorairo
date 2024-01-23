@@ -37,7 +37,6 @@ public class Main extends Application {
 	 */
 	public void start(Stage primaryStage) {
 		try {
-
 			// Añadimos a la lista de perfiles unos ya creados
 			anadirNuevoPerfil(Constants.PERFIL_JAIRO);
 			anadirNuevoPerfil(Constants.PERFIL_DORIANA);

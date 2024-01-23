@@ -41,7 +41,7 @@ public class Constants {
 	public static final Perfil PERFIL_DORIANA = new Perfil("Doridc", "Doriana", "doriana@ejemplo.com", "456", new Date());
 	
 	/** Ruta al documento fxml de pelicula */
-	public static final String URL_PELICULA_FXML = "/view/Peliculas.fxml";
+	public static final String URL_PELICULA_FXML = "/view/Pelicula.fxml";
 	
 	/** Ruta al documento fxml de Detalles */
 	public static final String URL_DETALLES_FXML = "/view/Detalles.fxml";

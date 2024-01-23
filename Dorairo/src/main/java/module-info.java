@@ -5,8 +5,9 @@ module Dorairo {
 	requires javafx.graphics;
 	requires com.google.gson;
 	requires okhttp3;
-	opens controller to com.google.gson; 
 
-	opens application to javafx.graphics, javafx.fxml;
-	opens models to javafx.fxml;
+    opens models to com.google.gson, javafx.fxml;
+    opens controller to javafx.fxml;
+
+    opens application to javafx.graphics, javafx.fxml;
 }

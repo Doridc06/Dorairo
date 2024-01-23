@@ -2,80 +2,25 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="982.0" prefWidth="1512.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="paneFondo" prefHeight="982.0" prefWidth="1512.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SeriesController">
    <children>
-            <Pane layoutY="2.0" prefHeight="150.0" prefWidth="1512.0" style="-fx-background-color: #00A9FF;">
-               <children>
-                  <ImageView fitHeight="125.0" fitWidth="125.0" layoutX="27.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../resources/application/images/logoDorairo.jpg" />
-                     </image>
-                  </ImageView>
-                  <Pane layoutX="199.0" layoutY="55.0" prefHeight="42.0" prefWidth="131.0" style="-fx-background-color: #FE72FF;">
-                     <children>
-                        <Text layoutX="38.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Inicio">
-                           <font>
-                              <Font name="System Bold" size="21.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </Pane>
-                  <Pane layoutX="778.0" layoutY="54.0" prefHeight="42.0" prefWidth="131.0" style="-fx-background-color: #FE72FF;">
-                     <children>
-                        <Text layoutX="38.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Perfil">
-                           <font>
-                              <Font name="System Bold" size="21.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </Pane>
-                  <Pane layoutX="588.0" layoutY="55.0" prefHeight="42.0" prefWidth="131.0" style="-fx-background-color: #FE72FF;">
-                     <children>
-                        <Text layoutX="38.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Series">
-                           <font>
-                              <Font name="System Bold" size="21.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </Pane>
-                  <Pane layoutX="393.0" layoutY="54.0" prefHeight="42.0" prefWidth="131.0" style="-fx-background-color: #FE72FF;">
-                     <children>
-                        <Text layoutX="23.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Películas">
-                           <font>
-                              <Font name="System Bold" size="21.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </Pane>
-                  <Pane layoutX="1265.0" layoutY="54.0" prefHeight="42.0" prefWidth="210.0" style="-fx-background-color: #FE72FF;">
-                     <children>
-                        <Text layoutX="43.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Buscador">
-                           <font>
-                              <Font name="System Bold" size="21.0" />
-                           </font>
-                        </Text>
-                        <ImageView fitHeight="35.0" fitWidth="44.0" layoutX="148.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../resources/application/images/lupa.png" />
-                           </image>
-                        </ImageView>
-                     </children>
-                  </Pane>
-               </children>
-            </Pane>
-            <ScrollPane layoutY="151.0" prefHeight="1310.0" prefWidth="1512.0" style="-fx-background-color: #b5ffff;">
+            <ScrollPane layoutY="151.0" prefHeight="1310.0" prefWidth="1512.0" styleClass="fondo">
                <content>
-                  <VBox prefHeight="1310.0" prefWidth="1513.0" style="-fx-background-color: #b5ffff;">
+                  <VBox prefHeight="1310.0" prefWidth="1513.0" styleClass="fondo">
                      <children>
                         <Pane prefHeight="89.0" prefWidth="1513.0" style="-fx-background-color: pink;">
                            <children>
@@ -147,12 +92,12 @@
                               <Insets left="20.0" />
                            </VBox.margin>
                         </Text>
-                        <ScrollPane prefHeight="242.0" prefWidth="1513.0" style="-fx-background-color: #b5ffff;">
+                        <ScrollPane prefHeight="242.0" prefWidth="1513.0" styleClass="fondo">
                            <VBox.margin>
                               <Insets top="20.0" />
                            </VBox.margin>
                            <content>
-                              <HBox prefHeight="220.0" prefWidth="1830.0" style="-fx-background-color: #b5ffff;">
+                              <HBox prefHeight="220.0" prefWidth="1830.0" styleClass="fondo">
                                  <children>
                                     <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -246,9 +191,9 @@
                               <Insets left="20.0" top="20.0" />
                            </VBox.margin>
                         </Text>
-                        <ScrollPane prefHeight="245.0" prefWidth="1513.0" style="-fx-background-color: #b5ffff;">
+                        <ScrollPane prefHeight="245.0" prefWidth="1513.0" styleClass="fondo">
                            <content>
-                              <HBox prefHeight="198.0" prefWidth="1010.0" style="-fx-background-color: #b5ffff;">
+                              <HBox prefHeight="198.0" prefWidth="1010.0" styleClass="fondo">
                                  <children>
                                     <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -345,12 +290,12 @@
                               <Font name="System Bold" size="19.0" />
                            </font>
                         </Text>
-                        <ScrollPane prefHeight="244.0" prefWidth="1513.0" style="-fx-background-color: #b5ffff;">
+                        <ScrollPane prefHeight="244.0" prefWidth="1513.0" styleClass="fondo">
                            <VBox.margin>
                               <Insets top="20.0" />
                            </VBox.margin>
                            <content>
-                              <HBox prefHeight="258.0" prefWidth="1120.0" style="-fx-background-color: #b5ffff;">
+                              <HBox prefHeight="258.0" prefWidth="1120.0" styleClass="fondo">
                                  <children>
                                     <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -447,9 +392,9 @@
                               <Insets bottom="20.0" left="20.0" top="20.0" />
                            </VBox.margin>
                         </Text>
-                        <ScrollPane prefHeight="244.0" prefWidth="1513.0" style="-fx-background-color: #b5ffff;">
+                        <ScrollPane prefHeight="244.0" prefWidth="1513.0" styleClass="fondo">
                            <content>
-                              <HBox prefHeight="258.0" prefWidth="1120.0" style="-fx-background-color: #b5ffff;">
+                              <HBox prefHeight="258.0" prefWidth="1120.0" styleClass="fondo">
                                  <children>
                                     <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -542,5 +487,71 @@
                   </VBox>
                </content>
             </ScrollPane>
+      <Pane fx:id="paneCabecera" prefHeight="150.0" prefWidth="1512.0">
+         <children>
+            <StackPane fx:id="stackPaneLogoCabecera" layoutX="50.0" layoutY="14.0" prefHeight="125.0" prefWidth="125.0">
+               <children>
+                  <ImageView fx:id="imagenLogoCabecera" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/application/images/logoAmpliado.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </StackPane>
+            <StackPane fx:id="stackPaneInicioCabecera" layoutX="215.0" layoutY="53.0" onMouseClicked="#inicioClicked" prefHeight="44.0" prefWidth="200.0" styleClass="cabeceraBotones">
+               <children>
+                  <Label text="Inicio">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </Label>
+               </children>
+            </StackPane>
+            <StackPane layoutX="675.0" layoutY="53.0" onMouseClicked="#seriesClicked" prefHeight="44.0" prefWidth="200.0" styleClass="cabeceraBotones">
+               <children>
+                  <Label text="Series">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </Label>
+               </children>
+            </StackPane>
+            <StackPane layoutX="905.0" layoutY="53.0" onMouseClicked="#perfilClicked" prefHeight="44.0" prefWidth="200.0" styleClass="cabeceraBotones">
+               <children>
+                  <Label text="Perfil">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </Label>
+               </children>
+            </StackPane>
+            <StackPane layoutX="1225.0" layoutY="53.0" onMouseClicked="#buscadorClicked" prefHeight="44.0" prefWidth="250.0" styleClass="cabeceraBotones">
+               <children>
+                  <Label text="Buscador">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </Label>
+               </children>
+            </StackPane>
+            <MenuButton layoutX="442.0" layoutY="100.0" minHeight="44.0" mnemonicParsing="false" prefWidth="200.0" styleClass="cabeceraBotones" text="Películas">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Aleatoria" />
+               </items>
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </MenuButton>
+            <StackPane fx:id="stackPanePeliculasCabecera" layoutX="442.0" layoutY="53.0" onMouseClicked="#peliculasClicked" prefHeight="44.0" prefWidth="200.0" styleClass="cabeceraBotones">
+               <children>
+                  <Label text="Películas">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </Label>
+               </children>
+            </StackPane>
+         </children>
+      </Pane>
          </children>
 </AnchorPane>

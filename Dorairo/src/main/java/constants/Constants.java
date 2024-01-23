@@ -42,12 +42,6 @@ public class Constants {
 	/** Perfil del usuario Doriana */
 	public static final Perfil PERFIL_DORIANA = new Perfil("Doridc", "Doriana", "doriana@ejemplo.com", "456", new Date());
 	
-	/** Ruta al documento fxml de pelicula */
-	public static final String URL_PELICULA_FXML = "/view/Pelicula.fxml";
-	
-	/** Ruta al documento fxml de Detalles */
-	public static final String URL_DETALLES_FXML = "/view/Detalles.fxml";
-
 	// Rutas a los Fxml de las ventanas
 	
 	/** Ruta al documento fxml del login */
@@ -59,8 +53,8 @@ public class Constants {
 	/** Ruta al documento fxml del inicio */
 	public static final String URL_INICIO_FXML = "/view/Inicio.fxml";
 	
-	/** Ruta al documento fxml de peliculas */
-	public static final String URL_PELICULAS_FXML = "/view/Peliculas.fxml";
+	/** Ruta al documento fxml de pelicula */
+	public static final String URL_PELICULA_FXML = "/view/Pelicula.fxml";
 	
 	/** Ruta al documento fxml de series */
 	public static final String URL_SERIES_FXML = "/view/Series.fxml";
@@ -73,5 +67,8 @@ public class Constants {
 	
 	/** Ruta al documento fxml de agregadas manualmente */
 	public static final String URL_AGREGADAS_MANUALMENTE_FXML = "/view/AgregadasManualmente.fxml";
+	
+	/** Ruta al documento fxml de Detalles */
+	public static final String URL_DETALLES_FXML = "/view/Detalles.fxml";
 
 }

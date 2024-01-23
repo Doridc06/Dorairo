@@ -70,7 +70,7 @@ public class InicioController {
 	@FXML
 	void peliculasClicked(MouseEvent event) {
 		setSceneAndStage();
-		gestorVentanas.muestraVentana(stage, Constants.URL_PELICULAS_FXML, "Peliculas");
+		gestorVentanas.muestraVentana(stage, Constants.URL_PELICULA_FXML, "Pelicula");
 	}
 
 	@FXML

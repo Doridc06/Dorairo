@@ -1,22 +1,20 @@
 package application;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import constants.Constants;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import models.Perfil;
+import utilities.GestorVentanas;
 import utilities.Utils;
 
 /**
  * Clase principal, gestiona el lanzamiento del programa
  * 
+ * @author JairoAB
+ *
  */
 public class Main extends Application {
 
@@ -45,11 +43,7 @@ public class Main extends Application {
 			anadirNuevoPerfil(Constants.PERFIL_DORIANA);
 
 			// Lanza la pantalla del Login
-			muestraLogin(primaryStage);
-
-			// Establecemos el primaryStage como owner Stage
-			Utils.setOwnerStage(primaryStage);
-
+			iniciaLogin(primaryStage);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -58,30 +52,11 @@ public class Main extends Application {
 	/**
 	 * Gestiona el lanzamiento de la pantalla de Login
 	 * 
-	 * @param primaryStage stage a mostrar
-	 * @throws IOException
+	 * @param primaryStage
 	 */
-	public void muestraLogin(Stage primaryStage) throws IOException {
-		// Ruta al Login
-		FXMLLoader loginLoader = new FXMLLoader(getClass().getResource(Constants.URL_PELICULA_FXML));
-		Parent loginRoot = loginLoader.load();
-
-		// Configura la ventana para mostrar el login con unas medidas determinadas
-		Scene scene = new Scene(loginRoot, 1512, 982);
-		primaryStage.setScene(scene);
-
-		// Cambia el icono de la ventana
-		Image icon = new Image(getClass().getResourceAsStream(Constants.URL_LOGO_AMPLIADO));
-		primaryStage.getIcons().add(icon);
-
-		// Cambia el titulo de la ventana
-		primaryStage.setTitle("Dorairo");
-
-		// Inhabilita la redimension de la ventana
-		primaryStage.setResizable(false);
-
-		// Muestra la ventana del login
-		primaryStage.show();
+	public void iniciaLogin(Stage primaryStage) {
+		GestorVentanas gestorVentanas = new GestorVentanas();
+		gestorVentanas.muestraVentana(primaryStage, Constants.URL_LOGIN_FXML, "Dorairo");
 	}
 
 	/**

@@ -7,6 +7,8 @@ import javafx.stage.Stage;
 /**
  * Clase con métodos comunes
  * 
+ * @author JairoAB
+ *
  */
 public class Utils {
 

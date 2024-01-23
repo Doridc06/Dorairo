@@ -18,22 +18,25 @@
 			<content>
 				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="832.0" prefWidth="1512.0" style="-fx-background-color: #C0F4F8;">
                <children>
-                  <HBox layoutX="50.0" layoutY="50.0" prefHeight="200.0" prefWidth="1439.0" />
-      				<StackPane fx:id="stackPanePeliculasCabecera" layoutX="754.0" layoutY="381.0" prefHeight="44.0" prefWidth="200.0" styleClass="cabeceraBotones">
+                  <HBox layoutX="50.0" layoutY="50.0" prefHeight="200.0" prefWidth="1439.0" spacing="50.0">
                      <children>
-                        <Label text="Películas">
-                           <font>
-                              <Font size="30.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </StackPane>
+                        <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../resources/application/images/aquaman.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="230.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../resources/application/images/aquaman.jpg" />
+                           </image>
+                        </ImageView>
+                     </children></HBox>
                </children></AnchorPane>
 			</content>
 		</ScrollPane>
 		<Pane fx:id="paneCabecera" prefHeight="150.0" prefWidth="1512.0">
 			<children>
-				<StackPane fx:id="stackPaneLogoCabecera" layoutX="50.0" layoutY="15.0" prefHeight="125.0" prefWidth="125.0">
+				<StackPane fx:id="stackPaneLogoCabecera" layoutX="50.0" layoutY="14.0" prefHeight="125.0" prefWidth="125.0">
 					<children>
 						<ImageView fx:id="imagenLogoCabecera" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
 							<image>
@@ -42,7 +45,7 @@
 						</ImageView>
 					</children>
 				</StackPane>
-				<StackPane fx:id="stackPaneInicioCabecera" layoutX="215.0" layoutY="53.0" prefHeight="44.0" prefWidth="200.0" styleClass="cabeceraBotones">
+				<StackPane fx:id="stackPaneInicioCabecera" layoutX="215.0" layoutY="53.0" onMouseClicked="#inicioClicked" prefHeight="44.0" prefWidth="200.0" styleClass="cabeceraBotones">
 					<children>
 						<Label text="Inicio">
 							<font>
@@ -51,7 +54,7 @@
 						</Label>
 					</children>
 				</StackPane>
-				<StackPane layoutX="675.0" layoutY="53.0" prefHeight="44.0" prefWidth="200.0" styleClass="cabeceraBotones">
+				<StackPane layoutX="675.0" layoutY="53.0" onMouseClicked="#seriesClicked" prefHeight="44.0" prefWidth="200.0" styleClass="cabeceraBotones">
                <children>
                   <Label text="Series">
                      <font>
@@ -59,7 +62,7 @@
                      </font>
                   </Label>
                </children></StackPane>
-				<StackPane layoutX="905.0" layoutY="53.0" prefHeight="44.0" prefWidth="200.0" styleClass="cabeceraBotones">
+				<StackPane layoutX="905.0" layoutY="53.0" onMouseClicked="#perfilClicked" prefHeight="44.0" prefWidth="200.0" styleClass="cabeceraBotones">
                <children>
                   <Label text="Perfil">
                      <font>
@@ -67,16 +70,31 @@
                      </font>
                   </Label>
                </children></StackPane>
-				<StackPane layoutX="1225.0" layoutY="53.0" prefHeight="44.0" prefWidth="250.0" styleClass="cabeceraBotones" />
-            <MenuButton layoutX="442.0" layoutY="56.0" minHeight="44.0" mnemonicParsing="false" prefWidth="200.0" styleClass="cabeceraBotones">
+				<StackPane layoutX="1225.0" layoutY="53.0" onMouseClicked="#buscadorClicked" prefHeight="44.0" prefWidth="250.0" styleClass="cabeceraBotones">
+               <children>
+                  <Label text="Buscador">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </Label>
+               </children></StackPane>
+            <MenuButton layoutX="442.0" layoutY="100.0" minHeight="44.0" mnemonicParsing="false" prefWidth="200.0" styleClass="cabeceraBotones" text="Películas">
               <items>
-                <MenuItem mnemonicParsing="false" text="Action 1" />
-                <MenuItem mnemonicParsing="false" text="Action 2" />
+                <MenuItem mnemonicParsing="false" text="Aleatoria" />
               </items>
                <font>
-                  <Font size="1.0" />
+                  <Font size="20.0" />
                </font>
             </MenuButton>
+				<StackPane fx:id="stackPanePeliculasCabecera" layoutX="442.0" layoutY="53.0" onMouseClicked="#peliculasClicked" prefHeight="44.0" prefWidth="200.0" styleClass="cabeceraBotones">
+               <children>
+                  <Label text="Películas">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </Label>
+               </children>
+            </StackPane>
 			</children>
 		</Pane>
 	</children>

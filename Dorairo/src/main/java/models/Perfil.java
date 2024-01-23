@@ -5,6 +5,8 @@ import java.util.Date;
 /**
  * Clase que gestiona el perfil del usuario
  * 
+ * @author JairoAB
+ *
  */
 public class Perfil {
 

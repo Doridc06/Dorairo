@@ -64,5 +64,8 @@ public class Constants {
 	
 	/** Ruta al documento fxml de buscador */
 	public static final String URL_BUSCADOR_FXML = "/view/Buscador.fxml";
+	
+	/** Ruta al documento fxml de agregadas manualmente */
+	public static final String URL_AGREGADAS_MANUALMENTE_FXML = "/view/AgregadasManualmente.fxml";
 
 }

@@ -1,73 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <Pane prefHeight="150.0" prefWidth="1512.0" style="-fx-background-color: #00A9FF;">
-         <children>
-       
-            <ImageView fitHeight="125.0" fitWidth="125.0" layoutX="27.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../resources/application/images/logoAmpliado.jpg" />
-               </image>
-            </ImageView>
-            <Pane layoutX="199.0" layoutY="55.0" prefHeight="42.0" prefWidth="131.0" style="-fx-background-color: #FE72FF;">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DetallesController">
+	<children>
+		<ScrollPane layoutY="150.0" prefHeight="982.0" prefWidth="1512.0" styleClass="fondo">
+			<content>
+				<AnchorPane fx:id="paneFondo" minHeight="0.0" minWidth="0.0" prefHeight="982.0" prefWidth="1512.0" styleClass="fondo">
                <children>
-                  <Text layoutX="38.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Inicio">
+               
+                
+                  <Text fx:id="titulo" layoutX="106.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="308.13671875">
                      <font>
-                        <Font name="System Bold" size="21.0" />
+                        <Font size="35.0" />
                      </font>
                   </Text>
-               </children>
-            </Pane>
-            <Pane layoutX="778.0" layoutY="54.0" prefHeight="42.0" prefWidth="131.0" style="-fx-background-color: #FE72FF;">
-               <children>
-                  <Text layoutX="38.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Perfil">
+                  <ImageView fx:id="cartel" fitHeight="385.0" fitWidth="553.0" layoutX="106.0" layoutY="106.0" pickOnBounds="true" preserveRatio="true" />
+                  <Text fx:id="detallesPelicula" layoutX="151.0" layoutY="552.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Detalles de la película:">
                      <font>
-                        <Font name="System Bold" size="21.0" />
+                        <Font size="32.0" />
                      </font>
                   </Text>
-               </children>
-            </Pane>
-            <Pane layoutX="1265.0" layoutY="54.0" prefHeight="42.0" prefWidth="210.0" style="-fx-background-color: #FE72FF;">
-               <children>
-                  <Text layoutX="43.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Buscador">
-                     <font>
-                        <Font name="System Bold" size="21.0" />
-                     </font>
-                  </Text>
-                  <ImageView fitHeight="35.0" fitWidth="44.0" layoutX="148.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../resources/application/images/lupa.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </Pane>
-            <MenuButton layoutX="590.0" layoutY="55.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="125.0" style="-fx-background-color: #FE72FF;" text="Series">
-              <items>
-                  <MenuItem mnemonicParsing="false" text="Serie Aleatoria" />
-              </items>
-               <font>
-                  <Font name="System Bold" size="20.0" />
-               </font>
-            </MenuButton>
-            <MenuButton layoutX="390.0" layoutY="55.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="152.0" style="-fx-background-color: #FE72FF;" text="Péliculas">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="Película Aleatoria" />
-               </items>
-               <font>
-                  <Font name="System Bold" size="20.0" />
-               </font>
-            </MenuButton>
-         </children>
-      </Pane>
-   </children>
+                  <Text fx:id="Compañia" layoutX="151.0" layoutY="610.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+               </children></AnchorPane>
+			</content>
+		</ScrollPane>
+   
+		<Pane fx:id="paneCabecera" prefHeight="150.0" prefWidth="1512.0">
+			<children>
+				<StackPane fx:id="stackPaneLogoCabecera" layoutX="50.0" layoutY="14.0" prefHeight="125.0" prefWidth="125.0">
+					<children>
+						<ImageView fx:id="imagenLogoCabecera" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+							<image>
+								<Image url="@../../resources/application/images/logoAmpliado.jpg" />
+							</image>
+						</ImageView>
+					</children>
+				</StackPane>
+				<StackPane fx:id="stackPaneInicioCabecera" layoutX="215.0" layoutY="53.0" onMouseClicked="#inicioClicked" prefHeight="44.0" prefWidth="200.0" styleClass="cabeceraBotones">
+					<children>
+						<Label text="Inicio">
+							<font>
+								<Font size="30.0" />
+							</font>
+						</Label>
+					</children>
+				</StackPane>
+				<StackPane layoutX="675.0" layoutY="53.0" onMouseClicked="#seriesClicked" prefHeight="44.0" prefWidth="200.0" styleClass="cabeceraBotones">
+					<children>
+						<Label text="Series">
+							<font>
+								<Font size="30.0" />
+							</font>
+						</Label>
+					</children>
+				</StackPane>
+				<StackPane layoutX="905.0" layoutY="53.0" onMouseClicked="#perfilClicked" prefHeight="44.0" prefWidth="200.0" styleClass="cabeceraBotones">
+					<children>
+						<Label text="Perfil">
+							<font>
+								<Font size="30.0" />
+							</font>
+						</Label>
+					</children>
+				</StackPane>
+				<StackPane layoutX="1225.0" layoutY="53.0" onMouseClicked="#buscadorClicked" prefHeight="44.0" prefWidth="250.0" styleClass="cabeceraBotones">
+					<children>
+						<Label text="Buscador">
+							<font>
+								<Font size="30.0" />
+							</font>
+						</Label>
+					</children>
+				</StackPane>
+				<StackPane fx:id="stackPanePeliculasCabecera" layoutX="442.0" layoutY="53.0" onMouseClicked="#peliculasClicked" prefHeight="44.0" prefWidth="200.0" styleClass="cabeceraBotones">
+					<children>
+						<Label text="Películas">
+							<font>
+								<Font size="30.0" />
+							</font>
+						</Label>
+					</children>
+				</StackPane>
+			</children>
+		</Pane>
+	</children>
 </AnchorPane>

@@ -16,83 +16,66 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="982.0" prefWidth="1512.0"
-	styleClass="fondo" stylesheets="@application.css"
-	xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="controller.PeliculaController">
+<AnchorPane prefHeight="982.0" prefWidth="1512.0" styleClass="fondo" stylesheets="@application.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PeliculaController">
 	<children>
-		<ScrollPane layoutY="151.0" prefHeight="982.0"
-			prefWidth="1512.0" styleClass="fondo">
+		<ScrollPane layoutY="151.0" prefHeight="982.0" prefWidth="1512.0" styleClass="fondo">
 
 			<content>
 				<VBox prefHeight="1354.0" prefWidth="1513.0" styleClass="fondo">
 					<children>
-						<Pane prefHeight="89.0" prefWidth="1513.0"
-							style="-fx-background-color: pink;">
+						<Pane prefHeight="89.0" prefWidth="1513.0" style="-fx-background-color: pink;">
 							<children>
-								<Text layoutX="33.0" layoutY="28.0" strokeType="OUTSIDE"
-									strokeWidth="0.0" text="Géneros:">
+								<Text layoutX="33.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Géneros:">
 									<font>
 										<Font size="29.0" />
 									</font>
 								</Text>
-								<CheckBox fx:id="GeneroDrama" layoutX="31.0"
-									layoutY="49.0" mnemonicParsing="false" prefHeight="28.0"
-									prefWidth="91.0" text="Drama">
+								<CheckBox fx:id="GeneroDrama" layoutX="31.0" layoutY="49.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="91.0" text="Drama">
 									<font>
 										<Font size="16.0" />
 									</font>
 								</CheckBox>
-								<CheckBox fx:id="GeneroSuspenso" layoutX="150.0"
-									layoutY="51.0" mnemonicParsing="false" text="Suspenso">
+								<CheckBox fx:id="GeneroSuspenso" layoutX="150.0" layoutY="51.0" mnemonicParsing="false" text="Suspenso">
 									<font>
 										<Font size="16.0" />
 									</font>
 								</CheckBox>
-								<CheckBox fx:id="GeneroMisterio" layoutX="286.0"
-									layoutY="51.0" mnemonicParsing="false" text="Misterio">
+								<CheckBox fx:id="GeneroMisterio" layoutX="286.0" layoutY="51.0" mnemonicParsing="false" text="Misterio">
 									<font>
 										<Font size="16.0" />
 									</font>
 								</CheckBox>
-								<CheckBox fx:id="GeneroMusical" layoutX="420.0"
-									layoutY="51.0" mnemonicParsing="false" text="Musical">
+								<CheckBox fx:id="GeneroMusical" layoutX="420.0" layoutY="51.0" mnemonicParsing="false" text="Musical">
 									<font>
 										<Font size="16.0" />
 									</font>
 								</CheckBox>
-								<CheckBox fx:id="GeneroAventura" layoutX="554.0"
-									layoutY="51.0" mnemonicParsing="false" text="Aventura">
+								<CheckBox fx:id="GeneroAventura" layoutX="554.0" layoutY="51.0" mnemonicParsing="false" text="Aventura">
 									<font>
 										<Font size="16.0" />
 									</font>
 								</CheckBox>
-								<CheckBox fx:id="GeneroTerror" layoutX="694.0"
-									layoutY="51.0" mnemonicParsing="false" text="Terror">
+								<CheckBox fx:id="GeneroTerror" layoutX="694.0" layoutY="51.0" mnemonicParsing="false" text="Terror">
 									<font>
 										<Font size="16.0" />
 									</font>
 								</CheckBox>
-								<CheckBox fx:id="GeneroCienciaFiccion" layoutX="805.0"
-									layoutY="50.0" mnemonicParsing="false" text="Ciencia Ficción">
+								<CheckBox fx:id="GeneroCienciaFiccion" layoutX="805.0" layoutY="50.0" mnemonicParsing="false" text="Ciencia Ficción">
 									<font>
 										<Font size="16.0" />
 									</font>
 								</CheckBox>
-								<CheckBox fx:id="GeneroAnimacion" layoutX="981.0"
-									layoutY="48.0" mnemonicParsing="false" text="Animación">
+								<CheckBox fx:id="GeneroAnimacion" layoutX="981.0" layoutY="48.0" mnemonicParsing="false" text="Animación">
 									<font>
 										<Font size="16.0" />
 									</font>
 								</CheckBox>
-								<CheckBox fx:id="GeneroAccion" layoutX="1122.0"
-									layoutY="49.0" mnemonicParsing="false" text="Acción">
+								<CheckBox fx:id="GeneroAccion" layoutX="1122.0" layoutY="49.0" mnemonicParsing="false" text="Acción">
 									<font>
 										<Font size="16.0" />
 									</font>
 								</CheckBox>
-								<CheckBox fx:id="GeneroComedia" layoutX="1237.0"
-									layoutY="48.0" mnemonicParsing="false" text="Comedia">
+								<CheckBox fx:id="GeneroComedia" layoutX="1237.0" layoutY="48.0" mnemonicParsing="false" text="Comedia">
 									<font>
 										<Font size="16.0" />
 									</font>
@@ -102,8 +85,7 @@
 								<Insets bottom="20.0" />
 							</VBox.margin>
 						</Pane>
-						<Text strokeType="OUTSIDE" strokeWidth="0.0"
-							text="PRÓXIMAMENTE">
+						<Text strokeType="OUTSIDE" strokeWidth="0.0" text="PRÓXIMAMENTE">
 							<font>
 								<Font name="System Bold" size="19.0" />
 							</font>
@@ -111,15 +93,16 @@
 								<Insets left="20.0" />
 							</VBox.margin>
 						</Text>
-						<ScrollPane prefHeight="242.0" prefWidth="1513.0"
-							styleClass="fondo">
+						
+						
+						
+						<ScrollPane prefHeight="242.0" prefWidth="1513.0" styleClass="fondo">
 							<VBox.margin>
 								<Insets top="20.0" />
 							</VBox.margin>
 							<content>
 
-								<HBox fx:id="peliculasEstrenos" prefHeight="228.0"
-									prefWidth="1830.0" styleClass="fondo">
+								<HBox fx:id="peliculasEstrenos" prefHeight="228.0" prefWidth="1830.0" styleClass="fondo">
 
 									<padding>
 										<Insets left="20.0" />
@@ -127,8 +110,7 @@
 								</HBox>
 							</content>
 						</ScrollPane>
-						<Text strokeType="OUTSIDE" strokeWidth="0.0"
-							text="TENDENCIAS">
+						<Text strokeType="OUTSIDE" strokeWidth="0.0" text="TENDENCIAS">
 							<font>
 								<Font name="System Bold" size="19.0" />
 							</font>
@@ -136,12 +118,13 @@
 								<Insets left="20.0" top="20.0" />
 							</VBox.margin>
 						</Text>
-						<ScrollPane prefHeight="245.0" prefWidth="1513.0"
-							styleClass="fondo">
+						
+						
+						
+						
+						<ScrollPane prefHeight="245.0" prefWidth="1513.0" styleClass="fondo">
 							<content>
-
-								<HBox fx:id="peliculasPopulares" prefHeight="230.0"
-									prefWidth="1512.0" styleClass="fondo">
+								<HBox fx:id="peliculasPopulares" prefHeight="230.0" prefWidth="1512.0" styleClass="fondo">
 
 									<padding>
 										<Insets left="20.0" />
@@ -152,8 +135,7 @@
 								<Insets top="20.0" />
 							</VBox.margin>
 						</ScrollPane>
-						<Text strokeType="OUTSIDE" strokeWidth="0.0"
-							text="PELÍCULAS VISTAS">
+						<Text strokeType="OUTSIDE" strokeWidth="0.0" text="PELÍCULAS VISTAS">
 							<VBox.margin>
 								<Insets left="20.0" top="20.0" />
 							</VBox.margin>
@@ -161,15 +143,13 @@
 								<Font name="System Bold" size="19.0" />
 							</font>
 						</Text>
-						<ScrollPane prefHeight="244.0" prefWidth="1513.0"
-							styleClass="fondo">
+						<ScrollPane prefHeight="244.0" prefWidth="1513.0" styleClass="fondo">
 							<VBox.margin>
 								<Insets top="20.0" />
 							</VBox.margin>
 							<content>
 
-								<HBox prefHeight="258.0" prefWidth="1512.0"
-									styleClass="fondo">
+								<HBox prefHeight="258.0" prefWidth="1512.0" styleClass="fondo">
 
 									<padding>
 										<Insets left="20.0" />
@@ -191,21 +171,16 @@
 		</ScrollPane>
 		<Pane fx:id="paneCabecera" prefHeight="150.0" prefWidth="1512.0">
 			<children>
-				<StackPane fx:id="stackPaneLogoCabecera" layoutX="50.0"
-					layoutY="14.0" prefHeight="125.0" prefWidth="125.0">
+				<StackPane fx:id="stackPaneLogoCabecera" layoutX="50.0" layoutY="14.0" prefHeight="125.0" prefWidth="125.0">
 					<children>
-						<ImageView fx:id="imagenLogoCabecera" fitHeight="90.0"
-							fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+						<ImageView fx:id="imagenLogoCabecera" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
 							<image>
-								<Image
-									url="@../../resources/application/images/logoAmpliado.jpg" />
+								<Image url="@../../resources/application/images/logoAmpliado.jpg" />
 							</image>
 						</ImageView>
 					</children>
 				</StackPane>
-				<StackPane fx:id="stackPaneInicioCabecera" layoutX="215.0"
-					layoutY="53.0" onMouseClicked="#inicioClicked" prefHeight="44.0"
-					prefWidth="200.0" styleClass="cabeceraBotones">
+				<StackPane fx:id="stackPaneInicioCabecera" layoutX="215.0" layoutY="53.0" onMouseClicked="#inicioClicked" prefHeight="44.0" prefWidth="200.0" styleClass="cabeceraBotones">
 					<children>
 						<Label text="Inicio">
 							<font>
@@ -214,9 +189,7 @@
 						</Label>
 					</children>
 				</StackPane>
-				<StackPane layoutX="675.0" layoutY="53.0"
-					onMouseClicked="#seriesClicked" prefHeight="44.0" prefWidth="200.0"
-					styleClass="cabeceraBotones">
+				<StackPane layoutX="675.0" layoutY="53.0" onMouseClicked="#seriesClicked" prefHeight="44.0" prefWidth="200.0" styleClass="cabeceraBotones">
 					<children>
 						<Label text="Series">
 							<font>
@@ -225,9 +198,7 @@
 						</Label>
 					</children>
 				</StackPane>
-				<StackPane layoutX="905.0" layoutY="53.0"
-					onMouseClicked="#perfilClicked" prefHeight="44.0" prefWidth="200.0"
-					styleClass="cabeceraBotones">
+				<StackPane layoutX="905.0" layoutY="53.0" onMouseClicked="#perfilClicked" prefHeight="44.0" prefWidth="200.0" styleClass="cabeceraBotones">
 					<children>
 						<Label text="Perfil">
 							<font>
@@ -236,9 +207,7 @@
 						</Label>
 					</children>
 				</StackPane>
-				<StackPane layoutX="1225.0" layoutY="53.0"
-					onMouseClicked="#buscadorClicked" prefHeight="44.0"
-					prefWidth="250.0" styleClass="cabeceraBotones">
+				<StackPane layoutX="1225.0" layoutY="53.0" onMouseClicked="#buscadorClicked" prefHeight="44.0" prefWidth="250.0" styleClass="cabeceraBotones">
 					<children>
 						<Label text="Buscador">
 							<font>
@@ -247,27 +216,14 @@
 						</Label>
 					</children>
 				</StackPane>
-				<MenuButton layoutX="442.0" layoutY="100.0"
-					minHeight="44.0" mnemonicParsing="false" prefWidth="200.0"
-					styleClass="cabeceraBotones" text="Películas">
+				<MenuButton layoutX="447.0" layoutY="53.0" minHeight="44.0" mnemonicParsing="false" prefWidth="200.0" styleClass="cabeceraBotones" text="Películas">
 					<items>
 						<MenuItem mnemonicParsing="false" text="Aleatoria" />
 					</items>
 					<font>
-						<Font size="20.0" />
+						<Font size="21.0" />
 					</font>
 				</MenuButton>
-				<StackPane fx:id="stackPanePeliculasCabecera"
-					layoutX="442.0" layoutY="53.0" onMouseClicked="#peliculasClicked"
-					prefHeight="44.0" prefWidth="200.0" styleClass="cabeceraBotones">
-					<children>
-						<Label text="Películas">
-							<font>
-								<Font size="30.0" />
-							</font>
-						</Label>
-					</children>
-				</StackPane>
 			</children>
 		</Pane>
 	</children>

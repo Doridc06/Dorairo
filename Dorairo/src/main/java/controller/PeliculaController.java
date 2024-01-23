@@ -6,6 +6,9 @@ import com.google.gson.Gson;
 
 import constants.Constants;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.image.Image;
@@ -74,28 +77,46 @@ public class PeliculaController {
 
 	@FXML
 	void initialize() {
-		// Inicializamos el Gestor de ventanas
-		gestorVentanas = new GestorVentanas();
-		// Establece la imagen del logo
-		Image imagenLogo = new Image(getClass().getResourceAsStream(Constants.URL_LOGO_AMPLIADO));
-		imagenLogoCabecera.setImage(imagenLogo);
-		try {
-			// Configuración del cliente HTTP (OkHttpClient)
-			OkHttpClient client = new OkHttpClient();
+	    // Inicializamos el Gestor de ventanas
+	    gestorVentanas = new GestorVentanas();
+	    // Establece la imagen del logo
+	    Image imagenLogo = new Image(getClass().getResourceAsStream(Constants.URL_LOGO_AMPLIADO));
+	    imagenLogoCabecera.setImage(imagenLogo);
+	    
+	    try {
+	        // Configuración del cliente HTTP (OkHttpClient)
+	        OkHttpClient client = new OkHttpClient();
 
-			// Llamada a la API para películas populares
-			handleMovieApiCall(client, "https://api.themoviedb.org/3/movie/popular?language=es-ES&page=1",
-					peliculasPopulares);
+	        // Llamada a la API para películas populares
+	        handleMovieApiCall(client, "https://api.themoviedb.org/3/movie/popular?language=es-ES&page=1",
+	                peliculasPopulares);
 
-			// Llamada a la API para próximas películas
-			handleMovieApiCall(client, "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1",
-					peliculasEstrenos);
+	        // Llamada a la API para próximas películas
+	        handleMovieApiCall(client, "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1",
+	                peliculasEstrenos);
 
-		} catch (IOException e) {
-			// Manejar excepciones
-			e.printStackTrace();
-		}
+	        // Configuración del evento para cada ImageView en peliculasEstrenos
+	        for (Node node : peliculasEstrenos.getChildren()) {
+	            if (node instanceof ImageView) {
+	                ImageView imageView = (ImageView) node;
+	                imageView.setOnMouseClicked(event -> detallesClicked(imageView));
+	            }
+	        }
+
+	        // Configuración del evento para cada ImageView en peliculasPopulares
+	        for (Node node : peliculasPopulares.getChildren()) {
+	            if (node instanceof ImageView) {
+	                ImageView imageView = (ImageView) node;
+	                imageView.setOnMouseClicked(event -> detallesClicked(imageView));
+	            }
+	        }
+	    } catch (IOException e) {
+	        // Manejar excepciones
+	        e.printStackTrace();
+	    }
 	}
+
+	
 
 	private void handleMovieApiCall(OkHttpClient client, String apiUrl, HBox targetHBox) throws IOException {
 		// Construir la solicitud para la API de películas
@@ -117,8 +138,7 @@ public class PeliculaController {
 			// Iterar sobre las películas y agregar imágenes al HBox
 			int contador = 0;
 			for (Pelicula pelicula : respApi.getResults()) {
-				System.out.println("Adding image: " + pelicula.getPoster_path());
-				if (contador < 10) { // Limitar a 10 películas
+				if (contador < 12) { // Limitar a 10 películas
 					ImageView imageView = null;
 					if (pelicula.getPoster_path() != null) {
 						imageView = getImageViewFromUrl("https://image.tmdb.org/t/p/w500" + pelicula.getPoster_path());
@@ -181,6 +201,55 @@ public class PeliculaController {
 		setSceneAndStage();
 		gestorVentanas.muestraVentana(stage, Constants.URL_PERFIL_FXML, "Perfil");
 	}
+	
+	// Método detallesClicked que se llama cuando se hace clic en una imagen
+	@FXML
+	void detallesClicked(ImageView clickedImageView) {
+	    // Obtener la URL de la imagen clickeada
+	    String imageUrl = getImageUrlFromImageView(clickedImageView);
+
+	    // Realizar una llamada adicional a la API para obtener detalles de la película
+	    try {
+	        OkHttpClient client = new OkHttpClient();
+	        Request request = new Request.Builder()
+	                .url("https://api.themoviedb.org/3/search/movie?query=Wonka&include_adult=false&language=es-ES&page=1" + imageUrl)
+	                .get()
+	                .addHeader("accept", "application/json")
+	                .addHeader("Authorization", "Bearer " + API_KEY)
+	                .build();
+
+	        Response response = client.newCall(request).execute();
+	        String responseBody = response.body().string();
+
+	        Gson gson = new Gson();
+	        Pelicula peliculaDetalles = gson.fromJson(responseBody, Pelicula.class);
+
+	        // Pasar la información de la película a la ventana de detalles
+	        FXMLLoader loader = new FXMLLoader(getClass().getResource(Constants.URL_DETALLES_FXML));
+	        Parent root = loader.load();
+	        DetallesController detallesController = loader.getController();
+	        detallesController.initData(peliculaDetalles);
+
+	        // Mostrar la ventana de detalles
+	        setSceneAndStage();
+	        Stage detallesStage = new Stage();
+	        detallesStage.setTitle("Detalles");
+	        detallesStage.setScene(new Scene(root));
+	        detallesStage.show();
+	    } catch (IOException e) {
+	        // Manejar excepciones
+	        e.printStackTrace();
+	    }
+	}
+
+	private String getImageUrlFromImageView(ImageView imageView) {
+	    // Obtener la URL de la imagen desde el ImageView
+	    Image image = imageView.getImage();
+	    String imageUrl = image.getUrl();
+	    return imageUrl;
+	}
+
+
 
 	/**
 	 * Asigna los valores correspondientes del stage y el scene

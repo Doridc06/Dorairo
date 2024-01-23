@@ -3,7 +3,7 @@ package models;
 /**
 * Clase que representa una película
 * 
-* @author Doriana Dc
+* 
 *
 */
 public class Pelicula {

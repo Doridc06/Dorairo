@@ -23,13 +23,18 @@
                         <Font size="35.0" />
                      </font>
                   </Text>
-                  <ImageView fx:id="cartel" fitHeight="385.0" fitWidth="553.0" layoutX="106.0" layoutY="106.0" pickOnBounds="true" preserveRatio="true" />
-                  <Text fx:id="detallesPelicula" layoutX="151.0" layoutY="552.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Detalles de la película:">
+                  <ImageView fx:id="cartel" fitHeight="400.0" fitWidth="400.0" layoutX="106.0" layoutY="106.0" pickOnBounds="true" preserveRatio="true" />
+                  <Text fx:id="detallesPelicula" layoutX="160.0" layoutY="618.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="52.0">
                      <font>
                         <Font size="32.0" />
                      </font>
                   </Text>
-                  <Text fx:id="Compañia" layoutX="151.0" layoutY="610.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+                  <Text fx:id="Compañia" layoutX="157.0" layoutY="750.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="29.0" />
+                  <Text layoutX="160.0" layoutY="545.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Detalles de la película:">
+                     <font>
+                        <Font size="26.0" />
+                     </font>
+                  </Text>
                </children></AnchorPane>
 			</content>
 		</ScrollPane>

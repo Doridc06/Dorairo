@@ -1,22 +1,16 @@
 package controller;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
+import java.io.IOException;
 import com.google.gson.Gson;
-
 import constants.Constants;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import models.Pelicula;
-import models.RespuestaApi;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -25,31 +19,7 @@ import utilities.GestorVentanas;
 public class DetallesController {
 
     @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
-
-    @FXML
     private ImageView imagenLogoCabecera;
-
-    @FXML
-    private Pane paneCabecera;
-
-    @FXML
-    private StackPane stackPaneInicioCabecera;
-
-    @FXML
-    private StackPane stackPaneLogoCabecera;
-
-    @FXML
-    private StackPane stackPanePeliculasCabecera;
-
-    private Scene scene;
-
-    private Stage stage;
-
-    private GestorVentanas gestorVentanas;
 
     @FXML
     private Text titulo;
@@ -60,14 +30,13 @@ public class DetallesController {
     @FXML
     private Text detallesPelicula;
 
-    @FXML
-    private Text compania;
+    private Scene scene;
 
-    @FXML
-    private Text resumen;
+    private Stage stage;
 
-    @FXML
-    private Text fecha;
+    private GestorVentanas gestorVentanas;
+
+    private static final String API_KEY = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlYjc0NTA5ZjRiZDBlODJlMTFlYzA2YWM1MDRhMGRlMCIsInN1YiI6IjY1Mzc3ZmRmZjQ5NWVlMDBmZjY1YTEyOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ehIu08LoiMRTccPoD4AfADXOpQPlqNAKUMvGgwY3XU8";
 
     @FXML
     void initialize() {
@@ -111,19 +80,15 @@ public class DetallesController {
         stage = (Stage) scene.getWindow();
     }
 
-    private static final String API_KEY = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlYjc0NTA5ZjRiZDBlODJlMTFlYzA2YWM1MDRhMGRlMCIsInN1YiI6IjY1Mzc3ZmRmZjQ5NWVlMDBmZjY1YTEyOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ehIu08LoiMRTccPoD4AfADXOpQPlqNAKUMvGgwY3XU8";
-
     /**
      * Inicializa la información de la película en la ventana de detalles.
      * 
-     * @param peli La película seleccionada.
+     * @param movieId El ID de la película seleccionada.
      */
-    public void initData(Pelicula peli) {
-        String imageUrl = "https://image.tmdb.org/t/p/w500" + peli.getPoster_path();
-
+    public void initData(String movieId) {
         OkHttpClient client = new OkHttpClient();
-        String apiUrl = "https://api.themoviedb.org/3/search/movie";
-        String queryParams = "?query=Wonka&include_adult=false&language=es-ES&page=1";
+        String apiUrl = "https://api.themoviedb.org/3/movie/" + movieId; 
+        String queryParams = "?language=es-ES";
         String fullUrl = apiUrl + queryParams;
 
         Request request = new Request.Builder()
@@ -138,20 +103,15 @@ public class DetallesController {
             System.out.println("Response Body: " + responseBody);
 
             Gson gson = new Gson();
-            RespuestaApi respuestaApi = gson.fromJson(responseBody, RespuestaApi.class);
+            Pelicula peliculaDetalles = gson.fromJson(responseBody, Pelicula.class);
 
-            if (respuestaApi != null && respuestaApi.getResults() != null && respuestaApi.getResults().length > 0) {
-                Pelicula peliculaDetalles = respuestaApi.getResults()[0];
-
-                // Mostrar información en la interfaz gráfica
-                titulo.setText("Título: " + peliculaDetalles.getTitle());
-                cartel.setImage(new Image("https://image.tmdb.org/t/p/w500" + peliculaDetalles.getPoster_path()));
-                detallesPelicula.setText("Detalles de la película: " + peliculaDetalles.getOverview());
-            } else {
-                System.out.println("La respuesta de la API no contiene resultados válidos.");
-            }
-        } catch (Exception e) {
+            // Mostrar información en la interfaz gráfica
+            titulo.setText("Título: " + peliculaDetalles.getTitle());
+            cartel.setImage(new Image("https://image.tmdb.org/t/p/w500" + peliculaDetalles.getPoster_path()));
+            detallesPelicula.setText("Detalles de la película: " + peliculaDetalles.getOverview());
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 }

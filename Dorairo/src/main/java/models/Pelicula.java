@@ -13,6 +13,19 @@ private String title;
 private String overview;
 private String release_date;
 private String poster_path;
+private String id;
+
+
+
+public String getId() {
+	return id;
+}
+
+
+public void setId(String id) {
+	this.id = id;
+}
+
 
 /**
 * Obtener el resumen de la película

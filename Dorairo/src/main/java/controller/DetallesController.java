@@ -106,9 +106,9 @@ public class DetallesController {
             Pelicula peliculaDetalles = gson.fromJson(responseBody, Pelicula.class);
 
             // Mostrar información en la interfaz gráfica
-            titulo.setText("Título: " + peliculaDetalles.getTitle());
+            titulo.setText(peliculaDetalles.getTitle());
             cartel.setImage(new Image("https://image.tmdb.org/t/p/w500" + peliculaDetalles.getPoster_path()));
-            detallesPelicula.setText("Detalles de la película: " + peliculaDetalles.getOverview());
+            detallesPelicula.setText("Descripción: " + peliculaDetalles.getOverview());
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,21 +1,88 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.InicioController">
 	<children>
-		<ScrollPane layoutY="150.0" prefHeight="832.0" prefWidth="1512.0" styleClass="fondo">
-			<content>
-				<AnchorPane fx:id="paneFondo" minHeight="0.0" minWidth="0.0" prefHeight="832.0" prefWidth="1512.0" styleClass="fondo" />
-			</content>
-		</ScrollPane>
+      <ScrollPane layoutY="150.0" prefHeight="834.0" prefWidth="1512.0" styleClass="fondo">
+         <content>
+            <VBox prefHeight="972.0" prefWidth="1513.0" styleClass="fondo">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="NOVEDADES">
+                     <font>
+                        <Font name="System Bold" size="19.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="20.0" top="20.0" />
+                     </VBox.margin>
+                  </Text>
+                  <ScrollPane prefHeight="242.0" prefWidth="1513.0" styleClass="fondo">
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                     <content>
+                        <HBox fx:id="novedades" prefHeight="228.0" prefWidth="1830.0" styleClass="fondo">
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                        </HBox>
+                     </content>
+                  </ScrollPane>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="TOP 10">
+                     <font>
+                        <Font name="System Bold" size="19.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="20.0" top="20.0" />
+                     </VBox.margin>
+                  </Text>
+                  <ScrollPane prefHeight="245.0" prefWidth="1042.0" styleClass="fondo">
+                     <content>
+                        <HBox fx:id="top5" prefHeight="230.0" prefWidth="1512.0" styleClass="fondo">
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                        </HBox>
+                     </content>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </ScrollPane>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="MI LISTA">
+                     <VBox.margin>
+                        <Insets left="20.0" top="20.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="System Bold" size="19.0" />
+                     </font>
+                  </Text>
+                  <ScrollPane prefHeight="244.0" prefWidth="1513.0" styleClass="fondo">
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                     <content>
+                        <HBox fx:id="miLista" prefHeight="258.0" prefWidth="1512.0" styleClass="fondo">
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                        </HBox>
+                     </content>
+                  </ScrollPane>
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
 		<Pane fx:id="paneCabecera" prefHeight="150.0" prefWidth="1512.0">
 			<children>
 				<StackPane fx:id="stackPaneLogoCabecera" layoutX="50.0" layoutY="14.0" prefHeight="125.0" prefWidth="125.0">

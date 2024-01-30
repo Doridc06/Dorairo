@@ -20,6 +20,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import models.Pelicula;
 import models.RespuestaApi;
+import models.Serie;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -177,6 +178,13 @@ public class SeriesController {
 		// Construir la URL del póster de la película
 		Image image = new Image(imageUrl);
 		imageView.setImage(image);
+		
+		/*
+		// Almacenar el ID de la película en el userData del ImageView
+			imageView.setUserData(String.valueOf(serie.getId()));*/
+		
+		// Configurar el evento de clic para llamar a detallesClicked
+		imageView.setOnMouseClicked(event -> detallesClicked(imageView));
 
 		return imageView;
 	}
@@ -225,5 +233,34 @@ public class SeriesController {
   		scene = imagenLogoCabecera.getScene();
   		stage = (Stage) scene.getWindow();
   	}
+  	
+  	
+  	@FXML
+	void detallesClicked(ImageView clickedImageView) {
+		// Obtener el identificador de la serie desde el ImageView
+		String serieId = getSerieIdFromImageView(clickedImageView);
+
+		// Abrir la ventana de detalles
+		abrirVentanaDetalles(serieId);
+	}
+
+	private void abrirVentanaDetalles(String serieId) {
+		setSceneAndStage();
+		gestorVentanas.muestraDetalles(stage,serieId);
+	}
+
+	private String getSerieIdFromImageView(ImageView imageView) {
+		// Obtén el ID de la serie almacenado en el userData del ImageView
+		Object userData = imageView.getUserData();
+
+		if (userData instanceof String) {
+			return (String) userData;
+		} else {
+			// Manejar la situación donde no hay un ID almacenado
+			return "";
+		}
+	}
+
+  	
 
 }

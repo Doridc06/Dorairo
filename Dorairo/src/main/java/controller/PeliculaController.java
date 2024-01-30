@@ -221,28 +221,8 @@ public class PeliculaController {
 	}
 
 	private void abrirVentanaDetalles(String movieId) {
-		try {
-			// Pasar la información de la película a la ventana de detalles
-			FXMLLoader loader = new FXMLLoader(getClass().getResource(Constants.URL_DETALLES_FXML));
-			Parent root = loader.load();
-
-			// Obtener el controlador de la ventana de detalles
-			DetallesController detallesController = loader.getController();
-
-			// Inicializar los datos en el controlador de detalles
-			detallesController.initData(movieId);
-
-			// Mostrar la ventana de detalles
-			setSceneAndStage();
-			Stage detallesStage = new Stage();
-			detallesStage.setTitle("Detalles");
-			detallesStage.setScene(new Scene(root));
-			detallesStage.show();
-
-		} catch (IOException e) {
-			// Manejar excepciones
-			e.printStackTrace();
-		}
+		setSceneAndStage();
+		gestorVentanas.muestraDetalles(stage, movieId);
 	}
 
 	private String getMovieIdFromImageView(ImageView imageView) {

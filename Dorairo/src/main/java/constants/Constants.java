@@ -37,7 +37,7 @@ public class Constants {
 	// Perfiles predeterminados
 
 	/** Perfil del usuario Jairo */
-	public static final Perfil PERFIL_JAIRO = new Perfil("Jairopo", "Jairo", "jairo@ejemplo.com", "123", new Date());
+	public static final Perfil PERFIL_JAIRO = new Perfil(".", "Jairo", "jairo@ejemplo.com", ".", new Date());
 
 	/** Perfil del usuario Doriana */
 	public static final Perfil PERFIL_DORIANA = new Perfil("Doridc", "Doriana", "doriana@ejemplo.com", "456", new Date());

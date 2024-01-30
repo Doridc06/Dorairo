@@ -104,7 +104,7 @@ public class GestorVentanas {
 		}
 	}
 
-	public void muestraDetalles(Stage stageAnterior, String movieId) {
+	public void muestraDetalles(Stage stageAnterior, String id, String tipo) {
 		try {
 			
 			// Cierra el stage anterior
@@ -119,7 +119,7 @@ public class GestorVentanas {
 			DetallesController detallesController = loader.getController();
 
 			// Inicializar los datos en el controlador de detalles
-			detallesController.initData(movieId);
+			detallesController.initData(id,tipo);
 
 			// Asigna la ventana al nuevo stage
 			Stage stage = new Stage();

@@ -10,7 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import models.Pelicula;
+import models.Datos;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -83,11 +83,11 @@ public class DetallesController {
     /**
      * Inicializa la información de la película en la ventana de detalles.
      * 
-     * @param movieId El ID de la película seleccionada.
+     * @param id El ID de la película seleccionada.
      */
-    public void initData(String movieId) {
+    public void initData(String id, String tipo) {
         OkHttpClient client = new OkHttpClient();
-        String apiUrl = "https://api.themoviedb.org/3/movie/" + movieId; 
+        String apiUrl = "https://api.themoviedb.org/3/" + tipo + "/" + id; 
         String queryParams = "?language=es-ES";
         String fullUrl = apiUrl + queryParams;
 
@@ -100,10 +100,10 @@ public class DetallesController {
 
         try (Response response = client.newCall(request).execute()) {
             String responseBody = response.body().string();
-            System.out.println("Response Body: " + responseBody);
+        //    System.out.println("Response Body: " + responseBody);
 
             Gson gson = new Gson();
-            Pelicula peliculaDetalles = gson.fromJson(responseBody, Pelicula.class);
+            Datos peliculaDetalles = gson.fromJson(responseBody, Datos.class);
 
             // Mostrar información en la interfaz gráfica
             titulo.setText(peliculaDetalles.getTitle());

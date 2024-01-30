@@ -18,9 +18,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import models.Pelicula;
+import models.Datos;
 import models.RespuestaApi;
-import models.Serie;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -99,7 +98,51 @@ public class SeriesController {
   	
   	private static final String API_KEY = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlYjc0NTA5ZjRiZDBlODJlMTFlYzA2YWM1MDRhMGRlMCIsInN1YiI6IjY1Mzc3ZmRmZjQ5NWVlMDBmZjY1YTEyOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ehIu08LoiMRTccPoD4AfADXOpQPlqNAKUMvGgwY3XU8";
 
+  	 @FXML
+   	void inicioClicked(MouseEvent event) {
+   		setSceneAndStage();
+   		gestorVentanas.muestraVentana(stage, Constants.URL_INICIO_FXML, "Inicio");
+   	}
 
+   	@FXML
+   	void peliculasClicked(MouseEvent event) {
+   		setSceneAndStage();
+   		gestorVentanas.muestraVentana(stage, Constants.URL_PELICULA_FXML, "Pelicula");
+   	}
+
+   	@FXML
+   	void seriesClicked(MouseEvent event) {
+   		setSceneAndStage();
+   		gestorVentanas.muestraVentana(stage, Constants.URL_SERIES_FXML, "Series");
+   	}
+
+   	@FXML
+   	void buscadorClicked(MouseEvent event) {
+   		setSceneAndStage();
+   		gestorVentanas.muestraVentana(stage, Constants.URL_BUSCADOR_FXML, "Buscador");
+   	}
+
+   	@FXML
+   	void perfilClicked(MouseEvent event) {
+   		setSceneAndStage();
+   		gestorVentanas.muestraVentana(stage, Constants.URL_PERFIL_FXML, "Perfil");
+   	}
+   	
+ 	@FXML
+ 	void detallesClicked(MouseEvent event) {
+ 		setSceneAndStage();
+ 		gestorVentanas.muestraVentana(stage, Constants.URL_DETALLES_FXML, "Detalles");
+ 	}
+ 	
+ 	/**
+  	 * Asigna los valores correspondientes del stage y el scene
+  	 * 
+  	 */
+  	public void setSceneAndStage() {
+  		scene = imagenLogoCabecera.getScene();
+  		stage = (Stage) scene.getWindow();
+  	}
+  	
     @FXML
     void initialize() {
    // Inicializamos el Gestor de ventanas
@@ -146,12 +189,12 @@ public class SeriesController {
 		if (respApi.getResults() != null && respApi.getResults().length > 0) {
 			// Iterar sobre las películas y agregar imágenes al HBox
 			int contador = 0;
-			for (Pelicula pelicula : respApi.getResults()) {
-				System.out.println("Adding image: " + pelicula.getPoster_path());
+			for (Datos datos : respApi.getResults()) {
+			//	System.out.println("Adding image: " + serie.getPoster_path());
 				if (contador < 12) { // Limitar a 10 películas
 					ImageView imageView = null;
-					if (pelicula.getPoster_path() != null) {
-						imageView = getImageViewFromUrl("https://image.tmdb.org/t/p/w500" + pelicula.getPoster_path());
+					if (datos.getPoster_path() != null) {
+						imageView = getImageViewFromUrl("https://image.tmdb.org/t/p/w500" + datos.getPoster_path(), datos);
 					}
 					// Verificar si imageView no es nulo antes de agregarlo al HBox
 					if (imageView != null) {
@@ -169,7 +212,7 @@ public class SeriesController {
 		targetHBox.setSpacing(50.0);
 	}
     
-    private ImageView getImageViewFromUrl(String imageUrl) {
+    private ImageView getImageViewFromUrl(String imageUrl, Datos datos) {
 		ImageView imageView = new ImageView();
 		imageView.setFitHeight(250.0);
 		imageView.setFitWidth(290.0);
@@ -179,9 +222,9 @@ public class SeriesController {
 		Image image = new Image(imageUrl);
 		imageView.setImage(image);
 		
-		/*
+		
 		// Almacenar el ID de la película en el userData del ImageView
-			imageView.setUserData(String.valueOf(serie.getId()));*/
+		imageView.setUserData(String.valueOf(datos.getId()));
 		
 		// Configurar el evento de clic para llamar a detallesClicked
 		imageView.setOnMouseClicked(event -> detallesClicked(imageView));
@@ -189,51 +232,6 @@ public class SeriesController {
 		return imageView;
 	}
     
-    @FXML
-  	void inicioClicked(MouseEvent event) {
-  		setSceneAndStage();
-  		gestorVentanas.muestraVentana(stage, Constants.URL_INICIO_FXML, "Inicio");
-  	}
-
-  	@FXML
-  	void peliculasClicked(MouseEvent event) {
-  		setSceneAndStage();
-  		gestorVentanas.muestraVentana(stage, Constants.URL_PELICULA_FXML, "Pelicula");
-  	}
-
-  	@FXML
-  	void seriesClicked(MouseEvent event) {
-  		setSceneAndStage();
-  		gestorVentanas.muestraVentana(stage, Constants.URL_SERIES_FXML, "Series");
-  	}
-
-  	@FXML
-  	void buscadorClicked(MouseEvent event) {
-  		setSceneAndStage();
-  		gestorVentanas.muestraVentana(stage, Constants.URL_BUSCADOR_FXML, "Buscador");
-  	}
-
-  	@FXML
-  	void perfilClicked(MouseEvent event) {
-  		setSceneAndStage();
-  		gestorVentanas.muestraVentana(stage, Constants.URL_PERFIL_FXML, "Perfil");
-  	}
-  	
-	@FXML
-	void detallesClicked(MouseEvent event) {
-		setSceneAndStage();
-		gestorVentanas.muestraVentana(stage, Constants.URL_DETALLES_FXML, "Detalles");
-	}
-
-  	/**
-  	 * Asigna los valores correspondientes del stage y el scene
-  	 * 
-  	 */
-  	public void setSceneAndStage() {
-  		scene = imagenLogoCabecera.getScene();
-  		stage = (Stage) scene.getWindow();
-  	}
-  	
   	
   	@FXML
 	void detallesClicked(ImageView clickedImageView) {
@@ -246,7 +244,7 @@ public class SeriesController {
 
 	private void abrirVentanaDetalles(String serieId) {
 		setSceneAndStage();
-		gestorVentanas.muestraDetalles(stage,serieId);
+		gestorVentanas.muestraDetalles(stage,serieId,"tv");
 	}
 
 	private String getSerieIdFromImageView(ImageView imageView) {

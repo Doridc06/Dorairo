@@ -14,7 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import models.Pelicula;
+import models.Datos;
 import models.RespuestaApi;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -73,6 +73,46 @@ public class PeliculaController {
 	/** Instancia del gestor de ventanas **/
 	private GestorVentanas gestorVentanas;
 
+	@FXML
+	void inicioClicked(MouseEvent event) {
+		setSceneAndStage();
+		gestorVentanas.muestraVentana(stage, Constants.URL_INICIO_FXML, "Inicio");
+	}
+
+	@FXML
+	void peliculasClicked(MouseEvent event) {
+		setSceneAndStage();
+		gestorVentanas.muestraVentana(stage, Constants.URL_PELICULA_FXML, "Pelicula");
+	}
+
+	@FXML
+	void seriesClicked(MouseEvent event) {
+		setSceneAndStage();
+		gestorVentanas.muestraVentana(stage, Constants.URL_SERIES_FXML, "Series");
+	}
+
+	@FXML
+	void buscadorClicked(MouseEvent event) {
+		setSceneAndStage();
+		gestorVentanas.muestraVentana(stage, Constants.URL_BUSCADOR_FXML, "Buscador");
+	}
+
+	@FXML
+	void perfilClicked(MouseEvent event) {
+		setSceneAndStage();
+		gestorVentanas.muestraVentana(stage, Constants.URL_PERFIL_FXML, "Perfil");
+	}
+
+	@FXML
+	void detallesClicked(ImageView clickedImageView) {
+		// Obtener el identificador de la película desde el ImageView
+		String movieId = getMovieIdFromImageView(clickedImageView);
+
+		// Abrir la ventana de detalles
+		abrirVentanaDetalles(movieId);
+	}
+	
+	
 	@FXML
 	void initialize() {
 		// Inicializamos el Gestor de ventanas
@@ -133,14 +173,14 @@ public class PeliculaController {
 		if (respApi.getResults() != null && respApi.getResults().length > 0) {
 			// Iterar sobre las películas y agregar imágenes al HBox
 			int contador = 0;
-			for (Pelicula pelicula : respApi.getResults()) {
+			for (Datos datos : respApi.getResults()) {
 				if (contador < 12) {
 					ImageView imageView = null;
-					if (pelicula.getPoster_path() != null) {
-						imageView = getImageViewFromPelicula(pelicula);
+					if (datos.getPoster_path() != null) {
+						imageView = getImageViewFromPelicula(datos);
 
 						// Almacena el ID de la película en el userData del ImageView
-						imageView.setUserData(String.valueOf(pelicula.getId()));
+						imageView.setUserData(String.valueOf(datos.getId()));
 					}
 
 					// Verificar si imageView no es nulo antes de agregarlo al HBox
@@ -159,21 +199,21 @@ public class PeliculaController {
 		targetHBox.setSpacing(50.0);
 	}
 
-	private ImageView getImageViewFromPelicula(Pelicula pelicula) {
+	private ImageView getImageViewFromPelicula(Datos datos) {
 		ImageView imageView = new ImageView();
 		imageView.setFitHeight(250.0);
 		imageView.setFitWidth(290.0);
 		imageView.setPreserveRatio(true);
 
 		// Construir la URL del póster de la película
-		String imageUrl = "https://image.tmdb.org/t/p/w500" + pelicula.getPoster_path();
+		String imageUrl = "https://image.tmdb.org/t/p/w500" + datos.getPoster_path();
 
 		// Configurar la imagen en el ImageView
 		Image image = new Image(imageUrl);
 		imageView.setImage(image);
 
 		// Almacenar el ID de la película en el userData del ImageView
-		imageView.setUserData(String.valueOf(pelicula.getId()));
+		imageView.setUserData(String.valueOf(datos.getId()));
 
 		// Configurar el evento de clic para llamar a detallesClicked
 		imageView.setOnMouseClicked(event -> detallesClicked(imageView));
@@ -181,49 +221,13 @@ public class PeliculaController {
 		return imageView;
 	}
 
-	@FXML
-	void inicioClicked(MouseEvent event) {
-		setSceneAndStage();
-		gestorVentanas.muestraVentana(stage, Constants.URL_INICIO_FXML, "Inicio");
-	}
-
-	@FXML
-	void peliculasClicked(MouseEvent event) {
-		setSceneAndStage();
-		gestorVentanas.muestraVentana(stage, Constants.URL_PELICULA_FXML, "Pelicula");
-	}
-
-	@FXML
-	void seriesClicked(MouseEvent event) {
-		setSceneAndStage();
-		gestorVentanas.muestraVentana(stage, Constants.URL_SERIES_FXML, "Series");
-	}
-
-	@FXML
-	void buscadorClicked(MouseEvent event) {
-		setSceneAndStage();
-		gestorVentanas.muestraVentana(stage, Constants.URL_BUSCADOR_FXML, "Buscador");
-	}
-
-	@FXML
-	void perfilClicked(MouseEvent event) {
-		setSceneAndStage();
-		gestorVentanas.muestraVentana(stage, Constants.URL_PERFIL_FXML, "Perfil");
-	}
-
-	@FXML
-	void detallesClicked(ImageView clickedImageView) {
-		// Obtener el identificador de la película desde el ImageView
-		String movieId = getMovieIdFromImageView(clickedImageView);
-
-		// Abrir la ventana de detalles
-		abrirVentanaDetalles(movieId);
-	}
+	
 
 	private void abrirVentanaDetalles(String movieId) {
 		setSceneAndStage();
-		gestorVentanas.muestraDetalles(stage, movieId);
+		gestorVentanas.muestraDetalles(stage, movieId, "movie");
 	}
+	
 
 	private String getMovieIdFromImageView(ImageView imageView) {
 		// Obtén el ID de la película almacenado en el userData del ImageView

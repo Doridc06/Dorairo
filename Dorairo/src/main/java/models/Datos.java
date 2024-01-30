@@ -6,7 +6,7 @@ package models;
 * 
 *
 */
-public class Pelicula {
+public class Datos {
 
 // Atributos de la película
 private String title;

@@ -21,6 +21,8 @@ public class Main extends Application {
 	/** Lista donde se guardan cada uno de los perfiles registrados */
 	private static List<Perfil> listaPerfiles = new ArrayList<>();
 
+	private static Perfil perfilRegsistrado = null;
+
 	/**
 	 * Método principal
 	 * 
@@ -56,6 +58,8 @@ public class Main extends Application {
 	public void iniciaLogin(Stage primaryStage) {
 		GestorVentanas gestorVentanas = new GestorVentanas();
 		gestorVentanas.muestraVentana(primaryStage, Constants.URL_LOGIN_FXML, "Dorairo");
+		// gestorVentanas.muestraVentana(primaryStage, Constants.URL_PERFIL_FXML,
+		// "Perfil");
 	}
 
 	/**
@@ -102,10 +106,25 @@ public class Main extends Application {
 		for (Perfil perfil : listaPerfiles) {
 			// Comprueba si coincide el usuario y contrasena
 			if (perfil.getUsuario().equals(usuario) && perfil.getContrasena().equals(contrasena)) {
+				setPerfilRegsistrado(perfil);
 				return true;
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * @return the perfilRegsistrado
+	 */
+	public static Perfil getPerfilRegsistrado() {
+		return perfilRegsistrado;
+	}
+
+	/**
+	 * @param perfilRegsistrado the perfilRegsistrado to set
+	 */
+	public static void setPerfilRegsistrado(Perfil perfilRegsistrado) {
+		Main.perfilRegsistrado = perfilRegsistrado;
 	}
 
 }

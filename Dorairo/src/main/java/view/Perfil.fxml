@@ -1,8 +1,176 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1">
-	<!-- TODO Add Nodes -->
+<AnchorPane prefHeight="982.0" prefWidth="1512.0" styleClass="fondo" stylesheets="@application.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PerfilController">
+   <children>
+      <Pane fx:id="paneFondoBorrosoIzquierdo" layoutX="362.0" layoutY="150.0" prefHeight="832.0" prefWidth="10.0" />
+      <ImageView fx:id="imagenFondoPerfil" fitHeight="832.0" fitWidth="1512.0" layoutY="150.0" pickOnBounds="true" />
+      <Pane fx:id="paneFondoDatosPerfil" layoutX="362.0" layoutY="150.0" prefHeight="832.0" prefWidth="788.0">
+         <children>
+            <StackPane fx:id="paneImagenPerfil" layoutX="70.0" layoutY="80.0" prefHeight="220.0" prefWidth="220.0">
+               <children>
+                  <ImageView fx:id="imagenPerfil" fitHeight="190.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </StackPane>
+            <Label fx:id="lblNombre" layoutX="335.0" layoutY="80.0" prefHeight="34.0" prefWidth="400.0" text="JAIRO ANDRADES BUENO">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Label>
+            <Label layoutX="335.0" layoutY="140.0" prefHeight="34.0" prefWidth="60.0" text="User: ">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblUser" layoutX="400.0" layoutY="140.0" prefHeight="34.0" prefWidth="335.0" text="jairopo">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="335.0" layoutY="200.0" prefHeight="34.0" prefWidth="68.0" text="Correo:">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblCorreo" layoutX="410.0" layoutY="200.0" prefHeight="34.0" prefWidth="335.0" text="jairo_alumno@ejemplo.com">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="335.0" layoutY="260.0" prefHeight="34.0" prefWidth="150.0" text="Miembro desde:">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="70.0" layoutY="350.0" prefHeight="34.0" prefWidth="127.0" text="Estadísticas">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Label>
+            <Separator layoutX="240.0" layoutY="367.0" prefHeight="5.0" prefWidth="500.0" />
+            <Label layoutX="70.0" layoutY="510.0" prefHeight="34.0" prefWidth="150.0" text="Configuración">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Label>
+            <Separator layoutX="240.0" layoutY="527.0" prefHeight="5.0" prefWidth="500.0" />
+            <Label fx:id="lblMiembro" layoutX="490.0" layoutY="260.0" prefHeight="34.0" prefWidth="225.0" text=" octubre de 2023">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="120.0" layoutY="400.0" prefHeight="34.0" prefWidth="237.0" text="Número de películas vistas">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="461.0" layoutY="400.0" prefHeight="34.0" prefWidth="214.0" text="Número de series vistas">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblNumeroSeries" alignment="CENTER" contentDisplay="CENTER" layoutX="525.0" layoutY="439.0" prefHeight="34.0" prefWidth="86.0" text="0" textAlignment="CENTER">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblNumeroPeliculas" alignment="CENTER" contentDisplay="CENTER" layoutX="196.0" layoutY="441.0" prefHeight="34.0" prefWidth="86.0" text="0" textAlignment="CENTER">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="134.0" layoutY="580.0" onMousePressed="#modificarContraseña" prefHeight="34.0" prefWidth="210.0" text="• Modificar contraseña">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="139.0" layoutY="640.0" onMousePressed="#modificarNombre" prefHeight="34.0" prefWidth="210.0" text="• Modificar nombre">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="139.0" layoutY="700.0" onMousePressed="#cerrarSesion" prefHeight="34.0" prefWidth="210.0" text="• Cerrar Sesión">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="462.0" layoutY="580.0" onMousePressed="#cambiarFotoPerfil" prefHeight="34.0" prefWidth="212.0" text="• Cambiar foto de perfil">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="462.0" layoutY="640.0" onMousePressed="#eliminarDatos" prefHeight="34.0" prefWidth="251.0" text="• Eliminar todos los datos">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="462.0" layoutY="700.0" onMousePressed="#eliminarCuenta" prefHeight="34.0" prefWidth="210.0" text="• Eliminar cuenta">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="paneCabecera" prefHeight="150.0" prefWidth="1512.0">
+         <children>
+            <StackPane fx:id="stackPaneLogoCabecera" layoutX="50.0" layoutY="14.0" prefHeight="125.0" prefWidth="125.0">
+               <children>
+                  <ImageView fx:id="imagenLogoCabecera" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </StackPane>
+            <StackPane fx:id="stackPaneInicioCabecera" layoutX="215.0" layoutY="53.0" onMouseClicked="#inicioClicked" prefHeight="44.0" prefWidth="200.0" styleClass="cabeceraBotones">
+               <children>
+                  <Label text="Inicio">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </Label>
+               </children>
+            </StackPane>
+            <StackPane layoutX="675.0" layoutY="53.0" onMouseClicked="#seriesClicked" prefHeight="44.0" prefWidth="200.0" styleClass="cabeceraBotones">
+               <children>
+                  <Label text="Series">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </Label>
+               </children>
+            </StackPane>
+            <StackPane layoutX="905.0" layoutY="53.0" onMouseClicked="#perfilClicked" prefHeight="44.0" prefWidth="200.0" styleClass="cabeceraBotones">
+               <children>
+                  <Label text="Perfil">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </Label>
+               </children>
+            </StackPane>
+            <StackPane layoutX="1225.0" layoutY="53.0" onMouseClicked="#buscadorClicked" prefHeight="44.0" prefWidth="250.0" styleClass="cabeceraBotones">
+               <children>
+                  <Label text="Buscador">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </Label>
+               </children>
+            </StackPane>
+            <StackPane fx:id="stackPanePeliculasCabecera" layoutX="442.0" layoutY="53.0" onMouseClicked="#peliculasClicked" prefHeight="44.0" prefWidth="200.0" styleClass="cabeceraBotones">
+               <children>
+                  <Label text="Películas">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </Label>
+               </children>
+            </StackPane>
+         </children>
+      </Pane>
+   </children>
 </AnchorPane>
-

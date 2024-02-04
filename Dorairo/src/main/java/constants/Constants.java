@@ -34,6 +34,9 @@ public class Constants {
 	/** Ruta a la imagen de la portada */
 	public static final String URL_PORTADA = "/application/images/portada.png";
 	
+	/** Ruta a la imagen de la foto de perfl por defecto */
+	public static final String URL_FOTO_PERFIL_DEFAULT = "/application/images/fotoPerfilDefault.png";
+
 	// Perfiles predeterminados
 
 	/** Perfil del usuario Jairo */
@@ -70,5 +73,6 @@ public class Constants {
 	
 	/** Ruta al documento fxml de Detalles */
 	public static final String URL_DETALLES_FXML = "/view/Detalles.fxml";
+
 
 }

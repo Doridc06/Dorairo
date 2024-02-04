@@ -31,7 +31,7 @@
 #paneCabecera {
 	-fx-background-color: #6CACF8;
 	-fx-effect: dropshadow(gaussian , rgba(0.0,0.0,0.0,0.3) , 10.0,0.0,3.0,3.0);
-	}
+}
 
 /* Panel del logo de la cabecera */
 #stackPaneLogoCabecera {
@@ -46,4 +46,24 @@
 	-fx-background-color: #F473D8;
 	-fx-background-radius: 20.0;
 	-fx-effect: dropshadow(gaussian , rgba(0.0,0.0,0.0,0.3) , 10.0,0.0,3.0,3.0);
+}
+
+/* Panel de fondo de los datos del perfil */
+#paneFondoDatosPerfil {
+	-fx-background-color: white; 
+	-fx-effect: dropshadow(gaussian, rgba(0.0, 0.0, 0.0, 0.3), 10.0, 0.0, 3.0, 0.0);
+}
+
+/* Panel de fondo de los datos del perfil con sombra en el lado izquierdo */
+#paneFondoBorrosoIzquierdo {
+	-fx-background-color: white; 
+	-fx-effect: dropshadow(gaussian, rgba(0.0, 0.0, 0.0, 0.3), 10.0, 0.0, -3.0, 0.0);
+} 
+
+/* Panel de foto de perfil */
+#paneImagenPerfil {
+	-fx-padding: 5.0;
+	-fx-background-color: #6CACF8;
+	-fx-background-radius: 5.0;
+	-fx-effect: dropshadow(gaussian , rgba(0.0,0.0,0.0,0.3) , 10.0,0.2,3.0,3.0);
 }

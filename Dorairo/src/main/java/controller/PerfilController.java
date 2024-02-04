@@ -8,8 +8,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import utilities.GestorVentanas;
 
@@ -75,6 +73,10 @@ public class PerfilController {
 		setDatosPerfil();
 	}
 
+	/**
+	 * Modifica los elementos de la pantalla para que muestren los datos del perfil
+	 * registrado
+	 */
 	private void setDatosPerfil() {
 		lblNombre.setText(Main.getPerfilRegsistrado().getNombre().toUpperCase());
 		lblUser.setText(Main.getPerfilRegsistrado().getUsuario());

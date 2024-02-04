@@ -1,5 +1,11 @@
+/* Clase de estilo para los fondos */
 .fondo {
 	-fx-background-color:  #C0F4F8;
+}
+
+/* Clase de estilo para la sombra derecha */
+.sombraDerecha {
+	-fx-effect: dropshadow(gaussian , rgba(0.0,0.0,0.0,0.3) , 10.0,0.0,3.0,3.0);
 }
 
 /* Boton de registro en el Registro */

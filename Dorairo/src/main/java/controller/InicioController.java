@@ -69,7 +69,7 @@ public class InicioController {
 
 	/** Instancia del gestor de ventanas **/
 	private GestorVentanas gestorVentanas;
-	
+
 	private static final String API_KEY = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlYjc0NTA5ZjRiZDBlODJlMTFlYzA2YWM1MDRhMGRlMCIsInN1YiI6IjY1Mzc3ZmRmZjQ5NWVlMDBmZjY1YTEyOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ehIu08LoiMRTccPoD4AfADXOpQPlqNAKUMvGgwY3XU8";
 
 	@FXML
@@ -84,12 +84,10 @@ public class InicioController {
 			OkHttpClient client = new OkHttpClient();
 
 			// Llamada a la API para películas novedades
-			handleMovieApiCall(client, "https://api.themoviedb.org/3/movie/popular?language=es-ES&page=1",
-					novedades);
+			handleMovieApiCall(client, "https://api.themoviedb.org/3/movie/popular?language=es-ES&page=1", novedades);
 
 			// Llamada a la API para top 5
-			handleMovieApiCall(client, "https://api.themoviedb.org/3/trending/all/day?language=es-ES",
-					top5);
+			handleMovieApiCall(client, "https://api.themoviedb.org/3/trending/all/day?language=es-ES", top5);
 
 		} catch (IOException e) {
 			// Manejar excepciones
@@ -141,13 +139,15 @@ public class InicioController {
 
 	private ImageView getImageViewFromUrl(String imageUrl) {
 		ImageView imageView = new ImageView();
-		imageView.setFitHeight(250.0);
-		imageView.setFitWidth(290.0);
+		imageView.setFitHeight(230.0);
 		imageView.setPreserveRatio(true);
 
 		// Construir la URL del póster de la película
 		Image image = new Image(imageUrl);
+		imageView.getStyleClass().add("sombraDerecha");
 		imageView.setImage(image);
+
+		System.out.println("W:" + imageView.getFitWidth() + "; H:" + imageView.getFitHeight());
 
 		return imageView;
 	}

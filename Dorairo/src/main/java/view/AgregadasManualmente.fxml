@@ -3,6 +3,7 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -109,6 +110,22 @@
                         <Font size="15.0" />
                      </font>
                   </TextField>
+                  <Label layoutX="70.0" layoutY="860.0" prefHeight="36.0" prefWidth="94.0" text="Director/es">
+                     <font>
+                        <Font name="System Bold" size="25.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtDirectores" layoutX="70.0" layoutY="910.0" prefHeight="34.0" prefWidth="660.0">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="70.0" layoutY="970.0" prefHeight="36.0" prefWidth="220.0" text="Descripción">
+                     <font>
+                        <Font name="System Bold" size="25.0" />
+                     </font>
+                  </Label>
+                  <TextArea fx:id="txtDescripcion" layoutX="70.0" layoutY="1020.0" prefHeight="100.0" prefWidth="660.0" />
                </children>
             </AnchorPane>
          </content>

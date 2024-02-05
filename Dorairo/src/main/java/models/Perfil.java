@@ -1,6 +1,6 @@
 package models;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * Clase que gestiona el perfil del usuario
@@ -15,7 +15,7 @@ public class Perfil {
 	private String correo;
 	private String contrasena;
 	private String fotoPerfil;
-	private Date fecha;
+	private LocalDate fecha;
 
 	/**
 	 * Constructor para generar un nuevo perfil de usuario
@@ -26,7 +26,7 @@ public class Perfil {
 	 * @param contrasena
 	 * @param fecha
 	 */
-	public Perfil(String usuario, String nombre, String correo, String contrasena, Date fecha) {
+	public Perfil(String usuario, String nombre, String correo, String contrasena, LocalDate fecha) {
 		super();
 		this.usuario = usuario;
 		this.nombre = nombre;
@@ -75,12 +75,16 @@ public class Perfil {
 		this.fotoPerfil = fotoPerfil;
 	}
 
-	public Date getFecha() {
+	public LocalDate getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(Date fecha) {
+	public void setFecha(LocalDate fecha) {
 		this.fecha = fecha;
+	}
+
+	public String getFechaString() {
+		return fecha.getDayOfMonth() + " de " + fecha.getMonthValue() + " de " + fecha.getYear();
 	}
 
 }

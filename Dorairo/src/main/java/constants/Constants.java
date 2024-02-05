@@ -1,7 +1,6 @@
 package constants;
 
-import java.util.Date;
-
+import java.time.LocalDate;
 import models.Perfil;
 
 /**
@@ -40,14 +39,18 @@ public class Constants {
 	/** Ruta a la imagen de fondo de la ventana del perfil */
 	public static final String URL_FOTO_FONDO_PERFIL = "/application/images/fondoPerfil.png";
 
+	/** Ruta a la imagen de subir foto */
+	public static final String URL_FOTO_SUBIR_FOTO = "/application/images/subirFoto.png";
+
 	// Perfiles predeterminados
 
 	/** Perfil del usuario Jairo */
-	public static final Perfil PERFIL_JAIRO = new Perfil(".", "Jairo", "jairo@ejemplo.com", ".", new Date());
+	public static final Perfil PERFIL_JAIRO = new Perfil(".", "Jairo", "jairo@ejemplo.com", ".",
+			LocalDate.of(2004, 02, 25));
 
 	/** Perfil del usuario Doriana */
 	public static final Perfil PERFIL_DORIANA = new Perfil("Doridc", "Doriana", "doriana@ejemplo.com", "456",
-			new Date());
+			LocalDate.of(1997, 12, 06));
 
 	// Rutas a los Fxml de las ventanas
 

@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="982.0" prefWidth="1512.0" styleClass="fondo" stylesheets="@application.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="982.0" prefWidth="1512.0" styleClass="fondo" stylesheets="@application.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AgregadasManualmenteController">
    <children>
       <Pane fx:id="paneFondoBorrosoIzquierdo" layoutX="362.0" layoutY="150.0" prefHeight="832.0" prefWidth="10.0" />
       <ScrollPane fx:id="paneFondoDatosPerfil" hbarPolicy="NEVER" layoutX="362.0" layoutY="150.0" pannable="true" prefHeight="832.0" prefWidth="788.0" styleClass="fondo" vbarPolicy="NEVER">
@@ -21,7 +21,7 @@
                <children>
                   <StackPane fx:id="paneImagenPerfil" layoutX="70.0" layoutY="80.0" prefHeight="310.0" prefWidth="230.0">
                      <children>
-                        <ImageView fx:id="imagenPerfil" fitHeight="300.0" fitWidth="230.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="imagenCartel" fitHeight="300.0" fitWidth="230.0" pickOnBounds="true" preserveRatio="true" />
                      </children>
                   </StackPane>
                   <Label layoutX="350.0" layoutY="80.0" prefHeight="36.0" prefWidth="68.0" text="Tipo">
@@ -29,7 +29,7 @@
                         <Font name="System Bold" size="25.0" />
                      </font>
                   </Label>
-                  <ChoiceBox fx:id="choiceTipo" layoutX="350.0" layoutY="130.0" prefHeight="34.0" prefWidth="380.0" />
+                  <ChoiceBox fx:id="choiceTipo" layoutX="350.0" layoutY="130.0" onMousePressed="#compruebaTipo" prefHeight="34.0" prefWidth="380.0" />
                   <Label layoutX="350.0" layoutY="190.0" prefHeight="36.0" prefWidth="101.0" text="Título">
                      <font>
                         <Font name="System Bold" size="25.0" />
@@ -85,7 +85,7 @@
                         <Font name="System Bold" size="25.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtGuardado1" layoutX="350.0" layoutY="580.0" prefHeight="34.0" prefWidth="380.0">
+                  <TextField fx:id="txtValoracionPersonal" layoutX="350.0" layoutY="580.0" prefHeight="34.0" prefWidth="380.0">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -137,7 +137,7 @@
                         <Font name="System Bold" size="25.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtTemporadas" layoutX="138.0" layoutY="1370.0" prefHeight="34.0" prefWidth="150.0">
+                  <TextField fx:id="txtTemporadas" disable="true" layoutX="138.0" layoutY="1370.0" prefHeight="34.0" prefWidth="150.0">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -147,16 +147,31 @@
                         <Font name="System Bold" size="25.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtEpisodios" layoutX="500.0" layoutY="1370.0" prefHeight="34.0" prefWidth="150.0">
+                  <TextField fx:id="txtEpisodios" disable="true" layoutX="500.0" layoutY="1370.0" prefHeight="34.0" prefWidth="150.0">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </TextField>
-                  <Button contentDisplay="CENTER" layoutX="294.0" layoutY="1450.0" minHeight="50.0" mnemonicParsing="false" prefWidth="200.0" text="Guardar" textAlignment="CENTER">
+                  <Button contentDisplay="CENTER" layoutX="294.0" layoutY="1450.0" minHeight="50.0" mnemonicParsing="false" onAction="#guardarPressed" prefWidth="200.0" text="Guardar" textAlignment="CENTER">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Button>
+                  <Label layoutX="170.0" layoutY="640.0" prefHeight="36.0" prefWidth="147.0" text="(Separar por comas)">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="220.0" layoutY="860.0" prefHeight="36.0" prefWidth="147.0" text="(Separar por comas)">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="180.0" layoutY="750.0" prefHeight="36.0" prefWidth="147.0" text="(Separar por comas)">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
          </content>

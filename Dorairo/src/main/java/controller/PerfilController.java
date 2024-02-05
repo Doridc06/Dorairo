@@ -81,7 +81,7 @@ public class PerfilController {
 		lblNombre.setText(Main.getPerfilRegsistrado().getNombre().toUpperCase());
 		lblUser.setText(Main.getPerfilRegsistrado().getUsuario());
 		lblCorreo.setText(Main.getPerfilRegsistrado().getCorreo());
-		lblMiembro.setText("REVISAR");
+		lblMiembro.setText(Main.getPerfilRegsistrado().getFechaString());
 	}
 
 	@FXML

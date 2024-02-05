@@ -1,6 +1,6 @@
 package controller;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import application.Main;
 import constants.Constants;
@@ -55,7 +55,7 @@ public class RegistroController {
 		if (camposLlenos(usuario, correo, nombre, contrasena, repeticionContrasena)
 				&& compruebaContrasenas(contrasena, repeticionContrasena) && !Main.isPerfil(usuario, correo)) {
 			// Crea el nuevo perfil
-			Main.anadirNuevoPerfil(new Perfil(usuario, nombre, correo, repeticionContrasena, new Date()));
+			Main.anadirNuevoPerfil(new Perfil(usuario, nombre, correo, repeticionContrasena, LocalDate.now()));
 
 			// Cierra la ventana de registro
 			Stage stage = (Stage) btnRegistrarse.getScene().getWindow();

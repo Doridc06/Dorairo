@@ -65,8 +65,8 @@ public class PerfilController {
 		// Establece la imagen por defecto del perfil
 		imagen = new Image(getClass().getResourceAsStream(Constants.URL_FOTO_PERFIL_DEFAULT), 190, 190, false, true);
 		imagenPerfil.setImage(imagen);
-		// Establece la imagen por de fondo
-		imagen = new Image(getClass().getResourceAsStream(Constants.URL_PORTADA), 1512, 832, false, true);
+		// Establece la imagen de fondo
+		imagen = new Image(getClass().getResourceAsStream(Constants.URL_FOTO_FONDO_PERFIL));
 		imagenFondoPerfil.setImage(imagen);
 
 		// Cambiar los datos del perfil

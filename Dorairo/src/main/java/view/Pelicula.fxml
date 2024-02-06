@@ -16,12 +16,12 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="982.0" prefWidth="1512.0" styleClass="fondo" stylesheets="@application.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PeliculaController">
+<AnchorPane prefHeight="982.0" prefWidth="1512.0" styleClass="fondo" stylesheets="@application.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PeliculaController">
 	<children>
-		<ScrollPane layoutY="151.0" prefHeight="982.0" prefWidth="1512.0" styleClass="fondo">
+		<ScrollPane hbarPolicy="NEVER" layoutY="151.0" pannable="true" prefHeight="982.0" prefWidth="1512.0" styleClass="fondo" vbarPolicy="NEVER">
 
 			<content>
-				<VBox prefHeight="1354.0" prefWidth="1513.0" styleClass="fondo">
+				<VBox prefHeight="1406.0" prefWidth="1513.0" styleClass="fondo">
 					<children>
 						<Pane prefHeight="89.0" prefWidth="1513.0" style="-fx-background-color: pink;">
 							<children>
@@ -96,13 +96,13 @@
 						
 						
 						
-						<ScrollPane prefHeight="242.0" prefWidth="1513.0" styleClass="fondo">
+						<ScrollPane hbarPolicy="NEVER" pannable="true" prefHeight="242.0" prefWidth="1513.0" styleClass="fondo" vbarPolicy="NEVER" vmax="0.0">
 							<VBox.margin>
 								<Insets top="20.0" />
 							</VBox.margin>
 							<content>
 
-								<HBox fx:id="peliculasEstrenos" prefHeight="228.0" prefWidth="1830.0" styleClass="fondo">
+								<HBox fx:id="peliculasEstrenos" prefHeight="243.0" prefWidth="1830.0" styleClass="fondo">
 
 									<padding>
 										<Insets left="20.0" />
@@ -122,9 +122,9 @@
 						
 						
 						
-						<ScrollPane prefHeight="245.0" prefWidth="1513.0" styleClass="fondo">
+						<ScrollPane hbarPolicy="NEVER" pannable="true" prefHeight="245.0" prefWidth="1513.0" styleClass="fondo" vbarPolicy="NEVER" vmax="0.0">
 							<content>
-								<HBox fx:id="peliculasPopulares" prefHeight="230.0" prefWidth="1512.0" styleClass="fondo">
+								<HBox fx:id="peliculasPopulares" prefHeight="245.0" prefWidth="1512.0" styleClass="fondo">
 
 									<padding>
 										<Insets left="20.0" />
@@ -143,7 +143,7 @@
 								<Font name="System Bold" size="19.0" />
 							</font>
 						</Text>
-						<ScrollPane prefHeight="244.0" prefWidth="1513.0" styleClass="fondo">
+						<ScrollPane hbarPolicy="NEVER" pannable="true" prefHeight="244.0" prefWidth="1513.0" styleClass="fondo" vbarPolicy="NEVER" vmax="0.0">
 							<VBox.margin>
 								<Insets top="20.0" />
 							</VBox.margin>
@@ -165,6 +165,15 @@
 								<Insets bottom="20.0" left="20.0" top="20.0" />
 							</VBox.margin>
 						</Text>
+                  <ScrollPane hbarPolicy="NEVER" pannable="true" prefHeight="244.0" prefWidth="1513.0" styleClass="fondo" vbarPolicy="NEVER" vmax="0.0">
+                     <content>
+                        <HBox prefHeight="258.0" prefWidth="1512.0" styleClass="fondo">
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                        </HBox>
+                     </content>
+                  </ScrollPane>
 					</children>
 				</VBox>
 			</content>

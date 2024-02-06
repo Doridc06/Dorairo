@@ -201,7 +201,7 @@ public class PeliculaController {
 
 	private ImageView getImageViewFromPelicula(Datos datos) {
 		ImageView imageView = new ImageView();
-		imageView.setFitHeight(250.0);
+		imageView.setFitHeight(230.0);
 		imageView.setFitWidth(290.0);
 		imageView.setPreserveRatio(true);
 
@@ -210,6 +210,7 @@ public class PeliculaController {
 
 		// Configurar la imagen en el ImageView
 		Image image = new Image(imageUrl);
+		imageView.getStyleClass().add("imagenPelicula");
 		imageView.setImage(image);
 
 		// Almacenar el ID de la película en el userData del ImageView

@@ -103,12 +103,23 @@ public class DetallesController {
         //    System.out.println("Response Body: " + responseBody);
 
             Gson gson = new Gson();
-            Datos peliculaDetalles = gson.fromJson(responseBody, Datos.class);
+            Datos datos = gson.fromJson(responseBody, Datos.class);
 
             // Mostrar información en la interfaz gráfica
-            titulo.setText(peliculaDetalles.getTitle());
-            cartel.setImage(new Image("https://image.tmdb.org/t/p/w500" + peliculaDetalles.getPoster_path()));
-            detallesPelicula.setText("Descripción: " + peliculaDetalles.getOverview());
+            titulo.setText(datos.getTitle());
+            cartel.setImage(new Image("https://image.tmdb.org/t/p/w500" + datos.getPoster_path()));
+            detallesPelicula.setText("Descripción: " + datos.getOverview() + "\n" 
+            		+ "Compañia: " + datos.getCompañia() + "\n" 
+            		+ "Géneros: " + datos.getGeneros() + "\n" 
+            		+ "Directores: " + datos.getDirectores() + "\n" 
+            		+ "Actores: " + datos.getActores() + "\n" 
+            		+ "Valoracion Usuario: " + datos.getValoracionUser() + "\n" 
+            		+ "Valoracion: " + datos.getValoracion() + "\n" 
+            		+ "Comentario Usuario: " + datos.getComentariosUser() + "\n" 
+            		+ "Fecha de Visualización: " + datos.getFechaVisualizacion() + "\n" 
+            		);
+            
+
         } catch (IOException e) {
             e.printStackTrace();
         }

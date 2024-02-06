@@ -18,7 +18,7 @@
 
 <AnchorPane prefHeight="982.0" prefWidth="1512.0" styleClass="fondo" stylesheets="@application.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PeliculaController">
 	<children>
-		<ScrollPane hbarPolicy="NEVER" layoutY="151.0" pannable="true" prefHeight="982.0" prefWidth="1512.0" styleClass="fondo" vbarPolicy="NEVER">
+		<ScrollPane hbarPolicy="NEVER" layoutY="151.0" pannable="true" prefHeight="832.0" prefWidth="1512.0" styleClass="fondo" vbarPolicy="NEVER">
 
 			<content>
 				<VBox prefHeight="1406.0" prefWidth="1513.0" styleClass="fondo">

@@ -28,7 +28,7 @@ public class DetallesController {
     private ImageView cartel;
 
     @FXML
-    private Text detallesPelicula;
+    private Text detalles;
 
     private Scene scene;
 
@@ -107,8 +107,9 @@ public class DetallesController {
 
             // Mostrar información en la interfaz gráfica
             titulo.setText(datos.getTitle());
+            
             cartel.setImage(new Image("https://image.tmdb.org/t/p/w500" + datos.getPoster_path()));
-            detallesPelicula.setText("Descripción: " + datos.getOverview() + "\n" 
+            detalles.setText("Descripción: " + datos.getOverview() + "\n" 
             		+ "Compañia: " + datos.getCompañia() + "\n" 
             		+ "Géneros: " + datos.getGeneros() + "\n" 
             		+ "Directores: " + datos.getDirectores() + "\n" 

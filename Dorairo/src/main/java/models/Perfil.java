@@ -2,89 +2,143 @@ package models;
 
 import java.time.LocalDate;
 
-/**
- * Clase que gestiona el perfil del usuario
- * 
- * @author JairoAB
- *
- */
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "Perfil")
 public class Perfil {
 
+	@Id
+	@Column(name = "usuario", length = 20)
 	private String usuario;
+
+	@Column(name = "nombre", length = 20)
 	private String nombre;
+
+	@Column(name = "correo", length = 100)
 	private String correo;
-	private String contrasena;
-	private String fotoPerfil;
-	private LocalDate fecha;
+
+	@Column(name = "imagen_de_perfil")
+	private String igamenPerfil;
+
+	@Column(name = "clave", length = 20)
+	private String clave;
+
+	@Column(name = "fecha_miembro")
+	private LocalDate fechaMiembro;
 
 	/**
-	 * Constructor para generar un nuevo perfil de usuario
+	 * Constructor para el momento en el que se crea un perfil
 	 * 
 	 * @param usuario
 	 * @param nombre
 	 * @param correo
-	 * @param contrasena
-	 * @param fecha
+	 * @param clave
+	 * @param fechaMiembro
 	 */
-	public Perfil(String usuario, String nombre, String correo, String contrasena, LocalDate fecha) {
+	public Perfil(String usuario, String nombre, String correo, String clave, LocalDate fechaMiembro) {
 		super();
 		this.usuario = usuario;
 		this.nombre = nombre;
 		this.correo = correo;
-		this.contrasena = contrasena;
-		this.fecha = fecha;
+		this.clave = clave;
+		this.fechaMiembro = fechaMiembro;
 	}
 
+	/**
+	 * @return the usuario
+	 */
 	public String getUsuario() {
 		return usuario;
 	}
 
+	/**
+	 * @param usuario the usuario to set
+	 */
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
 
+	/**
+	 * @return the nombre
+	 */
 	public String getNombre() {
 		return nombre;
 	}
 
+	/**
+	 * @param nombre the nombre to set
+	 */
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
 
+	/**
+	 * @return the correo
+	 */
 	public String getCorreo() {
 		return correo;
 	}
 
+	/**
+	 * @param correo the correo to set
+	 */
 	public void setCorreo(String correo) {
 		this.correo = correo;
 	}
 
-	public String getContrasena() {
-		return contrasena;
+	/**
+	 * @return the igamenPerfil
+	 */
+	public String getIgamenPerfil() {
+		return igamenPerfil;
 	}
 
-	public void setContrasena(String contrasena) {
-		this.contrasena = contrasena;
+	/**
+	 * @param igamenPerfil the igamenPerfil to set
+	 */
+	public void setIgamenPerfil(String igamenPerfil) {
+		this.igamenPerfil = igamenPerfil;
 	}
 
-	public String getFotoPerfil() {
-		return fotoPerfil;
+	/**
+	 * @return the clave
+	 */
+	public String getClave() {
+		return clave;
 	}
 
-	public void setFotoPerfil(String fotoPerfil) {
-		this.fotoPerfil = fotoPerfil;
+	/**
+	 * @param clave the clave to set
+	 */
+	public void setClave(String clave) {
+		this.clave = clave;
 	}
 
-	public LocalDate getFecha() {
-		return fecha;
+	/**
+	 * @return the fechaMiembro
+	 */
+	public LocalDate getFechaMiembro() {
+		return fechaMiembro;
 	}
 
-	public void setFecha(LocalDate fecha) {
-		this.fecha = fecha;
+	public String getFechaMiembroString() {
+		return fechaMiembro.getDayOfMonth() + " de " + fechaMiembro.getMonthValue() + " de " + fechaMiembro.getYear();
 	}
 
-	public String getFechaString() {
-		return fecha.getDayOfMonth() + " de " + fecha.getMonthValue() + " de " + fecha.getYear();
+	/**
+	 * @param fechaMiembro the fechaMiembro to set
+	 */
+	public void setFechaMiembro(LocalDate fechaMiembro) {
+		this.fechaMiembro = fechaMiembro;
 	}
 
+	@Override
+	public String toString() {
+		return "Perfil [usuario=" + usuario + ", nombre=" + nombre + ", correo=" + correo + ", igamenPerfil="
+				+ igamenPerfil + ", clave=" + clave + ", fechaMiembro=" + fechaMiembro + "]";
+	}
 }

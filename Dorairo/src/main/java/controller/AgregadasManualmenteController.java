@@ -179,9 +179,9 @@ public class AgregadasManualmenteController {
 		// Comprueba si todos los campos se han rellenado
 		if (isCompleto()) {
 
-			Pelicula pelicula = new Pelicula(txtTitulo.getText(), txtCompañia.getText(), txtGuardado.getText(),
-					txtEstreno.getText(), txtValoracionPersonal.getText(), txtValoracionGlobal.getText(), txtGenero.getText(),
-					txtActores.getText(), txtDirectores.getText(), txtDescripcion.getText(), txtComentarios.getText());
+//			Pelicula pelicula = new Pelicula(txtTitulo.getText(), txtCompañia.getText(), txtGuardado.getText(),
+//					txtEstreno.getText(), txtValoracionPersonal.getText(), txtValoracionGlobal.getText(), txtGenero.getText(),
+//					txtActores.getText(), txtDirectores.getText(), txtDescripcion.getText(), txtComentarios.getText());
 
 		} else {
 			// Muestra alerta de error

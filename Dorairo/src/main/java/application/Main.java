@@ -58,7 +58,8 @@ public class Main extends Application {
 	public void iniciaLogin(Stage primaryStage) {
 		GestorVentanas gestorVentanas = new GestorVentanas();
 		gestorVentanas.muestraVentana(primaryStage, Constants.URL_LOGIN_FXML, "Dorairo");
-		// gestorVentanas.muestraVentana(primaryStage, Constants.URL_AGREGADAS_MANUALMENTE_FXML, "Agregar Manualmente");
+		// gestorVentanas.muestraVentana(primaryStage,
+		// Constants.URL_AGREGADAS_MANUALMENTE_FXML, "Agregar Manualmente");
 	}
 
 	/**
@@ -104,7 +105,7 @@ public class Main extends Application {
 		// Recorre la lista de perfiles
 		for (Perfil perfil : listaPerfiles) {
 			// Comprueba si coincide el usuario y contrasena
-			if (perfil.getUsuario().equals(usuario) && perfil.getContrasena().equals(contrasena)) {
+			if (perfil.getUsuario().equals(usuario) && perfil.getClave().equals(contrasena)) {
 				setPerfilRegsistrado(perfil);
 				return true;
 			}

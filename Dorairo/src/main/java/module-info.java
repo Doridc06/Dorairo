@@ -5,6 +5,8 @@ module Dorairo {
 	requires javafx.graphics;
 	requires com.google.gson;
 	requires okhttp3;
+	requires hibernate.jpa;
+	requires hibernate.core;
 
     opens models to com.google.gson, javafx.fxml;
     opens controller to javafx.fxml;

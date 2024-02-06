@@ -18,7 +18,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import models.Datos;
+import models.Pelicula;
 import models.RespuestaApi;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -189,7 +189,7 @@ public class SeriesController {
 		if (respApi.getResults() != null && respApi.getResults().length > 0) {
 			// Iterar sobre las películas y agregar imágenes al HBox
 			int contador = 0;
-			for (Datos datos : respApi.getResults()) {
+			for (Pelicula datos : respApi.getResults()) {
 			//	System.out.println("Adding image: " + serie.getPoster_path());
 				if (contador < 12) { // Limitar a 10 películas
 					ImageView imageView = null;
@@ -212,7 +212,7 @@ public class SeriesController {
 		targetHBox.setSpacing(50.0);
 	}
     
-    private ImageView getImageViewFromUrl(String imageUrl, Datos datos) {
+    private ImageView getImageViewFromUrl(String imageUrl, Pelicula datos) {
 		ImageView imageView = new ImageView();
 		imageView.setFitHeight(250.0);
 		imageView.setFitWidth(290.0);

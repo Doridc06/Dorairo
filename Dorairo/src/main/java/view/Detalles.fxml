@@ -16,7 +16,7 @@
 			<content>
 				<AnchorPane fx:id="paneFondo" minHeight="0.0" minWidth="0.0" prefHeight="982.0" prefWidth="1512.0" styleClass="fondo">
                <children>
-               
+               <ImageView fx:id="fondoIm"></ImageView>
                 
                   <Text fx:id="titulo" layoutX="61.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="1226.13671875">
                      <font>

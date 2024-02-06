@@ -8,9 +8,13 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
-import models.Datos;
+import models.Genero;
+import models.Pelicula;
+import models.Serie;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -35,6 +39,9 @@ public class DetallesController {
     private Stage stage;
 
     private GestorVentanas gestorVentanas;
+    
+    @FXML
+    private ImageView fondoIm;
 
     private static final String API_KEY = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlYjc0NTA5ZjRiZDBlODJlMTFlYzA2YWM1MDRhMGRlMCIsInN1YiI6IjY1Mzc3ZmRmZjQ5NWVlMDBmZjY1YTEyOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ehIu08LoiMRTccPoD4AfADXOpQPlqNAKUMvGgwY3XU8";
 
@@ -100,25 +107,96 @@ public class DetallesController {
 
         try (Response response = client.newCall(request).execute()) {
             String responseBody = response.body().string();
-        //    System.out.println("Response Body: " + responseBody);
 
             Gson gson = new Gson();
-            Datos datos = gson.fromJson(responseBody, Datos.class);
-
-            // Mostrar información en la interfaz gráfica
-            titulo.setText(datos.getTitle());
             
-            cartel.setImage(new Image("https://image.tmdb.org/t/p/w500" + datos.getPoster_path()));
-            detalles.setText("Descripción: " + datos.getOverview() + "\n" 
-            		+ "Compañia: " + datos.getCompañia() + "\n" 
-            		+ "Géneros: " + datos.getGeneros() + "\n" 
-            		+ "Directores: " + datos.getDirectores() + "\n" 
-            		+ "Actores: " + datos.getActores() + "\n" 
-            		+ "Valoracion Usuario: " + datos.getValoracionUser() + "\n" 
-            		+ "Valoracion: " + datos.getValoracion() + "\n" 
-            		+ "Comentario Usuario: " + datos.getComentariosUser() + "\n" 
-            		+ "Fecha de Visualización: " + datos.getFechaVisualizacion() + "\n" 
-            		);
+            if (tipo.equals("movie")) {
+              Pelicula datos = gson.fromJson(responseBody, Pelicula.class);
+              titulo.setText(datos.getTitle());
+              cartel.setImage(new Image("https://image.tmdb.org/t/p/w500" + datos.getPoster_path()));
+              
+           // Configurar la imagen de fondo con transparencia
+              // Obtener las dimensiones de la pantalla
+              double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
+              double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
+              // Mantener la relación de aspecto original de la imagen
+              fondoIm.setPreserveRatio(true);
+           // Ajustar la posición de la imagen para que esté en el lado derecho de la pantalla
+              fondoIm.setLayoutX(screenWidth / 2); // Colocar en el centro horizontalmente
+              fondoIm.setLayoutY(0); // Colocar en la parte superior
+              
+              // Establecer las dimensiones del ImageView para que abarque toda la pantalla
+              fondoIm.setFitWidth(screenWidth);
+              fondoIm.setFitHeight(screenHeight);
+              fondoIm.setImage(new Image("https://image.tmdb.org/t/p/w500" + datos.getPoster_path()));
+              fondoIm.setOpacity(0.5);
+              fondoIm.toBack();
+
+
+              // Construir la cadena de géneros
+              StringBuilder generosString = new StringBuilder();
+              for (Genero genero : datos.getGenres()) {
+                  generosString.append(genero.getName()).append(", ");
+              }
+              // Eliminar la coma y el espacio extra al final
+              if (generosString.length() > 0) {
+                  generosString.setLength(generosString.length() - 2);
+              }
+
+              detalles.setText("Descripción: " + datos.getOverview() + "\n" 
+                  + "Fecha de estreno: " + datos.getRelease_date() + "\n"
+                  + "Géneros: " + generosString.toString() + "\n" 
+                  + "Valoracion: " + datos.getVote_average() + "\n" 
+                  + "Duración: " + datos.getRuntime() + " Minutos" + "\n" 
+                  + "Popularidad: " + datos.getPopularity() + "\n");
+              
+              
+          } else if (tipo.equals("tv")) {
+              Serie datos = gson.fromJson(responseBody, Serie.class);
+              titulo.setText(datos.getName());
+              cartel.setImage(new Image("https://image.tmdb.org/t/p/w500" + datos.getPoster_path()));
+           // Configurar la imagen de fondo con transparencia
+              // Obtener las dimensiones de la pantalla
+              double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
+              double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
+              
+              // Mantener la relación de aspecto original de la imagen
+              fondoIm.setPreserveRatio(true);
+           // Ajustar la posición de la imagen para que esté en el lado derecho de la pantalla
+              fondoIm.setLayoutX(screenWidth / 2); // Colocar en el centro horizontalmente
+              fondoIm.setLayoutY(0); // Colocar en la parte superior
+              
+              // Establecer las dimensiones del ImageView para que abarque toda la pantalla
+              fondoIm.setFitWidth(screenWidth);
+              fondoIm.setFitHeight(screenHeight);
+              fondoIm.setImage(new Image("https://image.tmdb.org/t/p/w500" + datos.getPoster_path()));
+              fondoIm.setOpacity(0.15);
+              fondoIm.toBack();
+              
+
+
+              // Construir la cadena de géneros
+              StringBuilder generosString = new StringBuilder();
+              for (Genero genero : datos.getGenres()) {
+                  generosString.append(genero.getName()).append(", ");
+              }
+              // Eliminar la coma y el espacio extra al final
+              if (generosString.length() > 0) {
+                  generosString.setLength(generosString.length() - 2);
+              }
+
+              detalles.setText("Descripción: " + datos.getOverview() + "\n" 
+                  + "Fecha de estreno: " + datos.getFirst_air_date() + "\n"
+                  + "Géneros: " + generosString.toString() + "\n" 
+                  + "Valoracion: " + datos.getVote_average() + "\n" 
+                  + "Episodios: " + datos.getNumber_of_episodes() + "\n"
+                  + "Temporadas: " + datos.getNumber_of_seasons() + "\n"
+                  + "Popularidad: " + datos.getPopularity() + "\n");
+             
+          }
+
+           
+           
             
 
         } catch (IOException e) {

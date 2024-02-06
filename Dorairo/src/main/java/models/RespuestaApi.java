@@ -10,7 +10,7 @@ public class RespuestaApi {
 
   // Atributos de la respuesta de la API
   private int page;
-  private Datos[] results;
+  private Pelicula[] results;
   private int total_pages;
   private int total_results;
 
@@ -39,7 +39,7 @@ public class RespuestaApi {
    * 
    * @return
    */
-  public Datos[] getResults() {
+  public Pelicula[] getResults() {
     return results;
   }
 
@@ -48,7 +48,7 @@ public class RespuestaApi {
    * 
    * @param results
    */
-  public void setResults(Datos[] results) {
+  public void setResults(Pelicula[] results) {
     this.results = results;
   }
 

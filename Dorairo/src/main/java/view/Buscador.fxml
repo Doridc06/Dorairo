@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.BuscadorController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.BuscadorController">
 	<children>
 		<ScrollPane layoutY="150.0" prefHeight="832.0" prefWidth="1512.0" styleClass="fondo">
 			<content>
@@ -36,6 +36,11 @@
                      </content>
                   </ScrollPane>
                   <Button fx:id="buscar" layoutX="678.0" layoutY="134.0" mnemonicParsing="false" onMouseClicked="#clickBuscar" prefHeight="45.0" prefWidth="84.0" text="Buscar" />
+                  <Button layoutX="1074.0" layoutY="54.0" mnemonicParsing="false" text="Agregar manualmente">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
              
                </children></AnchorPane>
 			</content>

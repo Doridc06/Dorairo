@@ -19,7 +19,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import models.Datos;
+import models.Pelicula;
 import models.RespuestaApi;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -159,10 +159,10 @@ public class BuscadorController {
 		}
 	}
 
-	private void mostrarResultados(Datos[] datos) {
+	private void mostrarResultados(Pelicula[] datos) {
 		seEncontro.getChildren().clear();
 
-		for (Datos dato : datos) {
+		for (Pelicula dato : datos) {
 			ImageView imageView = getImageView(dato);
 			seEncontro.getChildren().add(imageView);
 
@@ -174,7 +174,7 @@ public class BuscadorController {
 		}
 	}
 
-	private ImageView getImageView(Datos datos) {
+	private ImageView getImageView(Pelicula datos) {
 		ImageView imageView = new ImageView();
 		imageView.setFitHeight(250.0);
 		imageView.setFitWidth(290.0);
@@ -220,7 +220,7 @@ public class BuscadorController {
 	
 	
 	
-	private void handleImageClick(Datos datos) {
+	private void handleImageClick(Pelicula datos) {
 		// lógica que deseas realizar cuando se hace clic en una imagen
 		
 		ImageView imageView = new ImageView();

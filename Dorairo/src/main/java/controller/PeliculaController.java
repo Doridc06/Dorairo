@@ -14,7 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import models.Datos;
+import models.Pelicula;
 import models.RespuestaApi;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -173,7 +173,7 @@ public class PeliculaController {
 		if (respApi.getResults() != null && respApi.getResults().length > 0) {
 			// Iterar sobre las películas y agregar imágenes al HBox
 			int contador = 0;
-			for (Datos datos : respApi.getResults()) {
+			for (Pelicula datos : respApi.getResults()) {
 				if (contador < 12) {
 					ImageView imageView = null;
 					if (datos.getPoster_path() != null) {
@@ -199,7 +199,7 @@ public class PeliculaController {
 		targetHBox.setSpacing(50.0);
 	}
 
-	private ImageView getImageViewFromPelicula(Datos datos) {
+	private ImageView getImageViewFromPelicula(Pelicula datos) {
 		ImageView imageView = new ImageView();
 		imageView.setFitHeight(230.0);
 		imageView.setFitWidth(290.0);

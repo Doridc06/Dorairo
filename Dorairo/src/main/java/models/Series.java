@@ -1,22 +1,27 @@
 package models;
 
-import java.util.Date;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "series")
-public class Series {
+@Table(name = "Series")
+public class Series implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
 
@@ -39,20 +44,44 @@ public class Series {
 	@Column(name = "valoracion")
 	private int valoracion;
 
-	@Column(name = "valoracion_usuario", precision = 2, scale = 0)
-	private double valoracionUsuario;
+	@Column(name = "num_episodios")
+	private int numeroEpisodios;
 
-	@Column(name = "fecha_visualizacion_usuario")
-	private Date fechaVisualizacionUsuario;
-
-	@Column(name = "comentarios_usuario")
-	private String comentariosUsuario;
-
-	@Column(name = "localizacion")
-	private int localizacion;
+	@Column(name = "num_temporadas")
+	private int numeroTemporadas;
 
 	/**
-	 * Constructor para el momento en el que se crea una serie
+	 * Relación de serie con la tabla de los id de usuarioSerie
+	 */
+	@OneToMany(mappedBy = "id.series", cascade = CascadeType.ALL)
+	private Set<UsuarioSerie> usuarioSerie = new HashSet<>();
+
+	/**
+	 * Tabla intermedia entre series y actores
+	 */
+	@ManyToMany(cascade = { CascadeType.ALL })
+	@JoinTable(name = "Series_Actores", joinColumns = { @JoinColumn(name = "id_serie") }, inverseJoinColumns = {
+			@JoinColumn(name = "id_actor") })
+	private Set<Actores> actores = new HashSet<>();
+
+	/**
+	 * Tabla intermedia entre series y directores
+	 */
+	@ManyToMany(cascade = { CascadeType.ALL })
+	@JoinTable(name = "Series_Directores", joinColumns = { @JoinColumn(name = "id_serie") }, inverseJoinColumns = {
+			@JoinColumn(name = "id_director") })
+	private Set<Directores> directores = new HashSet<>();
+
+	/**
+	 * Tabla intermedia entre series y generos
+	 */
+	@ManyToMany(cascade = { CascadeType.ALL })
+	@JoinTable(name = "Series_Generos", joinColumns = { @JoinColumn(name = "id_serie") }, inverseJoinColumns = {
+			@JoinColumn(name = "id_genero") })
+	private Set<Genero> generos = new HashSet<>();
+
+	/**
+	 * Constructor para Serie
 	 * 
 	 * @param id
 	 * @param titulo
@@ -61,9 +90,11 @@ public class Series {
 	 * @param descripcion
 	 * @param cartel
 	 * @param valoracion
+	 * @param numeroEpisodios
+	 * @param numeroTemporadas
 	 */
-	public Series(int id, String titulo, int año, Compañia compañia, String descripcion, String cartel,
-			int valoracion) {
+	public Series(int id, String titulo, int año, Compañia compañia, String descripcion, String cartel, int valoracion,
+			int numeroEpisodios, int numeroTemporadas) {
 		super();
 		this.id = id;
 		this.titulo = titulo;
@@ -72,6 +103,8 @@ public class Series {
 		this.descripcion = descripcion;
 		this.cartel = cartel;
 		this.valoracion = valoracion;
+		this.numeroEpisodios = numeroEpisodios;
+		this.numeroTemporadas = numeroTemporadas;
 	}
 
 	/**
@@ -173,59 +206,31 @@ public class Series {
 	}
 
 	/**
-	 * @return the valoracionUsuario
+	 * @return the numeroEpisodios
 	 */
-	public double getValoracionUsuario() {
-		return valoracionUsuario;
+	public int getNumeroEpisodios() {
+		return numeroEpisodios;
 	}
 
 	/**
-	 * @param valoracionUsuario the valoracionUsuario to set
+	 * @param numeroEpisodios the numeroEpisodios to set
 	 */
-	public void setValoracionUsuario(double valoracionUsuario) {
-		this.valoracionUsuario = valoracionUsuario;
+	public void setNumeroEpisodios(int numeroEpisodios) {
+		this.numeroEpisodios = numeroEpisodios;
 	}
 
 	/**
-	 * @return the fechaVisualizacionUsuario
+	 * @return the numeroTemporadas
 	 */
-	public Date getFechaVisualizacionUsuario() {
-		return fechaVisualizacionUsuario;
+	public int getNumeroTemporadas() {
+		return numeroTemporadas;
 	}
 
 	/**
-	 * @param fechaVisualizacionUsuario the fechaVisualizacionUsuario to set
+	 * @param numeroTemporadas the numeroTemporadas to set
 	 */
-	public void setFechaVisualizacionUsuario(Date fechaVisualizacionUsuario) {
-		this.fechaVisualizacionUsuario = fechaVisualizacionUsuario;
-	}
-
-	/**
-	 * @return the comentariosUsuario
-	 */
-	public String getComentariosUsuario() {
-		return comentariosUsuario;
-	}
-
-	/**
-	 * @param comentariosUsuario the comentariosUsuario to set
-	 */
-	public void setComentariosUsuario(String comentariosUsuario) {
-		this.comentariosUsuario = comentariosUsuario;
-	}
-
-	/**
-	 * @return the localizacion
-	 */
-	public int getLocalizacion() {
-		return localizacion;
-	}
-
-	/**
-	 * @param localizacion the localizacion to set
-	 */
-	public void setLocalizacion(int localizacion) {
-		this.localizacion = localizacion;
+	public void setNumeroTemporadas(int numeroTemporadas) {
+		this.numeroTemporadas = numeroTemporadas;
 	}
 
 }

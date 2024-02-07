@@ -1,19 +1,27 @@
 package models;
 
-import java.time.LocalDate;
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Perfil")
-public class Perfil {
+@Table(name = "Usuario")
+public class Usuario implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name = "usuario", length = 20)
-	private String usuario;
+	private String user;
 
 	@Column(name = "nombre", length = 20)
 	private String nombre;
@@ -28,7 +36,12 @@ public class Perfil {
 	private String clave;
 
 	@Column(name = "fecha_miembro")
-	private LocalDate fechaMiembro;
+	private Date fechaMiembro;
+
+	@OneToMany(mappedBy = "id.usuario", cascade = CascadeType.ALL)
+	private Set<UsuarioPelicula> usuarioPelicula = new HashSet<>();
+	@OneToMany(mappedBy = "id.usuario", cascade = CascadeType.ALL)
+	private Set<UsuarioSerie> usuarioSerie = new HashSet<>();
 
 	/**
 	 * Constructor para el momento en el que se crea un perfil
@@ -39,9 +52,9 @@ public class Perfil {
 	 * @param clave
 	 * @param fechaMiembro
 	 */
-	public Perfil(String usuario, String nombre, String correo, String clave, LocalDate fechaMiembro) {
+	public Usuario(String usuario, String nombre, String correo, String clave, Date fechaMiembro) {
 		super();
-		this.usuario = usuario;
+		this.user = usuario;
 		this.nombre = nombre;
 		this.correo = correo;
 		this.clave = clave;
@@ -52,14 +65,14 @@ public class Perfil {
 	 * @return the usuario
 	 */
 	public String getUsuario() {
-		return usuario;
+		return user;
 	}
 
 	/**
 	 * @param usuario the usuario to set
 	 */
 	public void setUsuario(String usuario) {
-		this.usuario = usuario;
+		this.user = usuario;
 	}
 
 	/**
@@ -121,24 +134,33 @@ public class Perfil {
 	/**
 	 * @return the fechaMiembro
 	 */
-	public LocalDate getFechaMiembro() {
+	public Date getFechaMiembro() {
 		return fechaMiembro;
 	}
 
+	/**
+	 * Devuelve la fecha en la que se hizo miembro en formato string, dd-MM-yyyy
+	 * 
+	 * @return Fecha en string
+	 */
 	public String getFechaMiembroString() {
-		return fechaMiembro.getDayOfMonth() + " de " + fechaMiembro.getMonthValue() + " de " + fechaMiembro.getYear();
+		// Define el formato de salida
+		SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
+System.out.println(fechaMiembro.toString());
+		// Formatea la fecha como una cadena y la devuelve
+		return formato.format(fechaMiembro);
 	}
 
 	/**
 	 * @param fechaMiembro the fechaMiembro to set
 	 */
-	public void setFechaMiembro(LocalDate fechaMiembro) {
+	public void setFechaMiembro(Date fechaMiembro) {
 		this.fechaMiembro = fechaMiembro;
 	}
 
 	@Override
 	public String toString() {
-		return "Perfil [usuario=" + usuario + ", nombre=" + nombre + ", correo=" + correo + ", igamenPerfil="
-				+ igamenPerfil + ", clave=" + clave + ", fechaMiembro=" + fechaMiembro + "]";
+		return "Perfil [usuario=" + user + ", nombre=" + nombre + ", correo=" + correo + ", igamenPerfil=" + igamenPerfil
+				+ ", clave=" + clave + ", fechaMiembro=" + fechaMiembro + "]";
 	}
 }

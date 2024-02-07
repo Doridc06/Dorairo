@@ -10,14 +10,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import utilities.GestorVentanas;
+import utilities.Utils;
 
 /**
- * Clase con las funciones del Perfil
+ * Clase con las funciones del Usuario
  * 
  * @author JairoAB
  *
  */
-public class PerfilController {
+public class UsuarioController {
 
 	@FXML
 	private ImageView imagenFondoPerfil;
@@ -62,8 +63,14 @@ public class PerfilController {
 		// Establece la imagen del logo
 		Image imagen = new Image(getClass().getResourceAsStream(Constants.URL_LOGO_AMPLIADO));
 		imagenLogoCabecera.setImage(imagen);
-		// Establece la imagen por defecto del perfil
-		imagen = new Image(getClass().getResourceAsStream(Constants.URL_FOTO_PERFIL_DEFAULT), 190, 190, false, true);
+		// Establece la imagen del perfil
+		if (Main.getPerfilRegsistrado().getIgamenPerfil() == null
+				|| Main.getPerfilRegsistrado().getIgamenPerfil().isBlank()) {
+			// si no tiene una asignada se pone la por defecto
+			imagen = new Image(getClass().getResourceAsStream(Constants.URL_FOTO_PERFIL_DEFAULT), 190, 190, false, true);
+		} else {
+			imagen = new Image("file:" + Main.getPerfilRegsistrado().getIgamenPerfil());
+		}
 		imagenPerfil.setImage(imagen);
 		// Establece la imagen de fondo
 		imagen = new Image(getClass().getResourceAsStream(Constants.URL_FOTO_FONDO_PERFIL));
@@ -111,7 +118,7 @@ public class PerfilController {
 	@FXML
 	void perfilClicked(MouseEvent event) {
 		setSceneAndStage();
-		gestorVentanas.muestraVentana(stage, Constants.URL_PERFIL_FXML, "Perfil");
+		gestorVentanas.muestraVentana(stage, Constants.URL_USUARIO_FXML, "Perfil");
 	}
 
 	@FXML
@@ -137,7 +144,14 @@ public class PerfilController {
 
 	@FXML
 	void cambiarFotoPerfil(MouseEvent event) {
+		setSceneAndStage();
+		String fotoUrl = Utils.buscarFotoArchivos(stage);
 
+		Main.getPerfilRegsistrado().setIgamenPerfil(fotoUrl);
+
+		// Mostar la imagen
+		Image image = new Image("file:" + fotoUrl);
+		imagenPerfil.setImage(image);
 	}
 
 	@FXML

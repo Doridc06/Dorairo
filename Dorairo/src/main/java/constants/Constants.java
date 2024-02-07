@@ -1,7 +1,10 @@
 package constants;
 
-import java.time.LocalDate;
-import models.Perfil;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import models.Usuario;
 
 /**
  * Clase que guarda las constantes comunes
@@ -10,6 +13,9 @@ import models.Perfil;
  *
  */
 public class Constants {
+
+	private Constants() {
+	}
 
 	// Tipos de alertas
 
@@ -45,12 +51,12 @@ public class Constants {
 	// Perfiles predeterminados
 
 	/** Perfil del usuario Jairo */
-	public static final Perfil PERFIL_JAIRO = new Perfil(".", "Jairo", "jairo@ejemplo.com", ".",
-			LocalDate.of(2004, 02, 25));
+	public static final Usuario PERFIL_JAIRO = new Usuario(".", "Jairo", "jairo@ejemplo.com", ".",
+			getFecha("25-02-2004"));
 
 	/** Perfil del usuario Doriana */
-	public static final Perfil PERFIL_DORIANA = new Perfil("Doridc", "Doriana", "doriana@ejemplo.com", "456",
-			LocalDate.of(1997, 12, 06));
+	public static final Usuario PERFIL_DORIANA = new Usuario("Doridc", "Doriana", "doriana@ejemplo.com", "456",
+			getFecha("06-12-1997"));
 
 	// Rutas a los Fxml de las ventanas
 
@@ -69,8 +75,8 @@ public class Constants {
 	/** Ruta al documento fxml de series */
 	public static final String URL_SERIES_FXML = "/view/Series.fxml";
 
-	/** Ruta al documento fxml de perfil */
-	public static final String URL_PERFIL_FXML = "/view/Perfil.fxml";
+	/** Ruta al documento fxml de usuario */
+	public static final String URL_USUARIO_FXML = "/view/Usuario.fxml";
 
 	/** Ruta al documento fxml de buscador */
 	public static final String URL_BUSCADOR_FXML = "/view/Buscador.fxml";
@@ -80,5 +86,27 @@ public class Constants {
 
 	/** Ruta al documento fxml de Detalles */
 	public static final String URL_DETALLES_FXML = "/view/Detalles.fxml";
+
+	// Metodos
+
+	/**
+	 * Devuelve una fecha tipo Date a partir de una fecha string proporcionada
+	 * 
+	 * @param fecha Fecha en string
+	 * @return Fecha tipo Date formate dd-MM-yyyy
+	 */
+	private static Date getFecha(String fecha) {
+		// Formato de la cadena de fecha
+		SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
+
+		try {
+			// Convertir la cadena a un objeto Date
+			return formato.parse(fecha);
+
+			// Imprimir el resultado
+		} catch (ParseException e) {
+			return new Date();
+		}
+	}
 
 }

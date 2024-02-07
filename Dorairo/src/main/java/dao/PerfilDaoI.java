@@ -1,6 +1,6 @@
 package dao;
 
-import models.Perfil;
+import models.Usuario;
 
 /**
  * Profile Dao Interface
@@ -8,7 +8,7 @@ import models.Perfil;
  * @author JairoAB
  *
  */
-public interface PerfilDaoI extends CommonDaoI<Perfil> {
+public interface PerfilDaoI extends CommonDaoI<Usuario> {
 
 	/**
 	 * Searches for the profile that has the same user and returns it
@@ -16,7 +16,7 @@ public interface PerfilDaoI extends CommonDaoI<Perfil> {
 	 * @param usuario User profile to find
 	 * @return Profile that has this user
 	 */
-	public Perfil searchByUsuario(final String usuario);
+	public Usuario searchByUsuario(final String usuario);
 
 	/**
 	 * Searches for the profile that has the same email and returns it
@@ -24,6 +24,6 @@ public interface PerfilDaoI extends CommonDaoI<Perfil> {
 	 * @param correo Email profile to find
 	 * @return Profile that has this email
 	 */
-	public Perfil searchByCorreo(final String correo);
+	public Usuario searchByCorreo(final String correo);
 
 }

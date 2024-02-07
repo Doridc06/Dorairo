@@ -21,7 +21,7 @@
                <children>
                   <StackPane fx:id="paneImagenPerfil" layoutX="70.0" layoutY="80.0" prefHeight="310.0" prefWidth="230.0">
                      <children>
-                        <ImageView fx:id="imagenCartel" fitHeight="300.0" fitWidth="230.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="imagenCartel" fitHeight="300.0" fitWidth="230.0" onMousePressed="#subirFoto" pickOnBounds="true" preserveRatio="true" />
                      </children>
                   </StackPane>
                   <Label layoutX="350.0" layoutY="80.0" prefHeight="36.0" prefWidth="68.0" text="Tipo">

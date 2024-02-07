@@ -117,7 +117,7 @@ public class SeriesController {
   	@FXML
   	void perfilClicked(MouseEvent event) {
   		setSceneAndStage();
-  		gestorVentanas.muestraVentana(stage, Constants.URL_PERFIL_FXML, "Perfil");
+  		gestorVentanas.muestraVentana(stage, Constants.URL_USUARIO_FXML, "Perfil");
   	}
 
   	/**

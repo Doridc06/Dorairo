@@ -1,13 +1,27 @@
 package models;
 
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+/**
+ * Clase que representa la tabla de Actores
+ * 
+ * @author JairoAB
+ *
+ */
 @Entity
 @Table(name = "Actores")
-public class Actores {
+public class Actores implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name = "id")
@@ -16,6 +30,15 @@ public class Actores {
 	@Column(name = "nombre", length = 200)
 	private String name;
 
+	@ManyToMany(cascade = { CascadeType.ALL }, mappedBy = "actores")
+	private Set<Series> series = new HashSet<>();
+
+	/**
+	 * Constructor para la tabla Actores
+	 * 
+	 * @param id
+	 * @param name
+	 */
 	public Actores(int id, String name) {
 		this.id = id;
 		this.name = name;

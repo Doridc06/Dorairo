@@ -2,7 +2,7 @@ package dao;
 
 import org.hibernate.Session;
 
-import models.Perfil;
+import models.Usuario;
 
 /**
  * Profile Dao Interface Implementation
@@ -10,7 +10,7 @@ import models.Perfil;
  * @author JairoAB
  *
  */
-public class PerfilDaoImpl extends CommonDaoImpl<Perfil> implements PerfilDaoI {
+public class PerfilDaoImpl extends CommonDaoImpl<Usuario> implements PerfilDaoI {
 
 	/** Database connection */
 	private Session session;
@@ -26,18 +26,18 @@ public class PerfilDaoImpl extends CommonDaoImpl<Perfil> implements PerfilDaoI {
 	}
 
 	@Override
-	public Perfil searchByUsuario(String usuario) {
+	public Usuario searchByUsuario(String usuario) {
 		checkActiveTransaction();
 
 		// Searches for the user profile and returns it
-		return (Perfil) session.createQuery("FROM Perfil WHERE usuario = '" + usuario + "'").uniqueResult();
+		return (Usuario) session.createQuery("FROM Perfil WHERE usuario = '" + usuario + "'").uniqueResult();
 	}
 
 	@Override
-	public Perfil searchByCorreo(String correo) {
+	public Usuario searchByCorreo(String correo) {
 		checkActiveTransaction();
 
 		// Searches for the email profile and returns it
-		return (Perfil) session.createQuery("FROM Perfil WHERE correo = '" + correo + "'").uniqueResult();
+		return (Usuario) session.createQuery("FROM Perfil WHERE correo = '" + correo + "'").uniqueResult();
 	}
 }

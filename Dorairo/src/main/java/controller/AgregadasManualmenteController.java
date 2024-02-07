@@ -1,5 +1,8 @@
 package controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import constants.Constants;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import models.Compañia;
 import models.Pelicula;
 import utilities.GestorVentanas;
 import utilities.Utils;
@@ -86,6 +90,12 @@ public class AgregadasManualmenteController {
 	/** Indica si se trata de una serie (true) o una pelicula (false) */
 	private boolean isSerie = false;
 
+	/** Conexion con la base de datos */
+//	private Session session;
+
+	/** URL del poster añadido */
+	private String poster = null;
+
 	@FXML
 	void initialize() {
 		// Inicializamos el Gestor de ventanas
@@ -98,6 +108,9 @@ public class AgregadasManualmenteController {
 		imagenCartel.setImage(imagen);
 		// Establece las opciones de tipo serie o pelicula
 		choiceTipo.getItems().addAll("Pelicula", "Serie");
+
+		// Recogemos la sesion
+		// session = HibernateUtil.openSession();
 	}
 
 	@FXML
@@ -127,7 +140,21 @@ public class AgregadasManualmenteController {
 	@FXML
 	void perfilClicked(MouseEvent event) {
 		setSceneAndStage();
-		gestorVentanas.muestraVentana(stage, Constants.URL_PERFIL_FXML, "Perfil");
+		gestorVentanas.muestraVentana(stage, Constants.URL_USUARIO_FXML, "Perfil");
+	}
+
+	/**
+	 * Busca una foto en los archivos y la sube
+	 * 
+	 * @param event
+	 */
+	@FXML
+	void subirFoto(MouseEvent event) {
+		setSceneAndStage();
+		poster = Utils.buscarFotoArchivos(stage);
+		// Mostar la imagen
+		Image image = new Image("file:" + poster);
+		imagenCartel.setImage(image);
 	}
 
 	/**
@@ -179,9 +206,16 @@ public class AgregadasManualmenteController {
 		// Comprueba si todos los campos se han rellenado
 		if (isCompleto()) {
 
-//			Pelicula pelicula = new Pelicula(txtTitulo.getText(), txtCompañia.getText(), txtGuardado.getText(),
-//					txtEstreno.getText(), txtValoracionPersonal.getText(), txtValoracionGlobal.getText(), txtGenero.getText(),
-//					txtActores.getText(), txtDirectores.getText(), txtDescripcion.getText(), txtComentarios.getText());
+			try {
+				Compañia company = new Compañia(0, poster);
+				SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+				Date fecha;
+				fecha = formato.parse(txtEstreno.getText());
+				Pelicula pelicula = new Pelicula(txtTitulo.getText(), fecha, company, txtDescripcion.getText(), poster,
+						txtValoracionGlobal.getText());
+			} catch (Exception e) {
+				Utils.mostrarAlerta("Error en la creacion del elemento, revisa todos los campos.", Constants.ERROR_TYPE);
+			}
 
 		} else {
 			// Muestra alerta de error
@@ -189,6 +223,14 @@ public class AgregadasManualmenteController {
 		}
 
 	}
+
+//	private Compañia searchCompany() {
+//		CompañiaDaoImpl compañiaDaoIpml = new CompañiaDaoImpl(session);
+//		List<Compañia> compList = compañiaDaoIpml.searchByName(txtCompañia.getText());
+//
+//		// REVISAR LAS MIERDAS ESTAS
+//		return compList.get(0);
+//	}
 
 	private void crearSerie() {
 		// Comprueba si todos los campos se han rellenado
@@ -212,7 +254,7 @@ public class AgregadasManualmenteController {
 				&& !txtEstreno.getText().isBlank() && !txtValoracionPersonal.getText().isBlank()
 				&& !txtValoracionGlobal.getText().isBlank() && !txtGenero.getText().isBlank() && !txtActores.getText().isBlank()
 				&& !txtDirectores.getText().isBlank() && !txtDescripcion.getText().isBlank()
-				&& !txtComentarios.getText().isBlank();
+				&& !txtComentarios.getText().isBlank() && !poster.isBlank();
 	}
 
 	/**

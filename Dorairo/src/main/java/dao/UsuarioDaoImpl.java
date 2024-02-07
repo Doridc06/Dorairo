@@ -5,22 +5,22 @@ import org.hibernate.Session;
 import models.Usuario;
 
 /**
- * Profile Dao Interface Implementation
+ * Usuario Dao Interface Implementation
  * 
  * @author JairoAB
  *
  */
-public class PerfilDaoImpl extends CommonDaoImpl<Usuario> implements PerfilDaoI {
+public class UsuarioDaoImpl extends CommonDaoImpl<Usuario> implements UsuarioDaoI {
 
 	/** Database connection */
 	private Session session;
 
 	/**
-	 * ProfileDao constructor
+	 * UsuarioDao constructor
 	 * 
 	 * @param session Database session
 	 */
-	public PerfilDaoImpl(Session session) {
+	public UsuarioDaoImpl(Session session) {
 		super(session);
 		this.session = session;
 	}
@@ -30,7 +30,7 @@ public class PerfilDaoImpl extends CommonDaoImpl<Usuario> implements PerfilDaoI 
 		checkActiveTransaction();
 
 		// Searches for the user profile and returns it
-		return (Usuario) session.createQuery("FROM Perfil WHERE usuario = '" + usuario + "'").uniqueResult();
+		return (Usuario) session.createQuery("FROM Usuario WHERE usuario = '" + usuario + "'").uniqueResult();
 	}
 
 	@Override
@@ -38,6 +38,6 @@ public class PerfilDaoImpl extends CommonDaoImpl<Usuario> implements PerfilDaoI 
 		checkActiveTransaction();
 
 		// Searches for the email profile and returns it
-		return (Usuario) session.createQuery("FROM Perfil WHERE correo = '" + correo + "'").uniqueResult();
+		return (Usuario) session.createQuery("FROM Usuario WHERE correo = '" + correo + "'").uniqueResult();
 	}
 }

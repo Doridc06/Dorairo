@@ -3,12 +3,12 @@ package dao;
 import models.Usuario;
 
 /**
- * Profile Dao Interface
+ * Usuario Dao Interfaz
  * 
  * @author JairoAB
  *
  */
-public interface PerfilDaoI extends CommonDaoI<Usuario> {
+public interface UsuarioDaoI extends CommonDaoI<Usuario> {
 
 	/**
 	 * Searches for the profile that has the same user and returns it

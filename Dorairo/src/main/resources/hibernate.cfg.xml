@@ -4,8 +4,8 @@
 	<session-factory>
 		<property name="hibernate.bytecode.use_reflection_optimizer">false</property>
 		<property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-		<property name="hibernate.connection.password">root</property>
-		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/dorairo_db?serverTimezone=UTC</property>
+		<property name="hibernate.connection.password">po2004po</property>
+		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/dorairo_db?serverTimezone=UTC&amp;createDatabaseIfNotExist=true</property>
 		<property name="hibernate.connection.username">root</property>
 		<property name="hibernate.default_schema">dorairo_db</property>
 		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
@@ -13,9 +13,19 @@
 		<property name="hibernate.search.autoregister_listeners">true</property>
 		<property name="hibernate.show_sql">true</property>
 		<property name="hibernate.validator.apply_to_ddl">false</property>
-	
-		<mapping class="models.Perfil" />
+
+		<mapping class="models.Actores" />
+		<mapping class="models.Compañia" />
+		<mapping class="models.Directores" />
+		<mapping class="models.Genero" />
+		<mapping class="models.Localizacion" />
+		<mapping class="models.Pelicula" />
 		<mapping class="models.Series" />
+		<mapping class="models.Usuario" />
+		<mapping class="models.UsuarioPelicula" />
+		<mapping class="models.UsuarioPeliculaID" />
+		<mapping class="models.UsuarioSerie" />
+		<mapping class="models.UsuarioSerieID" />
 
 	</session-factory>
 </hibernate-configuration>

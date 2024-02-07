@@ -3,6 +3,7 @@ package application;
 import java.util.ArrayList;
 import java.util.List;
 
+import conexion.HibernateUtil;
 import constants.Constants;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -29,7 +30,8 @@ public class Main extends Application {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		launch(args);
+		HibernateUtil.buildSessionFactory();
+		//launch(args);
 	}
 
 	@Override

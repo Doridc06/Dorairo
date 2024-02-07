@@ -22,7 +22,7 @@ public class HibernateUtil {
 	/**
 	 * Construye la SessionFactory
 	 * 
-	 */
+	 */ 
 	public static synchronized void buildSessionFactory() {
 		if (sf == null) {
 			// Generador de sesiones
@@ -36,9 +36,11 @@ public class HibernateUtil {
 	 * 
 	 * @return Session
 	 */
-	public static Session openSession() {
+	public static synchronized Session openSession() {
 		buildSessionFactory();
-		session = sf.openSession();
+		if (session == null) {
+			session = sf.openSession();
+		}
 		return session;
 	}
 

@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -37,7 +38,8 @@ public class Pelicula implements Serializable {
 	@Column(name = "fecha_estreno")
 	private Date release_date;
 
-	@JoinColumn(name = "id")
+	@ManyToOne
+	@JoinColumn(name = "compañia")
 	private Compañia company;
 
 	@Column(name = "descripcion")
@@ -46,7 +48,7 @@ public class Pelicula implements Serializable {
 	@Column(name = "cartel")
 	private String poster_path;
 
-	@Column(name = "valoracion")
+	@Column(name = "valoracion", precision = 5, scale = 3)
 	private double vote_average;
 
 	/**

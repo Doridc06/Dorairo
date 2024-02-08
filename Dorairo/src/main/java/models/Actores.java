@@ -30,8 +30,13 @@ public class Actores implements Serializable {
 	@Column(name = "nombre", length = 200)
 	private String name;
 
+	/** Relacion de Actores con Series */
 	@ManyToMany(cascade = { CascadeType.ALL }, mappedBy = "actores")
 	private Set<Series> series = new HashSet<>();
+
+	/** Relacion de Actores con Peliculas */
+	@ManyToMany(cascade = { CascadeType.ALL }, mappedBy = "actores")
+	private Set<Pelicula> peliculas = new HashSet<>();
 
 	/**
 	 * Constructor para la tabla Actores

@@ -19,11 +19,11 @@ public class UsuarioPeliculaID implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@ManyToOne
-	@JoinColumn(name = "user")
+	@JoinColumn(name = "usuario")
 	private Usuario usuario;
 
 	@ManyToOne
-	@JoinColumn(name = "id")
+	@JoinColumn(name = "id_pelicula")
 	private Pelicula pelicula;
 
 	/**

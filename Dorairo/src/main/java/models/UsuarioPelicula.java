@@ -35,7 +35,7 @@ public class UsuarioPelicula implements Serializable {
 	private String comentariosUsuario;
 
 	@ManyToOne
-	@JoinColumn(name = "id")
+	@JoinColumn(name = "localizacion")
 	private Localizacion localizacion;
 
 	@Column(name = "vista")

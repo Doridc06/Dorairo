@@ -1,10 +1,14 @@
 package models;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 /**
@@ -25,6 +29,14 @@ public class Directores implements Serializable {
 
 	@Column(name = "nombre", length = 200)
 	private String name;
+
+	/** Relacion de Directores con Series */
+	@ManyToMany(cascade = { CascadeType.ALL }, mappedBy = "directores")
+	private Set<Series> series = new HashSet<>();
+
+	/** Relacion de Directores con Peliculas */
+	@ManyToMany(cascade = { CascadeType.ALL }, mappedBy = "directores")
+	private Set<Pelicula> peliculas = new HashSet<>();
 
 	public Directores(int id, String name) {
 		this.id = id;

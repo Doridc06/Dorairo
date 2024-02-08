@@ -1,6 +1,7 @@
 package models;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -26,23 +27,23 @@ public class Series implements Serializable {
 	private int id;
 
 	@Column(name = "titulo", length = 200)
-	private String titulo;
+	private String title;
 
-	@Column(name = "año")
-	private int año;
+	@Column(name = "fecha_estreno")
+	private Date release_date;
 
 	@ManyToOne
-	@JoinColumn(name = "id")
-	private Compañia compañia;
+	@JoinColumn(name = "compañia")
+	private Compañia company;
 
 	@Column(name = "descripcion")
-	private String descripcion;
+	private String overview;
 
 	@Column(name = "cartel")
-	private String cartel;
+	private String poster_path;
 
-	@Column(name = "valoracion")
-	private int valoracion;
+	@Column(name = "valoracion", precision = 5, scale = 3)
+	private double vote_average;
 
 	@Column(name = "num_episodios")
 	private int numeroEpisodios;
@@ -93,16 +94,16 @@ public class Series implements Serializable {
 	 * @param numeroEpisodios
 	 * @param numeroTemporadas
 	 */
-	public Series(int id, String titulo, int año, Compañia compañia, String descripcion, String cartel, int valoracion,
+	public Series(int id, String titulo, Date año, Compañia compañia, String descripcion, String cartel, int valoracion,
 			int numeroEpisodios, int numeroTemporadas) {
 		super();
 		this.id = id;
-		this.titulo = titulo;
-		this.año = año;
-		this.compañia = compañia;
-		this.descripcion = descripcion;
-		this.cartel = cartel;
-		this.valoracion = valoracion;
+		this.title = titulo;
+		this.release_date = año;
+		this.company = compañia;
+		this.overview = descripcion;
+		this.poster_path = cartel;
+		this.vote_average = valoracion;
 		this.numeroEpisodios = numeroEpisodios;
 		this.numeroTemporadas = numeroTemporadas;
 	}
@@ -122,87 +123,87 @@ public class Series implements Serializable {
 	}
 
 	/**
-	 * @return the titulo
+	 * @return the title
 	 */
-	public String getTitulo() {
-		return titulo;
+	public String getTitle() {
+		return title;
 	}
 
 	/**
-	 * @param titulo the titulo to set
+	 * @param title the title to set
 	 */
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	/**
-	 * @return the año
+	 * @return the release_date
 	 */
-	public int getAño() {
-		return año;
+	public Date getRelease_date() {
+		return release_date;
 	}
 
 	/**
-	 * @param año the año to set
+	 * @param release_date the release_date to set
 	 */
-	public void setAño(int año) {
-		this.año = año;
+	public void setRelease_date(Date release_date) {
+		this.release_date = release_date;
 	}
 
 	/**
-	 * @return the compañia
+	 * @return the company
 	 */
-	public Compañia getCompañia() {
-		return compañia;
+	public Compañia getCompany() {
+		return company;
 	}
 
 	/**
-	 * @param compañia the compañia to set
+	 * @param company the company to set
 	 */
-	public void setCompañia(Compañia compañia) {
-		this.compañia = compañia;
+	public void setCompany(Compañia company) {
+		this.company = company;
 	}
 
 	/**
-	 * @return the descripcion
+	 * @return the overview
 	 */
-	public String getDescripcion() {
-		return descripcion;
+	public String getOverview() {
+		return overview;
 	}
 
 	/**
-	 * @param descripcion the descripcion to set
+	 * @param overview the overview to set
 	 */
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
+	public void setOverview(String overview) {
+		this.overview = overview;
 	}
 
 	/**
-	 * @return the cartel
+	 * @return the poster_path
 	 */
-	public String getCartel() {
-		return cartel;
+	public String getPoster_path() {
+		return poster_path;
 	}
 
 	/**
-	 * @param cartel the cartel to set
+	 * @param poster_path the poster_path to set
 	 */
-	public void setCartel(String cartel) {
-		this.cartel = cartel;
+	public void setPoster_path(String poster_path) {
+		this.poster_path = poster_path;
 	}
 
 	/**
-	 * @return the valoracion
+	 * @return the vote_average
 	 */
-	public int getValoracion() {
-		return valoracion;
+	public double getVote_average() {
+		return vote_average;
 	}
 
 	/**
-	 * @param valoracion the valoracion to set
+	 * @param vote_average the vote_average to set
 	 */
-	public void setValoracion(int valoracion) {
-		this.valoracion = valoracion;
+	public void setVote_average(double vote_average) {
+		this.vote_average = vote_average;
 	}
 
 	/**
@@ -231,6 +232,62 @@ public class Series implements Serializable {
 	 */
 	public void setNumeroTemporadas(int numeroTemporadas) {
 		this.numeroTemporadas = numeroTemporadas;
+	}
+
+	/**
+	 * @return the usuarioSerie
+	 */
+	public Set<UsuarioSerie> getUsuarioSerie() {
+		return usuarioSerie;
+	}
+
+	/**
+	 * @param usuarioSerie the usuarioSerie to set
+	 */
+	public void setUsuarioSerie(Set<UsuarioSerie> usuarioSerie) {
+		this.usuarioSerie = usuarioSerie;
+	}
+
+	/**
+	 * @return the actores
+	 */
+	public Set<Actores> getActores() {
+		return actores;
+	}
+
+	/**
+	 * @param actores the actores to set
+	 */
+	public void setActores(Set<Actores> actores) {
+		this.actores = actores;
+	}
+
+	/**
+	 * @return the directores
+	 */
+	public Set<Directores> getDirectores() {
+		return directores;
+	}
+
+	/**
+	 * @param directores the directores to set
+	 */
+	public void setDirectores(Set<Directores> directores) {
+		this.directores = directores;
+	}
+
+	/**
+	 * @return the generos
+	 */
+	public Set<Genero> getGeneros() {
+		return generos;
+	}
+
+	/**
+	 * @param generos the generos to set
+	 */
+	public void setGeneros(Set<Genero> generos) {
+		this.generos = generos;
 	}
 
 }

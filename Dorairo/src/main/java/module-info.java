@@ -6,10 +6,10 @@ module Dorairo {
 	requires com.google.gson;
 	requires okhttp3;
 	requires java.sql;
-	requires hibernate.core;
-	requires hibernate.jpa;
+	requires java.persistence;
+	requires org.hibernate.orm.core;
 
-	opens models to com.google.gson, javafx.fxml;
+	opens models to com.google.gson, javafx.fxml, org.hibernate.orm.core;
 	opens controller to javafx.fxml;
 
 	opens application to javafx.graphics, javafx.fxml;

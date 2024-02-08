@@ -15,83 +15,83 @@ import utilities.GestorVentanas;
 
 public class AleatoriaController {
 
-@FXML
-private ResourceBundle resources;
+  @FXML
+  private ResourceBundle resources;
 
-@FXML
-private URL location;
+  @FXML
+  private URL location;
 
-@FXML
-private ImageView imagenLogoCabecera;
+  @FXML
+  private ImageView imagenLogoCabecera;
 
-@FXML
-private Pane paneCabecera;
+  @FXML
+  private Pane paneCabecera;
 
-@FXML
-private StackPane stackPaneInicioCabecera;
+  @FXML
+  private StackPane stackPaneInicioCabecera;
 
-@FXML
-private StackPane stackPaneLogoCabecera;
+  @FXML
+  private StackPane stackPaneLogoCabecera;
 
-@FXML
-private StackPane stackPanePeliculasCabecera;
+  @FXML
+  private StackPane stackPanePeliculasCabecera;
 
-/** Scene de la ventana de Inicio */
-private Scene scene;
+  /** Scene de la ventana de Inicio */
+  private Scene scene;
 
-/** Stage de la ventana de Inicio */
-private Stage stage;
+  /** Stage de la ventana de Inicio */
+  private Stage stage;
 
-/** Instancia del gestor de ventanas **/
-private GestorVentanas gestorVentanas;
+  /** Instancia del gestor de ventanas **/
+  private GestorVentanas gestorVentanas;
 
-@FXML
-void initialize() {
+  @FXML
+  void initialize() {
     // Inicializamos el Gestor de ventanas
     gestorVentanas = new GestorVentanas();
     // Establece la imagen del logo
     Image imagenLogo = new Image(getClass().getResourceAsStream(Constants.URL_LOGO_AMPLIADO));
     imagenLogoCabecera.setImage(imagenLogo);
-}
+  }
 
-@FXML
-void inicioClicked(MouseEvent event) {
+  @FXML
+  void inicioClicked(MouseEvent event) {
     setSceneAndStage();
     gestorVentanas.muestraVentana(stage, Constants.URL_INICIO_FXML, "Inicio");
-}
+  }
 
-@FXML
-void peliculasClicked(MouseEvent event) {
+  @FXML
+  void peliculasClicked(MouseEvent event) {
     setSceneAndStage();
     gestorVentanas.muestraVentana(stage, Constants.URL_PELICULA_FXML, "Pelicula");
-}
+  }
 
-@FXML
-void seriesClicked(MouseEvent event) {
+  @FXML
+  void seriesClicked(MouseEvent event) {
     setSceneAndStage();
     gestorVentanas.muestraVentana(stage, Constants.URL_SERIES_FXML, "Series");
-}
+  }
 
-@FXML
-void buscadorClicked(MouseEvent event) {
+  @FXML
+  void buscadorClicked(MouseEvent event) {
     setSceneAndStage();
     gestorVentanas.muestraVentana(stage, Constants.URL_BUSCADOR_FXML, "Buscador");
-}
+  }
 
-@FXML
-void perfilClicked(MouseEvent event) {
+  @FXML
+  void perfilClicked(MouseEvent event) {
     setSceneAndStage();
     gestorVentanas.muestraVentana(stage, Constants.URL_PERFIL_FXML, "Perfil");
-}
+  }
 
 
-/**
- * Asigna los valores correspondientes del stage y el scene
- * 
- */
-public void setSceneAndStage() {
+  /**
+   * Asigna los valores correspondientes del stage y el scene
+   * 
+   */
+  public void setSceneAndStage() {
     scene = imagenLogoCabecera.getScene();
     stage = (Stage) scene.getWindow();
-}
+  }
 
 }

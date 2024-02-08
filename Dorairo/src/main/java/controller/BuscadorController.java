@@ -7,7 +7,6 @@ import java.util.ResourceBundle;
 import com.google.gson.Gson;
 
 import constants.Constants;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

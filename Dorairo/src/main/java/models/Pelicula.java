@@ -1,8 +1,10 @@
 package models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -36,7 +38,7 @@ public class Pelicula implements Serializable {
 	private String title;
 
 	@Column(name = "fecha_estreno")
-	private Date release_date;
+	private String release_date;
 
 	@ManyToOne
 	@JoinColumn(name = "compañia")
@@ -79,7 +81,7 @@ public class Pelicula implements Serializable {
 	@ManyToMany(cascade = { CascadeType.ALL })
 	@JoinTable(name = "Peliculas_Generos", joinColumns = { @JoinColumn(name = "id_pelicula") }, inverseJoinColumns = {
 			@JoinColumn(name = "id_genero") })
-	private Set<Genero> genres = new HashSet<>();
+	 private List<Genero> genres = new ArrayList<>();
 
 	/**
 	 * Constructor para Pelicula
@@ -91,7 +93,7 @@ public class Pelicula implements Serializable {
 	 * @param poster
 	 * @param valoracionGlobal
 	 */
-	public Pelicula(String titulo, Date fechaEstreno, Compañia compañia, String descripcion, String poster,
+	public Pelicula(String titulo, String fechaEstreno, Compañia compañia, String descripcion, String poster,
 			String valoracionGlobal) {
 		this.title = titulo;
 		this.release_date = fechaEstreno;
@@ -132,14 +134,14 @@ public class Pelicula implements Serializable {
 	/**
 	 * @return the release_date
 	 */
-	public Date getRelease_date() {
+	public String getRelease_date() {
 		return release_date;
 	}
 
 	/**
 	 * @param release_date the release_date to set
 	 */
-	public void setRelease_date(Date release_date) {
+	public void setRelease_date(String release_date) {
 		this.release_date = release_date;
 	}
 
@@ -244,16 +246,14 @@ public class Pelicula implements Serializable {
 	/**
 	 * @return the generos
 	 */
-	public Set<Genero> getGenres() {
-		return genres;
-	}
+    public List<Genero> getGenres() {
+   return genres;
+}
 
-	/**
-	 * @param generos the generos to set
-	 */
-	public void setGenres(Set<Genero> generos) {
-		this.genres = generos;
-	}
+public void setGenres(List<Genero> genres) {
+    this.genres = genres;
+}
+
 
 	public boolean contieneGenero(String nombreGenero) {
 		if (genres != null && nombreGenero != null) {
@@ -265,5 +265,16 @@ public class Pelicula implements Serializable {
 		}
 		return false;
 	}
+
+  @Override
+  public String toString() {
+    return "Pelicula [id=" + id + ", title=" + title + ", release_date=" + release_date
+        + ", company=" + company + ", overview=" + overview + ", poster_path=" + poster_path
+        + ", vote_average=" + vote_average + ", usuarioPelicula=" + usuarioPelicula + ", actores="
+        + actores + ", directores=" + directores + ", genres=" + genres + "]";
+  }
+	
+	
+	
 
 }

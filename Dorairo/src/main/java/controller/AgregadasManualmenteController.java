@@ -211,8 +211,8 @@ public class AgregadasManualmenteController {
 				SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 				Date fecha;
 				fecha = formato.parse(txtEstreno.getText());
-				Pelicula pelicula = new Pelicula(txtTitulo.getText(), fecha, company, txtDescripcion.getText(), poster,
-						txtValoracionGlobal.getText());
+			//	Pelicula pelicula = new Pelicula(txtTitulo.getText(), fecha, company, txtDescripcion.getText(), poster,
+			//			txtValoracionGlobal.getText());
 			} catch (Exception e) {
 				Utils.mostrarAlerta("Error en la creacion del elemento, revisa todos los campos.", Constants.ERROR_TYPE);
 			}

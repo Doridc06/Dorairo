@@ -240,7 +240,7 @@ public class SeriesController {
 		return imageView;
 	}
 
-	@FXML
+
 	void detallesClicked(ImageView clickedImageView) {
 		// Obtener el identificador de la serie desde el ImageView
 		String serieId = getSerieIdFromImageView(clickedImageView);
@@ -249,10 +249,14 @@ public class SeriesController {
 		abrirVentanaDetalles(serieId);
 	}
 
+	
+	
 	private void abrirVentanaDetalles(String serieId) {
 		setSceneAndStage();
 		gestorVentanas.muestraDetalles(stage, serieId, "tv");
 	}
+	
+	
 
 	private String getSerieIdFromImageView(ImageView imageView) {
 		// Obtén el ID de la serie almacenado en el userData del ImageView
@@ -277,16 +281,11 @@ public class SeriesController {
 		abrirVentanaPeliAleatoria();
 	}
 
-	// Para abrir la pantalla de generos
-	private void abrirVentanaBuscadorGenero(String generoId) {
-		setSceneAndStage();
-		gestorVentanas.muestraVentana(stage, Constants.URL_GENEROS_FXML, "Generos");
-	}
 
-	@FXML
+
 	void generoClicked(String generoId) {
-
-		abrirVentanaBuscadorGenero(generoId);
-	}
+      setSceneAndStage();
+      gestorVentanas. muestraBuscadorGenero(stage,"tv",generoId);
+    }
 
 }

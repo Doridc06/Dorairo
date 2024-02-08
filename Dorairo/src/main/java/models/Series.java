@@ -1,8 +1,10 @@
 package models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -27,10 +29,10 @@ public class Series implements Serializable {
 	private int id;
 
 	@Column(name = "titulo", length = 200)
-	private String title;
+	private String name;
 
 	@Column(name = "fecha_estreno")
-	private Date release_date;
+	private String first_air_date;
 
 	@ManyToOne
 	@JoinColumn(name = "compañia")
@@ -46,10 +48,10 @@ public class Series implements Serializable {
 	private double vote_average;
 
 	@Column(name = "num_episodios")
-	private int numeroEpisodios;
+	private int number_of_episodes;
 
 	@Column(name = "num_temporadas")
-	private int numeroTemporadas;
+	private int number_of_seasons;
 
 	/**
 	 * Relación de serie con la tabla de los id de usuarioSerie
@@ -79,7 +81,7 @@ public class Series implements Serializable {
 	@ManyToMany(cascade = { CascadeType.ALL })
 	@JoinTable(name = "Series_Generos", joinColumns = { @JoinColumn(name = "id_serie") }, inverseJoinColumns = {
 			@JoinColumn(name = "id_genero") })
-	private Set<Genero> generos = new HashSet<>();
+	   private List<Genero> genres = new ArrayList<>();
 
 	/**
 	 * Constructor para Serie
@@ -94,18 +96,19 @@ public class Series implements Serializable {
 	 * @param numeroEpisodios
 	 * @param numeroTemporadas
 	 */
-	public Series(int id, String titulo, Date año, Compañia compañia, String descripcion, String cartel, int valoracion,
-			int numeroEpisodios, int numeroTemporadas) {
+	public Series(int id, String name, String first_air_date, Compañia compañia, String descripcion, String cartel, int valoracion,
+			int number_of_episodes, int number_of_seasons) {
 		super();
 		this.id = id;
-		this.title = titulo;
-		this.release_date = año;
+		this.name = name;
+		this.first_air_date = first_air_date;
 		this.company = compañia;
 		this.overview = descripcion;
 		this.poster_path = cartel;
 		this.vote_average = valoracion;
-		this.numeroEpisodios = numeroEpisodios;
-		this.numeroTemporadas = numeroTemporadas;
+		this.number_of_episodes = number_of_episodes;
+		this.number_of_seasons = number_of_seasons;
+		
 	}
 
 	/**
@@ -125,29 +128,29 @@ public class Series implements Serializable {
 	/**
 	 * @return the title
 	 */
-	public String getTitle() {
-		return title;
+	public String getName() {
+		return name;
 	}
 
 	/**
 	 * @param title the title to set
 	 */
-	public void setTitle(String title) {
-		this.title = title;
+	public void setName(String title) {
+		this.name = title;
 	}
 
 	/**
 	 * @return the release_date
 	 */
-	public Date getRelease_date() {
-		return release_date;
+	public String getFirst_air_date() {
+		return first_air_date;
 	}
 
 	/**
 	 * @param release_date the release_date to set
 	 */
-	public void setRelease_date(Date release_date) {
-		this.release_date = release_date;
+	public void setFirst_air_date(String first_air_date) {
+		this.first_air_date = first_air_date;
 	}
 
 	/**
@@ -209,29 +212,30 @@ public class Series implements Serializable {
 	/**
 	 * @return the numeroEpisodios
 	 */
-	public int getNumeroEpisodios() {
-		return numeroEpisodios;
+	public int getNumber_of_episodes() {
+		return number_of_episodes;
 	}
 
 	/**
 	 * @param numeroEpisodios the numeroEpisodios to set
 	 */
-	public void setNumeroEpisodios(int numeroEpisodios) {
-		this.numeroEpisodios = numeroEpisodios;
+	public void setNumber_of_episodes(int number_of_episodes) {
+		this.number_of_episodes = number_of_episodes;
+		
 	}
 
 	/**
 	 * @return the numeroTemporadas
 	 */
-	public int getNumeroTemporadas() {
-		return numeroTemporadas;
+	public int getNumber_of_seasons() {
+		return number_of_seasons;
 	}
 
 	/**
 	 * @param numeroTemporadas the numeroTemporadas to set
 	 */
-	public void setNumeroTemporadas(int numeroTemporadas) {
-		this.numeroTemporadas = numeroTemporadas;
+	public void setNumber_of_seasons(int number_of_seasons) {
+		this.number_of_seasons = number_of_seasons;
 	}
 
 	/**
@@ -279,15 +283,12 @@ public class Series implements Serializable {
 	/**
 	 * @return the generos
 	 */
-	public Set<Genero> getGeneros() {
-		return generos;
-	}
+	 public List<Genero> getGenres() {
+    return genres;
+ }
 
-	/**
-	 * @param generos the generos to set
-	 */
-	public void setGeneros(Set<Genero> generos) {
-		this.generos = generos;
-	}
+ public void setGenres(List<Genero> genres) {
+     this.genres = genres;
+ }
 
 }

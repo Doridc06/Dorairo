@@ -115,7 +115,6 @@ public class InicioController {
 			// Iterar sobre las películas y agregar imágenes al HBox
 			int contador = 0;
 			for (Pelicula pelicula : respApi.getResults()) {
-				System.out.println("Adding image: " + pelicula.getPoster_path());
 				if (contador < 10) { // Limitar a 10 películas
 					ImageView imageView = null;
 					if (pelicula.getPoster_path() != null) {
@@ -146,8 +145,6 @@ public class InicioController {
 		Image image = new Image(imageUrl);
 		imageView.getStyleClass().add("sombraDerecha");
 		imageView.setImage(image);
-
-		System.out.println("W:" + imageView.getFitWidth() + "; H:" + imageView.getFitHeight());
 
 		return imageView;
 	}

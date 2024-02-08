@@ -14,7 +14,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import models.Genero;
 import models.Pelicula;
-import models.Serie;
+import models.Series;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -143,7 +143,7 @@ public class DetallesController {
 						+ "\n" + "Géneros: " + generosString.toString() + "\n" + "Valoracion: " + datos.getVote_average() + "\n");
 
 			} else if (tipo.equals("tv")) {
-				Serie datos = gson.fromJson(responseBody, Serie.class);
+				Series datos = gson.fromJson(responseBody, Series.class);
 				titulo.setText(datos.getName());
 				cartel.setImage(new Image("https://image.tmdb.org/t/p/w500" + datos.getPoster_path()));
 				// Configurar la imagen de fondo con transparencia
@@ -177,8 +177,7 @@ public class DetallesController {
 
 				detalles.setText("Descripción: " + datos.getOverview() + "\n" + "Fecha de estreno: " + datos.getFirst_air_date()
 						+ "\n" + "Géneros: " + generosString.toString() + "\n" + "Valoracion: " + datos.getVote_average() + "\n"
-						+ "Episodios: " + datos.getNumber_of_episodes() + "\n" + "Temporadas: " + datos.getNumber_of_seasons()
-						+ "\n" + "Popularidad: " + datos.getPopularity() + "\n");
+						+ "Episodios: " + datos.getNumber_of_episodes() + "\n" + "Temporadas: " + datos.getNumber_of_seasons());
 
 			}
 

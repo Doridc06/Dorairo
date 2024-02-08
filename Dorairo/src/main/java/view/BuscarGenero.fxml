@@ -1,43 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DetallesController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.BuscarGeneroController">
 	<children>
-		<ScrollPane layoutY="150.0" prefHeight="832.0" prefWidth="1512.0" styleClass="fondo">
-			<content>
-				<AnchorPane fx:id="paneFondo" minHeight="0.0" minWidth="0.0" prefHeight="982.0" prefWidth="1512.0" styleClass="fondo">
-               <children>
-               <ImageView fx:id="fondoIm"></ImageView>
-                
-                  <Text fx:id="titulo" layoutX="61.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="1226.13671875">
-                     <font>
-                        <Font name="System Bold" size="34.0" />
-                     </font>
-                  </Text>
-                  <ImageView fx:id="cartel" fitHeight="400.0" fitWidth="400.0" layoutX="61.0" layoutY="91.0" pickOnBounds="true" preserveRatio="true" />
-                  <Text fx:id="detalles" layoutX="59.0" layoutY="582.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="1311.0">
-                     <font>
-                        <Font size="23.0" />
-                     </font>
-                  </Text>
-                  <Text layoutX="59.0" layoutY="543.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Detalles de la película:">
-                     <font>
-                        <Font size="26.0" />
-                     </font>
-                  </Text>
-               </children></AnchorPane>
-			</content>
-		</ScrollPane>
-   
 		<Pane fx:id="paneCabecera" prefHeight="150.0" prefWidth="1512.0">
 			<children>
 				<StackPane fx:id="stackPaneLogoCabecera" layoutX="50.0" layoutY="14.0" prefHeight="125.0" prefWidth="125.0">
@@ -96,5 +72,19 @@
 				</StackPane>
 			</children>
 		</Pane>
+      <ScrollPane layoutX="38.0" layoutY="237.0" prefHeight="269.0" prefWidth="1513.0" styleClass="fondo">
+         <content>
+            <HBox fx:id="hBoxPeliculas" prefHeight="258.0" prefWidth="1830.0" styleClass="fondo">
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </HBox>
+         </content>
+      </ScrollPane>
+      <Text fx:id="seEncontro" layoutX="38.0" layoutY="199.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Se encontro:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
 	</children>
 </AnchorPane>

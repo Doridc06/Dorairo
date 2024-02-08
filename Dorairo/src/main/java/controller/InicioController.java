@@ -181,6 +181,7 @@ public class InicioController {
 		setSceneAndStage();
 		gestorVentanas.muestraVentana(stage, Constants.URL_USUARIO_FXML, "Perfil");
 	}
+	
 
 	/**
 	 * Asigna los valores correspondientes del stage y el scene

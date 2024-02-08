@@ -32,4 +32,58 @@ public class Genero implements Serializable {
 	@ManyToMany(cascade = { CascadeType.ALL }, mappedBy = "generos")
 	private Set<Pelicula> peliculas = new HashSet<>();
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Object toLowerCase() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the series
+	 */
+	public Set<Series> getSeries() {
+		return series;
+	}
+
+	/**
+	 * @param series the series to set
+	 */
+	public void setSeries(Set<Series> series) {
+		this.series = series;
+	}
+
+	/**
+	 * @return the peliculas
+	 */
+	public Set<Pelicula> getPeliculas() {
+		return peliculas;
+	}
+
+	/**
+	 * @param peliculas the peliculas to set
+	 */
+	public void setPeliculas(Set<Pelicula> peliculas) {
+		this.peliculas = peliculas;
+	}
 }

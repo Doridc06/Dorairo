@@ -79,7 +79,7 @@ public class Pelicula implements Serializable {
 	@ManyToMany(cascade = { CascadeType.ALL })
 	@JoinTable(name = "Peliculas_Generos", joinColumns = { @JoinColumn(name = "id_pelicula") }, inverseJoinColumns = {
 			@JoinColumn(name = "id_genero") })
-	private Set<Genero> generos = new HashSet<>();
+	private Set<Genero> genres = new HashSet<>();
 
 	/**
 	 * Constructor para Pelicula
@@ -244,15 +244,26 @@ public class Pelicula implements Serializable {
 	/**
 	 * @return the generos
 	 */
-	public Set<Genero> getGeneros() {
-		return generos;
+	public Set<Genero> getGenres() {
+		return genres;
 	}
 
 	/**
 	 * @param generos the generos to set
 	 */
-	public void setGeneros(Set<Genero> generos) {
-		this.generos = generos;
+	public void setGenres(Set<Genero> generos) {
+		this.genres = generos;
+	}
+
+	public boolean contieneGenero(String nombreGenero) {
+		if (genres != null && nombreGenero != null) {
+			for (Genero genero : genres) {
+				if (nombreGenero.equalsIgnoreCase(genero.getName())) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 }

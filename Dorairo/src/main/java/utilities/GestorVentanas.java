@@ -3,6 +3,7 @@ package utilities;
 import java.io.IOException;
 
 import constants.Constants;
+import controller.DetallesController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -96,6 +97,54 @@ public class GestorVentanas {
 			} else {
 				stage.show();
 			}
+			// Establecemos el stage como owner Stage
+			Utils.setOwnerStage(stage);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void muestraDetalles(Stage stageAnterior, String id, String tipo) {
+		try {
+			
+			// Cierra el stage anterior
+			stageAnterior.close();
+			
+			// Ruta a la ventana
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(Constants.URL_DETALLES_FXML));
+			Parent root;
+			root = loader.load();
+
+			// Obtener el controlador de la ventana de detalles
+			DetallesController detallesController = loader.getController();
+
+			// Inicializar los datos en el controlador de detalles
+			detallesController.initData(id,tipo);
+
+			// Asigna la ventana al nuevo stage
+			Stage stage = new Stage();
+			Scene scene = null;
+
+			// Establece el tamaño por defecto
+			scene = new Scene(root, 1512, 982);
+			stage.setScene(scene);
+
+			// Cambia el icono de la ventana
+			Image icon = new Image(getClass().getResourceAsStream(Constants.URL_LOGO_AMPLIADO));
+			stage.getIcons().add(icon);
+
+			// Cambia el titulo de la ventana
+			stage.setTitle("Detalles");
+
+			// Define el tipo de modalidad
+			stage.initModality(Modality.APPLICATION_MODAL);
+
+			// Inhabilita la redimension de la ventana
+			stage.setResizable(false);
+
+			// Muestra la ventana
+			stage.show();
+
 			// Establecemos el stage como owner Stage
 			Utils.setOwnerStage(stage);
 		} catch (IOException e) {

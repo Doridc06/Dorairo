@@ -14,6 +14,9 @@ import models.Usuario;
  */
 public class Constants {
 
+	/**
+	 * Constructor privado para que no se cree objeto
+	 */
 	private Constants() {
 	}
 
@@ -27,26 +30,6 @@ public class Constants {
 
 	/** Tipo de alerta para mensajes comunes */
 	public static final String INFORMATION_TYPE = "INFORMATION";
-
-	// Rutas a imagenes
-
-	/** Ruta a la imagen del icono de la aplicación */
-	public static final String URL_LOGO_AMPLIADO = "/application/images/logoAmpliado.jpg";
-
-	/** Ruta a la imagen del logo */
-	public static final String URL_LOGO_NORMAL = "/application/images/logoDorairo.jpg";
-
-	/** Ruta a la imagen de la portada */
-	public static final String URL_PORTADA = "/application/images/portada.png";
-
-	/** Ruta a la imagen de la foto de perfl por defecto */
-	public static final String URL_FOTO_PERFIL_DEFAULT = "/application/images/fotoPerfilDefault.png";
-
-	/** Ruta a la imagen de fondo de la ventana del perfil */
-	public static final String URL_FOTO_FONDO_PERFIL = "/application/images/fondoPerfil.png";
-
-	/** Ruta a la imagen de subir foto */
-	public static final String URL_FOTO_SUBIR_FOTO = "/application/images/subirFoto.png";
 
 	// Perfiles predeterminados
 
@@ -86,6 +69,31 @@ public class Constants {
 
 	/** Ruta al documento fxml de Detalles */
 	public static final String URL_DETALLES_FXML = "/view/Detalles.fxml";
+
+	/** Ruta al documento fxml de Generos */
+	public static final String URL_GENEROS_FXML = "/view/BuscarGenero.fxml";
+
+	/** Ruta al documento fxml de Aleatoria */
+	public static final String URL_PELI_SERIE_ALEATORIA_FXML = "/view/Aleatoria.fxml";
+
+	// Rutas a imagenes
+	/** Ruta a la imagen de la portada */
+	public static final String URL_PORTADA = "/application/images/portada.png";
+
+	/** Ruta a la imagen de la foto de perfl por defecto */
+	public static final String URL_FOTO_PERFIL_DEFAULT = "/application/images/fotoPerfilDefault.png";
+
+	/** Ruta a la imagen de fondo de la ventana del perfil */
+	public static final String URL_FOTO_FONDO_PERFIL = "/application/images/fondoPerfil.png";
+
+	/** Ruta a la imagen de subir foto */
+	public static final String URL_FOTO_SUBIR_FOTO = "/application/images/subirFoto.png";
+
+	/** Ruta a la imagen del icono de la aplicación */
+	public static final String URL_LOGO_AMPLIADO = "/application/images/logoAmpliado.jpg";
+
+	/** Ruta a la imagen del logo */
+	public static final String URL_LOGO_NORMAL = "/application/images/logoDorairo.jpg";
 
 	// Metodos
 

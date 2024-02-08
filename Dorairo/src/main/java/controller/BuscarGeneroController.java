@@ -83,7 +83,6 @@ public class BuscarGeneroController {
 
     private List<Genero> listaGeneros = new ArrayList<>();
 
-    
 
     /**
      * Asigna los valores correspondientes del stage y el scene
@@ -124,7 +123,6 @@ public class BuscarGeneroController {
         setSceneAndStage();
         gestorVentanas.muestraVentana(stage, Constants.URL_PERFIL_FXML, "Perfil");
     }
-    
 
     @FXML
     void initialize() {
@@ -135,8 +133,7 @@ public class BuscarGeneroController {
         // Establecer la imagen del logo
         Image imagenLogo = new Image(getClass().getResourceAsStream(Constants.URL_LOGO_AMPLIADO));
         imagenLogoCabecera.setImage(imagenLogo);
-
-      
+    
     }
     
     

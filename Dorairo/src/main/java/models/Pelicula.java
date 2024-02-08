@@ -114,7 +114,19 @@ public class Pelicula {
   }
 
 
-	
-	
-	
+  private List<Genero> generos;
+
+  // Otros atributos y métodos de la clase Pelicula
+
+  public boolean contieneGenero(String nombreGenero) {
+      if (generos != null && nombreGenero != null) {
+          for (Genero genero : generos) {
+              if (nombreGenero.equalsIgnoreCase(genero.getName())) {
+                  return true;
+              }
+          }
+      }
+      return false;
+  }
+
 }

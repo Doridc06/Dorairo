@@ -227,7 +227,7 @@
 				</StackPane>
 				<MenuButton layoutX="447.0" layoutY="53.0" minHeight="44.0" mnemonicParsing="false" prefWidth="200.0" styleClass="cabeceraBotones" text="Películas">
 					<items>
-						<MenuItem mnemonicParsing="false" text="Aleatoria" />
+						<MenuItem fx:id="Aleatoria" mnemonicParsing="false" text="Aleatoria" />
 					</items>
 					<font>
 						<Font size="21.0" />

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AleatoriaController">
+	<children>
+		<ScrollPane layoutY="150.0" prefHeight="832.0" prefWidth="1512.0" styleClass="fondo">
+			<content>
+				<AnchorPane fx:id="paneFondo" minHeight="0.0" minWidth="0.0" prefHeight="832.0" prefWidth="1512.0" styleClass="fondo" />
+			</content>
+		</ScrollPane>
+		<Pane fx:id="paneCabecera" prefHeight="150.0" prefWidth="1512.0">
+			<children>
+				<StackPane fx:id="stackPaneLogoCabecera" layoutX="50.0" layoutY="14.0" prefHeight="125.0" prefWidth="125.0">
+					<children>
+						<ImageView fx:id="imagenLogoCabecera" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+							<image>
+								<Image url="@../../resources/application/images/logoAmpliado.jpg" />
+							</image>
+						</ImageView>
+					</children>
+				</StackPane>
+				<StackPane fx:id="stackPaneInicioCabecera" layoutX="215.0" layoutY="53.0" onMouseClicked="#inicioClicked" prefHeight="44.0" prefWidth="200.0" styleClass="cabeceraBotones">
+					<children>
+						<Label text="Inicio">
+							<font>
+								<Font size="30.0" />
+							</font>
+						</Label>
+					</children>
+				</StackPane>
+				<StackPane layoutX="675.0" layoutY="53.0" onMouseClicked="#seriesClicked" prefHeight="44.0" prefWidth="200.0" styleClass="cabeceraBotones">
+					<children>
+						<Label text="Series">
+							<font>
+								<Font size="30.0" />
+							</font>
+						</Label>
+					</children>
+				</StackPane>
+				<StackPane layoutX="905.0" layoutY="53.0" onMouseClicked="#perfilClicked" prefHeight="44.0" prefWidth="200.0" styleClass="cabeceraBotones">
+					<children>
+						<Label text="Perfil">
+							<font>
+								<Font size="30.0" />
+							</font>
+						</Label>
+					</children>
+				</StackPane>
+				<StackPane layoutX="1225.0" layoutY="53.0" onMouseClicked="#buscadorClicked" prefHeight="44.0" prefWidth="250.0" styleClass="cabeceraBotones">
+					<children>
+						<Label text="Buscador">
+							<font>
+								<Font size="30.0" />
+							</font>
+						</Label>
+					</children>
+				</StackPane>
+				<StackPane fx:id="stackPanePeliculasCabecera" layoutX="442.0" layoutY="53.0" onMouseClicked="#peliculasClicked" prefHeight="44.0" prefWidth="200.0" styleClass="cabeceraBotones">
+					<children>
+						<Label text="Películas">
+							<font>
+								<Font size="30.0" />
+							</font>
+						</Label>
+					</children>
+				</StackPane>
+			</children>
+		</Pane>
+	</children>
+</AnchorPane>

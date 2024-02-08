@@ -10,6 +10,7 @@ import constants.Constants;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -96,6 +97,9 @@ public class SeriesController {
   	/** Instancia del gestor de ventanas **/
   	private GestorVentanas gestorVentanas;
   	
+  	 @FXML
+     private MenuItem Aleatoria;
+  	
   	private static final String API_KEY = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlYjc0NTA5ZjRiZDBlODJlMTFlYzA2YWM1MDRhMGRlMCIsInN1YiI6IjY1Mzc3ZmRmZjQ5NWVlMDBmZjY1YTEyOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ehIu08LoiMRTccPoD4AfADXOpQPlqNAKUMvGgwY3XU8";
 
   	 @FXML
@@ -150,6 +154,13 @@ public class SeriesController {
   		// Establece la imagen del logo
   		Image imagenLogo = new Image(getClass().getResourceAsStream(Constants.URL_LOGO_AMPLIADO));
   		imagenLogoCabecera.setImage(imagenLogo);
+  		 Aleatoria.setOnAction(event -> peliAleatoriaClicked());
+  		 GeneroAccion.setOnAction(event -> generoClicked("28"));
+         GeneroAventura.setOnAction(event -> generoClicked("12"));
+         GeneroComedia.setOnAction(event -> generoClicked("35"));
+         GeneroTerror.setOnAction(event -> generoClicked("27"));
+         GeneroSuspenso.setOnAction(event -> generoClicked("53"));
+         GeneroDrama.setOnAction(event -> generoClicked("18"));
   		
   		try {
 			// Configuración del cliente HTTP (OkHttpClient)
@@ -258,7 +269,28 @@ public class SeriesController {
 			return "";
 		}
 	}
+	
+	// para abrir la pantalla de peli aleatoria
+    private void abrirVentanaPeliAleatoria() {
+    setSceneAndStage();
+    gestorVentanas.muestraVentana(stage, Constants.URL_PELI_SERIE_ALEATORIA_FXML, "Pelicula/Serie Aleatoria");
+  }
+    @FXML
+    void peliAleatoriaClicked() {
+      abrirVentanaPeliAleatoria();
+    }
 
+  //Para abrir la pantalla de generos
+    private void abrirVentanaBuscadorGenero(String generoId) {
+    setSceneAndStage();
+    gestorVentanas.muestraVentana(stage, Constants.URL_GENEROS_FXML, "Generos");
+  }
+   
+    @FXML
+    void generoClicked(String generoId) {
+        
+        abrirVentanaBuscadorGenero(generoId);
+    }
   	
 
 }

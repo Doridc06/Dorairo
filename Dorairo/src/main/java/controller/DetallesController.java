@@ -195,9 +195,7 @@ public class DetallesController {
              
           }
 
-           
-           
-            
+         
 
         } catch (IOException e) {
             e.printStackTrace();

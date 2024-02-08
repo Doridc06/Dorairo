@@ -36,111 +36,107 @@ import com.google.gson.reflect.TypeToken;
 
 public class BuscarGeneroController {
 
-    @FXML
-    private ResourceBundle resources;
+	@FXML
+	private ResourceBundle resources;
 
-    @FXML
-    private URL location;
+	@FXML
+	private URL location;
 
-    @FXML
-    private ImageView imagenLogoCabecera;
+	@FXML
+	private ImageView imagenLogoCabecera;
 
-    @FXML
-    private HBox peliculasPorGenero;
+	@FXML
+	private HBox peliculasPorGenero;
 
-    @FXML
-    private StackPane stackPaneInicioCabecera;
+	@FXML
+	private StackPane stackPaneInicioCabecera;
 
-    @FXML
-    private StackPane stackPaneLogoCabecera;
+	@FXML
+	private StackPane stackPaneLogoCabecera;
 
-    @FXML
-    private StackPane stackPanePeliculasCabecera;
-    
-    /** Scene de la ventana de Inicio */
-    private Scene scene;
+	@FXML
+	private StackPane stackPanePeliculasCabecera;
 
-    /** Stage de la ventana de Inicio */
-    private Stage stage;
+	/** Scene de la ventana de Inicio */
+	private Scene scene;
 
-    /** Instancia del gestor de ventanas **/
-    private GestorVentanas gestorVentanas;
-    
-    @FXML
-    private Text seEncontro;
-    
-    @FXML
-   public HBox hBoxPeliculas;
-    
-    @FXML
-    private ImageView cartel;
-    
-    // Lista para almacenar todas las películas obtenidas de la API
-    static List<Pelicula> todasLasPeliculas = new ArrayList<>();
+	/** Stage de la ventana de Inicio */
+	private Stage stage;
 
-    // Lista para almacenar las películas filtradas por género
-    private List<Pelicula> peliculasFiltradas = new ArrayList<>();
+	/** Instancia del gestor de ventanas **/
+	private GestorVentanas gestorVentanas;
 
-    private List<Genero> listaGeneros = new ArrayList<>();
+	@FXML
+	private Text seEncontro;
 
+	@FXML
+	public HBox hBoxPeliculas;
 
-    /**
-     * Asigna los valores correspondientes del stage y el scene
-     * 
-     */
-    public void setSceneAndStage() {
-        scene = imagenLogoCabecera.getScene();
-        stage = (Stage) scene.getWindow();
-    }
-    
-    @FXML
-    void inicioClicked(MouseEvent event) {
-        setSceneAndStage();
-        gestorVentanas.muestraVentana(stage, Constants.URL_INICIO_FXML, "Inicio");
-         System.out.println("Mouse clicked en la cabecera de inicio");
-    }
+	@FXML
+	private ImageView cartel;
 
-    @FXML
-    void peliculasClicked(MouseEvent event) {
-        setSceneAndStage();
-        gestorVentanas.muestraVentana(stage, Constants.URL_PELICULA_FXML, "Pelicula");
-    }
+	// Lista para almacenar todas las películas obtenidas de la API
+	static List<Pelicula> todasLasPeliculas = new ArrayList<>();
 
-    @FXML
-    void seriesClicked(MouseEvent event) {
-        setSceneAndStage();
-        gestorVentanas.muestraVentana(stage, Constants.URL_SERIES_FXML, "Series");
-    }
+	// Lista para almacenar las películas filtradas por género
+	private List<Pelicula> peliculasFiltradas = new ArrayList<>();
 
-    @FXML
-    void buscadorClicked(MouseEvent event) {
-        setSceneAndStage();
-        gestorVentanas.muestraVentana(stage, Constants.URL_BUSCADOR_FXML, "Buscador");
-    }
+	private List<Genero> listaGeneros = new ArrayList<>();
 
-    @FXML
-    void perfilClicked(MouseEvent event) {
-        setSceneAndStage();
-        gestorVentanas.muestraVentana(stage, Constants.URL_PERFIL_FXML, "Perfil");
-    }
+	/**
+	 * Asigna los valores correspondientes del stage y el scene
+	 * 
+	 */
+	public void setSceneAndStage() {
+		scene = imagenLogoCabecera.getScene();
+		stage = (Stage) scene.getWindow();
+	}
 
-    @FXML
-    void initialize() {
-        // Inicializar gestorVentanas
-        gestorVentanas = new GestorVentanas();
-        // No necesitas inicializar hBoxPeliculas aquí
-        
-        // Establecer la imagen del logo
-        Image imagenLogo = new Image(getClass().getResourceAsStream(Constants.URL_LOGO_AMPLIADO));
-        imagenLogoCabecera.setImage(imagenLogo);
-    
-    }
-    
-    
-    public HBox getHBoxPeliculas() {
-      return hBoxPeliculas;
-  }
+	@FXML
+	void inicioClicked(MouseEvent event) {
+		setSceneAndStage();
+		gestorVentanas.muestraVentana(stage, Constants.URL_INICIO_FXML, "Inicio");
+		System.out.println("Mouse clicked en la cabecera de inicio");
+	}
 
+	@FXML
+	void peliculasClicked(MouseEvent event) {
+		setSceneAndStage();
+		gestorVentanas.muestraVentana(stage, Constants.URL_PELICULA_FXML, "Pelicula");
+	}
 
- 
+	@FXML
+	void seriesClicked(MouseEvent event) {
+		setSceneAndStage();
+		gestorVentanas.muestraVentana(stage, Constants.URL_SERIES_FXML, "Series");
+	}
+
+	@FXML
+	void buscadorClicked(MouseEvent event) {
+		setSceneAndStage();
+		gestorVentanas.muestraVentana(stage, Constants.URL_BUSCADOR_FXML, "Buscador");
+	}
+
+	@FXML
+	void perfilClicked(MouseEvent event) {
+		setSceneAndStage();
+		gestorVentanas.muestraVentana(stage, Constants.URL_USUARIO_FXML, "Perfil");
+	}
+
+	@FXML
+	void initialize() {
+		// Inicializar gestorVentanas
+		gestorVentanas = new GestorVentanas();
+		// No necesitas inicializar hBoxPeliculas aquí
+
+		// Establecer la imagen del logo
+		Image imagenLogo = new Image(getClass().getResourceAsStream(Constants.URL_LOGO_AMPLIADO));
+		imagenLogoCabecera.setImage(imagenLogo);
+
+	}
+
+	public HBox getHBoxPeliculas() {
+		return hBoxPeliculas;
+	}
+
 }

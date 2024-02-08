@@ -16,15 +16,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-/**
- * Clase que representa la tabla de Pelicula
- * 
- * @author JairoAB
- *
- */
 @Entity
-@Table(name = "Peliculas")
-public class Pelicula implements Serializable {
+@Table(name = "Series")
+public class Series implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -51,54 +45,67 @@ public class Pelicula implements Serializable {
 	@Column(name = "valoracion", precision = 5, scale = 3)
 	private double vote_average;
 
-	/**
-	 * Relación de pelicula con la tabla de los id de usuarioPelicula
-	 */
-	@OneToMany(mappedBy = "id.pelicula", cascade = CascadeType.ALL)
-	private Set<UsuarioPelicula> usuarioPelicula = new HashSet<>();
+	@Column(name = "num_episodios")
+	private int numeroEpisodios;
+
+	@Column(name = "num_temporadas")
+	private int numeroTemporadas;
 
 	/**
-	 * Tabla intermedia entre peliculas y actores
+	 * Relación de serie con la tabla de los id de usuarioSerie
+	 */
+	@OneToMany(mappedBy = "id.series", cascade = CascadeType.ALL)
+	private Set<UsuarioSerie> usuarioSerie = new HashSet<>();
+
+	/**
+	 * Tabla intermedia entre series y actores
 	 */
 	@ManyToMany(cascade = { CascadeType.ALL })
-	@JoinTable(name = "Peliculas_Actores", joinColumns = { @JoinColumn(name = "id_pelicula") }, inverseJoinColumns = {
+	@JoinTable(name = "Series_Actores", joinColumns = { @JoinColumn(name = "id_serie") }, inverseJoinColumns = {
 			@JoinColumn(name = "id_actor") })
 	private Set<Actores> actores = new HashSet<>();
 
 	/**
-	 * Tabla intermedia entre peliculas y directores
+	 * Tabla intermedia entre series y directores
 	 */
 	@ManyToMany(cascade = { CascadeType.ALL })
-	@JoinTable(name = "Peliculas_Directores", joinColumns = { @JoinColumn(name = "id_pelicula") }, inverseJoinColumns = {
+	@JoinTable(name = "Series_Directores", joinColumns = { @JoinColumn(name = "id_serie") }, inverseJoinColumns = {
 			@JoinColumn(name = "id_director") })
 	private Set<Directores> directores = new HashSet<>();
 
 	/**
-	 * Tabla intermedia entre peliculas y generos
+	 * Tabla intermedia entre series y generos
 	 */
 	@ManyToMany(cascade = { CascadeType.ALL })
-	@JoinTable(name = "Peliculas_Generos", joinColumns = { @JoinColumn(name = "id_pelicula") }, inverseJoinColumns = {
+	@JoinTable(name = "Series_Generos", joinColumns = { @JoinColumn(name = "id_serie") }, inverseJoinColumns = {
 			@JoinColumn(name = "id_genero") })
-	private Set<Genero> genres = new HashSet<>();
+	private Set<Genero> generos = new HashSet<>();
 
 	/**
-	 * Constructor para Pelicula
+	 * Constructor para Serie
 	 * 
+	 * @param id
 	 * @param titulo
-	 * @param fechaEstreno
+	 * @param año
 	 * @param compañia
 	 * @param descripcion
-	 * @param poster
-	 * @param valoracionGlobal
+	 * @param cartel
+	 * @param valoracion
+	 * @param numeroEpisodios
+	 * @param numeroTemporadas
 	 */
-	public Pelicula(String titulo, Date fechaEstreno, Compañia compañia, String descripcion, String poster,
-			String valoracionGlobal) {
+	public Series(int id, String titulo, Date año, Compañia compañia, String descripcion, String cartel, int valoracion,
+			int numeroEpisodios, int numeroTemporadas) {
+		super();
+		this.id = id;
 		this.title = titulo;
-		this.release_date = fechaEstreno;
+		this.release_date = año;
 		this.company = compañia;
 		this.overview = descripcion;
-		this.poster_path = poster;
-		this.vote_average = Double.parseDouble(valoracionGlobal);
+		this.poster_path = cartel;
+		this.vote_average = valoracion;
+		this.numeroEpisodios = numeroEpisodios;
+		this.numeroTemporadas = numeroTemporadas;
 	}
 
 	/**
@@ -200,17 +207,45 @@ public class Pelicula implements Serializable {
 	}
 
 	/**
-	 * @return the usuarioPelicula
+	 * @return the numeroEpisodios
 	 */
-	public Set<UsuarioPelicula> getUsuarioPelicula() {
-		return usuarioPelicula;
+	public int getNumeroEpisodios() {
+		return numeroEpisodios;
 	}
 
 	/**
-	 * @param usuarioPelicula the usuarioPelicula to set
+	 * @param numeroEpisodios the numeroEpisodios to set
 	 */
-	public void setUsuarioPelicula(Set<UsuarioPelicula> usuarioPelicula) {
-		this.usuarioPelicula = usuarioPelicula;
+	public void setNumeroEpisodios(int numeroEpisodios) {
+		this.numeroEpisodios = numeroEpisodios;
+	}
+
+	/**
+	 * @return the numeroTemporadas
+	 */
+	public int getNumeroTemporadas() {
+		return numeroTemporadas;
+	}
+
+	/**
+	 * @param numeroTemporadas the numeroTemporadas to set
+	 */
+	public void setNumeroTemporadas(int numeroTemporadas) {
+		this.numeroTemporadas = numeroTemporadas;
+	}
+
+	/**
+	 * @return the usuarioSerie
+	 */
+	public Set<UsuarioSerie> getUsuarioSerie() {
+		return usuarioSerie;
+	}
+
+	/**
+	 * @param usuarioSerie the usuarioSerie to set
+	 */
+	public void setUsuarioSerie(Set<UsuarioSerie> usuarioSerie) {
+		this.usuarioSerie = usuarioSerie;
 	}
 
 	/**
@@ -244,26 +279,15 @@ public class Pelicula implements Serializable {
 	/**
 	 * @return the generos
 	 */
-	public Set<Genero> getGenres() {
-		return genres;
+	public Set<Genero> getGeneros() {
+		return generos;
 	}
 
 	/**
 	 * @param generos the generos to set
 	 */
-	public void setGenres(Set<Genero> generos) {
-		this.genres = generos;
-	}
-
-	public boolean contieneGenero(String nombreGenero) {
-		if (genres != null && nombreGenero != null) {
-			for (Genero genero : genres) {
-				if (nombreGenero.equalsIgnoreCase(genero.getName())) {
-					return true;
-				}
-			}
-		}
-		return false;
+	public void setGeneros(Set<Genero> generos) {
+		this.generos = generos;
 	}
 
 }

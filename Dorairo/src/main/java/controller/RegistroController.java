@@ -1,5 +1,6 @@
 package controller;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import application.Main;
@@ -10,7 +11,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import models.Perfil;
+import models.Usuario;
 import utilities.Utils;
 
 /**
@@ -55,7 +56,7 @@ public class RegistroController {
 		if (camposLlenos(usuario, correo, nombre, contrasena, repeticionContrasena)
 				&& compruebaContrasenas(contrasena, repeticionContrasena) && !Main.isPerfil(usuario, correo)) {
 			// Crea el nuevo perfil
-			Main.anadirNuevoPerfil(new Perfil(usuario, nombre, correo, repeticionContrasena, new Date()));
+			Main.anadirNuevoPerfil(new Usuario(usuario, nombre, correo, repeticionContrasena, new Date()));
 
 			// Cierra la ventana de registro
 			Stage stage = (Stage) btnRegistrarse.getScene().getWindow();

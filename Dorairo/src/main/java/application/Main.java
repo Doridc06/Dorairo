@@ -3,10 +3,11 @@ package application;
 import java.util.ArrayList;
 import java.util.List;
 
+import conexion.HibernateUtil;
 import constants.Constants;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import models.Perfil;
+import models.Usuario;
 import utilities.GestorVentanas;
 import utilities.Utils;
 
@@ -19,7 +20,9 @@ import utilities.Utils;
 public class Main extends Application {
 
 	/** Lista donde se guardan cada uno de los perfiles registrados */
-	private static List<Perfil> listaPerfiles = new ArrayList<>();
+	private static List<Usuario> listaPerfiles = new ArrayList<>();
+
+	private static Usuario perfilRegsistrado = null;
 
 	/**
 	 * Método principal
@@ -27,7 +30,8 @@ public class Main extends Application {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		launch(args);
+		HibernateUtil.buildSessionFactory();
+		//launch(args);
 	}
 
 	@Override
@@ -56,6 +60,7 @@ public class Main extends Application {
 	public void iniciaLogin(Stage primaryStage) {
 		GestorVentanas gestorVentanas = new GestorVentanas();
 		gestorVentanas.muestraVentana(primaryStage, Constants.URL_LOGIN_FXML, "Dorairo");
+//		gestorVentanas.muestraVentana(primaryStage, Constants.URL_AGREGADAS_MANUALMENTE_FXML, "Agregar Manualmente");
 	}
 
 	/**
@@ -63,7 +68,7 @@ public class Main extends Application {
 	 * 
 	 * @param perfil
 	 */
-	public static void anadirNuevoPerfil(Perfil perfil) {
+	public static void anadirNuevoPerfil(Usuario perfil) {
 		listaPerfiles.add(perfil);
 	}
 
@@ -77,7 +82,7 @@ public class Main extends Application {
 	 */
 	public static boolean isPerfil(String usuario, String correo) {
 		// Recorre la lista de perfiles
-		for (Perfil perfil : listaPerfiles) {
+		for (Usuario perfil : listaPerfiles) {
 			// Comprueba si coincide el correo o usuario
 			if (perfil.getCorreo().equals(correo)) {
 				Utils.mostrarAlerta("El correo introducido ya está registrado.", Constants.WARNING_TYPE);
@@ -99,13 +104,28 @@ public class Main extends Application {
 	 */
 	public static boolean comprobarPerfil(String usuario, String contrasena) {
 		// Recorre la lista de perfiles
-		for (Perfil perfil : listaPerfiles) {
+		for (Usuario perfil : listaPerfiles) {
 			// Comprueba si coincide el usuario y contrasena
-			if (perfil.getUsuario().equals(usuario) && perfil.getContrasena().equals(contrasena)) {
+			if (perfil.getUsuario().equals(usuario) && perfil.getClave().equals(contrasena)) {
+				setPerfilRegsistrado(perfil);
 				return true;
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * @return the perfilRegsistrado
+	 */
+	public static Usuario getPerfilRegsistrado() {
+		return perfilRegsistrado;
+	}
+
+	/**
+	 * @param perfilRegsistrado the perfilRegsistrado to set
+	 */
+	public static void setPerfilRegsistrado(Usuario perfilRegsistrado) {
+		Main.perfilRegsistrado = perfilRegsistrado;
 	}
 
 }

@@ -1,5 +1,269 @@
 package controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import constants.Constants;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.Scene;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+import models.Compañia;
+import models.Pelicula;
+import utilities.GestorVentanas;
+import utilities.Utils;
+
+/**
+ * Clase con las funciones del Agregado Manual
+ * 
+ * @author JairoAB
+ *
+ */
 public class AgregadasManualmenteController {
+
+	@FXML
+	private ChoiceBox<String> choiceTipo;
+
+	@FXML
+	private ImageView imagenLogoCabecera;
+
+	@FXML
+	private ImageView imagenCartel;
+
+	@FXML
+	private TextField txtActores;
+
+	@FXML
+	private TextArea txtComentarios;
+
+	@FXML
+	private TextField txtCompañia;
+
+	@FXML
+	private TextArea txtDescripcion;
+
+	@FXML
+	private TextField txtDirectores;
+
+	@FXML
+	private TextField txtEpisodios;
+
+	@FXML
+	private TextField txtEstreno;
+
+	@FXML
+	private TextField txtGenero;
+
+	@FXML
+	private TextField txtGuardado;
+
+	@FXML
+	private TextField txtValoracionPersonal;
+
+	@FXML
+	private TextField txtTemporadas;
+
+	@FXML
+	private TextField txtTitulo;
+
+	@FXML
+	private TextField txtValoracionGlobal;
+
+	/** Scene de la ventana de Agregado Manual */
+	private Scene scene;
+
+	/** Stage de la ventana de Agregado Manual */
+	private Stage stage;
+
+	/** Instancia del gestor de ventanas **/
+	private GestorVentanas gestorVentanas;
+
+	/** Indica el tipo del que se trata */
+	private String tipo = "";
+
+	/** Indica si se trata de una serie (true) o una pelicula (false) */
+	private boolean isSerie = false;
+
+	/** Conexion con la base de datos */
+//	private Session session;
+
+	/** URL del poster añadido */
+	private String poster = null;
+
+	@FXML
+	void initialize() {
+		// Inicializamos el Gestor de ventanas
+		gestorVentanas = new GestorVentanas();
+		// Establece la imagen del logo
+		Image imagen = new Image(getClass().getResourceAsStream(Constants.URL_LOGO_AMPLIADO));
+		imagenLogoCabecera.setImage(imagen);
+		// Establece la imagen de subir foto
+		imagen = new Image(getClass().getResourceAsStream(Constants.URL_FOTO_SUBIR_FOTO));
+		imagenCartel.setImage(imagen);
+		// Establece las opciones de tipo serie o pelicula
+		choiceTipo.getItems().addAll("Pelicula", "Serie");
+
+		// Recogemos la sesion
+		// session = HibernateUtil.openSession();
+	}
+
+	@FXML
+	void inicioClicked(MouseEvent event) {
+		setSceneAndStage();
+		gestorVentanas.muestraVentana(stage, Constants.URL_INICIO_FXML, "Inicio");
+	}
+
+	@FXML
+	void peliculasClicked(MouseEvent event) {
+		setSceneAndStage();
+		gestorVentanas.muestraVentana(stage, Constants.URL_PELICULA_FXML, "Pelicula");
+	}
+
+	@FXML
+	void seriesClicked(MouseEvent event) {
+		setSceneAndStage();
+		gestorVentanas.muestraVentana(stage, Constants.URL_SERIES_FXML, "Series");
+	}
+
+	@FXML
+	void buscadorClicked(MouseEvent event) {
+		setSceneAndStage();
+		gestorVentanas.muestraVentana(stage, Constants.URL_BUSCADOR_FXML, "Buscador");
+	}
+
+	@FXML
+	void perfilClicked(MouseEvent event) {
+		setSceneAndStage();
+		gestorVentanas.muestraVentana(stage, Constants.URL_USUARIO_FXML, "Perfil");
+	}
+
+	/**
+	 * Busca una foto en los archivos y la sube
+	 * 
+	 * @param event
+	 */
+	@FXML
+	void subirFoto(MouseEvent event) {
+		setSceneAndStage();
+		poster = Utils.buscarFotoArchivos(stage);
+		// Mostar la imagen
+		Image image = new Image("file:" + poster);
+		imagenCartel.setImage(image);
+	}
+
+	/**
+	 * Comprueba si se ha seleccionado el tipo de Serie para activar las casillas de
+	 * temporadas y episodios
+	 */
+	@FXML
+	void compruebaTipo() {
+		choiceTipo.setOnAction(event -> {
+			tipo = choiceTipo.getValue();
+			if (tipo != null) {
+				isSerie = tipo.equalsIgnoreCase("Serie");
+				if (!isSerie) {
+					// Si no es una serie quita el texto que tuviera
+					txtEpisodios.setText("");
+					txtTemporadas.setText("");
+				}
+				txtEpisodios.setDisable(!isSerie);
+				txtTemporadas.setDisable(!isSerie);
+			}
+		});
+	}
+
+	/**
+	 * Gestiona la creacion de la pelicula o serie
+	 * 
+	 * @param event
+	 */
+	@FXML
+	void guardarPressed(ActionEvent event) {
+		// Comprueba que haya seleccionado el tipo
+		if (tipo.isBlank()) {
+			// Muestra alerta de error
+			Utils.mostrarAlerta("No se ha seleccionado ningún tipo.", Constants.ERROR_TYPE);
+		} else {
+			// Comprueba si es una pelicula o serie y la crea
+			if (isSerie) {
+				crearSerie();
+			} else {
+				crearPelicula();
+			}
+		}
+	}
+
+	/**
+	 * Realiza la creación de una película
+	 */
+	private void crearPelicula() {
+		// Comprueba si todos los campos se han rellenado
+		if (isCompleto()) {
+
+			try {
+				Compañia company = new Compañia(0, poster);
+				SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+				Date fecha;
+				fecha = formato.parse(txtEstreno.getText());
+				Pelicula pelicula = new Pelicula(txtTitulo.getText(), fecha, company, txtDescripcion.getText(), poster,
+						txtValoracionGlobal.getText());
+			} catch (Exception e) {
+				Utils.mostrarAlerta("Error en la creacion del elemento, revisa todos los campos.", Constants.ERROR_TYPE);
+			}
+
+		} else {
+			// Muestra alerta de error
+			Utils.mostrarAlerta("Falta algún campo por rellenar.", Constants.ERROR_TYPE);
+		}
+
+	}
+
+//	private Compañia searchCompany() {
+//		CompañiaDaoImpl compañiaDaoIpml = new CompañiaDaoImpl(session);
+//		List<Compañia> compList = compañiaDaoIpml.searchByName(txtCompañia.getText());
+//
+//		// REVISAR LAS MIERDAS ESTAS
+//		return compList.get(0);
+//	}
+
+	private void crearSerie() {
+		// Comprueba si todos los campos se han rellenado
+		if (isCompleto() && !txtEpisodios.getText().isBlank() && !txtTemporadas.getText().isBlank()) {
+
+		} else {
+			// Muestra alerta de error
+			Utils.mostrarAlerta("Falta algún campo por rellenar.", Constants.ERROR_TYPE);
+		}
+
+	}
+
+	/**
+	 * Indica si se han rellanado todos los campos (excepto número de episodios y
+	 * temporadas
+	 * 
+	 * @return True: todos rellenos. False: alguno sin rellenar
+	 */
+	private boolean isCompleto() {
+		return !txtTitulo.getText().isBlank() && !txtCompañia.getText().isBlank() && !txtGuardado.getText().isBlank()
+				&& !txtEstreno.getText().isBlank() && !txtValoracionPersonal.getText().isBlank()
+				&& !txtValoracionGlobal.getText().isBlank() && !txtGenero.getText().isBlank() && !txtActores.getText().isBlank()
+				&& !txtDirectores.getText().isBlank() && !txtDescripcion.getText().isBlank()
+				&& !txtComentarios.getText().isBlank() && !poster.isBlank();
+	}
+
+	/**
+	 * Asigna los valores correspondientes del stage y el scene
+	 * 
+	 */
+	public void setSceneAndStage() {
+		scene = imagenLogoCabecera.getScene();
+		stage = (Stage) scene.getWindow();
+	}
 
 }

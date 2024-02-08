@@ -88,8 +88,6 @@ public class PeliculaController {
 	@FXML
 	private MenuItem Aleatoria;
 
-	Genero genero;
-
 	private BuscarGeneroController buscarGeneroController;
 
 	@FXML
@@ -151,8 +149,6 @@ public class PeliculaController {
 		// Establece la imagen del logo
 		Image imagenLogo = new Image(getClass().getResourceAsStream(Constants.URL_LOGO_AMPLIADO));
 		imagenLogoCabecera.setImage(imagenLogo);
-
-		genero = new Genero();
 
 		// Configuración de los eventos para los CheckBox de género
 		GeneroAccion.setOnAction(event -> generoClicked("28"));
@@ -309,6 +305,12 @@ public class PeliculaController {
 		abrirVentanaPeliAleatoria();
 	}
 
+	@FXML
+	void perfilClicked(MouseEvent event) {
+		setSceneAndStage();
+		gestorVentanas.muestraVentana(stage, Constants.URL_USUARIO_FXML, "Perfil");
+	}
+
 	public void setBuscarGeneroController(BuscarGeneroController buscarGeneroController) {
 		this.buscarGeneroController = buscarGeneroController;
 	}
@@ -401,7 +403,6 @@ public class PeliculaController {
 	 * establece la URL de la imagen y se carga en el ImageView. 6: El HBox al que
 	 * se está agregando el ImageView que muestra la imagen de la película.
 	 */
-
 	private String obtenerIdGenero(String generoBuscado) {
 		// Itera sobre la lista de géneros para encontrar el ID del género buscado
 		for (Genero genero : listaGeneros) {

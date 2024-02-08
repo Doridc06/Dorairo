@@ -266,4 +266,12 @@ public class Pelicula implements Serializable {
 		return false;
 	}
 
+	@Override
+	public String toString() {
+		return "Pelicula [id=" + id + ", title=" + title + ", release_date=" + release_date + ", company=" + company
+				+ ", overview=" + overview + ", poster_path=" + poster_path + ", vote_average=" + vote_average
+				+ ", usuarioPelicula=" + usuarioPelicula + ", actores=" + actores + ", directores=" + directores + ", genres="
+				+ genres + "]";
+	}
+
 }

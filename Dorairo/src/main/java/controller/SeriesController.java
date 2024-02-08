@@ -240,7 +240,6 @@ public class SeriesController {
 		return imageView;
 	}
 
-	@FXML
 	void detallesClicked(ImageView clickedImageView) {
 		// Obtener el identificador de la serie desde el ImageView
 		String serieId = getSerieIdFromImageView(clickedImageView);

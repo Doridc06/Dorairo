@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -29,11 +32,35 @@
                         <Font size="23.0" />
                      </font>
                   </Text>
-                  <Text layoutX="59.0" layoutY="543.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Detalles de la película:">
+                  <Text layoutX="59.0" layoutY="543.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Detalles:">
                      <font>
-                        <Font size="26.0" />
+                        <Font name="System Bold" size="26.0" />
                      </font>
                   </Text>
+                  <MenuButton layoutX="526.0" layoutY="108.0" mnemonicParsing="false" styleClass="cabeceraBotones" text="Añadir">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Mi Lista" />
+                      <MenuItem mnemonicParsing="false" text="Ya visto" />
+                    </items>
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </MenuButton>
+                  <MenuButton layoutX="674.0" layoutY="108.0" mnemonicParsing="false" styleClass="cabeceraBotones" text="Exportar">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="CSV" />
+                      <MenuItem mnemonicParsing="false" text="JSON" />
+                    </items>
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </MenuButton>
+                  <Text layoutX="528.0" layoutY="236.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Guardado en:">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <TextField layoutX="526.0" layoutY="254.0" prefHeight="37.0" prefWidth="230.0" />
                </children></AnchorPane>
 			</content>
 		</ScrollPane>

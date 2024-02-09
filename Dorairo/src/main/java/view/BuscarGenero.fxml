@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.BuscarGeneroController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" styleClass="fondo" stylesheets="@application.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.BuscarGeneroController">
 	<children>
 		<Pane fx:id="paneCabecera" prefHeight="150.0" prefWidth="1512.0">
 			<children>
@@ -21,6 +21,7 @@
 						<ImageView fx:id="imagenLogoCabecera" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
 							<image>
 								<Image url="@../../resources/application/images/logoAmpliado.jpg" />
+								
 							</image>
 						</ImageView>
 					</children>
@@ -72,7 +73,7 @@
 				</StackPane>
 			</children>
 		</Pane>
-      <ScrollPane layoutX="38.0" layoutY="237.0" prefHeight="269.0" prefWidth="1513.0" styleClass="fondo">
+      <ScrollPane hbarPolicy="NEVER" layoutX="38.0" layoutY="237.0" pannable="true" prefHeight="252.0" prefWidth="1513.0" styleClass="fondo" vbarPolicy="NEVER">
          <content>
             <HBox fx:id="hBoxPeliculas" prefHeight="258.0" prefWidth="1830.0" styleClass="fondo">
                <padding>

@@ -22,273 +22,278 @@ import javax.persistence.Table;
 @Table(name = "Series")
 public class Series implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	@Id
-	@Column(name = "id")
-	private int id;
+  @Id
+  @Column(name = "id")
+  private int id;
 
-	@Column(name = "titulo", length = 200)
-	private String name;
+  @Column(name = "titulo", length = 200)
+  private String name;
 
-	@Column(name = "fecha_estreno")
-	private String first_air_date;
+  @Column(name = "fecha_estreno")
+  private String first_air_date;
 
-	@ManyToOne
-	@JoinColumn(name = "compañia")
-	private Compañia company;
+  @ManyToOne
+  @JoinColumn(name = "compañia")
+  private Compañia company;
 
-	@Column(name = "descripcion")
-	private String overview;
+  @Column(name = "descripcion")
+  private String overview;
 
-	@Column(name = "cartel")
-	private String poster_path;
+  @Column(name = "cartel")
+  private String poster_path;
 
-	@Column(name = "valoracion", precision = 5, scale = 3)
-	private double vote_average;
+  @Column(name = "valoracion", precision = 5, scale = 3)
+  private double vote_average;
 
-	@Column(name = "num_episodios")
-	private int number_of_episodes;
+  @Column(name = "num_episodios")
+  private int number_of_episodes;
 
-	@Column(name = "num_temporadas")
-	private int number_of_seasons;
+  @Column(name = "num_temporadas")
+  private int number_of_seasons;
 
-	/**
-	 * Relación de serie con la tabla de los id de usuarioSerie
-	 */
-	@OneToMany(mappedBy = "id.series", cascade = CascadeType.ALL)
-	private Set<UsuarioSerie> usuarioSerie = new HashSet<>();
+  /**
+   * Relación de serie con la tabla de los id de usuarioSerie
+   */
+  @OneToMany(mappedBy = "id.series", cascade = CascadeType.ALL)
+  private Set<UsuarioSerie> usuarioSerie = new HashSet<>();
 
-	/**
-	 * Tabla intermedia entre series y actores
-	 */
-	@ManyToMany(cascade = { CascadeType.ALL })
-	@JoinTable(name = "Series_Actores", joinColumns = { @JoinColumn(name = "id_serie") }, inverseJoinColumns = {
-			@JoinColumn(name = "id_actor") })
-	private Set<Actores> actores = new HashSet<>();
+  /**
+   * Tabla intermedia entre series y actores
+   */
+  @ManyToMany(cascade = {CascadeType.ALL})
+  @JoinTable(name = "Series_Actores", joinColumns = {@JoinColumn(name = "id_serie")},
+      inverseJoinColumns = {@JoinColumn(name = "id_actor")})
+  private Set<Actores> actores = new HashSet<>();
 
-	/**
-	 * Tabla intermedia entre series y directores
-	 */
-	@ManyToMany(cascade = { CascadeType.ALL })
-	@JoinTable(name = "Series_Directores", joinColumns = { @JoinColumn(name = "id_serie") }, inverseJoinColumns = {
-			@JoinColumn(name = "id_director") })
-	private Set<Directores> directores = new HashSet<>();
+  /**
+   * Tabla intermedia entre series y directores
+   */
+  @ManyToMany(cascade = {CascadeType.ALL})
+  @JoinTable(name = "Series_Directores", joinColumns = {@JoinColumn(name = "id_serie")},
+      inverseJoinColumns = {@JoinColumn(name = "id_director")})
+  private Set<Directores> directores = new HashSet<>();
 
-	/**
-	 * Tabla intermedia entre series y generos
-	 */
-	@ManyToMany(cascade = { CascadeType.ALL })
-	@JoinTable(name = "Series_Generos", joinColumns = { @JoinColumn(name = "id_serie") }, inverseJoinColumns = {
-			@JoinColumn(name = "id_genero") })
-	   private List<Genero> genres = new ArrayList<>();
+  /**
+   * Tabla intermedia entre series y generos
+   */
+  @ManyToMany(cascade = {CascadeType.ALL})
+  @JoinTable(name = "Series_Generos", joinColumns = {@JoinColumn(name = "id_serie")},
+      inverseJoinColumns = {@JoinColumn(name = "id_genero")})
+  private List<Genero> genres = new ArrayList<>();
 
-	/**
-	 * Constructor para Serie
-	 * 
-	 * @param id
-	 * @param titulo
-	 * @param año
-	 * @param compañia
-	 * @param descripcion
-	 * @param cartel
-	 * @param valoracion
-	 * @param numeroEpisodios
-	 * @param numeroTemporadas
-	 */
-	public Series(int id, String name, String first_air_date, Compañia compañia, String descripcion, String cartel, int valoracion,
-			int number_of_episodes, int number_of_seasons) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.first_air_date = first_air_date;
-		this.company = compañia;
-		this.overview = descripcion;
-		this.poster_path = cartel;
-		this.vote_average = valoracion;
-		this.number_of_episodes = number_of_episodes;
-		this.number_of_seasons = number_of_seasons;
-		
-	}
+  /**
+   * Constructor para Serie
+   * 
+   * @param id
+   * @param titulo
+   * @param año
+   * @param compañia
+   * @param descripcion
+   * @param cartel
+   * @param valoracion
+   * @param numeroEpisodios
+   * @param numeroTemporadas
+   */
+  public Series(int id, String name, String first_air_date, Compañia compañia, String descripcion,
+      String cartel, int valoracion, int number_of_episodes, int number_of_seasons) {
+    super();
+    this.id = id;
+    this.name = name;
+    this.first_air_date = first_air_date;
+    this.company = compañia;
+    this.overview = descripcion;
+    this.poster_path = cartel;
+    this.vote_average = valoracion;
+    this.number_of_episodes = number_of_episodes;
+    this.number_of_seasons = number_of_seasons;
+    this.genres = new ArrayList<>();
 
-	/**
-	 * @return the id
-	 */
-	public int getId() {
-		return id;
-	}
+  }
 
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(int id) {
-		this.id = id;
-	}
+  /**
+   * @return the id
+   */
+  public int getId() {
+    return id;
+  }
 
-	/**
-	 * @return the title
-	 */
-	public String getName() {
-		return name;
-	}
+  /**
+   * @param id the id to set
+   */
+  public void setId(int id) {
+    this.id = id;
+  }
 
-	/**
-	 * @param title the title to set
-	 */
-	public void setName(String title) {
-		this.name = title;
-	}
+  /**
+   * @return the title
+   */
+  public String getName() {
+    return name;
+  }
 
-	/**
-	 * @return the release_date
-	 */
-	public String getFirst_air_date() {
-		return first_air_date;
-	}
+  /**
+   * @param title the title to set
+   */
+  public void setName(String title) {
+    this.name = title;
+  }
 
-	/**
-	 * @param release_date the release_date to set
-	 */
-	public void setFirst_air_date(String first_air_date) {
-		this.first_air_date = first_air_date;
-	}
+  /**
+   * @return the release_date
+   */
+  public String getFirst_air_date() {
+    return first_air_date;
+  }
 
-	/**
-	 * @return the company
-	 */
-	public Compañia getCompany() {
-		return company;
-	}
+  /**
+   * @param release_date the release_date to set
+   */
+  public void setFirst_air_date(String first_air_date) {
+    this.first_air_date = first_air_date;
+  }
 
-	/**
-	 * @param company the company to set
-	 */
-	public void setCompany(Compañia company) {
-		this.company = company;
-	}
+  /**
+   * @return the company
+   */
+  public Compañia getCompany() {
+    return company;
+  }
 
-	/**
-	 * @return the overview
-	 */
-	public String getOverview() {
-		return overview;
-	}
+  /**
+   * @param company the company to set
+   */
+  public void setCompany(Compañia company) {
+    this.company = company;
+  }
 
-	/**
-	 * @param overview the overview to set
-	 */
-	public void setOverview(String overview) {
-		this.overview = overview;
-	}
+  /**
+   * @return the overview
+   */
+  public String getOverview() {
+    return overview;
+  }
 
-	/**
-	 * @return the poster_path
-	 */
-	public String getPoster_path() {
-		return poster_path;
-	}
+  /**
+   * @param overview the overview to set
+   */
+  public void setOverview(String overview) {
+    this.overview = overview;
+  }
 
-	/**
-	 * @param poster_path the poster_path to set
-	 */
-	public void setPoster_path(String poster_path) {
-		this.poster_path = poster_path;
-	}
+  /**
+   * @return the poster_path
+   */
+  public String getPoster_path() {
+    return poster_path;
+  }
 
-	/**
-	 * @return the vote_average
-	 */
-	public double getVote_average() {
-		return vote_average;
-	}
+  /**
+   * @param poster_path the poster_path to set
+   */
+  public void setPoster_path(String poster_path) {
+    this.poster_path = poster_path;
+  }
 
-	/**
-	 * @param vote_average the vote_average to set
-	 */
-	public void setVote_average(double vote_average) {
-		this.vote_average = vote_average;
-	}
+  /**
+   * @return the vote_average
+   */
+  public double getVote_average() {
+    return vote_average;
+  }
 
-	/**
-	 * @return the numeroEpisodios
-	 */
-	public int getNumber_of_episodes() {
-		return number_of_episodes;
-	}
+  /**
+   * @param vote_average the vote_average to set
+   */
+  public void setVote_average(double vote_average) {
+    this.vote_average = vote_average;
+  }
 
-	/**
-	 * @param numeroEpisodios the numeroEpisodios to set
-	 */
-	public void setNumber_of_episodes(int number_of_episodes) {
-		this.number_of_episodes = number_of_episodes;
-		
-	}
+  /**
+   * @return the numeroEpisodios
+   */
+  public int getNumber_of_episodes() {
+    return number_of_episodes;
+  }
 
-	/**
-	 * @return the numeroTemporadas
-	 */
-	public int getNumber_of_seasons() {
-		return number_of_seasons;
-	}
+  /**
+   * @param numeroEpisodios the numeroEpisodios to set
+   */
+  public void setNumber_of_episodes(int number_of_episodes) {
+    this.number_of_episodes = number_of_episodes;
 
-	/**
-	 * @param numeroTemporadas the numeroTemporadas to set
-	 */
-	public void setNumber_of_seasons(int number_of_seasons) {
-		this.number_of_seasons = number_of_seasons;
-	}
+  }
 
-	/**
-	 * @return the usuarioSerie
-	 */
-	public Set<UsuarioSerie> getUsuarioSerie() {
-		return usuarioSerie;
-	}
+  /**
+   * @return the numeroTemporadas
+   */
+  public int getNumber_of_seasons() {
+    return number_of_seasons;
+  }
 
-	/**
-	 * @param usuarioSerie the usuarioSerie to set
-	 */
-	public void setUsuarioSerie(Set<UsuarioSerie> usuarioSerie) {
-		this.usuarioSerie = usuarioSerie;
-	}
+  /**
+   * @param numeroTemporadas the numeroTemporadas to set
+   */
+  public void setNumber_of_seasons(int number_of_seasons) {
+    this.number_of_seasons = number_of_seasons;
+  }
 
-	/**
-	 * @return the actores
-	 */
-	public Set<Actores> getActores() {
-		return actores;
-	}
+  /**
+   * @return the usuarioSerie
+   */
+  public Set<UsuarioSerie> getUsuarioSerie() {
+    return usuarioSerie;
+  }
 
-	/**
-	 * @param actores the actores to set
-	 */
-	public void setActores(Set<Actores> actores) {
-		this.actores = actores;
-	}
+  /**
+   * @param usuarioSerie the usuarioSerie to set
+   */
+  public void setUsuarioSerie(Set<UsuarioSerie> usuarioSerie) {
+    this.usuarioSerie = usuarioSerie;
+  }
 
-	/**
-	 * @return the directores
-	 */
-	public Set<Directores> getDirectores() {
-		return directores;
-	}
+  /**
+   * @return the actores
+   */
+  public Set<Actores> getActores() {
+    return actores;
+  }
 
-	/**
-	 * @param directores the directores to set
-	 */
-	public void setDirectores(Set<Directores> directores) {
-		this.directores = directores;
-	}
+  /**
+   * @param actores the actores to set
+   */
+  public void setActores(Set<Actores> actores) {
+    this.actores = actores;
+  }
 
-	/**
-	 * @return the generos
-	 */
-	 public List<Genero> getGenres() {
+  /**
+   * @return the directores
+   */
+  public Set<Directores> getDirectores() {
+    return directores;
+  }
+
+  /**
+   * @param directores the directores to set
+   */
+  public void setDirectores(Set<Directores> directores) {
+    this.directores = directores;
+  }
+
+  /**
+   * @return the generos
+   */
+  public List<Genero> getGenres() {
     return genres;
- }
+  }
 
- public void setGenres(List<Genero> genres) {
-     this.genres = genres;
- }
+  public void setGenres(List<Genero> genres) {
+    this.genres = genres;
+  }
+
+  public String getTipo() {
+    return "tv";
+  }
 
 }

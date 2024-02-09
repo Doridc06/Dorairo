@@ -185,5 +185,8 @@ public class DetallesController {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	
 
 }

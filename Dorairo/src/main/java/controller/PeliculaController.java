@@ -3,6 +3,7 @@ package controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -301,17 +302,42 @@ public class PeliculaController {
       gestorVentanas. muestraBuscadorGenero(stage,"movie",generoId);
 	}
 
-	// para abrir la pantalla de peli aleatoria
-	private void abrirVentanaPeliAleatoria() {
-		setSceneAndStage();
-		gestorVentanas.muestraVentana(stage, Constants.URL_PELI_SERIE_ALEATORIA_FXML, "Pelicula/Serie Aleatoria");
-	}
 
+// para la pelicula aleatoria
 	@FXML
 	void peliAleatoriaClicked() {
 		abrirVentanaPeliAleatoria();
 	}
 
+    private void abrirVentanaPeliAleatoria() {
+      // Obtener una película aleatoria
+      Pelicula peliculaAleatoria = obtenerPeliculaAleatoria();
+
+      // Verificar si se encontró una película aleatoria
+      if (peliculaAleatoria != null) {
+          // Obtener el ID de la película aleatoria
+          String movieId = String.valueOf(peliculaAleatoria.getId());
+
+          // Abrir la ventana de detalles de la película aleatoria
+          abrirVentanaDetalles(movieId);
+      } else {
+          // Manejar la situación en la que no se pudo obtener una película aleatoria
+          System.out.println("No se pudo obtener una película aleatoria");
+      }
+  }
+
+  private Pelicula obtenerPeliculaAleatoria() {
+      // Verificar si hay películas disponibles
+      if (!todasLasPeliculas.isEmpty()) {
+          // Obtener un índice aleatorio dentro del rango de la lista de películas
+          int indiceAleatorio = new Random().nextInt(todasLasPeliculas.size());
+
+          // Obtener y devolver la película aleatoria
+          return todasLasPeliculas.get(indiceAleatorio);
+      } else {
+          return null;
+      }
+  }
 
 
 }

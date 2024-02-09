@@ -22,6 +22,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
@@ -79,6 +80,9 @@ public class BuscarGeneroController {
 	@FXML
 	private ImageView cartel;
 
+	@FXML
+	private FlowPane flowPanePeliculas;
+	
 	// Lista para almacenar todas las películas obtenidas de la API
 	static List<Pelicula> todasLasPeliculas = new ArrayList<>();
 
@@ -133,26 +137,19 @@ public class BuscarGeneroController {
 	void initialize() {
 		// Inicializar gestorVentanas
 		gestorVentanas = new GestorVentanas();
-		// No necesitas inicializar hBoxPeliculas aquí
 
 		// Establecer la imagen del logo
 		Image imagenLogo = new Image(getClass().getResourceAsStream(Constants.URL_LOGO_AMPLIADO));
 		imagenLogoCabecera.setImage(imagenLogo);
 		
-		
-		// Configuración del evento para cada ImageView en peliculasEstrenos
-	    for (Node node : hBoxPeliculas.getChildren()) {
-	        if (node instanceof ImageView) {
-	            ImageView imageView = (ImageView) node;
-	            imageView.setOnMouseClicked(event -> detallesClicked(imageView));
-	        }
-	    }
+	    // Establecer el espacio entre las imágenes en el HBox
+	    hBoxPeliculas.setSpacing(50);
 	}
 	
 	
 	   void detallesClicked(ImageView clickedImageView) {
 	        // Obtener el identificador de la película desde el ImageView
-	        String movieId = getMovieIdFromImageView(clickedImageView);
+	        String movieId = getIdFromImageView(clickedImageView);
 
 	        // Abrir la ventana de detalles
 	        abrirVentanaDetalles(movieId);
@@ -166,7 +163,7 @@ public class BuscarGeneroController {
 	    
 	    
 	    
-	    private String getMovieIdFromImageView(ImageView imageView) {
+	    private String getIdFromImageView(ImageView imageView) {
 	        // Obtén el ID de la película almacenado en el userData del ImageView
 	        Object userData = imageView.getUserData();
 
@@ -347,7 +344,7 @@ public class BuscarGeneroController {
                           
                           if (serie.getPoster_path() != null) {
                             imageView = getImageViewFromSerie(serie);
-
+                            
                             // Almacena el ID de la película en el userData del ImageView
                             imageView.setUserData(String.valueOf(serie.getId()));
                           }

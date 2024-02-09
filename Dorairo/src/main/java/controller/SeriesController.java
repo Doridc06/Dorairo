@@ -2,6 +2,9 @@ package controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 import com.google.gson.Gson;
@@ -21,6 +24,8 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import models.Pelicula;
 import models.RespuestaApi;
+import models.RespuestaApiSeries;
+import models.Series;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -102,6 +107,10 @@ public class SeriesController {
 
 	private static final String API_KEY = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlYjc0NTA5ZjRiZDBlODJlMTFlYzA2YWM1MDRhMGRlMCIsInN1YiI6IjY1Mzc3ZmRmZjQ5NWVlMDBmZjY1YTEyOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ehIu08LoiMRTccPoD4AfADXOpQPlqNAKUMvGgwY3XU8";
 
+	// Lista para almacenar todas las películas obtenidas de la API
+     List<Series> todasLasSeries = new ArrayList<>();
+	
+	
 	@FXML
 	void inicioClicked(MouseEvent event) {
 		setSceneAndStage();
@@ -192,13 +201,14 @@ public class SeriesController {
 
 		// Utilizar Gson para convertir la respuesta JSON a objetos Java
 		Gson gson = new Gson();
-		RespuestaApi respApi = gson.fromJson(responseBody, RespuestaApi.class);
+		RespuestaApiSeries respApi = gson.fromJson(responseBody, RespuestaApiSeries.class);
 
 		// Verificar si hay resultados en la respuesta
 		if (respApi.getResults() != null && respApi.getResults().length > 0) {
 			// Iterar sobre las películas y agregar imágenes al HBox
 			int contador = 0;
-			for (Pelicula datos : respApi.getResults()) {
+			for (Series datos : respApi.getResults()) {
+			  todasLasSeries.add(datos);
 				// System.out.println("Adding image: " + serie.getPoster_path());
 				if (contador < 12) { // Limitar a 10 películas
 					ImageView imageView = null;
@@ -221,7 +231,7 @@ public class SeriesController {
 		targetHBox.setSpacing(50.0);
 	}
 
-	private ImageView getImageViewFromUrl(String imageUrl, Pelicula datos) {
+	private ImageView getImageViewFromUrl(String imageUrl, Series datos) {
 		ImageView imageView = new ImageView();
 		imageView.setFitHeight(250.0);
 		imageView.setFitWidth(290.0);
@@ -270,22 +280,49 @@ public class SeriesController {
 		}
 	}
 
-	// para abrir la pantalla de peli aleatoria
-	private void abrirVentanaPeliAleatoria() {
-		setSceneAndStage();
-		gestorVentanas.muestraVentana(stage, Constants.URL_PELI_SERIE_ALEATORIA_FXML, "Pelicula/Serie Aleatoria");
-	}
-
-	@FXML
-	void peliAleatoriaClicked() {
-		abrirVentanaPeliAleatoria();
-	}
-
 
 
 	void generoClicked(String generoId) {
       setSceneAndStage();
       gestorVentanas. muestraBuscadorGenero(stage,"tv",generoId);
     }
+	
+	
+	
+	// para las series aleatorias
+	@FXML
+	void peliAleatoriaClicked() {
+	  abrirVentanaSerieAleatoria();
+	}
+	
+	private void abrirVentanaSerieAleatoria() {
+      // Obtener una serie aleatoria
+      Series serieAleatoria = obtenerSerieAleatoria();
+
+      // Verificar si se encontró una serie aleatoria
+      if (serieAleatoria != null) {
+          // Obtener el ID de la serie aleatoria
+          String serieId = String.valueOf(serieAleatoria.getId());
+
+          // Abrir la ventana de detalles de la serie aleatoria
+          abrirVentanaDetalles(serieId);
+      } else {
+          // Manejar la situación en la que no se pudo obtener una serie aleatoria
+          System.out.println("No se pudo obtener una serie aleatoria");
+      }
+  }
+
+  private Series obtenerSerieAleatoria() {
+      // Verificar si hay series disponibles
+      if (!todasLasSeries.isEmpty()) {
+          // Obtener un índice aleatorio dentro del rango de la lista de series
+          int indiceAleatorio = new Random().nextInt(todasLasSeries.size());
+
+          // Obtener y devolver la serie aleatoria
+          return todasLasSeries.get(indiceAleatorio);
+      } else {
+          return null;
+      }
+  }
 
 }

@@ -86,7 +86,7 @@ public class UsuarioController {
 	 */
 	private void setDatosPerfil() {
 		lblNombre.setText(Main.getPerfilRegsistrado().getNombre().toUpperCase());
-		lblUser.setText(Main.getPerfilRegsistrado().getUsuario());
+		lblUser.setText(Main.getPerfilRegsistrado().getUser());
 		lblCorreo.setText(Main.getPerfilRegsistrado().getCorreo());
 		lblMiembro.setText(Main.getPerfilRegsistrado().getFechaMiembroString());
 	}

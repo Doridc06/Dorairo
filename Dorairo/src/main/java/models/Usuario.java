@@ -2,9 +2,9 @@ package models;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -39,9 +39,9 @@ public class Usuario implements Serializable {
 	private Date fechaMiembro;
 
 	@OneToMany(mappedBy = "id.usuario", cascade = CascadeType.ALL)
-	private Set<UsuarioPelicula> usuarioPelicula = new HashSet<>();
+	private List<UsuarioPelicula> usuarioPelicula = new ArrayList<>();
 	@OneToMany(mappedBy = "id.usuario", cascade = CascadeType.ALL)
-	private Set<UsuarioSerie> usuarioSerie = new HashSet<>();
+	private List<UsuarioSerie> usuarioSerie = new ArrayList<>();
 
 	/**
 	 * Constructor para el momento en el que se crea un perfil
@@ -62,17 +62,17 @@ public class Usuario implements Serializable {
 	}
 
 	/**
-	 * @return the usuario
+	 * @return the user
 	 */
-	public String getUsuario() {
+	public String getUser() {
 		return user;
 	}
 
 	/**
-	 * @param usuario the usuario to set
+	 * @param user the user to set
 	 */
-	public void setUsuario(String usuario) {
-		this.user = usuario;
+	public void setUser(String user) {
+		this.user = user;
 	}
 
 	/**
@@ -139,6 +139,41 @@ public class Usuario implements Serializable {
 	}
 
 	/**
+	 * @param fechaMiembro the fechaMiembro to set
+	 */
+	public void setFechaMiembro(Date fechaMiembro) {
+		this.fechaMiembro = fechaMiembro;
+	}
+
+	/**
+	 * @return the usuarioPelicula
+	 */
+	public List<UsuarioPelicula> getUsuarioPelicula() {
+		return usuarioPelicula;
+	}
+
+	/**
+	 * @param usuarioPelicula the usuarioPelicula to set
+	 */
+	public void setUsuarioPelicula(List<UsuarioPelicula> usuarioPelicula) {
+		this.usuarioPelicula = usuarioPelicula;
+	}
+
+	/**
+	 * @return the usuarioSerie
+	 */
+	public List<UsuarioSerie> getUsuarioSerie() {
+		return usuarioSerie;
+	}
+
+	/**
+	 * @param usuarioSerie the usuarioSerie to set
+	 */
+	public void setUsuarioSerie(List<UsuarioSerie> usuarioSerie) {
+		this.usuarioSerie = usuarioSerie;
+	}
+
+	/**
 	 * Devuelve la fecha en la que se hizo miembro en formato string, dd-MM-yyyy
 	 * 
 	 * @return Fecha en string
@@ -146,16 +181,9 @@ public class Usuario implements Serializable {
 	public String getFechaMiembroString() {
 		// Define el formato de salida
 		SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
-System.out.println(fechaMiembro.toString());
+		System.out.println(fechaMiembro.toString());
 		// Formatea la fecha como una cadena y la devuelve
 		return formato.format(fechaMiembro);
-	}
-
-	/**
-	 * @param fechaMiembro the fechaMiembro to set
-	 */
-	public void setFechaMiembro(Date fechaMiembro) {
-		this.fechaMiembro = fechaMiembro;
 	}
 
 	@Override

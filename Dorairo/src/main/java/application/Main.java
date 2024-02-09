@@ -1,10 +1,10 @@
 package application;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.hibernate.Session;
 
 import conexion.HibernateUtil;
 import constants.Constants;
+import dao.UsuarioDaoImpl;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import models.Usuario;
@@ -19,10 +19,14 @@ import utilities.Utils;
  */
 public class Main extends Application {
 
-	/** Lista donde se guardan cada uno de los perfiles registrados */
-	private static List<Usuario> listaPerfiles = new ArrayList<>();
-
+	/** Perfil que se ha registrado */
 	private static Usuario perfilRegsistrado = null;
+
+	/** Session conectada a la base de datos */
+	private static Session session;
+
+	/** Instancia del dao de usuario */
+	private static UsuarioDaoImpl usuarioDaoImpl;
 
 	/**
 	 * Método principal
@@ -30,7 +34,9 @@ public class Main extends Application {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		//HibernateUtil.buildSessionFactory();
+		// Abre la session y crea el dao de usuario
+		session = HibernateUtil.openSession();
+		usuarioDaoImpl = new UsuarioDaoImpl(session);
 		launch(args);
 	}
 
@@ -41,7 +47,7 @@ public class Main extends Application {
 	 */
 	public void start(Stage primaryStage) {
 		try {
-			// Añadimos a la lista de perfiles unos ya creados
+			// Añadimos unos perfiles ya creados
 			anadirNuevoPerfil(Constants.PERFIL_JAIRO);
 			anadirNuevoPerfil(Constants.PERFIL_DORIANA);
 
@@ -60,7 +66,6 @@ public class Main extends Application {
 	public void iniciaLogin(Stage primaryStage) {
 		GestorVentanas gestorVentanas = new GestorVentanas();
 		gestorVentanas.muestraVentana(primaryStage, Constants.URL_LOGIN_FXML, "Dorairo");
-//		gestorVentanas.muestraVentana(primaryStage, Constants.URL_AGREGADAS_MANUALMENTE_FXML, "Agregar Manualmente");
 	}
 
 	/**
@@ -69,7 +74,7 @@ public class Main extends Application {
 	 * @param perfil
 	 */
 	public static void anadirNuevoPerfil(Usuario perfil) {
-		listaPerfiles.add(perfil);
+		usuarioDaoImpl.insert(perfil);
 	}
 
 	/**
@@ -81,16 +86,13 @@ public class Main extends Application {
 	 *         ha usado
 	 */
 	public static boolean isPerfil(String usuario, String correo) {
-		// Recorre la lista de perfiles
-		for (Usuario perfil : listaPerfiles) {
-			// Comprueba si coincide el correo o usuario
-			if (perfil.getCorreo().equals(correo)) {
-				Utils.mostrarAlerta("El correo introducido ya está registrado.", Constants.WARNING_TYPE);
-				return true;
-			} else if (perfil.getUsuario().equals(usuario)) {
-				Utils.mostrarAlerta("El usuario introducido ya existe.", Constants.WARNING_TYPE);
-				return true;
-			}
+		// Busca el usuario y correo, si es distinto de null es que existe
+		if (usuarioDaoImpl.searchByUsuario(usuario) != null) {
+			Utils.mostrarAlerta("El usuario introducido ya existe.", Constants.WARNING_TYPE);
+			return true;
+		} else if (usuarioDaoImpl.searchByCorreo(correo) != null) {
+			Utils.mostrarAlerta("El correo introducido ya está registrado.", Constants.WARNING_TYPE);
+			return true;
 		}
 		return false;
 	}
@@ -98,20 +100,22 @@ public class Main extends Application {
 	/**
 	 * Verifica que exista un perfil con el usuario y contrasena proporcionados
 	 * 
-	 * @param usuario    a comprobar
+	 * @param user       a comprobar
 	 * @param contrasena a comprobar
 	 * @return true si existe o false si no existe
 	 */
-	public static boolean comprobarPerfil(String usuario, String contrasena) {
-		// Recorre la lista de perfiles
-		for (Usuario perfil : listaPerfiles) {
-			// Comprueba si coincide el usuario y contrasena
-			if (perfil.getUsuario().equals(usuario) && perfil.getClave().equals(contrasena)) {
-				setPerfilRegsistrado(perfil);
-				return true;
-			}
+	public static boolean comprobarPerfil(String user, String contrasena) {
+
+		// Busca y recoge el perfil con dicho usuario y contraseña
+		Usuario usuario = usuarioDaoImpl.searchByUsuarioAndPassword(user, contrasena);
+
+		// Si es distinto de null (existe), se establece como perfil registrado
+		if (usuario != null) {
+			setPerfilRegistrado(usuario);
+			return true;
+		} else {
+			return false;
 		}
-		return false;
 	}
 
 	/**
@@ -124,7 +128,7 @@ public class Main extends Application {
 	/**
 	 * @param perfilRegsistrado the perfilRegsistrado to set
 	 */
-	public static void setPerfilRegsistrado(Usuario perfilRegsistrado) {
+	public static void setPerfilRegistrado(Usuario perfilRegsistrado) {
 		Main.perfilRegsistrado = perfilRegsistrado;
 	}
 

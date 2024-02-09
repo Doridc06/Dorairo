@@ -40,4 +40,12 @@ public class UsuarioDaoImpl extends CommonDaoImpl<Usuario> implements UsuarioDao
 		// Searches for the email profile and returns it
 		return (Usuario) session.createQuery("FROM Usuario WHERE correo = '" + correo + "'").uniqueResult();
 	}
+
+	@Override
+	public Usuario searchByUsuarioAndPassword(String usuario, String password) {
+		checkActiveTransaction();
+		return (Usuario) session
+				.createQuery("FROM Usuario WHERE usuario = '" + usuario + "' AND clave = '" + password + "'").uniqueResult();
+	}
+
 }

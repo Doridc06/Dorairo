@@ -49,7 +49,6 @@ public class Main extends Application {
 			// Lanza la pantalla del Login
 			iniciaLogin(primaryStage);
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 

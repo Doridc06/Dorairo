@@ -62,6 +62,12 @@ public class Usuario implements Serializable {
 	}
 
 	/**
+	 * Constructor por defecto, vacío
+	 */
+	public Usuario() {
+	}
+
+	/**
 	 * @return the user
 	 */
 	public String getUser() {

@@ -3,11 +3,9 @@ package controller;
 import conexion.HibernateUtil;
 import constants.Constants;
 import dao.UsuarioDaoImpl;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -51,12 +49,6 @@ public class UsuarioController {
 	@FXML
 	private Label lblUser;
 
-	@FXML
-	private PasswordField pssNuevaPassword;
-
-	@FXML
-	private PasswordField pssRepetirPassword;
-
 	/** Scene de la ventana de Perfil */
 	private Scene scene;
 
@@ -70,7 +62,7 @@ public class UsuarioController {
 	private static Usuario usuarioRegistrado;
 
 	/** Instancia del dao de usuario */
-	private UsuarioDaoImpl usuarioDaoImpl;
+	private static UsuarioDaoImpl usuarioDaoImpl;
 
 	@FXML
 	void initialize() {
@@ -84,11 +76,11 @@ public class UsuarioController {
 		imagen = new Image(getClass().getResourceAsStream(Constants.URL_FOTO_FONDO_PERFIL));
 		imagenFondoPerfil.setImage(imagen);
 
-		// Cambiar los datos del perfil
-		setDatosPerfil();
-
 		// Abre la session y crea el dao de usuario
 		usuarioDaoImpl = new UsuarioDaoImpl(HibernateUtil.openSession());
+
+		// Cambiar los datos del perfil
+		setDatosPerfil();
 	}
 
 	/**
@@ -100,8 +92,8 @@ public class UsuarioController {
 		lblUser.setText(usuarioRegistrado.getUser());
 		lblCorreo.setText(usuarioRegistrado.getCorreo());
 		lblMiembro.setText(usuarioRegistrado.getFechaMiembroString());
-		lblNumeroPeliculas.setText(usuarioDaoImpl.searchNumeroPeliculas(usuarioRegistrado.getUser()));
-		lblNumeroSeries.setText(usuarioDaoImpl.searchNumeroSeries(usuarioRegistrado.getUser()));
+		// lblNumeroPeliculas.setText(usuarioDaoImpl.searchNumeroPeliculas(usuarioRegistrado.getUser()));
+		// lblNumeroSeries.setText(usuarioDaoImpl.searchNumeroSeries(usuarioRegistrado.getUser()));
 		// Establece la imagen del perfil
 		Image imagen;
 		if (usuarioRegistrado.getImagenPerfil() == null || usuarioRegistrado.getImagenPerfil().isBlank()) {
@@ -150,6 +142,7 @@ public class UsuarioController {
 	 */
 	@FXML
 	void cerrarSesion(MouseEvent event) {
+		usuarioRegistrado = null;
 		muestraLogin();
 	}
 
@@ -168,32 +161,38 @@ public class UsuarioController {
 		String fotoUrl = Utils.buscarFotoArchivos(stage);
 		// La establece para el usuario registrado
 		usuarioRegistrado.setImagenPerfil(fotoUrl);
-		// Mostar la imagen
-		Image image = new Image("file:" + fotoUrl);
-		imagenPerfil.setImage(image);
+		// Actualiza el perfil
+		usuarioDaoImpl.insert(usuarioRegistrado);
 		// Recarga los datos
 		setDatosPerfil();
 	}
 
 	@FXML
 	void eliminarDatos(MouseEvent event) {
-		usuarioDaoImpl.deleteDataUser(usuarioRegistrado.getUser());
+		if (Utils.confirmacion()) {
+			usuarioDaoImpl.deleteDataUser(usuarioRegistrado.getUser());
+		}
 	}
 
 	@FXML
-	void modificarContraseña(MouseEvent event) {
-
+	void modificarPassword(MouseEvent event) {
+		setSceneAndStage();
+		gestorVentanas.muestraCambiarPasswordNombre(scene, "Cambiar Contraseña");
 	}
 
 	@FXML
 	void modificarNombre(MouseEvent event) {
-
+		setSceneAndStage();
+		gestorVentanas.muestraCambiarPasswordNombre(scene, "Cambiar Nombre");
+		setDatosPerfil();
 	}
 
 	@FXML
 	void eliminarCuenta(MouseEvent event) {
-		usuarioDaoImpl.delete(usuarioRegistrado);
-		muestraLogin();
+		if (Utils.confirmacion()) {
+			usuarioDaoImpl.delete(usuarioRegistrado);
+			muestraLogin();
+		}
 	}
 
 	/**
@@ -217,19 +216,28 @@ public class UsuarioController {
 	/**
 	 * @return the usuarioRegistrado
 	 */
-	public static Usuario getUsuarioRegistrado() {
+	public Usuario getUsuarioRegistrado() {
 		return usuarioRegistrado;
 	}
 
-	@FXML
-	void guardarPressed(ActionEvent event) {
-		// Comprueba que ambas sean iguales
-		if (Utils.compruebaContrasenas(pssNuevaPassword.getText(), pssRepetirPassword.getText())) {
-			// Establece la contraseña
-			usuarioRegistrado.setClave(pssNuevaPassword.getText());
-			usuarioDaoImpl.insert(usuarioRegistrado);
-			Utils.mostrarAlerta("Contraseña cambiada con éxito", Constants.INFORMATION_TYPE);
-		}
+	/**
+	 * Cambia la clave del perfil registrado
+	 * 
+	 * @param clave Nueva clave
+	 */
+	public static void cambiarClave(String clave) {
+		usuarioRegistrado.setClave(clave);
+		usuarioDaoImpl.insert(usuarioRegistrado);
+	}
+
+	/**
+	 * Cambia el nombre del perfil registrado
+	 * 
+	 * @param nombre Nuevo nombre
+	 */
+	public static void cambiarNombre(String nombre) {
+		usuarioRegistrado.setNombre(nombre);
+		usuarioDaoImpl.insert(usuarioRegistrado);
 	}
 
 }

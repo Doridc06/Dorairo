@@ -71,10 +71,8 @@ public abstract class CommonDaoImpl<T> implements CommonDaoI<T> {
 
 	@Override
 	public void activeTransaction() {
-		try {
+		if (!session.getTransaction().isActive()) {
 			session.beginTransaction();
-		} catch (Exception e) {
-			System.out.println();
 		}
 	}
 

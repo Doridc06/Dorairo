@@ -1,8 +1,16 @@
 package utilities;
 
+import java.util.Optional;
+
 import constants.Constants;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -69,20 +77,40 @@ public class Utils {
 	 * 
 	 * @param contrasena
 	 * @param repeticionContrasena
-	 * @return true si coinciden; false si son distintas
+	 * @return True si coinciden; false si son distintas
 	 */
 	public static boolean compruebaContrasenas(String contrasena, String repeticionContrasena) {
 		if (contrasena.compareTo(repeticionContrasena) == 0) {
-			if (contrasena.length() <= 20) {
+			if (contrasena.length() > 0 && contrasena.length() <= 20) {
 				return true;
 			} else {
-				Utils.mostrarAlerta("La contraseña no puede ser mayor de 20 caracteres.", Constants.WARNING_TYPE);
+				Utils.mostrarAlerta("La contraseña no puede ser mayor de 20 caracteres (ni estar vacía).",
+						Constants.WARNING_TYPE);
 				return false;
 			}
 		} else {
 			Utils.mostrarAlerta("Las constraseñas no coinciden.", Constants.WARNING_TYPE);
 			return false;
 		}
+	}
+
+	/**
+	 * Muestra una alerta de confirmacion
+	 * 
+	 * @return True si se pulsa aceptar; False si se pulsa cancelar
+	 */
+	public static boolean confirmacion() {
+		// Crea una alerta de tipo confirmacion
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+		alert.setHeaderText(null);
+		alert.setTitle("Confirmación");
+		alert.initOwner(ownerStage);
+		alert.setContentText("¿Estás seguro de querer realizar la acción?");
+		// Muestra la alerta y espera hasta que se cierre
+		Optional<ButtonType> result = alert.showAndWait();
+
+		// Comprueba si se ha pulsado el boton de ok y lo envia
+		return result.isPresent() && result.get() == ButtonType.OK;
 	}
 
 }

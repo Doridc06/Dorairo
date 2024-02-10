@@ -22,6 +22,12 @@ import javafx.stage.Stage;
 public class GestorVentanas {
 
 	/**
+	 * Array con las pantallas que no deben seguir el tamaño normal, sino que tienen
+	 * el suyo propio y se superponen a la ventana anterior
+	 */
+	private String[] pantallasTamañoDistintoYSuperpuestas = { "Registro", "Cambiar Contraseña", "Cambiar Nombre" };
+
+	/**
 	 * Muestra la ventana que corresponda y cierra la anterior
 	 * 
 	 * @param stageAnterior Stage que se va a cerrar
@@ -72,7 +78,7 @@ public class GestorVentanas {
 			Scene scene = null;
 
 			// Comprueba si es Registro o Inicio para dejarlos con sus tamaños por defecto
-			if (titulo.equalsIgnoreCase("Registro") || titulo.equalsIgnoreCase("Dorairo")) {
+			if (isPantallaTamañoDistintoYSuperpuesta(titulo) || titulo.equalsIgnoreCase("Dorairo")) {
 				scene = new Scene(root);
 			} else {
 				scene = new Scene(root, 1512, 982);
@@ -93,7 +99,7 @@ public class GestorVentanas {
 			stage.setResizable(false);
 
 			// Muestra la ventana
-			if (titulo.equalsIgnoreCase("Registro")) {
+			if (isPantallaTamañoDistintoYSuperpuesta(titulo)) {
 				stage.showAndWait();
 			} else {
 				stage.show();
@@ -103,6 +109,23 @@ public class GestorVentanas {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * Comprueba si el titulo pasado es una de las pantallas con tamaño distinto
+	 * 
+	 * @param titulo Titulo a comprobar
+	 * @return True si es una de las pantallas con tamaño distinto; False si no lo
+	 *         es.
+	 */
+	private boolean isPantallaTamañoDistintoYSuperpuesta(String titulo) {
+// Recorre el array de las pantallas con tamaño distinto para comprobar si se encuentra el titulo
+		for (String pantalla : pantallasTamañoDistintoYSuperpuestas) {
+			if (pantalla.equalsIgnoreCase(titulo)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -211,6 +234,27 @@ public class GestorVentanas {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * Muestra la ventana de Registro y desenfoca la anterior para que no se pueda
+	 * hacer uso de ella hasta que se cierre la de Registro
+	 * 
+	 * @param anteriorScene
+	 */
+	public void muestraCambiarPasswordNombre(Scene anteriorScene, String titulo) {
+		// Aplica el desenfoque a la escena
+		BoxBlur blur = new BoxBlur(10, 10, 3);
+		anteriorScene.getRoot().setEffect(blur);
+
+		if (titulo.equalsIgnoreCase("Cambiar Contraseña")) {
+			setNewStage(Constants.URL_CAMBIAR_PASSWORD_FXML, titulo);
+		} else if (titulo.equalsIgnoreCase("Cambiar Nombre")) {
+			setNewStage(Constants.URL_CAMBIAR_NOMBRE_FXML, titulo);
+		}
+
+		// Desactiva el efecto de desenfoque
+		anteriorScene.getRoot().setEffect(null);
 	}
 
 }

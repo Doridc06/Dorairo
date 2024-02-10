@@ -6,6 +6,7 @@ import conexion.HibernateUtil;
 import constants.Constants;
 import dao.UsuarioDaoImpl;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -38,6 +39,12 @@ public class RegistroController {
 	@FXML
 	private TextField txtUsuario;
 
+	/** Scene de la ventana de Inicio */
+	private Scene scene;
+
+	/** Stage de la ventana de Inicio */
+	private Stage stage;
+
 	/** Instancia del dao de usuario */
 	private UsuarioDaoImpl usuarioDaoImpl;
 
@@ -63,12 +70,11 @@ public class RegistroController {
 		// Comprueba que los campos estén llenos, las contraseñas coincidan y no exista
 		// un perfil con un usuario o correo igual
 		if (camposLlenos(usuario, correo, nombre, contrasena, repeticionContrasena)
-				&& Utils.compruebaContrasenas(contrasena, repeticionContrasena) && isPerfil(usuario, correo)) {
+				&& Utils.compruebaContrasenas(contrasena, repeticionContrasena) && !isPerfil(usuario, correo)) {
 			// Crea el nuevo perfil
 			usuarioDaoImpl.update(new Usuario(usuario, nombre, correo, repeticionContrasena, new Date()));
 
-			// Cierra la ventana de registro
-			Stage stage = (Stage) btnRegistrarse.getScene().getWindow();
+			setSceneAndStage();
 			stage.close();
 
 			Utils.mostrarAlerta("¡El nuevo perfil se ha creado con éxito!", Constants.INFORMATION_TYPE);
@@ -114,6 +120,15 @@ public class RegistroController {
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * Asigna los valores correspondientes del stage y el scene
+	 * 
+	 */
+	public void setSceneAndStage() {
+		scene = btnRegistrarse.getScene();
+		stage = (Stage) scene.getWindow();
 	}
 
 }

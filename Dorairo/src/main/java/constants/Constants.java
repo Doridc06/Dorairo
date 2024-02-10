@@ -76,8 +76,14 @@ public class Constants {
 	/** Ruta al documento fxml de Aleatoria */
 	public static final String URL_PELI_SERIE_ALEATORIA_FXML = "/view/Aleatoria.fxml";
 
+	/** Ruta al documento fxml de Cambiar Password */
+	public static final String URL_CAMBIAR_PASSWORD_FXML = "/view/CambiarPassword.fxml";
+
+	/** Ruta al documento fxml de Cambiar Nombre */
+	public static final String URL_CAMBIAR_NOMBRE_FXML = "/view/CambiarNombre.fxml";
+
 	// Rutas a imagenes
-	
+
 	/** Ruta a la imagen de la portada */
 	public static final String URL_PORTADA = "/application/images/portada.png";
 

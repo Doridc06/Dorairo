@@ -1,10 +1,10 @@
 package controller;
 
-import java.time.LocalDate;
 import java.util.Date;
 
-import application.Main;
+import conexion.HibernateUtil;
 import constants.Constants;
+import dao.UsuarioDaoImpl;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -38,6 +38,15 @@ public class RegistroController {
 	@FXML
 	private TextField txtUsuario;
 
+	/** Instancia del dao de usuario */
+	private UsuarioDaoImpl usuarioDaoImpl;
+
+	@FXML
+	void initialize() {
+		// Abre la session y crea el dao de usuario
+		usuarioDaoImpl = new UsuarioDaoImpl(HibernateUtil.openSession());
+	}
+
 	/**
 	 * Registra un nuevo perfil según los datos que se hayan introducido
 	 * 
@@ -54,16 +63,15 @@ public class RegistroController {
 		// Comprueba que los campos estén llenos, las contraseñas coincidan y no exista
 		// un perfil con un usuario o correo igual
 		if (camposLlenos(usuario, correo, nombre, contrasena, repeticionContrasena)
-				&& compruebaContrasenas(contrasena, repeticionContrasena) && !Main.isPerfil(usuario, correo)) {
+				&& Utils.compruebaContrasenas(contrasena, repeticionContrasena) && isPerfil(usuario, correo)) {
 			// Crea el nuevo perfil
-			Main.anadirNuevoPerfil(new Usuario(usuario, nombre, correo, repeticionContrasena, new Date()));
+			usuarioDaoImpl.update(new Usuario(usuario, nombre, correo, repeticionContrasena, new Date()));
 
 			// Cierra la ventana de registro
 			Stage stage = (Stage) btnRegistrarse.getScene().getWindow();
 			stage.close();
 
 			Utils.mostrarAlerta("¡El nuevo perfil se ha creado con éxito!", Constants.INFORMATION_TYPE);
-
 		}
 	}
 
@@ -89,19 +97,23 @@ public class RegistroController {
 	}
 
 	/**
-	 * Comprueba que la contraseña y la repetición sean iguales
+	 * Comprueba si existe un perfil con el correo o el usuario proporcionados
 	 * 
-	 * @param contrasena
-	 * @param repeticionContrasena
-	 * @return true si coinciden; false si son distintas
+	 * @param usuario a comprobar
+	 * @param correo  a comprobar
+	 * @return true si el correo o usuario ya han sido usados; false si ninguno se
+	 *         ha usado
 	 */
-	private boolean compruebaContrasenas(String contrasena, String repeticionContrasena) {
-		if (contrasena.compareTo(repeticionContrasena) == 0) {
+	public boolean isPerfil(String usuario, String correo) {
+		// Busca el usuario y correo, si es distinto de null es que existe
+		if (usuarioDaoImpl.searchByUsuario(usuario) != null) {
+			Utils.mostrarAlerta("El usuario introducido ya existe.", Constants.WARNING_TYPE);
 			return true;
-		} else {
-			Utils.mostrarAlerta("Las constraseñas no coinciden.", Constants.WARNING_TYPE);
-			return false;
+		} else if (usuarioDaoImpl.searchByCorreo(correo) != null) {
+			Utils.mostrarAlerta("El correo introducido ya está registrado.", Constants.WARNING_TYPE);
+			return true;
 		}
+		return false;
 	}
 
 }

@@ -4,7 +4,6 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 import org.hibernate.Session;
-import org.hibernate.resource.transaction.spi.TransactionStatus;
 
 /**
  * Common Dao interface implementation
@@ -28,14 +27,13 @@ public abstract class CommonDaoImpl<T> implements CommonDaoI<T> {
 	 */
 	@SuppressWarnings("unchecked")
 	protected CommonDaoImpl(Session session) {
-		setEntityClass(
-				(Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
+		setEntityClass((Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
 		this.session = session;
 	}
 
 	@Override
 	public void insert(T paramT) {
-		checkActiveTransaction();
+		activeTransaction();
 
 		// Stores the object, sends it and commits the changes
 		session.save(paramT);
@@ -45,34 +43,38 @@ public abstract class CommonDaoImpl<T> implements CommonDaoI<T> {
 
 	@Override
 	public void update(T paramT) {
-		checkActiveTransaction();
+		activeTransaction();
 
 		// Updates the object and commits the changes
 		session.saveOrUpdate(paramT);
+		session.flush();
 		session.getTransaction().commit();
 	}
 
 	@Override
 	public void delete(T paramT) {
-		checkActiveTransaction();
+		activeTransaction();
 
 		// Deletes the object and commits the changes
 		session.delete(paramT);
+		session.flush();
 		session.getTransaction().commit();
 	}
 
 	@Override
 	public List<T> searchAll() {
-		checkActiveTransaction();
+		activeTransaction();
 
 		// Gets all objects and stores them in a list
 		return session.createQuery("FROM " + this.entityClass.getName()).list();
 	}
 
 	@Override
-	public void checkActiveTransaction() {
-		if (session.getTransaction().getStatus().equals(TransactionStatus.NOT_ACTIVE)) {
+	public void activeTransaction() {
+		try {
 			session.beginTransaction();
+		} catch (Exception e) {
+			System.out.println();
 		}
 	}
 

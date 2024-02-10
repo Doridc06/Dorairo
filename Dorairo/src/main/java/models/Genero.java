@@ -25,11 +25,11 @@ public class Genero implements Serializable {
 	private String name;
 
 	/** Relacion de Generos con Series */
-	@ManyToMany(cascade = { CascadeType.ALL }, mappedBy = "generos")
+	@ManyToMany(cascade = { CascadeType.ALL }, mappedBy = "genres")
 	private List<Series> series = new ArrayList<>();
 
 	/** Relacion de Generos con Peliculas */
-	@ManyToMany(cascade = { CascadeType.ALL }, mappedBy = "generos")
+	@ManyToMany(cascade = { CascadeType.ALL }, mappedBy = "genres")
 	private List<Pelicula> peliculas = new ArrayList<>();
 
 	public String getName() {

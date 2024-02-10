@@ -77,6 +77,7 @@ public class Constants {
 	public static final String URL_PELI_SERIE_ALEATORIA_FXML = "/view/Aleatoria.fxml";
 
 	// Rutas a imagenes
+	
 	/** Ruta a la imagen de la portada */
 	public static final String URL_PORTADA = "/application/images/portada.png";
 

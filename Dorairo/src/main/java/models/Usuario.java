@@ -30,7 +30,7 @@ public class Usuario implements Serializable {
 	private String correo;
 
 	@Column(name = "imagen_de_perfil")
-	private String igamenPerfil;
+	private String imagenPerfil;
 
 	@Column(name = "clave", length = 20)
 	private String clave;
@@ -104,17 +104,17 @@ public class Usuario implements Serializable {
 	}
 
 	/**
-	 * @return the igamenPerfil
+	 * @return the imagenPerfil
 	 */
-	public String getIgamenPerfil() {
-		return igamenPerfil;
+	public String getImagenPerfil() {
+		return imagenPerfil;
 	}
 
 	/**
-	 * @param igamenPerfil the igamenPerfil to set
+	 * @param imagenPerfil the igamenPerfil to set
 	 */
-	public void setIgamenPerfil(String igamenPerfil) {
-		this.igamenPerfil = igamenPerfil;
+	public void setImagenPerfil(String imagenPerfil) {
+		this.imagenPerfil = imagenPerfil;
 	}
 
 	/**
@@ -188,7 +188,7 @@ public class Usuario implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Perfil [usuario=" + user + ", nombre=" + nombre + ", correo=" + correo + ", igamenPerfil=" + igamenPerfil
+		return "Perfil [usuario=" + user + ", nombre=" + nombre + ", correo=" + correo + ", igamenPerfil=" + imagenPerfil
 				+ ", clave=" + clave + ", fechaMiembro=" + fechaMiembro + "]";
 	}
 }

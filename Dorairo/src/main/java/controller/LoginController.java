@@ -1,7 +1,8 @@
 package controller;
 
-import application.Main;
+import conexion.HibernateUtil;
 import constants.Constants;
+import dao.UsuarioDaoImpl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -14,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import models.Usuario;
 import utilities.GestorVentanas;
 import utilities.Utils;
 
@@ -58,6 +60,9 @@ public class LoginController {
 	/** Instancia del gestor de ventanas **/
 	private GestorVentanas gestorVentanas;
 
+	/** Instancia del dao de usuario */
+	private UsuarioDaoImpl usuarioDaoImpl;
+
 	/**
 	 * Método al inicio de la ejecución
 	 */
@@ -73,6 +78,9 @@ public class LoginController {
 		// Establece la imagen de la portada
 		imagen = new Image(getClass().getResourceAsStream(Constants.URL_PORTADA));
 		imgPortada.setImage(imagen);
+
+		// Abre la session y crea el dao de usuario
+		usuarioDaoImpl = new UsuarioDaoImpl(HibernateUtil.openSession());
 	}
 
 	/**
@@ -87,7 +95,7 @@ public class LoginController {
 		String contrasena = pwContrasena.getText();
 
 		// Comprueba que exista un perfil con ese usuario y contraseñas
-		if (Main.comprobarPerfil(usuario, contrasena)) {
+		if (comprobarPerfil(usuario, contrasena)) {
 			Utils.mostrarAlerta("Inicio de sesión exitoso. ¡Bienvenido/a, " + usuario + "!", Constants.INFORMATION_TYPE);
 			// Muestra la ventana de inicio
 			gestorVentanas.muestraVentana(stage, Constants.URL_INICIO_FXML, "Inicio");
@@ -116,6 +124,25 @@ public class LoginController {
 		vaciarCampos();
 		setSceneAndStage();
 		gestorVentanas.muestraRegistro(scene);
+	}
+
+	/**
+	 * Verifica que exista un perfil con el usuario y contrasena proporcionados
+	 * 
+	 * @param user       a comprobar
+	 * @param contrasena a comprobar
+	 * @return true si existe o false si no existe
+	 */
+	public boolean comprobarPerfil(String user, String contrasena) {
+		// Busca y recoge el perfil con dicho usuario y contraseña
+		Usuario usuario = usuarioDaoImpl.searchByUsuarioAndPassword(user, contrasena);
+		// Si es distinto de null (existe), se establece como perfil registrado
+		if (usuario != null) {
+			UsuarioController.setUsuarioRegistrado(usuario);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**

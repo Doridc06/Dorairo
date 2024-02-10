@@ -29,7 +29,7 @@ public class CompañiaDaoImpl extends CommonDaoImpl<Compañia> implements Compa�
 
 	@Override
 	public Compañia searchById(int id) {
-		checkActiveTransaction();
+		activeTransaction();
 
 		// Busca la compañia con el id y la devuelve
 		return (Compañia) session.createQuery("FROM Compañias WHERE id = " + id).uniqueResult();
@@ -37,7 +37,7 @@ public class CompañiaDaoImpl extends CommonDaoImpl<Compañia> implements Compa�
 
 	@Override
 	public List<Compañia> searchByName(String name) {
-		checkActiveTransaction();
+		activeTransaction();
 
 		// Busca las compañias con dicho nombre
 		return session.createQuery("FROM Compañias WHERE nombre = '" + name + "'").list();

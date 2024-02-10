@@ -35,4 +35,27 @@ public interface UsuarioDaoI extends CommonDaoI<Usuario> {
 	 */
 	public Usuario searchByUsuarioAndPassword(final String usuario, final String password);
 
+	/**
+	 * Searches for the number of movies that this id user has seen
+	 * 
+	 * @param usuario Id of the user
+	 * @return Number of user movies
+	 */
+	public String searchNumeroPeliculas(final String usuario);
+
+	/**
+	 * Searches for the number of series that this id user has seen
+	 * 
+	 * @param usuario Id of the user
+	 * @return Number of user series
+	 */
+	public String searchNumeroSeries(final String usuario);
+
+	/**
+	 * Deletes user data about his watched or stored movie or series
+	 * 
+	 * @param usuario Id of the user
+	 */
+	public void deleteDataUser(String usuario);
+
 }

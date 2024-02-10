@@ -13,7 +13,7 @@
 		<property name="hibernate.search.autoregister_listeners">true</property>
 		<property name="hibernate.show_sql">true</property>
 		<property name="hibernate.validator.apply_to_ddl">false</property>
-		<property name="hibernate.hbm2ddl.auto">create</property>
+		<property name="hibernate.hbm2ddl.auto">validate</property>
 
 		<mapping class="models.Actores" />
 		<mapping class="models.Compañia" />

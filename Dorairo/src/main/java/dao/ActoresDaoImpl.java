@@ -28,7 +28,7 @@ public class ActoresDaoImpl extends CommonDaoImpl<Actores> implements ActoresDao
 
 	@Override
 	public Actores searchById(int id) {
-		checkActiveTransaction();
+		activeTransaction();
 
 		// Busca el actor con el id y lo devuelve
 		return (Actores) session.createQuery("FROM Actores WHERE id = " + id).uniqueResult();
@@ -36,7 +36,7 @@ public class ActoresDaoImpl extends CommonDaoImpl<Actores> implements ActoresDao
 
 	@Override
 	public List<Actores> searchByName(String name) {
-		checkActiveTransaction();
+		activeTransaction();
 
 		// Busca los actores con dicho nombre
 		return session.createQuery("FROM Actores WHERE nombre = '" + name + "'").list();

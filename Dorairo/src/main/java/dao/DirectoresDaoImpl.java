@@ -29,7 +29,7 @@ public class DirectoresDaoImpl extends CommonDaoImpl<Directores> implements Dire
 
 	@Override
 	public Directores searchById(int id) {
-		checkActiveTransaction();
+		activeTransaction();
 
 		// Busca el director con el id y lo devuelve
 		return (Directores) session.createQuery("FROM Directores WHERE id = " + id).uniqueResult();
@@ -37,7 +37,7 @@ public class DirectoresDaoImpl extends CommonDaoImpl<Directores> implements Dire
 
 	@Override
 	public List<Directores> searchByName(String name) {
-		checkActiveTransaction();
+		activeTransaction();
 
 		// Busca los directores con dicho nombre
 		return session.createQuery("FROM Directores WHERE nombre = '" + name + "'").list();

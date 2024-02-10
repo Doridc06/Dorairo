@@ -27,7 +27,7 @@ public class UsuarioDaoImpl extends CommonDaoImpl<Usuario> implements UsuarioDao
 
 	@Override
 	public Usuario searchByUsuario(String usuario) {
-		checkActiveTransaction();
+		activeTransaction();
 
 		// Searches for the user profile and returns it
 		return (Usuario) session.createQuery("FROM Usuario WHERE usuario = '" + usuario + "'").uniqueResult();
@@ -35,7 +35,7 @@ public class UsuarioDaoImpl extends CommonDaoImpl<Usuario> implements UsuarioDao
 
 	@Override
 	public Usuario searchByCorreo(String correo) {
-		checkActiveTransaction();
+		activeTransaction();
 
 		// Searches for the email profile and returns it
 		return (Usuario) session.createQuery("FROM Usuario WHERE correo = '" + correo + "'").uniqueResult();
@@ -43,9 +43,32 @@ public class UsuarioDaoImpl extends CommonDaoImpl<Usuario> implements UsuarioDao
 
 	@Override
 	public Usuario searchByUsuarioAndPassword(String usuario, String password) {
-		checkActiveTransaction();
+		activeTransaction();
 		return (Usuario) session
 				.createQuery("FROM Usuario WHERE usuario = '" + usuario + "' AND clave = '" + password + "'").uniqueResult();
+	}
+
+	@Override
+	public String searchNumeroPeliculas(String usuario) {
+		activeTransaction();
+		return (String) session.createQuery("SELECT count(*) FROM Usuario_Pelicula WHERE usuario = '" + usuario + "'")
+				.uniqueResult();
+	}
+
+	@Override
+	public String searchNumeroSeries(String usuario) {
+		activeTransaction();
+		return (String) session.createQuery("SELECT count(*) FROM Usuario_Serie WHERE usuario = '" + usuario + "'")
+				.uniqueResult();
+	}
+
+	@Override
+	public void deleteDataUser(String usuario) {
+		activeTransaction();
+		// Elimina los datos de la tabla usuario_serie y usuario_pelicula de los
+		// registros del usuario con el id proporcionado
+		session.createQuery("DELETE FROM Usuario_Serie WHERE usuario = '" + usuario + "'");
+		session.createQuery("DELETE FROM Usuario_Pelicula WHERE usuario = '" + usuario + "'");
 	}
 
 }

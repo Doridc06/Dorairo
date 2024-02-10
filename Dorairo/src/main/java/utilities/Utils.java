@@ -3,7 +3,6 @@ package utilities;
 import constants.Constants;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -62,6 +61,27 @@ public class Utils {
 		} catch (Exception e) {
 			mostrarAlerta("Error al seleccionar una foto", Constants.ERROR_TYPE);
 			return null;
+		}
+	}
+
+	/**
+	 * Comprueba que la contraseña y la repetición sean iguales
+	 * 
+	 * @param contrasena
+	 * @param repeticionContrasena
+	 * @return true si coinciden; false si son distintas
+	 */
+	public static boolean compruebaContrasenas(String contrasena, String repeticionContrasena) {
+		if (contrasena.compareTo(repeticionContrasena) == 0) {
+			if (contrasena.length() <= 20) {
+				return true;
+			} else {
+				Utils.mostrarAlerta("La contraseña no puede ser mayor de 20 caracteres.", Constants.WARNING_TYPE);
+				return false;
+			}
+		} else {
+			Utils.mostrarAlerta("Las constraseñas no coinciden.", Constants.WARNING_TYPE);
+			return false;
 		}
 	}
 

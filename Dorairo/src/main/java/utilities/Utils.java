@@ -5,12 +5,7 @@ import java.util.Optional;
 import constants.Constants;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.DialogPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -33,6 +28,7 @@ public class Utils {
 	 */
 	public static void mostrarAlerta(String mensaje, String tipo) {
 		Alert alert = new Alert(AlertType.valueOf(tipo));
+		alert.getDialogPane().getStyleClass().add(".dialog-pane");
 		alert.setTitle(tipo);
 		alert.setHeaderText(null);
 		alert.setContentText(mensaje);

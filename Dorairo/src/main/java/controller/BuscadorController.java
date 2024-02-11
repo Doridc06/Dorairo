@@ -54,6 +54,10 @@ public class BuscadorController {
 
     @FXML
     private Button buscar;
+    
+    @FXML
+    private ImageView lupa;
+
 
     @FXML
     void inicioClicked(MouseEvent event) {
@@ -94,6 +98,9 @@ public class BuscadorController {
         gestorVentanas = new GestorVentanas();
         Image imagenLogo = new Image(getClass().getResourceAsStream(Constants.URL_LOGO_AMPLIADO));
         imagenLogoCabecera.setImage(imagenLogo);
+        
+        Image imagenLupa = new Image(getClass().getResourceAsStream(Constants.URL_LUPA));
+        lupa.setImage(imagenLupa);
     }
 
     @FXML

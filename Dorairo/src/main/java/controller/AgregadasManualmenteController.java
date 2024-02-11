@@ -95,6 +95,9 @@ public class AgregadasManualmenteController {
 
 	/** URL del poster añadido */
 	private String poster = null;
+	
+    @FXML
+    private ImageView lupa;
 
 	@FXML
 	void initialize() {
@@ -103,6 +106,9 @@ public class AgregadasManualmenteController {
 		// Establece la imagen del logo
 		Image imagen = new Image(getClass().getResourceAsStream(Constants.URL_LOGO_AMPLIADO));
 		imagenLogoCabecera.setImage(imagen);
+		
+		 Image imagenLupa = new Image(getClass().getResourceAsStream(Constants.URL_LUPA));
+	        lupa.setImage(imagenLupa);
 		// Establece la imagen de subir foto
 		imagen = new Image(getClass().getResourceAsStream(Constants.URL_FOTO_SUBIR_FOTO));
 		imagenCartel.setImage(imagen);

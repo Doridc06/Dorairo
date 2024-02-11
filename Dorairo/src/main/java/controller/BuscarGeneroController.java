@@ -93,6 +93,8 @@ public class BuscarGeneroController {
 
   private String tipo;
 
+  @FXML
+  private ImageView lupa;
 	/**
 	 * Asigna los valores correspondientes del stage y el scene
 	 * 
@@ -141,6 +143,9 @@ public class BuscarGeneroController {
 		// Establecer la imagen del logo
 		Image imagenLogo = new Image(getClass().getResourceAsStream(Constants.URL_LOGO_AMPLIADO));
 		imagenLogoCabecera.setImage(imagenLogo);
+		
+		 Image imagenLupa = new Image(getClass().getResourceAsStream(Constants.URL_LUPA));
+	     lupa.setImage(imagenLupa);
 		
 	    // Establecer el espacio entre las imágenes en el HBox
 	    hBoxPeliculas.setSpacing(50);

@@ -90,6 +90,14 @@
 								<Font size="30.0" />
 							</font>
 						</Label>
+                  <ImageView fx:id="lupa" fitHeight="35.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/application/images/lupa.png" />
+                     </image>
+                     <StackPane.margin>
+                        <Insets left="180.0" />
+                     </StackPane.margin>
+                  </ImageView>
 					</children>
 				</StackPane>
 				<StackPane fx:id="stackPanePeliculasCabecera" layoutX="442.0" layoutY="53.0" onMouseClicked="#peliculasClicked" prefHeight="44.0" prefWidth="200.0" styleClass="cabeceraBotones">

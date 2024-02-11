@@ -89,7 +89,8 @@ public class PeliculaController {
 	@FXML
 	private MenuItem Aleatoria;
 
-
+    @FXML
+    private ImageView lupa;
 
 	private BuscarGeneroController buscarGeneroController;
 
@@ -158,8 +159,10 @@ public class PeliculaController {
 		// Establece la imagen del logo
 		Image imagenLogo = new Image(getClass().getResourceAsStream(Constants.URL_LOGO_AMPLIADO));
 		imagenLogoCabecera.setImage(imagenLogo);
-
 		
+		 Image imagenLupa = new Image(getClass().getResourceAsStream(Constants.URL_LUPA));
+	     lupa.setImage(imagenLupa);
+	        
 
 		// Configuración de los eventos para los CheckBox de género
 		GeneroAccion.setOnAction(event -> generoClicked("28"));

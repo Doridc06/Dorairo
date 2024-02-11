@@ -55,6 +55,9 @@ public class UsuarioController {
 
 	/** Instancia del gestor de ventanas **/
 	private GestorVentanas gestorVentanas;
+	
+    @FXML
+    private ImageView lupa;
 
 	@FXML
 	void initialize() {
@@ -63,6 +66,9 @@ public class UsuarioController {
 		// Establece la imagen del logo
 		Image imagen = new Image(getClass().getResourceAsStream(Constants.URL_LOGO_AMPLIADO));
 		imagenLogoCabecera.setImage(imagen);
+		
+		 Image imagenLupa = new Image(getClass().getResourceAsStream(Constants.URL_LUPA));
+	        lupa.setImage(imagenLupa);
 		// Establece la imagen del perfil
 		if (Main.getPerfilRegsistrado().getIgamenPerfil() == null
 				|| Main.getPerfilRegsistrado().getIgamenPerfil().isBlank()) {

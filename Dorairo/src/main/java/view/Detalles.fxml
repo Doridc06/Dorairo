@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
@@ -37,19 +38,19 @@
                         <Font name="System Bold" size="26.0" />
                      </font>
                   </Text>
-                  <MenuButton layoutX="526.0" layoutY="108.0" mnemonicParsing="false" styleClass="cabeceraBotones" text="Añadir">
+                  <MenuButton fx:id="Agregar" layoutX="526.0" layoutY="108.0" mnemonicParsing="false" styleClass="cabeceraBotones" text="Añadir">
                     <items>
-                      <MenuItem mnemonicParsing="false" text="Mi Lista" />
-                      <MenuItem mnemonicParsing="false" text="Ya visto" />
+                      <MenuItem fx:id="miLista" mnemonicParsing="false" text="Mi Lista" />
+                      <MenuItem fx:id="yaVisto" mnemonicParsing="false" text="Ya visto" />
                     </items>
                      <font>
                         <Font size="22.0" />
                      </font>
                   </MenuButton>
-                  <MenuButton layoutX="674.0" layoutY="108.0" mnemonicParsing="false" styleClass="cabeceraBotones" text="Exportar">
+                  <MenuButton fx:id="Exportar" layoutX="674.0" layoutY="108.0" mnemonicParsing="false" styleClass="cabeceraBotones" text="Exportar">
                     <items>
-                      <MenuItem mnemonicParsing="false" text="CSV" />
-                      <MenuItem mnemonicParsing="false" text="JSON" />
+                      <MenuItem fx:id="csv" mnemonicParsing="false" text="CSV" />
+                      <MenuItem fx:id="json" mnemonicParsing="false" text="JSON" />
                     </items>
                      <font>
                         <Font size="22.0" />
@@ -110,6 +111,14 @@
 								<Font size="30.0" />
 							</font>
 						</Label>
+                  <ImageView fx:id="lupa" fitHeight="35.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/application/images/lupa.png" />
+                     </image>
+                     <StackPane.margin>
+                        <Insets left="180.0" />
+                     </StackPane.margin>
+                  </ImageView>
 					</children>
 				</StackPane>
 				<StackPane fx:id="stackPanePeliculasCabecera" layoutX="442.0" layoutY="53.0" onMouseClicked="#peliculasClicked" prefHeight="44.0" prefWidth="200.0" styleClass="cabeceraBotones">

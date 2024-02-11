@@ -104,6 +104,9 @@ public class SeriesController {
 
 	@FXML
 	private MenuItem Aleatoria;
+	
+    @FXML
+    private ImageView lupa;
 
 	private static final String API_KEY = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlYjc0NTA5ZjRiZDBlODJlMTFlYzA2YWM1MDRhMGRlMCIsInN1YiI6IjY1Mzc3ZmRmZjQ5NWVlMDBmZjY1YTEyOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ehIu08LoiMRTccPoD4AfADXOpQPlqNAKUMvGgwY3XU8";
 
@@ -163,6 +166,11 @@ public class SeriesController {
 		// Establece la imagen del logo
 		Image imagenLogo = new Image(getClass().getResourceAsStream(Constants.URL_LOGO_AMPLIADO));
 		imagenLogoCabecera.setImage(imagenLogo);
+		
+		 Image imagenLupa = new Image(getClass().getResourceAsStream(Constants.URL_LUPA));
+	        lupa.setImage(imagenLupa);
+	        
+	        
 		Aleatoria.setOnAction(event -> peliAleatoriaClicked());
 		GeneroAccion.setOnAction(event -> generoClicked("28"));
 		GeneroAventura.setOnAction(event -> generoClicked("12"));

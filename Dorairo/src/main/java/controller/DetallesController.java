@@ -1,15 +1,21 @@
 package controller;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import constants.Constants;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import models.Genero;
@@ -22,171 +28,256 @@ import utilities.GestorVentanas;
 
 public class DetallesController {
 
-	@FXML
-	private ImageView imagenLogoCabecera;
+  @FXML
+  private ImageView imagenLogoCabecera;
 
-	@FXML
-	private Text titulo;
+  @FXML
+  private Text titulo;
 
-	@FXML
-	private ImageView cartel;
+  @FXML
+  private ImageView cartel;
 
-	@FXML
-	private Text detalles;
+  @FXML
+  private Text detalles;
 
-	private Scene scene;
+  private Scene scene;
 
-	private Stage stage;
+  private Stage stage;
 
-	private GestorVentanas gestorVentanas;
+  private GestorVentanas gestorVentanas;
 
-	@FXML
-	private ImageView fondoIm;
+  @FXML
+  private ImageView fondoIm;
 
-	private static final String API_KEY = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlYjc0NTA5ZjRiZDBlODJlMTFlYzA2YWM1MDRhMGRlMCIsInN1YiI6IjY1Mzc3ZmRmZjQ5NWVlMDBmZjY1YTEyOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ehIu08LoiMRTccPoD4AfADXOpQPlqNAKUMvGgwY3XU8";
+  @FXML
+  private ImageView lupa;
 
-	@FXML
-	void initialize() {
-		gestorVentanas = new GestorVentanas();
-		Image imagenLogo = new Image(getClass().getResourceAsStream(Constants.URL_LOGO_AMPLIADO));
-		imagenLogoCabecera.setImage(imagenLogo);
-	}
+  @FXML
+  private MenuButton Agregar;
 
-	@FXML
-	void inicioClicked(MouseEvent event) {
-		setSceneAndStage();
-		gestorVentanas.muestraVentana(stage, Constants.URL_INICIO_FXML, "Inicio");
-	}
+  @FXML
+  private MenuButton Exportar;
 
-	@FXML
-	void peliculasClicked(MouseEvent event) {
-		setSceneAndStage();
-		gestorVentanas.muestraVentana(stage, Constants.URL_PELICULA_FXML, "Pelicula");
-	}
+  @FXML
+  private MenuItem csv;
 
-	@FXML
-	void seriesClicked(MouseEvent event) {
-		setSceneAndStage();
-		gestorVentanas.muestraVentana(stage, Constants.URL_SERIES_FXML, "Series");
-	}
+  @FXML
+  private MenuItem json;
 
-	@FXML
-	void buscadorClicked(MouseEvent event) {
-		setSceneAndStage();
-		gestorVentanas.muestraVentana(stage, Constants.URL_BUSCADOR_FXML, "Buscador");
-	}
+  @FXML
+  private MenuItem miLista;
 
-	@FXML
-	void perfilClicked(MouseEvent event) {
-		setSceneAndStage();
-		gestorVentanas.muestraVentana(stage, Constants.URL_USUARIO_FXML, "Perfil");
-	}
+  @FXML
+  private MenuItem yaVisto;
 
-	public void setSceneAndStage() {
-		scene = imagenLogoCabecera.getScene();
-		stage = (Stage) scene.getWindow();
-	}
 
-	/**
-	 * Inicializa la información de la película en la ventana de detalles.
-	 * 
-	 * @param id El ID de la película seleccionada.
-	 */
-	public void initData(String id, String tipo) {
-		OkHttpClient client = new OkHttpClient();
-		String apiUrl = "https://api.themoviedb.org/3/" + tipo + "/" + id;
-		String queryParams = "?language=es-ES";
-		String fullUrl = apiUrl + queryParams;
+  private static final String API_KEY =
+      "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlYjc0NTA5ZjRiZDBlODJlMTFlYzA2YWM1MDRhMGRlMCIsInN1YiI6IjY1Mzc3ZmRmZjQ5NWVlMDBmZjY1YTEyOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ehIu08LoiMRTccPoD4AfADXOpQPlqNAKUMvGgwY3XU8";
 
-		Request request = new Request.Builder().url(fullUrl).get().addHeader("accept", "application/json")
-				.addHeader("Authorization", "Bearer " + API_KEY).build();
+  @FXML
+  void initialize() {
+    gestorVentanas = new GestorVentanas();
+    Image imagenLogo = new Image(getClass().getResourceAsStream(Constants.URL_LOGO_AMPLIADO));
+    imagenLogoCabecera.setImage(imagenLogo);
 
-		try (Response response = client.newCall(request).execute()) {
-			String responseBody = response.body().string();
+    Image imagenLupa = new Image(getClass().getResourceAsStream(Constants.URL_LUPA));
+    lupa.setImage(imagenLupa);
 
-			Gson gson = new Gson();
 
-			if (tipo.equals("movie")) {
-				Pelicula datos = gson.fromJson(responseBody, Pelicula.class);
-				titulo.setText(datos.getTitle());
-				cartel.setImage(new Image("https://image.tmdb.org/t/p/w500" + datos.getPoster_path()));
+    // Configurar eventos para los elementos del menú Exportar
+    csv.setOnAction(event -> exportarPeliculaYSerie("csv"));
+    json.setOnAction(event -> exportarPeliculaYSerie("json"));
+  }
 
-				// Configurar la imagen de fondo con transparencia
-				// Obtener las dimensiones de la pantalla
-				double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
-				double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
-				// Mantener la relación de aspecto original de la imagen
-				fondoIm.setPreserveRatio(true);
-				// Ajustar la posición de la imagen para que esté en el lado derecho de la
-				// pantalla
-				fondoIm.setLayoutX(screenWidth / 2); // Colocar en el centro horizontalmente
-				fondoIm.setLayoutY(0); // Colocar en la parte superior
+  @FXML
+  void inicioClicked(MouseEvent event) {
+    setSceneAndStage();
+    gestorVentanas.muestraVentana(stage, Constants.URL_INICIO_FXML, "Inicio");
+  }
 
-				// Establecer las dimensiones del ImageView para que abarque toda la pantalla
-				fondoIm.setFitWidth(screenWidth);
-				fondoIm.setFitHeight(screenHeight);
-				fondoIm.setImage(new Image("https://image.tmdb.org/t/p/w500" + datos.getPoster_path()));
-				fondoIm.setOpacity(0.5);
-				fondoIm.toBack();
+  @FXML
+  void peliculasClicked(MouseEvent event) {
+    setSceneAndStage();
+    gestorVentanas.muestraVentana(stage, Constants.URL_PELICULA_FXML, "Pelicula");
+  }
 
-				// Construir la cadena de géneros
-				StringBuilder generosString = new StringBuilder();
-				for (Genero genero : datos.getGenres()) {
-					generosString.append(genero.getName()).append(", ");
-				}
-				// Eliminar la coma y el espacio extra al final
-				if (generosString.length() > 0) {
-					generosString.setLength(generosString.length() - 2);
-				}
+  @FXML
+  void seriesClicked(MouseEvent event) {
+    setSceneAndStage();
+    gestorVentanas.muestraVentana(stage, Constants.URL_SERIES_FXML, "Series");
+  }
 
-				detalles.setText("Descripción: " + datos.getOverview() + "\n" + "Fecha de estreno: " + datos.getRelease_date()
-						+ "\n" + "Géneros: " + generosString.toString() + "\n" + "Valoracion: " + datos.getVote_average() + "\n");
+  @FXML
+  void buscadorClicked(MouseEvent event) {
+    setSceneAndStage();
+    gestorVentanas.muestraVentana(stage, Constants.URL_BUSCADOR_FXML, "Buscador");
+  }
 
-			} else if (tipo.equals("tv")) {
-				Series datos = gson.fromJson(responseBody, Series.class);
-				titulo.setText(datos.getName());
-				cartel.setImage(new Image("https://image.tmdb.org/t/p/w500" + datos.getPoster_path()));
-				// Configurar la imagen de fondo con transparencia
-				// Obtener las dimensiones de la pantalla
-				double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
-				double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
+  @FXML
+  void perfilClicked(MouseEvent event) {
+    setSceneAndStage();
+    gestorVentanas.muestraVentana(stage, Constants.URL_USUARIO_FXML, "Perfil");
+  }
 
-				// Mantener la relación de aspecto original de la imagen
-				fondoIm.setPreserveRatio(true);
-				// Ajustar la posición de la imagen para que esté en el lado derecho de la
-				// pantalla
-				fondoIm.setLayoutX(screenWidth / 2); // Colocar en el centro horizontalmente
-				fondoIm.setLayoutY(0); // Colocar en la parte superior
+  public void setSceneAndStage() {
+    scene = imagenLogoCabecera.getScene();
+    stage = (Stage) scene.getWindow();
+  }
 
-				// Establecer las dimensiones del ImageView para que abarque toda la pantalla
-				fondoIm.setFitWidth(screenWidth);
-				fondoIm.setFitHeight(screenHeight);
-				fondoIm.setImage(new Image("https://image.tmdb.org/t/p/w500" + datos.getPoster_path()));
-				fondoIm.setOpacity(0.15);
-				fondoIm.toBack();
+  /**
+   * Inicializa la información de la película en la ventana de detalles.
+   * 
+   * @param id El ID de la película seleccionada.
+   */
+  public void initData(String id, String tipo) {
+    OkHttpClient client = new OkHttpClient();
+    String apiUrl = "https://api.themoviedb.org/3/" + tipo + "/" + id;
+    String queryParams = "?language=es-ES";
+    String fullUrl = apiUrl + queryParams;
 
-				// Construir la cadena de géneros
-				StringBuilder generosString = new StringBuilder();
-				for (Genero genero : datos.getGenres()) {
-					generosString.append(genero.getName()).append(", ");
-				}
-				// Eliminar la coma y el espacio extra al final
-				if (generosString.length() > 0) {
-					generosString.setLength(generosString.length() - 2);
-				}
+    Request request =
+        new Request.Builder().url(fullUrl).get().addHeader("accept", "application/json")
+            .addHeader("Authorization", "Bearer " + API_KEY).build();
 
-				detalles.setText("Descripción: " + datos.getOverview() + "\n" + "Fecha de estreno: " + datos.getFirst_air_date()
-						+ "\n" + "Géneros: " + generosString.toString() + "\n" + "Valoracion: " + datos.getVote_average() + "\n"
-						+ "Episodios: " + datos.getNumber_of_episodes() + "\n" + "Temporadas: " + datos.getNumber_of_seasons());
+    try (Response response = client.newCall(request).execute()) {
+      String responseBody = response.body().string();
 
-			}
+      Gson gson = new Gson();
 
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	
-	
+      if (tipo.equals("movie")) {
+        Pelicula datos = gson.fromJson(responseBody, Pelicula.class);
+        titulo.setText(datos.getTitle());
+        cartel.setImage(new Image("https://image.tmdb.org/t/p/w500" + datos.getPoster_path()));
+
+        // Configurar la imagen de fondo con transparencia
+        // Obtener las dimensiones de la pantalla
+        double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
+        double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
+        // Mantener la relación de aspecto original de la imagen
+        fondoIm.setPreserveRatio(true);
+        // Ajustar la posición de la imagen para que esté en el lado derecho de la
+        // pantalla
+        fondoIm.setLayoutX(screenWidth / 2); // Colocar en el centro horizontalmente
+        fondoIm.setLayoutY(0); // Colocar en la parte superior
+
+        // Establecer las dimensiones del ImageView para que abarque toda la pantalla
+        fondoIm.setFitWidth(screenWidth);
+        fondoIm.setFitHeight(screenHeight);
+        fondoIm.setImage(new Image("https://image.tmdb.org/t/p/w500" + datos.getPoster_path()));
+        fondoIm.setOpacity(0.5);
+        fondoIm.toBack();
+
+        // Construir la cadena de géneros
+        StringBuilder generosString = new StringBuilder();
+        for (Genero genero : datos.getGenres()) {
+          generosString.append(genero.getName()).append(", ");
+        }
+        // Eliminar la coma y el espacio extra al final
+        if (generosString.length() > 0) {
+          generosString.setLength(generosString.length() - 2);
+        }
+
+        detalles.setText("Descripción: " + datos.getOverview() + "\n" + "Fecha de estreno: "
+            + datos.getRelease_date() + "\n" + "Géneros: " + generosString.toString() + "\n"
+            + "Valoracion: " + datos.getVote_average() + "\n");
+
+      } else if (tipo.equals("tv")) {
+        Series datos = gson.fromJson(responseBody, Series.class);
+        titulo.setText(datos.getName());
+        cartel.setImage(new Image("https://image.tmdb.org/t/p/w500" + datos.getPoster_path()));
+        // Configurar la imagen de fondo con transparencia
+        // Obtener las dimensiones de la pantalla
+        double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
+        double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
+
+        // Mantener la relación de aspecto original de la imagen
+        fondoIm.setPreserveRatio(true);
+        // Ajustar la posición de la imagen para que esté en el lado derecho de la
+        // pantalla
+        fondoIm.setLayoutX(screenWidth / 2); // Colocar en el centro horizontalmente
+        fondoIm.setLayoutY(0); // Colocar en la parte superior
+
+        // Establecer las dimensiones del ImageView para que abarque toda la pantalla
+        fondoIm.setFitWidth(screenWidth);
+        fondoIm.setFitHeight(screenHeight);
+        fondoIm.setImage(new Image("https://image.tmdb.org/t/p/w500" + datos.getPoster_path()));
+        fondoIm.setOpacity(0.15);
+        fondoIm.toBack();
+
+        // Construir la cadena de géneros
+        StringBuilder generosString = new StringBuilder();
+        for (Genero genero : datos.getGenres()) {
+          generosString.append(genero.getName()).append(", ");
+        }
+        // Eliminar la coma y el espacio extra al final
+        if (generosString.length() > 0) {
+          generosString.setLength(generosString.length() - 2);
+        }
+
+        detalles.setText("Descripción: " + datos.getOverview() + "\n" + "Fecha de estreno: "
+            + datos.getFirst_air_date() + "\n" + "Géneros: " + generosString.toString() + "\n"
+            + "Valoracion: " + datos.getVote_average() + "\n" + "Episodios: "
+            + datos.getNumber_of_episodes() + "\n" + "Temporadas: " + datos.getNumber_of_seasons());
+
+      }
+
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  
+  
+  
+  // para exportar 
+  private void exportarPeliculaYSerie(String formato) {
+    // Obtener la información de la película actual
+    String tituloPelicula = titulo.getText();
+    String detallesPelicula = detalles.getText();
+
+    // Crear un objeto FileChooser para elegir la ubicación del archivo
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.setTitle("Guardar película");
+
+    // Configurar el filtro de extensión de archivo según el formato seleccionado
+    FileChooser.ExtensionFilter extFilter = null;
+    if (formato.equals("csv")) {
+        extFilter = new FileChooser.ExtensionFilter("Archivos CSV (*.csv)", "*.csv");
+    } else if (formato.equals("json")) {
+        extFilter = new FileChooser.ExtensionFilter("Archivos JSON (*.json)", "*.json");
+    }
+    if (extFilter != null) {
+        fileChooser.getExtensionFilters().add(extFilter);
+    }
+
+    // Mostrar el diálogo de guardar archivo y obtener la ubicación del archivo
+    File archivo = fileChooser.showSaveDialog(stage);
+
+    // Verificar si se ha seleccionado una ubicación de archivo
+    if (archivo != null) {
+        try {
+            // Escribir la información de la película en el archivo
+            FileWriter escritor = new FileWriter(archivo);
+            if (formato.equals("csv")) {
+                escritor.write(tituloPelicula + "\n");
+                escritor.write(detallesPelicula);
+            } else if (formato.equals("json")) {
+                // Crear un objeto JSON con los datos de la película
+                JsonObject peliculaJson = new JsonObject();
+                peliculaJson.addProperty("titulo", tituloPelicula);
+                peliculaJson.addProperty("detalles", detallesPelicula);
+
+                // Escribir el objeto JSON en el archivo
+                Gson gson = new Gson();
+                String peliculaJsonString = gson.toJson(peliculaJson);
+                escritor.write(peliculaJsonString);
+            }
+            escritor.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
 
 }

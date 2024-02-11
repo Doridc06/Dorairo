@@ -1,8 +1,12 @@
 package controller;
 
+import org.hibernate.Session;
+
 import conexion.HibernateUtil;
 import constants.Constants;
 import dao.UsuarioDaoImpl;
+import dao.UsuarioPeliculaDaoImpl;
+import dao.UsuarioSerieDaoImpl;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -64,6 +68,9 @@ public class UsuarioController {
 	/** Instancia del dao de usuario */
 	private static UsuarioDaoImpl usuarioDaoImpl;
 
+	/** Conexion con la base de datos */
+	private Session session;
+
 	@FXML
 	void initialize() {
 		// Inicializamos el Gestor de ventanas
@@ -76,8 +83,10 @@ public class UsuarioController {
 		imagen = new Image(getClass().getResourceAsStream(Constants.URL_FOTO_FONDO_PERFIL));
 		imagenFondoPerfil.setImage(imagen);
 
+		session = HibernateUtil.openSession();
+
 		// Abre la session y crea el dao de usuario
-		usuarioDaoImpl = new UsuarioDaoImpl(HibernateUtil.openSession());
+		usuarioDaoImpl = new UsuarioDaoImpl(session);
 
 		// Cambiar los datos del perfil
 		setDatosPerfil();
@@ -92,8 +101,10 @@ public class UsuarioController {
 		lblUser.setText(usuarioRegistrado.getUser());
 		lblCorreo.setText(usuarioRegistrado.getCorreo());
 		lblMiembro.setText(usuarioRegistrado.getFechaMiembroString());
-		// lblNumeroPeliculas.setText(usuarioDaoImpl.searchNumeroPeliculas(usuarioRegistrado.getUser()));
-		// lblNumeroSeries.setText(usuarioDaoImpl.searchNumeroSeries(usuarioRegistrado.getUser()));
+		UsuarioPeliculaDaoImpl upDao = new UsuarioPeliculaDaoImpl(session);
+		lblNumeroPeliculas.setText(upDao.searchNumeroPeliculas(usuarioRegistrado.getUser()));
+		UsuarioSerieDaoImpl usDao = new UsuarioSerieDaoImpl(session);
+		lblNumeroSeries.setText(usDao.searchNumeroSeries(usuarioRegistrado.getUser()));
 		// Establece la imagen del perfil
 		Image imagen;
 		if (usuarioRegistrado.getImagenPerfil() == null || usuarioRegistrado.getImagenPerfil().isBlank()) {
@@ -145,7 +156,7 @@ public class UsuarioController {
 		usuarioRegistrado = null;
 		muestraLogin();
 	}
-
+	
 	/**
 	 * Muestra la pantalla de login
 	 */
@@ -171,6 +182,7 @@ public class UsuarioController {
 	void eliminarDatos(MouseEvent event) {
 		if (Utils.confirmacion()) {
 			usuarioDaoImpl.deleteDataUser(usuarioRegistrado.getUser());
+			setDatosPerfil();
 		}
 	}
 
@@ -216,7 +228,7 @@ public class UsuarioController {
 	/**
 	 * @return the usuarioRegistrado
 	 */
-	public Usuario getUsuarioRegistrado() {
+	public static Usuario getUsuarioRegistrado() {
 		return usuarioRegistrado;
 	}
 

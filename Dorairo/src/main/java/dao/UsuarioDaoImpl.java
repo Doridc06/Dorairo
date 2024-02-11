@@ -49,26 +49,14 @@ public class UsuarioDaoImpl extends CommonDaoImpl<Usuario> implements UsuarioDao
 	}
 
 	@Override
-	public String searchNumeroPeliculas(String usuario) {
-		activeTransaction();
-		return (String) session.createQuery("SELECT count(*) FROM Usuario_Pelicula WHERE usuario = '" + usuario + "'")
-				.uniqueResult();
-	}
-
-	@Override
-	public String searchNumeroSeries(String usuario) {
-		activeTransaction();
-		return (String) session.createQuery("SELECT count(*) FROM Usuario_Serie WHERE usuario = '" + usuario + "'")
-				.uniqueResult();
-	}
-
-	@Override
 	public void deleteDataUser(String usuario) {
 		activeTransaction();
 		// Elimina los datos de la tabla usuario_serie y usuario_pelicula de los
 		// registros del usuario con el id proporcionado
-		session.createQuery("DELETE FROM Usuario_Serie WHERE usuario = '" + usuario + "'");
-		session.createQuery("DELETE FROM Usuario_Pelicula WHERE usuario = '" + usuario + "'");
+		session.createQuery("DELETE FROM UsuarioSerie WHERE id.usuario = '" + usuario + "'").executeUpdate();
+		session.createQuery("DELETE FROM UsuarioPelicula WHERE id.usuario = '" + usuario + "'").executeUpdate();
+		session.flush();
+		session.getTransaction().commit();
 	}
 
 }

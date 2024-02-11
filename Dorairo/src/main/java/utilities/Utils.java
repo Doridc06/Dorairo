@@ -20,6 +20,24 @@ public class Utils {
 	/** Stage principal */
 	private static Stage ownerStage;
 
+	private static int sufijoIdPelisManuales = 0;
+
+	private static int sufijoIdSeriesManuales = 0;
+
+	private static int sufijoIdCompaniesManuales = 0;
+
+	private static int sufijoIdActoresManuales = 0;
+
+	private static int sufijoIdDirectoresManuales = 0;
+
+	private static int sufijoIdGeneroManuales = 0;
+
+	/**
+	 * Private Utils Constructor
+	 */
+	private Utils() {
+	}
+
 	/**
 	 * Muestra un dialog con el mensaje proporcionado segun el tipo de alerta
 	 * 
@@ -109,4 +127,78 @@ public class Utils {
 		return result.isPresent() && result.get() == ButtonType.OK;
 	}
 
+	/**
+	 * Genera un nuevo id para las peliculas
+	 * 
+	 * @return Nuevo id
+	 */
+	public static Integer generaMovieId() {
+		// Une ambas partes como cadena y lo pasa a un numero entero
+		int id = Integer.parseInt(Constants.PREFIJO_ID_PELIS_MANUALES + sufijoIdPelisManuales);
+		sufijoIdPelisManuales++;
+		return id;
+	}
+
+	/**
+	 * Genera un nuevo id para las series
+	 * 
+	 * @return Nuevo id
+	 */
+	public static Integer generaSerieId() {
+		// Une ambas partes como cadena y lo pasa a un numero entero
+		int id = Integer.parseInt(Constants.PREFIJO_ID_SERIES_MANUALES + sufijoIdSeriesManuales);
+		sufijoIdSeriesManuales++;
+		return id;
+	}
+
+	/**
+	 * Genera un nuevo id para las compañias
+	 * 
+	 * @return Nuevo id
+	 */
+	public static Integer generaCompanyId() {
+		// Une ambas partes como cadena y lo pasa a un numero entero
+		int id = Integer.parseInt(Constants.PREFIJO_ID_SERIES_MANUALES + sufijoIdCompaniesManuales);
+		sufijoIdCompaniesManuales++;
+		return id;
+	}
+
+	/**
+	 * Genera un nuevo id para los actores
+	 * 
+	 * @return Nuevo id
+	 */
+	public static Integer generaActorId() {
+		// Une ambas partes como cadena y lo pasa a un numero entero
+		int id = Integer.parseInt(Constants.PREFIJO_ID_ACTORES_MANUALES + sufijoIdActoresManuales);
+		sufijoIdActoresManuales++;
+		return id;
+	}
+
+	/**
+	 * Genera un nuevo id para los directores
+	 * 
+	 * @return Nuevo id
+	 */
+	public static Integer generaDirectorId() {
+		// Une ambas partes como cadena y lo pasa a un numero entero
+		int id = Integer.parseInt(Constants.PREFIJO_ID_DIRECTORES_MANUALES + sufijoIdDirectoresManuales);
+		sufijoIdDirectoresManuales++;
+		return id;
+	}
+
+	/**
+	 * Genera un nuevo id para los generos
+	 * 
+	 * @return Nuevo id
+	 */
+	public static Integer generaGeneroID() {
+		
+		
+		
+		// Une ambas partes como cadena y lo pasa a un numero entero
+		int id = Integer.parseInt(Constants.PREFIJO_ID_GENERO_MANUALES + sufijoIdGeneroManuales);
+		sufijoIdGeneroManuales++;
+		return id;
+	}
 }

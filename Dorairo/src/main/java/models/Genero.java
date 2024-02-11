@@ -32,6 +32,21 @@ public class Genero implements Serializable {
 	@ManyToMany(cascade = { CascadeType.ALL }, mappedBy = "genres")
 	private List<Pelicula> peliculas = new ArrayList<>();
 
+	/**
+	 * Constructor Genero
+	 * 
+	 * @param id
+	 * @param name
+	 */
+	public Genero(int id, String name) {
+		super();
+		this.id = id;
+		this.name = name;
+	}
+	
+	public Genero() {
+	}
+
 	public String getName() {
 		return name;
 	}

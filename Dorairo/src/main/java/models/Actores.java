@@ -48,6 +48,9 @@ public class Actores implements Serializable {
 		this.id = id;
 		this.name = name;
 	}
+	
+	public Actores() {
+	}
 
 	/**
 	 * @return the id

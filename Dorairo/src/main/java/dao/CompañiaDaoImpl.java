@@ -32,7 +32,7 @@ public class CompañiaDaoImpl extends CommonDaoImpl<Compañia> implements Compa�
 		activeTransaction();
 
 		// Busca la compañia con el id y la devuelve
-		return (Compañia) session.createQuery("FROM Compañias WHERE id = " + id).uniqueResult();
+		return (Compañia) session.createQuery("FROM Compañia WHERE id = " + id).uniqueResult();
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class CompañiaDaoImpl extends CommonDaoImpl<Compañia> implements Compa�
 		activeTransaction();
 
 		// Busca las compañias con dicho nombre
-		return session.createQuery("FROM Compañias WHERE nombre = '" + name + "'").list();
+		return session.createQuery("FROM Compañia WHERE nombre = '" + name + "'").list();
 	}
 
 }

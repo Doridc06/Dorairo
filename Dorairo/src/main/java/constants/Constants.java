@@ -102,6 +102,27 @@ public class Constants {
 	/** Ruta a la imagen del logo */
 	public static final String URL_LOGO_NORMAL = "/application/images/logoDorairo.jpg";
 
+	// ID
+	/** Prefijo para las series manuales */
+	public static final String PREFIJO_ID_SERIES_MANUALES = "3333333";
+
+	/** Prefijo para las peliculas manuales */
+	public static final String PREFIJO_ID_PELIS_MANUALES = "4444444";
+
+	/** Prefijo para las compañias manuales */
+	public static final String PREFIJO_ID_COMPANIES_MANUALES = "5555555";
+
+	/** Prefijo para los actores manuales */
+	public static final String PREFIJO_ID_ACTORES_MANUALES = "6666666";
+
+	/** Prefijo para los actores manuales */
+	public static final String PREFIJO_ID_DIRECTORES_MANUALES = "7777777";
+
+	/** Prefijo para los actores manuales */
+	public static final String PREFIJO_ID_GENEROS_MANUALES = "8888888";
+
+	public static final String PREFIJO_ID_GENERO_MANUALES = "99999";
+
 	// Metodos
 
 	/**

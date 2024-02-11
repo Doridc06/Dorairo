@@ -67,6 +67,10 @@ public class UsuarioPelicula implements Serializable {
 		this.miLista = miLista;
 	}
 
+	public UsuarioPelicula(Usuario usuario, Pelicula p) {
+		this.id = new UsuarioPeliculaID(usuario, p);
+	}
+
 	/**
 	 * @return the id
 	 */

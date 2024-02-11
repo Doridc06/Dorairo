@@ -1,9 +1,26 @@
 package controller;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import org.hibernate.Session;
+
+import com.google.gson.Gson;
+
+import conexion.HibernateUtil;
 import constants.Constants;
+import dao.ActoresDaoImpl;
+import dao.CompañiaDaoImpl;
+import dao.DirectoresDaoImpl;
+import dao.GeneroDaoImpl;
+import dao.LocalizacionDaoImpl;
+import dao.PeliculaDaoImpl;
+import dao.SeriesDaoImpl;
+import dao.UsuarioPeliculaDaoImpl;
+import dao.UsuarioSerieDaoImpl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -14,8 +31,24 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import models.Actores;
 import models.Compañia;
+import models.Directores;
+import models.Genero;
+import models.Localizacion;
 import models.Pelicula;
+import models.RespuestaApiPersona;
+import models.Series;
+import models.UsuarioPelicula;
+import models.UsuarioPeliculaID;
+import models.UsuarioSerie;
+import models.UsuarioSerieID;
+import models.RespuestaApiCompany;
+import models.RespuestaApiGenero;
+import models.PersonaApi;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import utilities.GestorVentanas;
 import utilities.Utils;
 
@@ -91,13 +124,23 @@ public class AgregadasManualmenteController {
 	private boolean isSerie = false;
 
 	/** Conexion con la base de datos */
-//	private Session session;
+	private Session session;
 
 	/** URL del poster añadido */
 	private String poster = null;
 
+	/** Cliente para la api */
+	private OkHttpClient client;
+
+	/** API KEY */
+	public static final String API_KEY = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlYjc0NTA5ZjRiZDBlODJlMTFlYzA2YWM1MDRhMGRlMCIsInN1YiI6IjY1Mzc3ZmRmZjQ5NWVlMDBmZjY1YTEyOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ehIu08LoiMRTccPoD4AfADXOpQPlqNAKUMvGgwY3XU8";
+
 	@FXML
 	void initialize() {
+
+		// Configuración del cliente HTTP (OkHttpClient)
+		client = new OkHttpClient();
+
 		// Inicializamos el Gestor de ventanas
 		gestorVentanas = new GestorVentanas();
 		// Establece la imagen del logo
@@ -110,7 +153,7 @@ public class AgregadasManualmenteController {
 		choiceTipo.getItems().addAll("Pelicula", "Serie");
 
 		// Recogemos la sesion
-		// session = HibernateUtil.openSession();
+		session = HibernateUtil.openSession();
 	}
 
 	@FXML
@@ -151,8 +194,9 @@ public class AgregadasManualmenteController {
 	@FXML
 	void subirFoto(MouseEvent event) {
 		setSceneAndStage();
+		// Coge la url de la nueva foto
 		poster = Utils.buscarFotoArchivos(stage);
-		// Mostar la imagen
+		// Muestra la imagen
 		Image image = new Image("file:" + poster);
 		imagenCartel.setImage(image);
 	}
@@ -203,44 +247,448 @@ public class AgregadasManualmenteController {
 	 * Realiza la creación de una película
 	 */
 	private void crearPelicula() {
-		// Comprueba si todos los campos se han rellenado
-		if (isCompleto()) {
-
-			try {
-				Compañia company = new Compañia(0, poster);
+		try {
+			// Comprueba si todos los campos se han rellenado
+			Compañia company = searchCompany();
+			if (isCompleto()) {
+				double vote = getVote(txtValoracionGlobal.getText());
+				List<Actores> listActores = getListaActores();
+				List<Directores> listDirectores = getListaDirectores();
+				List<Genero> listGenero = getListaGenero();
 				SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 				Date fecha;
 				fecha = formato.parse(txtEstreno.getText());
-				Pelicula pelicula = new Pelicula(txtTitulo.getText(), fecha, company, txtDescripcion.getText(), poster,
-						txtValoracionGlobal.getText());
-			} catch (Exception e) {
-				Utils.mostrarAlerta("Error en la creacion del elemento, revisa todos los campos.", Constants.ERROR_TYPE);
+				Pelicula pelicula = new Pelicula(Utils.generaMovieId(), txtTitulo.getText(), fecha, company,
+						txtDescripcion.getText(), poster, vote, listActores, listDirectores, listGenero);
+				// Si acepta, se guarda la peli
+				if (Utils.confirmacion()) {
+					// Guarda la compañia, los actores, generos y directores
+					CompañiaDaoImpl compDao = new CompañiaDaoImpl(session);
+					compDao.update(company);
+					guardarListaActores(listActores);
+					guardarListaDirectores(listDirectores);
+					guardarListaGeneros(listGenero);
+					// Guarda la pelicual
+					PeliculaDaoImpl peliDao = new PeliculaDaoImpl(session);
+					peliDao.update(pelicula);
+					guardarDatosPersonalesPelicula(pelicula);
+					Utils.mostrarAlerta("Pelicula guardada correctamente.", Constants.INFORMATION_TYPE);
+					borrarDatos();
+				}
+
+			} else {
+				// Muestra alerta de error
+				Utils.mostrarAlerta("Falta algún campo por rellenar.", Constants.ERROR_TYPE);
 			}
-
-		} else {
-			// Muestra alerta de error
-			Utils.mostrarAlerta("Falta algún campo por rellenar.", Constants.ERROR_TYPE);
+		} catch (Exception e) {
+			HibernateUtil.rollbackCambios();
+			e.printStackTrace();
+			Utils.mostrarAlerta("Error en la creacion del elemento, revisa todos los campos.", Constants.ERROR_TYPE);
 		}
-
 	}
 
-//	private Compañia searchCompany() {
-//		CompañiaDaoImpl compañiaDaoIpml = new CompañiaDaoImpl(session);
-//		List<Compañia> compList = compañiaDaoIpml.searchByName(txtCompañia.getText());
-//
-//		// REVISAR LAS MIERDAS ESTAS
-//		return compList.get(0);
-//	}
+	/**
+	 * Guarda los datos personales del usuario sobre la pelicula
+	 * 
+	 * @param pelicula
+	 */
+	private void guardarDatosPersonalesPelicula(Pelicula pelicula) {
+		UsuarioPeliculaDaoImpl upDao = new UsuarioPeliculaDaoImpl(session);
+		Localizacion localizacion = searchLocalizacion();
+		UsuarioPelicula up = new UsuarioPelicula(new UsuarioPeliculaID(UsuarioController.getUsuarioRegistrado(), pelicula),
+				getVote(txtValoracionPersonal.getText()), new Date(), txtComentarios.getText(), localizacion, false, false);
+		upDao.update(up);
+	}
 
-	private void crearSerie() {
-		// Comprueba si todos los campos se han rellenado
-		if (isCompleto() && !txtEpisodios.getText().isBlank() && !txtTemporadas.getText().isBlank()) {
-
-		} else {
-			// Muestra alerta de error
-			Utils.mostrarAlerta("Falta algún campo por rellenar.", Constants.ERROR_TYPE);
+	/**
+	 * Busca la localizacion en la bbdd, si no existe, se crea una nueva
+	 * 
+	 * @return Localizacion
+	 */
+	private Localizacion searchLocalizacion() {
+		LocalizacionDaoImpl lDao = new LocalizacionDaoImpl(session);
+		Localizacion lugar = lDao.searchByName(txtGuardado.getText());
+		if (lugar == null) {
+			lugar = new Localizacion(txtGuardado.getText());
+			lDao.update(lugar);
 		}
+		return lugar;
+	}
 
+	/**
+	 * Guarda la lista de generos en la bbdd
+	 * 
+	 * @param listGenero Lista a guardar
+	 */
+	private void guardarListaGeneros(List<Genero> listGenero) {
+		GeneroDaoImpl genDao = new GeneroDaoImpl(session);
+		for (Genero g : listGenero) {
+			genDao.update(g);
+		}
+	}
+
+	/**
+	 * Guarda la lista de directores en la bbdd listDirectores
+	 * 
+	 * @param listDirectores Lista a guardar
+	 */
+	private void guardarListaDirectores(List<Directores> listDirectores) {
+		DirectoresDaoImpl dirDao = new DirectoresDaoImpl(session);
+		for (Directores d : listDirectores) {
+			dirDao.update(d);
+		}
+	}
+
+	/**
+	 * Guarda la lista de actores en la bbdd
+	 * 
+	 * @param listActores Lista a guardar
+	 */
+	private void guardarListaActores(List<Actores> listActores) {
+		ActoresDaoImpl actDao = new ActoresDaoImpl(session);
+		for (Actores a : listActores) {
+			actDao.update(a);
+		}
+	}
+
+	/**
+	 * Devuelve una lista de Generos
+	 * 
+	 * @return Lista de Generos
+	 * @throws IOException
+	 */
+	private List<Genero> getListaGenero() throws IOException {
+		// Paso a array
+		String[] generosArr = txtGenero.getText().split(",");
+		GeneroDaoImpl generoDaoImpl = new GeneroDaoImpl(session);
+		// Lista de generos
+		List<Genero> listGenero = new ArrayList<>();
+		for (String genero : generosArr) {
+			List<Genero> genList = generoDaoImpl.searchByName(genero.strip());
+
+			// Comprueba si está en la bbdd
+			if (!genList.isEmpty()) {
+				listGenero.add(genList.get(0));
+			} else {
+				// Construir la solicitud para la API
+				Request request;
+				if (isSerie) {
+					request = new Request.Builder().url("https://api.themoviedb.org/3/genre/movie/list?language=es").get()
+							.addHeader("accept", "application/json").addHeader("Authorization", "Bearer " + API_KEY).build();
+
+				} else {
+					request = new Request.Builder().url("https://api.themoviedb.org/3/genre/tv/list?language=en").get()
+							.addHeader("accept", "application/json").addHeader("Authorization", "Bearer " + API_KEY).build();
+				}
+
+				// Ejecuta la solicitud y obtiene la respuesta
+				Response response;
+				response = client.newCall(request).execute();
+
+				// Obtiene el cuerpo de la respuesta como cadena
+				String responseBody = response.body().string();
+
+				// Utiliza Gson para convertir la respuesta JSON a objetos Java
+				Gson gson = new Gson();
+				RespuestaApiGenero respApi = gson.fromJson(responseBody, RespuestaApiGenero.class);
+
+				Genero g = searchGenero(respApi, genero);
+				// Si se ha encontrado, se añade a la lista
+				if (g != null) {
+					listGenero.add(g);
+				} else {
+					// Se crea uno nuevo y se añade
+					listGenero.add(new Genero(Utils.generaGeneroID(), genero));
+
+				}
+			}
+		}
+		return listGenero;
+	}
+
+	/**
+	 * Busca el genero en la respuesta de la api
+	 * 
+	 * @param respApi
+	 * @param name
+	 * @return Genero encontrado
+	 */
+	private Genero searchGenero(RespuestaApiGenero respApi, String name) {
+		// Busca el genero
+		if (respApi != null && respApi.getGeneros() != null) {
+			for (Genero genre : respApi.getGeneros()) {
+				// Si coinciden los nombres, se devuelve
+				if (name.equalsIgnoreCase(genre.getName())) {
+					return genre;
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Devuelve una lista de Directores
+	 * 
+	 * @return Lista de directores
+	 * @throws IOException
+	 */
+	private List<Directores> getListaDirectores() throws IOException {
+		// Paso a array
+		String[] directoresArr = txtDirectores.getText().split(",");
+		DirectoresDaoImpl directoresDaoImpl = new DirectoresDaoImpl(session);
+
+		List<Directores> listDirectores = new ArrayList<>();
+		for (String director : directoresArr) {
+			List<Directores> dirList = directoresDaoImpl.searchByName(director.strip());
+
+			// Comprueba si está en la bbdd
+			if (!dirList.isEmpty()) {
+				listDirectores.add(dirList.get(0));
+			} else {
+				// Construir la solicitud para la API
+				Request request = new Request.Builder()
+						.url("https://api.themoviedb.org/3/search/person?query=" + director
+								+ "&include_adult=false&language=es-ES&page=1")
+						.get().addHeader("accept", "application/json").addHeader("Authorization", "Bearer " + API_KEY).build();
+
+				// Ejecutar la solicitud y obtener la respuesta
+				Response response;
+				response = client.newCall(request).execute();
+
+				// Obtener el cuerpo de la respuesta como cadena
+				String responseBody = response.body().string();
+
+				// Utilizar Gson para convertir la respuesta JSON a objetos Java
+				Gson gson = new Gson();
+				RespuestaApiPersona respApi = gson.fromJson(responseBody, RespuestaApiPersona.class);
+
+				// Busca la persona
+				PersonaApi persona = searchPersona(respApi, "Directing");
+				if (persona != null) {
+					listDirectores.add(new Directores(persona.getId(), persona.getName()));
+				} else {
+					// Crea un nuevo actor y añade a la lista
+					Directores a = new Directores(Utils.generaDirectorId(), director);
+					listDirectores.add(a);
+				}
+			}
+		}
+		return listDirectores;
+	}
+
+	/**
+	 * Devuelve una lista de Actores
+	 * 
+	 * @return Lista de Actores
+	 * @throws IOException
+	 */
+	private List<Actores> getListaActores() throws IOException {
+		// Paso a array
+		String[] actoresArr = txtActores.getText().split(",");
+		ActoresDaoImpl actoresDaoImpl = new ActoresDaoImpl(session);
+
+		List<Actores> listActores = new ArrayList<>();
+		for (String actor : actoresArr) {
+			List<Actores> actList = actoresDaoImpl.searchByName(actor.strip());
+
+			// Comprueba si está en la bbdd
+			if (!actList.isEmpty()) {
+				listActores.add(actList.get(0));
+			} else {
+				// Construir la solicitud para la API
+				Request request = new Request.Builder()
+						.url("https://api.themoviedb.org/3/search/person?query=" + actor
+								+ "&include_adult=false&language=es-ES&page=1")
+						.get().addHeader("accept", "application/json").addHeader("Authorization", "Bearer " + API_KEY).build();
+
+				// Ejecutar la solicitud y obtener la respuesta
+				Response response;
+				response = client.newCall(request).execute();
+
+				// Obtener el cuerpo de la respuesta como cadena
+				String responseBody = response.body().string();
+
+				// Utilizar Gson para convertir la respuesta JSON a objetos Java
+				Gson gson = new Gson();
+				RespuestaApiPersona respApi = gson.fromJson(responseBody, RespuestaApiPersona.class);
+
+				// Busca la persona
+				PersonaApi persona = searchPersona(respApi, "Acting");
+				if (persona != null) {
+					listActores.add(new Actores(persona.getId(), persona.getName()));
+				} else {
+					// Crea un nuevo actor y añade a la lista
+					Actores a = new Actores(Utils.generaActorId(), actor);
+					listActores.add(a);
+				}
+			}
+		}
+		return listActores;
+	}
+
+	/**
+	 * Busca la persona en la respuesta de la api
+	 * 
+	 * @param respApi
+	 * @param departamento Departamento de la persona
+	 * @return Persona encontrada
+	 */
+	private PersonaApi searchPersona(RespuestaApiPersona respApi, String departamento) {
+		// Verifica si hay resultados en la respuesta
+		if (respApi != null && respApi.getResults() != null && !respApi.getResults().isEmpty()) {
+			// Recorre la lista de resultados
+			for (PersonaApi respPers : respApi.getResults()) {
+				// Comprueba si es del departamento correcto
+				if (respPers.getKnownForDepartment() != null
+						&& respPers.getKnownForDepartment().equalsIgnoreCase(departamento)) {
+					return respPers;
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Devuelve el voto en formato decimal
+	 * 
+	 * @param voto Voto a devolver
+	 * @return Double voto
+	 * @throws NumberFormatException
+	 */
+	public double getVote(String voto) throws NumberFormatException {
+		// Reemplaza coma por punto
+		String voteString = voto.replace(',', '.');
+
+		// Intenta parsear a double
+		double parsedVote = Double.parseDouble(voteString);
+
+		// Verificar condiciones de decimales y dígitos en la parte entera
+		if (Math.abs(parsedVote) <= 10) {
+			// Redondear a 3 decimales
+			return Math.round(parsedVote * 1000.0) / 1000.0;
+		} else {
+			throw new NumberFormatException();
+		}
+	}
+
+	/**
+	 * Busca la compañia por el nombre
+	 * 
+	 * @return Compañia
+	 * @throws IOException
+	 */
+	private Compañia searchCompany() throws IOException {
+		CompañiaDaoImpl compañiaDaoImpl = new CompañiaDaoImpl(session);
+		List<Compañia> compList = compañiaDaoImpl.searchByName(txtCompañia.getText());
+
+		// Comprueba si la compañia está registrada en la bbdd
+		if (!compList.isEmpty()) {
+			return compList.get(0);
+		} else {
+			// Construir la solicitud para la API de compañias
+			Request request = new Request.Builder()
+					.url("https://api.themoviedb.org/3/search/company?query=" + txtCompañia.getText() + "&page=1").get()
+					.addHeader("accept", "application/json").addHeader("Authorization", "Bearer " + API_KEY).build();
+
+			// Ejecutar la solicitud y obtener la respuesta
+			Response response;
+			response = client.newCall(request).execute();
+
+			// Obtener el cuerpo de la respuesta como cadena
+			String responseBody = response.body().string();
+
+			// Utilizar Gson para convertir la respuesta JSON a objetos Java
+			Gson gson = new Gson();
+			RespuestaApiCompany respApi = gson.fromJson(responseBody, RespuestaApiCompany.class);
+
+			// Verificar si hay resultados en la respuesta
+			if (respApi != null && respApi.getResults() != null && !respApi.getResults().isEmpty()) {
+				return respApi.getResults().get(0);
+			} else {
+				// Crea una nueva compañia y la suba a la bbdd
+				Compañia c = new Compañia(Utils.generaCompanyId(), txtCompañia.getText());
+				return c;
+			}
+		}
+	}
+
+	/**
+	 * Gestiona la creacion de una serie nueva
+	 */
+	private void crearSerie() {
+		try {
+			// Comprueba si todos los campos se han rellenado
+			if (isCompleto() && !txtEpisodios.getText().isBlank() && !txtTemporadas.getText().isBlank()) {
+				Compañia company = searchCompany();
+				double vote = getVote(txtValoracionGlobal.getText());
+				int numEpisodios = Integer.parseInt(txtEpisodios.getText());
+				int numTemporadas = Integer.parseInt(txtTemporadas.getText());
+				List<Actores> listActores = getListaActores();
+				List<Directores> listDirectores = getListaDirectores();
+				List<Genero> listGenero = getListaGenero();
+				SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+				Date fecha;
+				fecha = formato.parse(txtEstreno.getText());
+				Series serie = new Series(Utils.generaMovieId(), txtTitulo.getText(), fecha, company, txtDescripcion.getText(),
+						poster, vote, numEpisodios, numTemporadas, listActores, listDirectores, listGenero);
+				// Si acepta, se guarda la serie
+				if (Utils.confirmacion()) {
+					// Guarda la compañia, actores, directores, generos
+					CompañiaDaoImpl compDao = new CompañiaDaoImpl(session);
+					compDao.update(company);
+					guardarListaActores(listActores);
+					guardarListaDirectores(listDirectores);
+					guardarListaGeneros(listGenero);
+					// Guarda la serie
+					SeriesDaoImpl serieDao = new SeriesDaoImpl(session);
+					serieDao.update(serie);
+					guardarDatosPersonalesSerie(serie);
+					Utils.mostrarAlerta("Serie guardada correctamente.", Constants.INFORMATION_TYPE);
+					borrarDatos();
+				}
+			} else {
+				// Muestra alerta de error
+				Utils.mostrarAlerta("Falta algún campo por rellenar.", Constants.ERROR_TYPE);
+			}
+		} catch (Exception e) {
+			Utils.mostrarAlerta("Error en la creacion del elemento, revisa todos los campos.", Constants.ERROR_TYPE);
+		}
+	}
+
+	/**
+	 * Quita todos los datos de la pantalla
+	 */
+	private void borrarDatos() {
+		choiceTipo.setValue("");
+		txtTitulo.setText("");
+		txtCompañia.setText("");
+		txtActores.setText("");
+		txtComentarios.setText("");
+		txtDescripcion.setText("");
+		txtDirectores.setText("");
+		txtEpisodios.setText("");
+		txtEstreno.setText("");
+		txtGenero.setText("");
+		txtGuardado.setText("");
+		txtTemporadas.setText("");
+		txtValoracionGlobal.setText("");
+		txtValoracionPersonal.setText("");
+		poster = "";
+		Image imagen = new Image(getClass().getResourceAsStream(Constants.URL_FOTO_SUBIR_FOTO));
+		imagenCartel.setImage(imagen);
+	}
+
+	/**
+	 * Guarda los datos personales del usuario sobre la pelicula
+	 * 
+	 * @param serie
+	 */
+	private void guardarDatosPersonalesSerie(Series serie) {
+		UsuarioSerieDaoImpl upDao = new UsuarioSerieDaoImpl(session);
+		Localizacion localizacion = searchLocalizacion();
+		UsuarioSerie us = new UsuarioSerie(new UsuarioSerieID(UsuarioController.getUsuarioRegistrado(), serie),
+				getVote(txtValoracionPersonal.getText()), new Date(), txtComentarios.getText(), localizacion, false, false);
+		upDao.update(us);
 	}
 
 	/**
@@ -254,7 +702,7 @@ public class AgregadasManualmenteController {
 				&& !txtEstreno.getText().isBlank() && !txtValoracionPersonal.getText().isBlank()
 				&& !txtValoracionGlobal.getText().isBlank() && !txtGenero.getText().isBlank() && !txtActores.getText().isBlank()
 				&& !txtDirectores.getText().isBlank() && !txtDescripcion.getText().isBlank()
-				&& !txtComentarios.getText().isBlank() && !poster.isBlank();
+				&& !txtComentarios.getText().isBlank() && poster != null && !poster.isBlank();
 	}
 
 	/**

@@ -36,7 +36,7 @@
                      </content>
                   </ScrollPane>
                   <Button fx:id="buscar" layoutX="678.0" layoutY="134.0" mnemonicParsing="false" onMouseClicked="#clickBuscar" prefHeight="45.0" prefWidth="84.0" text="Buscar" />
-                  <Button layoutX="1074.0" layoutY="54.0" mnemonicParsing="false" text="Agregar manualmente">
+                  <Button fx:id="btnAgregarManualmente" layoutX="1074.0" layoutY="54.0" mnemonicParsing="false" onAction="#agregarManualmenteClicked" text="Agregar manualmente">
                      <font>
                         <Font size="18.0" />
                      </font>

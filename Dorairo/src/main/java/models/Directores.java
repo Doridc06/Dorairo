@@ -42,6 +42,9 @@ public class Directores implements Serializable {
 		this.id = id;
 		this.name = name;
 	}
+	
+	public Directores() {
+	}
 
 	/**
 	 * @return the id

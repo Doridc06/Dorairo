@@ -102,6 +102,35 @@ public class Pelicula implements Serializable {
 	}
 
 	/**
+	 * Constructor para pelicula agregada manualmente
+	 * 
+	 * @param id
+	 * @param title
+	 * @param release_date
+	 * @param company
+	 * @param overview
+	 * @param poster_path
+	 * @param vote_average
+	 * @param actores
+	 * @param directores
+	 * @param genres
+	 */
+	public Pelicula(int id, String title, Date releaseDate, Compañia company, String overview, String posterPath,
+			double voteAverage, List<Actores> actores, List<Directores> directores, List<Genero> genres) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.release_date = releaseDate;
+		this.company = company;
+		this.overview = overview;
+		this.poster_path = posterPath;
+		this.vote_average = voteAverage;
+		this.actores = actores;
+		this.directores = directores;
+		this.genres = genres;
+	}
+
+	/**
 	 * @return the id
 	 */
 	public int getId() {

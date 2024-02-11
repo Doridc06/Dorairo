@@ -108,6 +108,23 @@ public class Series implements Serializable {
 		this.numeroTemporadas = numeroTemporadas;
 	}
 
+	public Series(int id, String titulo, Date fecha, Compañia company, String descripcion, String cartel,
+			double valoracion, int numeroEpisodios, int numeroTemporadas, List<Actores> listActores,
+			List<Directores> listDirectores, List<Genero> listGenero) {
+		this.id = id;
+		this.title = titulo;
+		this.release_date = fecha;
+		this.company = company;
+		this.overview = descripcion;
+		this.poster_path = cartel;
+		this.vote_average = valoracion;
+		this.numeroEpisodios = numeroEpisodios;
+		this.numeroTemporadas = numeroTemporadas;
+		this.actores = listActores;
+		this.directores = listDirectores;
+		this.genres = listGenero;
+	}
+
 	/**
 	 * @return the id
 	 */

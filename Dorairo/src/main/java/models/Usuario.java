@@ -53,7 +53,6 @@ public class Usuario implements Serializable {
 	 * @param fechaMiembro
 	 */
 	public Usuario(String usuario, String nombre, String correo, String clave, Date fechaMiembro) {
-		super();
 		this.user = usuario;
 		this.nombre = nombre;
 		this.correo = correo;
@@ -65,6 +64,15 @@ public class Usuario implements Serializable {
 	 * Constructor por defecto, vacío
 	 */
 	public Usuario() {
+	}
+
+	public Usuario(String usuario, String nombre, String correo, String clave, Date fechaMiembro, List<UsuarioPelicula> listPe) {
+		this.user = usuario;
+		this.nombre = nombre;
+		this.correo = correo;
+		this.clave = clave;
+		this.fechaMiembro = fechaMiembro;
+		this.usuarioPelicula = listPe;
 	}
 
 	/**

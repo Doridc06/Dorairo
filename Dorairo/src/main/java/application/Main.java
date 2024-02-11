@@ -60,5 +60,6 @@ public class Main extends Application {
 	public void iniciaLogin(Stage primaryStage) {
 		GestorVentanas gestorVentanas = new GestorVentanas();
 		gestorVentanas.muestraVentana(primaryStage, Constants.URL_LOGIN_FXML, "Dorairo");
+		// gestorVentanas.muestraVentana(primaryStage, Constants.URL_AGREGADAS_MANUALMENTE_FXML, "Dorairo");
 	}
 }

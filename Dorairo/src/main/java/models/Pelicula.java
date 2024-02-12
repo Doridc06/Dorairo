@@ -154,6 +154,7 @@ public class Pelicula implements Serializable {
     return company;
   }
 
+
   /**
    * @param company the company to set
    */

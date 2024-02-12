@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.google.gson.Gson;
 import constants.Constants;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -87,6 +88,12 @@ public class BuscadorController {
 	void perfilClicked(MouseEvent event) {
 		setSceneAndStage();
 		gestorVentanas.muestraVentana(stage, Constants.URL_USUARIO_FXML, "Perfil");
+	}
+	
+	@FXML
+	void agregarManualmenteClicked(ActionEvent event) {
+		setSceneAndStage();
+		gestorVentanas.muestraVentana(stage, Constants.URL_AGREGADAS_MANUALMENTE_FXML, "Agregar Manualmente");
 	}
 
 	public void setSceneAndStage() {

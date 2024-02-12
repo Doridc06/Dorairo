@@ -17,6 +17,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 @Entity
 @Table(name = "Series")
@@ -296,4 +298,39 @@ public class Series implements Serializable {
     return "tv";
   }
 
+  
+  
+  public String toStringCsv() {
+    return name + "\",\"" + first_air_date + "\",\"" + overview + "\",\"" + poster_path + "\",\"" + vote_average  +  "\",\"" + number_of_episodes + "\",\"" + number_of_seasons + "\"";
+
+    }
+
+  public String toStringJson() {
+    JsonObject jsonObject = new JsonObject();
+    
+    jsonObject.addProperty("titulo", name);
+    jsonObject.addProperty("detalles", overview);
+    jsonObject.addProperty("fecha", first_air_date);
+    
+    // Construir la cadena de géneros
+    StringBuilder generosString = new StringBuilder();
+    for (Genero genero : genres) {
+        generosString.append(genero.getName()).append(", ");
+    }
+    // Eliminar la coma y el espacio extra al final
+    if (generosString.length() > 0) {
+        generosString.setLength(generosString.length() - 2);
+    }
+    jsonObject.addProperty("Géneros", generosString.toString());
+    
+    jsonObject.addProperty("Valoracion", vote_average);
+    jsonObject.addProperty("Número de episodios", number_of_episodes);
+    jsonObject.addProperty("Número de temporadas", number_of_seasons);
+    
+    Gson gson = new Gson();
+    return gson.toJson(jsonObject);
+}
+
+  
+  
 }

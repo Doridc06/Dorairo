@@ -17,6 +17,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 /**
  * Clase que representa la tabla de Pelicula
@@ -267,17 +269,40 @@ public class Pelicula implements Serializable {
     return false;
   }
 
-  @Override
-  public String toString() {
-    return "Pelicula [id=" + id + ", title=" + title + ", release_date=" + release_date
-        + ", company=" + company + ", overview=" + overview + ", poster_path=" + poster_path
-        + ", vote_average=" + vote_average + ", usuarioPelicula=" + usuarioPelicula + ", actores="
-        + actores + ", directores=" + directores + ", genres=" + genres + "]";
-  }
-
 
   public String getTipo() {
     return "movie";
+  }
+
+
+  public String toStringCsv() {
+    return title + "\",\"" + release_date + "\",\"" + overview + "\",\"" + poster_path + "\",\""
+        + vote_average + "\"";
+
+  }
+
+  public String toStringJson() {
+    JsonObject jsonObject = new JsonObject();
+
+    jsonObject.addProperty("titulo", title);
+    jsonObject.addProperty("detalles", overview);
+    jsonObject.addProperty("fecha", release_date);
+
+    // Construir la cadena de géneros
+    StringBuilder generosString = new StringBuilder();
+    for (Genero genero : genres) {
+      generosString.append(genero.getName()).append(", ");
+    }
+    // Eliminar la coma y el espacio extra al final
+    if (generosString.length() > 0) {
+      generosString.setLength(generosString.length() - 2);
+    }
+    jsonObject.addProperty("Géneros", generosString.toString());
+
+    jsonObject.addProperty("Valoracion", vote_average);
+
+    Gson gson = new Gson();
+    return gson.toJson(jsonObject);
   }
 
 

@@ -1,7 +1,12 @@
 package controller;
 
-import application.Main;
+import org.hibernate.Session;
+
+import conexion.HibernateUtil;
 import constants.Constants;
+import dao.UsuarioDaoImpl;
+import dao.UsuarioPeliculaDaoImpl;
+import dao.UsuarioSerieDaoImpl;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -9,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import models.Usuario;
 import utilities.GestorVentanas;
 import utilities.Utils;
 
@@ -56,6 +62,15 @@ public class UsuarioController {
 	/** Instancia del gestor de ventanas **/
 	private GestorVentanas gestorVentanas;
 
+	/** Perfil registrado */
+	private static Usuario usuarioRegistrado;
+
+	/** Instancia del dao de usuario */
+	private static UsuarioDaoImpl usuarioDaoImpl;
+
+	/** Conexion con la base de datos */
+	private Session session;
+
 	@FXML
 	void initialize() {
 		// Inicializamos el Gestor de ventanas
@@ -63,18 +78,15 @@ public class UsuarioController {
 		// Establece la imagen del logo
 		Image imagen = new Image(getClass().getResourceAsStream(Constants.URL_LOGO_AMPLIADO));
 		imagenLogoCabecera.setImage(imagen);
-		// Establece la imagen del perfil
-		if (Main.getPerfilRegsistrado().getIgamenPerfil() == null
-				|| Main.getPerfilRegsistrado().getIgamenPerfil().isBlank()) {
-			// si no tiene una asignada se pone la por defecto
-			imagen = new Image(getClass().getResourceAsStream(Constants.URL_FOTO_PERFIL_DEFAULT), 190, 190, false, true);
-		} else {
-			imagen = new Image("file:" + Main.getPerfilRegsistrado().getIgamenPerfil());
-		}
-		imagenPerfil.setImage(imagen);
+
 		// Establece la imagen de fondo
 		imagen = new Image(getClass().getResourceAsStream(Constants.URL_FOTO_FONDO_PERFIL));
 		imagenFondoPerfil.setImage(imagen);
+
+		session = HibernateUtil.openSession();
+
+		// Abre la session y crea el dao de usuario
+		usuarioDaoImpl = new UsuarioDaoImpl(session);
 
 		// Cambiar los datos del perfil
 		setDatosPerfil();
@@ -85,10 +97,23 @@ public class UsuarioController {
 	 * registrado
 	 */
 	private void setDatosPerfil() {
-		lblNombre.setText(Main.getPerfilRegsistrado().getNombre().toUpperCase());
-		lblUser.setText(Main.getPerfilRegsistrado().getUsuario());
-		lblCorreo.setText(Main.getPerfilRegsistrado().getCorreo());
-		lblMiembro.setText(Main.getPerfilRegsistrado().getFechaMiembroString());
+		lblNombre.setText(usuarioRegistrado.getNombre().toUpperCase());
+		lblUser.setText(usuarioRegistrado.getUser());
+		lblCorreo.setText(usuarioRegistrado.getCorreo());
+		lblMiembro.setText(usuarioRegistrado.getFechaMiembroString());
+		UsuarioPeliculaDaoImpl upDao = new UsuarioPeliculaDaoImpl(session);
+		lblNumeroPeliculas.setText(upDao.searchNumeroPeliculas(usuarioRegistrado.getUser()));
+		UsuarioSerieDaoImpl usDao = new UsuarioSerieDaoImpl(session);
+		lblNumeroSeries.setText(usDao.searchNumeroSeries(usuarioRegistrado.getUser()));
+		// Establece la imagen del perfil
+		Image imagen;
+		if (usuarioRegistrado.getImagenPerfil() == null || usuarioRegistrado.getImagenPerfil().isBlank()) {
+			// si no tiene una asignada se pone la por defecto
+			imagen = new Image(getClass().getResourceAsStream(Constants.URL_FOTO_PERFIL_DEFAULT), 190, 190, false, true);
+		} else {
+			imagen = new Image("file:" + usuarioRegistrado.getImagenPerfil());
+		}
+		imagenPerfil.setImage(imagen);
 	}
 
 	@FXML
@@ -121,16 +146,6 @@ public class UsuarioController {
 		gestorVentanas.muestraVentana(stage, Constants.URL_USUARIO_FXML, "Perfil");
 	}
 
-	@FXML
-	void modificarContraseña(MouseEvent event) {
-
-	}
-
-	@FXML
-	void modificarNombre(MouseEvent event) {
-
-	}
-
 	/**
 	 * Cierra la sesión del usuario llevándolo de vuelta al login.
 	 * 
@@ -138,6 +153,14 @@ public class UsuarioController {
 	 */
 	@FXML
 	void cerrarSesion(MouseEvent event) {
+		usuarioRegistrado = null;
+		muestraLogin();
+	}
+	
+	/**
+	 * Muestra la pantalla de login
+	 */
+	public void muestraLogin() {
 		setSceneAndStage();
 		gestorVentanas.muestraVentana(stage, Constants.URL_LOGIN_FXML, "Dorairo");
 	}
@@ -145,23 +168,43 @@ public class UsuarioController {
 	@FXML
 	void cambiarFotoPerfil(MouseEvent event) {
 		setSceneAndStage();
+		// Coge la url de la nueva foto
 		String fotoUrl = Utils.buscarFotoArchivos(stage);
-
-		Main.getPerfilRegsistrado().setIgamenPerfil(fotoUrl);
-
-		// Mostar la imagen
-		Image image = new Image("file:" + fotoUrl);
-		imagenPerfil.setImage(image);
+		// La establece para el usuario registrado
+		usuarioRegistrado.setImagenPerfil(fotoUrl);
+		// Actualiza el perfil
+		usuarioDaoImpl.insert(usuarioRegistrado);
+		// Recarga los datos
+		setDatosPerfil();
 	}
 
 	@FXML
 	void eliminarDatos(MouseEvent event) {
+		if (Utils.confirmacion()) {
+			usuarioDaoImpl.deleteDataUser(usuarioRegistrado.getUser());
+			setDatosPerfil();
+		}
+	}
 
+	@FXML
+	void modificarPassword(MouseEvent event) {
+		setSceneAndStage();
+		gestorVentanas.muestraCambiarPasswordNombre(scene, "Cambiar Contraseña");
+	}
+
+	@FXML
+	void modificarNombre(MouseEvent event) {
+		setSceneAndStage();
+		gestorVentanas.muestraCambiarPasswordNombre(scene, "Cambiar Nombre");
+		setDatosPerfil();
 	}
 
 	@FXML
 	void eliminarCuenta(MouseEvent event) {
-
+		if (Utils.confirmacion()) {
+			usuarioDaoImpl.delete(usuarioRegistrado);
+			muestraLogin();
+		}
 	}
 
 	/**
@@ -171,6 +214,42 @@ public class UsuarioController {
 	public void setSceneAndStage() {
 		scene = imagenLogoCabecera.getScene();
 		stage = (Stage) scene.getWindow();
+	}
+
+	/**
+	 * Establece el usuario registrado
+	 * 
+	 * @param usuario
+	 */
+	public static void setUsuarioRegistrado(Usuario usuario) {
+		usuarioRegistrado = usuario;
+	}
+
+	/**
+	 * @return the usuarioRegistrado
+	 */
+	public static Usuario getUsuarioRegistrado() {
+		return usuarioRegistrado;
+	}
+
+	/**
+	 * Cambia la clave del perfil registrado
+	 * 
+	 * @param clave Nueva clave
+	 */
+	public static void cambiarClave(String clave) {
+		usuarioRegistrado.setClave(clave);
+		usuarioDaoImpl.insert(usuarioRegistrado);
+	}
+
+	/**
+	 * Cambia el nombre del perfil registrado
+	 * 
+	 * @param nombre Nuevo nombre
+	 */
+	public static void cambiarNombre(String nombre) {
+		usuarioRegistrado.setNombre(nombre);
+		usuarioDaoImpl.insert(usuarioRegistrado);
 	}
 
 }

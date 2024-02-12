@@ -1,8 +1,8 @@
 package models;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -32,30 +32,74 @@ public class Directores implements Serializable {
 
 	/** Relacion de Directores con Series */
 	@ManyToMany(cascade = { CascadeType.ALL }, mappedBy = "directores")
-	private Set<Series> series = new HashSet<>();
+	private List<Series> series = new ArrayList<>();
 
 	/** Relacion de Directores con Peliculas */
 	@ManyToMany(cascade = { CascadeType.ALL }, mappedBy = "directores")
-	private Set<Pelicula> peliculas = new HashSet<>();
+	private List<Pelicula> peliculas = new ArrayList<>();
 
 	public Directores(int id, String name) {
 		this.id = id;
 		this.name = name;
 	}
+	
+	public Directores() {
+	}
 
+	/**
+	 * @return the id
+	 */
 	public int getId() {
 		return id;
 	}
 
+	/**
+	 * @param id the id to set
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
+	/**
+	 * @return the name
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * @param name the name to set
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	/**
+	 * @return the series
+	 */
+	public List<Series> getSeries() {
+		return series;
+	}
+
+	/**
+	 * @param series the series to set
+	 */
+	public void setSeries(List<Series> series) {
+		this.series = series;
+	}
+
+	/**
+	 * @return the peliculas
+	 */
+	public List<Pelicula> getPeliculas() {
+		return peliculas;
+	}
+
+	/**
+	 * @param peliculas the peliculas to set
+	 */
+	public void setPeliculas(List<Pelicula> peliculas) {
+		this.peliculas = peliculas;
+	}
+
 }

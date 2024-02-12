@@ -29,7 +29,7 @@ public class SeriesDaoImpl extends CommonDaoImpl<Series> implements SeriesDaoI {
 
 	@Override
 	public Series searchById(String id) {
-		checkActiveTransaction();
+		activeTransaction();
 
 		// Searches for the series with the id
 		return (Series) session.createQuery("FROM Series WHERE id = " + id).uniqueResult();
@@ -37,10 +37,20 @@ public class SeriesDaoImpl extends CommonDaoImpl<Series> implements SeriesDaoI {
 
 	@Override
 	public List<Series> searchByTitle(String title) {
-		checkActiveTransaction();
+		activeTransaction();
 
 		// Searches for all series with this title
 		return session.createQuery("FROM Series WHERE titulo = '" + title + "'").list();
+	}
+
+	@Override
+	public String searchMaxId() {
+		activeTransaction();
+
+		// Searches for the max id
+		Integer max = (Integer) session.createQuery("SELECT MAX(id) FROM Series").uniqueResult();
+		String maxId = "" + max;
+		return maxId;
 	}
 
 }

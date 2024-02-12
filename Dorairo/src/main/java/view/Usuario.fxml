@@ -86,7 +86,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label layoutX="134.0" layoutY="580.0" onMousePressed="#modificarContraseña" prefHeight="34.0" prefWidth="210.0" text="• Modificar contraseña">
+            <Label layoutX="134.0" layoutY="580.0" onMousePressed="#modificarPassword" prefHeight="34.0" prefWidth="210.0" text="• Modificar contraseña">
                <font>
                   <Font size="20.0" />
                </font>

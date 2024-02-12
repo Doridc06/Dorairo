@@ -1,5 +1,7 @@
 package models;
 
+import java.util.Arrays;
+
 /**
  * Clase que representa la respuesta de la API
  * 
@@ -14,6 +16,9 @@ public class RespuestaApi {
   private int total_pages;
   private int total_results;
 
+  public RespuestaApi() {
+  }
+  
   // Métodos getter y setter para cada atributo
 
   /**
@@ -88,4 +93,12 @@ public class RespuestaApi {
     this.total_results = total_results;
   }
 
+	@Override
+	public String toString() {
+		return "RespuestaApi [page=" + page + ", results=" + Arrays.toString(results) + ", total_pages=" + total_pages
+				+ ", total_results=" + total_results + "]";
+	}
+
+  
+  
 }

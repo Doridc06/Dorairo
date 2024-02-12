@@ -11,6 +11,6 @@ module Dorairo {
 
 	opens models to com.google.gson, javafx.fxml, org.hibernate.orm.core;
 	opens controller to javafx.fxml;
-
+	
 	opens application to javafx.graphics, javafx.fxml;
 }

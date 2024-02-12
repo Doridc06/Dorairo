@@ -76,7 +76,14 @@ public class Constants {
 	/** Ruta al documento fxml de Aleatoria */
 	public static final String URL_PELI_SERIE_ALEATORIA_FXML = "/view/Aleatoria.fxml";
 
+	/** Ruta al documento fxml de Cambiar Password */
+	public static final String URL_CAMBIAR_PASSWORD_FXML = "/view/CambiarPassword.fxml";
+
+	/** Ruta al documento fxml de Cambiar Nombre */
+	public static final String URL_CAMBIAR_NOMBRE_FXML = "/view/CambiarNombre.fxml";
+
 	// Rutas a imagenes
+
 	/** Ruta a la imagen de la portada */
 	public static final String URL_PORTADA = "/application/images/portada.png";
 
@@ -94,6 +101,25 @@ public class Constants {
 
 	/** Ruta a la imagen del logo */
 	public static final String URL_LOGO_NORMAL = "/application/images/logoDorairo.jpg";
+
+	// ID
+	/** Prefijo para las series manuales */
+	public static final String PREFIJO_ID_SERIES_MANUALES = "3333333";
+
+	/** Prefijo para las peliculas manuales */
+	public static final String PREFIJO_ID_PELIS_MANUALES = "4444444";
+
+	/** Prefijo para las compañias manuales */
+	public static final String PREFIJO_ID_COMPANIES_MANUALES = "5555555";
+
+	/** Prefijo para los actores manuales */
+	public static final String PREFIJO_ID_ACTORES_MANUALES = "6666666";
+
+	/** Prefijo para los actores manuales */
+	public static final String PREFIJO_ID_DIRECTORES_MANUALES = "7777777";
+
+	/** Prefijo para los actores manuales */
+	public static final String PREFIJO_ID_GENEROS_MANUALES = "88888";
 
 	// Metodos
 

@@ -1,9 +1,9 @@
 package models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -55,7 +55,7 @@ public class Pelicula implements Serializable {
 	 * Relación de pelicula con la tabla de los id de usuarioPelicula
 	 */
 	@OneToMany(mappedBy = "id.pelicula", cascade = CascadeType.ALL)
-	private Set<UsuarioPelicula> usuarioPelicula = new HashSet<>();
+	private List<UsuarioPelicula> usuarioPelicula = new ArrayList<>();
 
 	/**
 	 * Tabla intermedia entre peliculas y actores
@@ -63,7 +63,7 @@ public class Pelicula implements Serializable {
 	@ManyToMany(cascade = { CascadeType.ALL })
 	@JoinTable(name = "Peliculas_Actores", joinColumns = { @JoinColumn(name = "id_pelicula") }, inverseJoinColumns = {
 			@JoinColumn(name = "id_actor") })
-	private Set<Actores> actores = new HashSet<>();
+	private List<Actores> actores = new ArrayList<>();
 
 	/**
 	 * Tabla intermedia entre peliculas y directores
@@ -71,7 +71,7 @@ public class Pelicula implements Serializable {
 	@ManyToMany(cascade = { CascadeType.ALL })
 	@JoinTable(name = "Peliculas_Directores", joinColumns = { @JoinColumn(name = "id_pelicula") }, inverseJoinColumns = {
 			@JoinColumn(name = "id_director") })
-	private Set<Directores> directores = new HashSet<>();
+	private List<Directores> directores = new ArrayList<>();
 
 	/**
 	 * Tabla intermedia entre peliculas y generos
@@ -79,7 +79,7 @@ public class Pelicula implements Serializable {
 	@ManyToMany(cascade = { CascadeType.ALL })
 	@JoinTable(name = "Peliculas_Generos", joinColumns = { @JoinColumn(name = "id_pelicula") }, inverseJoinColumns = {
 			@JoinColumn(name = "id_genero") })
-	private Set<Genero> genres = new HashSet<>();
+	private List<Genero> genres = new ArrayList<>();
 
 	/**
 	 * Constructor para Pelicula
@@ -99,6 +99,38 @@ public class Pelicula implements Serializable {
 		this.overview = descripcion;
 		this.poster_path = poster;
 		this.vote_average = Double.parseDouble(valoracionGlobal);
+	}
+
+	/**
+	 * Constructor para pelicula agregada manualmente
+	 * 
+	 * @param id
+	 * @param title
+	 * @param release_date
+	 * @param company
+	 * @param overview
+	 * @param poster_path
+	 * @param vote_average
+	 * @param actores
+	 * @param directores
+	 * @param genres
+	 */
+	public Pelicula(int id, String title, Date releaseDate, Compañia company, String overview, String posterPath,
+			double voteAverage, List<Actores> actores, List<Directores> directores, List<Genero> genres) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.release_date = releaseDate;
+		this.company = company;
+		this.overview = overview;
+		this.poster_path = posterPath;
+		this.vote_average = voteAverage;
+		this.actores = actores;
+		this.directores = directores;
+		this.genres = genres;
+	}
+	
+	public Pelicula() {
 	}
 
 	/**
@@ -202,57 +234,57 @@ public class Pelicula implements Serializable {
 	/**
 	 * @return the usuarioPelicula
 	 */
-	public Set<UsuarioPelicula> getUsuarioPelicula() {
+	public List<UsuarioPelicula> getUsuarioPelicula() {
 		return usuarioPelicula;
 	}
 
 	/**
 	 * @param usuarioPelicula the usuarioPelicula to set
 	 */
-	public void setUsuarioPelicula(Set<UsuarioPelicula> usuarioPelicula) {
+	public void setUsuarioPelicula(List<UsuarioPelicula> usuarioPelicula) {
 		this.usuarioPelicula = usuarioPelicula;
 	}
 
 	/**
 	 * @return the actores
 	 */
-	public Set<Actores> getActores() {
+	public List<Actores> getActores() {
 		return actores;
 	}
 
 	/**
 	 * @param actores the actores to set
 	 */
-	public void setActores(Set<Actores> actores) {
+	public void setActores(List<Actores> actores) {
 		this.actores = actores;
 	}
 
 	/**
 	 * @return the directores
 	 */
-	public Set<Directores> getDirectores() {
+	public List<Directores> getDirectores() {
 		return directores;
 	}
 
 	/**
 	 * @param directores the directores to set
 	 */
-	public void setDirectores(Set<Directores> directores) {
+	public void setDirectores(List<Directores> directores) {
 		this.directores = directores;
 	}
 
 	/**
-	 * @return the generos
+	 * @return the genres
 	 */
-	public Set<Genero> getGenres() {
+	public List<Genero> getGenres() {
 		return genres;
 	}
 
 	/**
-	 * @param generos the generos to set
+	 * @param genres the genres to set
 	 */
-	public void setGenres(Set<Genero> generos) {
-		this.genres = generos;
+	public void setGenres(List<Genero> genres) {
+		this.genres = genres;
 	}
 
 	public boolean contieneGenero(String nombreGenero) {
@@ -264,6 +296,14 @@ public class Pelicula implements Serializable {
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public String toString() {
+		return "Pelicula [id=" + id + ", title=" + title + ", release_date=" + release_date + ", company=" + company
+				+ ", overview=" + overview + ", poster_path=" + poster_path + ", vote_average=" + vote_average
+				+ ", usuarioPelicula=" + usuarioPelicula + ", actores=" + actores + ", directores=" + directores + ", genres="
+				+ genres + "]";
 	}
 
 }

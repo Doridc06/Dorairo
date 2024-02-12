@@ -50,12 +50,12 @@
                         <Font size="15.0" />
                      </font>
                   </TextField>
-                  <Label layoutX="70.0" layoutY="420.0" prefHeight="36.0" prefWidth="228.0" text="Año estreno">
+                  <Label layoutX="70.0" layoutY="420.0" prefHeight="36.0" prefWidth="228.0" text="Fecha estreno">
                      <font>
                         <Font name="System Bold" size="25.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtEstreno" layoutX="70.0" layoutY="470.0" prefHeight="34.0" prefWidth="150.0">
+                  <TextField fx:id="txtEstreno" layoutX="70.0" layoutY="470.0" prefHeight="34.0" prefWidth="150.0" promptText="dd/MM/yyyy">
                      <font>
                         <Font size="15.0" />
                      </font>

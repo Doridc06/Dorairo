@@ -2,12 +2,19 @@ package controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
+
+import org.hibernate.Session;
 
 import com.google.gson.Gson;
 
+import conexion.HibernateUtil;
 import constants.Constants;
+import dao.UsuarioPeliculaDaoImpl;
+import dao.UsuarioSerieDaoImpl;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -18,6 +25,8 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import models.Pelicula;
 import models.RespuestaApi;
+import models.UsuarioPelicula;
+import models.UsuarioSerie;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -59,7 +68,7 @@ public class InicioController {
 	private StackPane stackPanePeliculasCabecera;
 
 	@FXML
-	private HBox top5;
+	private HBox top10;
 
 	/** Scene de la ventana de Inicio */
 	private Scene scene;
@@ -70,10 +79,14 @@ public class InicioController {
 	/** Instancia del gestor de ventanas **/
 	private GestorVentanas gestorVentanas;
 
+	/** Conexion con la base de datos */
+	private Session session;
+
 	private static final String API_KEY = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlYjc0NTA5ZjRiZDBlODJlMTFlYzA2YWM1MDRhMGRlMCIsInN1YiI6IjY1Mzc3ZmRmZjQ5NWVlMDBmZjY1YTEyOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ehIu08LoiMRTccPoD4AfADXOpQPlqNAKUMvGgwY3XU8";
 
 	@FXML
 	void initialize() {
+		session = HibernateUtil.openSession();
 		// Inicializamos el Gestor de ventanas
 		gestorVentanas = new GestorVentanas();
 		// Establece la imagen del logo
@@ -87,12 +100,136 @@ public class InicioController {
 			handleMovieApiCall(client, "https://api.themoviedb.org/3/movie/popular?language=es-ES&page=1", novedades);
 
 			// Llamada a la API para top 5
-			handleMovieApiCall(client, "https://api.themoviedb.org/3/trending/all/day?language=es-ES", top5);
+			handleMovieApiCall(client, "https://api.themoviedb.org/3/trending/all/day?language=es-ES", top10);
+
+			// Muestra la lista
+			mostrarMiLista();
+
+			// Sacar pelis de mi lista, de la bbdd
+			/* METODO QUE BUSQUE EN BBDD LAS PELIS // SERIES QUE TIENEN MI LISTA = TRUE */
+
+			// Configuración del evento para cada ImageView en novedades
+			for (Node node : novedades.getChildren()) {
+				if (node instanceof ImageView) {
+					ImageView imageView = (ImageView) node;
+					imageView.setOnMouseClicked(event -> detallesClicked(imageView));
+				}
+			}
+
+			// Configuración del evento para cada ImageView en top10
+			for (Node node : top10.getChildren()) {
+				if (node instanceof ImageView) {
+					ImageView imageView = (ImageView) node;
+					imageView.setOnMouseClicked(event -> detallesClicked(imageView));
+				}
+			}
+
+			// Configuración del evento para cada ImageView en miLista
+			for (Node node : miLista.getChildren()) {
+				if (node instanceof ImageView) {
+					ImageView imageView = (ImageView) node;
+					imageView.setOnMouseClicked(event -> detallesClicked(imageView));
+				}
+			}
 
 		} catch (IOException e) {
 			// Manejar excepciones
 			e.printStackTrace();
 		}
+	}
+
+	private void mostrarMiLista() {
+		// Coge el numero de peliculas y series que hay registradas para el usuario
+		UsuarioSerieDaoImpl usDao = new UsuarioSerieDaoImpl(session);
+		UsuarioPeliculaDaoImpl upDao = new UsuarioPeliculaDaoImpl(session);
+		String user = UsuarioController.getUsuarioRegistrado().getNombre();
+		int numeroSeries = Integer.parseInt(usDao.searchNumeroSeries(user));
+		int numeroPeliculas = Integer.parseInt(upDao.searchNumeroPeliculas(user));
+
+		// Comprueba que haya algo guardado
+		if (numeroSeries > 0 || numeroPeliculas > 0) {
+			// Trae la lista de series y peliculas guardadas
+			List<UsuarioSerie> listaUserSerie = usDao.searchByUsuario(user);
+			List<UsuarioPelicula> listaUserPeli = upDao.searchByUsuario(user);
+			// Coge el numero total de pelis y series guardados
+			int totalSeries = listaUserSerie.size();
+
+//			for (int i = 1; i <= totalGuardadas; i++) {
+//				// Muestra una de peli y otra de serie, para que salgan mezcladas
+//				if (i % 2 == 0) {
+//							ImageView imageView = null;
+//							if (pelicula.getPoster_path() != null) {
+//								imageView = getImageViewFromPelicula(pelicula);
+//
+//								// Almacena el ID de la película en el userData del ImageView
+//								imageView.setUserData(String.valueOf(pelicula.getId()));
+//
+//							}
+//							// Verificar si imageView no es nulo antes de agregarlo al HBox
+//							if (imageView != null) {
+//								targetHBox.getChildren().add(imageView);
+//							}
+//
+//							contador++;
+//						} else {
+//							break; // Se han agregado 10 películas, salir del bucle
+//						}
+//					}
+//				}
+//				} else {
+//					// peli
+//				}
+//			}
+
+		}
+
+//			for (Pelicula pelicula : respApi.getResults()) {
+//				System.out.println("Adding image: " + pelicula.getPoster_path());
+//				if (contador < 10) { // Limitar a 10 películas
+//					ImageView imageView = null;
+//					if (pelicula.getPoster_path() != null) {
+//						imageView = getImageViewFromPelicula(pelicula);
+//
+//						// Almacena el ID de la película en el userData del ImageView
+//						imageView.setUserData(String.valueOf(pelicula.getId()));
+//
+//					}
+//					// Verificar si imageView no es nulo antes de agregarlo al HBox
+//					if (imageView != null) {
+//						targetHBox.getChildren().add(imageView);
+//					}
+//
+//					contador++;
+//				} else {
+//					break; // Se han agregado 10 películas, salir del bucle
+//				}
+//			}
+//		}
+	}
+
+	void detallesClicked(ImageView clickedImageView) {
+		// Obtener el identificador de la película desde el ImageView
+		String movieId = getMovieIdFromImageView(clickedImageView);
+
+		// Abrir la ventana de detalles
+		abrirVentanaDetalles(movieId);
+	}
+
+	private String getMovieIdFromImageView(ImageView imageView) {
+		// Obtén el ID de la película almacenado en el userData del ImageView
+		Object userData = imageView.getUserData();
+
+		if (userData instanceof String) {
+			return (String) userData;
+		} else {
+			// Manejar la situación donde no hay un ID almacenado
+			return "";
+		}
+	}
+
+	private void abrirVentanaDetalles(String movieId) {
+		setSceneAndStage();
+		gestorVentanas.muestraDetalles(stage, movieId, "movie");
 	}
 
 	private void handleMovieApiCall(OkHttpClient client, String apiUrl, HBox targetHBox) throws IOException {
@@ -119,7 +256,11 @@ public class InicioController {
 				if (contador < 10) { // Limitar a 10 películas
 					ImageView imageView = null;
 					if (pelicula.getPoster_path() != null) {
-						imageView = getImageViewFromUrl("https://image.tmdb.org/t/p/w500" + pelicula.getPoster_path());
+						imageView = getImageViewFromPelicula(pelicula);
+
+						// Almacena el ID de la película en el userData del ImageView
+						imageView.setUserData(String.valueOf(pelicula.getId()));
+
 					}
 					// Verificar si imageView no es nulo antes de agregarlo al HBox
 					if (imageView != null) {
@@ -131,23 +272,25 @@ public class InicioController {
 					break; // Se han agregado 10 películas, salir del bucle
 				}
 			}
-		} else {
-			// No hay resultados, manejar de acuerdo a tus necesidades
 		}
 		targetHBox.setSpacing(50.0);
 	}
 
-	private ImageView getImageViewFromUrl(String imageUrl) {
+	private ImageView getImageViewFromPelicula(Pelicula pelicula) {
 		ImageView imageView = new ImageView();
 		imageView.setFitHeight(230.0);
 		imageView.setPreserveRatio(true);
 
 		// Construir la URL del póster de la película
+		String imageUrl = "https://image.tmdb.org/t/p/w500" + pelicula.getPoster_path();
+
+		// Configurar la imagen en el ImageView
 		Image image = new Image(imageUrl);
 		imageView.getStyleClass().add("sombraDerecha");
 		imageView.setImage(image);
 
-		System.out.println("W:" + imageView.getFitWidth() + "; H:" + imageView.getFitHeight());
+		// Configurar el evento de clic para llamar a detallesClicked
+		imageView.setOnMouseClicked(event -> detallesClicked(imageView));
 
 		return imageView;
 	}
@@ -181,7 +324,6 @@ public class InicioController {
 		setSceneAndStage();
 		gestorVentanas.muestraVentana(stage, Constants.URL_USUARIO_FXML, "Perfil");
 	}
-	
 
 	/**
 	 * Asigna los valores correspondientes del stage y el scene

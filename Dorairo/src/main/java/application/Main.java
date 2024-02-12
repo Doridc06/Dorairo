@@ -1,15 +1,13 @@
-package application;
+ package application;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.hibernate.Session;
 
 import conexion.HibernateUtil;
 import constants.Constants;
+import dao.UsuarioDaoImpl;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import models.Usuario;
 import utilities.GestorVentanas;
-import utilities.Utils;
 
 /**
  * Clase principal, gestiona el lanzamiento del programa
@@ -19,10 +17,11 @@ import utilities.Utils;
  */
 public class Main extends Application {
 
-	/** Lista donde se guardan cada uno de los perfiles registrados */
-	private static List<Usuario> listaPerfiles = new ArrayList<>();
+	/** Session conectada a la base de datos */
+	private static Session session;
 
-	private static Usuario perfilRegsistrado = null;
+	/** Instancia del dao de usuario */
+	private static UsuarioDaoImpl usuarioDaoImpl;
 
 	/**
 	 * Método principal
@@ -30,8 +29,10 @@ public class Main extends Application {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		HibernateUtil.buildSessionFactory();
-		//launch(args);
+		// Abre la session y crea el dao de usuario
+		session = HibernateUtil.openSession();
+		usuarioDaoImpl = new UsuarioDaoImpl(session);
+		launch(args);
 	}
 
 	@Override
@@ -41,14 +42,13 @@ public class Main extends Application {
 	 */
 	public void start(Stage primaryStage) {
 		try {
-			// Añadimos a la lista de perfiles unos ya creados
-			anadirNuevoPerfil(Constants.PERFIL_JAIRO);
-			anadirNuevoPerfil(Constants.PERFIL_DORIANA);
+			// Añadimos unos perfiles ya creados
+			usuarioDaoImpl.update(Constants.PERFIL_JAIRO);
+			usuarioDaoImpl.update(Constants.PERFIL_DORIANA);
 
 			// Lanza la pantalla del Login
 			iniciaLogin(primaryStage);
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 
@@ -60,72 +60,6 @@ public class Main extends Application {
 	public void iniciaLogin(Stage primaryStage) {
 		GestorVentanas gestorVentanas = new GestorVentanas();
 		gestorVentanas.muestraVentana(primaryStage, Constants.URL_LOGIN_FXML, "Dorairo");
-//		gestorVentanas.muestraVentana(primaryStage, Constants.URL_AGREGADAS_MANUALMENTE_FXML, "Agregar Manualmente");
+		// gestorVentanas.muestraVentana(primaryStage, Constants.URL_AGREGADAS_MANUALMENTE_FXML, "Dorairo");
 	}
-
-	/**
-	 * Añade el perfil proporcionado a la lista de perfiles
-	 * 
-	 * @param perfil
-	 */
-	public static void anadirNuevoPerfil(Usuario perfil) {
-		listaPerfiles.add(perfil);
-	}
-
-	/**
-	 * Comprueba si existe un perfil con el correo o el usuario proporcionados
-	 * 
-	 * @param usuario a comprobar
-	 * @param correo  a comprobar
-	 * @return true si el correo o usuario ya han sido usados; false si ninguno se
-	 *         ha usado
-	 */
-	public static boolean isPerfil(String usuario, String correo) {
-		// Recorre la lista de perfiles
-		for (Usuario perfil : listaPerfiles) {
-			// Comprueba si coincide el correo o usuario
-			if (perfil.getCorreo().equals(correo)) {
-				Utils.mostrarAlerta("El correo introducido ya está registrado.", Constants.WARNING_TYPE);
-				return true;
-			} else if (perfil.getUsuario().equals(usuario)) {
-				Utils.mostrarAlerta("El usuario introducido ya existe.", Constants.WARNING_TYPE);
-				return true;
-			}
-		}
-		return false;
-	}
-
-	/**
-	 * Verifica que exista un perfil con el usuario y contrasena proporcionados
-	 * 
-	 * @param usuario    a comprobar
-	 * @param contrasena a comprobar
-	 * @return true si existe o false si no existe
-	 */
-	public static boolean comprobarPerfil(String usuario, String contrasena) {
-		// Recorre la lista de perfiles
-		for (Usuario perfil : listaPerfiles) {
-			// Comprueba si coincide el usuario y contrasena
-			if (perfil.getUsuario().equals(usuario) && perfil.getClave().equals(contrasena)) {
-				setPerfilRegsistrado(perfil);
-				return true;
-			}
-		}
-		return false;
-	}
-
-	/**
-	 * @return the perfilRegsistrado
-	 */
-	public static Usuario getPerfilRegsistrado() {
-		return perfilRegsistrado;
-	}
-
-	/**
-	 * @param perfilRegsistrado the perfilRegsistrado to set
-	 */
-	public static void setPerfilRegsistrado(Usuario perfilRegsistrado) {
-		Main.perfilRegsistrado = perfilRegsistrado;
-	}
-
 }

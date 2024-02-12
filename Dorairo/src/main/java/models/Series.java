@@ -1,9 +1,9 @@
 package models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -55,7 +55,7 @@ public class Series implements Serializable {
 	 * Relación de serie con la tabla de los id de usuarioSerie
 	 */
 	@OneToMany(mappedBy = "id.series", cascade = CascadeType.ALL)
-	private Set<UsuarioSerie> usuarioSerie = new HashSet<>();
+	private List<UsuarioSerie> usuarioSerie = new ArrayList<>();
 
 	/**
 	 * Tabla intermedia entre series y actores
@@ -63,7 +63,7 @@ public class Series implements Serializable {
 	@ManyToMany(cascade = { CascadeType.ALL })
 	@JoinTable(name = "Series_Actores", joinColumns = { @JoinColumn(name = "id_serie") }, inverseJoinColumns = {
 			@JoinColumn(name = "id_actor") })
-	private Set<Actores> actores = new HashSet<>();
+	private List<Actores> actores = new ArrayList<>();
 
 	/**
 	 * Tabla intermedia entre series y directores
@@ -71,7 +71,7 @@ public class Series implements Serializable {
 	@ManyToMany(cascade = { CascadeType.ALL })
 	@JoinTable(name = "Series_Directores", joinColumns = { @JoinColumn(name = "id_serie") }, inverseJoinColumns = {
 			@JoinColumn(name = "id_director") })
-	private Set<Directores> directores = new HashSet<>();
+	private List<Directores> directores = new ArrayList<>();
 
 	/**
 	 * Tabla intermedia entre series y generos
@@ -79,7 +79,7 @@ public class Series implements Serializable {
 	@ManyToMany(cascade = { CascadeType.ALL })
 	@JoinTable(name = "Series_Generos", joinColumns = { @JoinColumn(name = "id_serie") }, inverseJoinColumns = {
 			@JoinColumn(name = "id_genero") })
-	private Set<Genero> generos = new HashSet<>();
+	private List<Genero> genres = new ArrayList<>();
 
 	/**
 	 * Constructor para Serie
@@ -106,6 +106,26 @@ public class Series implements Serializable {
 		this.vote_average = valoracion;
 		this.numeroEpisodios = numeroEpisodios;
 		this.numeroTemporadas = numeroTemporadas;
+	}
+
+	public Series(int id, String titulo, Date fecha, Compañia company, String descripcion, String cartel,
+			double valoracion, int numeroEpisodios, int numeroTemporadas, List<Actores> listActores,
+			List<Directores> listDirectores, List<Genero> listGenero) {
+		this.id = id;
+		this.title = titulo;
+		this.release_date = fecha;
+		this.company = company;
+		this.overview = descripcion;
+		this.poster_path = cartel;
+		this.vote_average = valoracion;
+		this.numeroEpisodios = numeroEpisodios;
+		this.numeroTemporadas = numeroTemporadas;
+		this.actores = listActores;
+		this.directores = listDirectores;
+		this.genres = listGenero;
+	}
+	
+	public Series() {
 	}
 
 	/**
@@ -237,57 +257,57 @@ public class Series implements Serializable {
 	/**
 	 * @return the usuarioSerie
 	 */
-	public Set<UsuarioSerie> getUsuarioSerie() {
+	public List<UsuarioSerie> getUsuarioSerie() {
 		return usuarioSerie;
 	}
 
 	/**
 	 * @param usuarioSerie the usuarioSerie to set
 	 */
-	public void setUsuarioSerie(Set<UsuarioSerie> usuarioSerie) {
+	public void setUsuarioSerie(List<UsuarioSerie> usuarioSerie) {
 		this.usuarioSerie = usuarioSerie;
 	}
 
 	/**
 	 * @return the actores
 	 */
-	public Set<Actores> getActores() {
+	public List<Actores> getActores() {
 		return actores;
 	}
 
 	/**
 	 * @param actores the actores to set
 	 */
-	public void setActores(Set<Actores> actores) {
+	public void setActores(List<Actores> actores) {
 		this.actores = actores;
 	}
 
 	/**
 	 * @return the directores
 	 */
-	public Set<Directores> getDirectores() {
+	public List<Directores> getDirectores() {
 		return directores;
 	}
 
 	/**
 	 * @param directores the directores to set
 	 */
-	public void setDirectores(Set<Directores> directores) {
+	public void setDirectores(List<Directores> directores) {
 		this.directores = directores;
 	}
 
 	/**
 	 * @return the generos
 	 */
-	public Set<Genero> getGeneros() {
-		return generos;
+	public List<Genero> getGeneros() {
+		return genres;
 	}
 
 	/**
 	 * @param generos the generos to set
 	 */
-	public void setGeneros(Set<Genero> generos) {
-		this.generos = generos;
+	public void setGeneros(List<Genero> generos) {
+		this.genres = generos;
 	}
 
 }

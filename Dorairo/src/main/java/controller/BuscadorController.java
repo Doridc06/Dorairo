@@ -95,7 +95,7 @@ public class BuscadorController {
 		setSceneAndStage();
 		gestorVentanas.muestraVentana(stage, Constants.URL_AGREGADAS_MANUALMENTE_FXML, "Agregar Manualmente");
 	}
-
+	
 	public void setSceneAndStage() {
 		stage = (Stage) imagenLogoCabecera.getScene().getWindow();
 	}

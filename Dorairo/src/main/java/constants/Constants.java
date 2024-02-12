@@ -102,6 +102,9 @@ public class Constants {
 	/** Ruta a la imagen del logo */
 	public static final String URL_LOGO_NORMAL = "/application/images/logoDorairo.jpg";
 
+	/** Ruta a la imagen de la lupa de la aplicación */
+	public static final String URL_LUPA = "/application/images/lupa.png";
+
 	// ID
 	/** Prefijo para las series manuales */
 	public static final String PREFIJO_ID_SERIES_MANUALES = "3333333";

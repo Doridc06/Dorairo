@@ -3,16 +3,11 @@ package controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.reflect.TypeToken;
 import constants.Constants;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.MenuItem;
@@ -27,9 +22,6 @@ import models.RespuestaApi;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import java.lang.reflect.Type;
-import com.google.gson.reflect.TypeToken;
-import javafx.event.ActionEvent;
 
 import utilities.GestorVentanas;
 
@@ -88,6 +80,9 @@ public class PeliculaController {
 	@FXML
 	private MenuItem Aleatoria;
 
+	@FXML
+	private ImageView lupa;
+
 	private BuscarGeneroController buscarGeneroController;
 
 	@FXML
@@ -129,6 +124,11 @@ public class PeliculaController {
 	}
 
 	@FXML
+	void perfilClicked(MouseEvent event) {
+		setSceneAndStage();
+		gestorVentanas.muestraVentana(stage, Constants.URL_USUARIO_FXML, "Perfil");
+	}
+
 	void detallesClicked(ImageView clickedImageView) {
 		// Obtener el identificador de la película desde el ImageView
 		String movieId = getMovieIdFromImageView(clickedImageView);
@@ -150,6 +150,9 @@ public class PeliculaController {
 		Image imagenLogo = new Image(getClass().getResourceAsStream(Constants.URL_LOGO_AMPLIADO));
 		imagenLogoCabecera.setImage(imagenLogo);
 
+		Image imagenLupa = new Image(getClass().getResourceAsStream(Constants.URL_LUPA));
+		lupa.setImage(imagenLupa);
+
 		// Configuración de los eventos para los CheckBox de género
 		GeneroAccion.setOnAction(event -> generoClicked("28"));
 		GeneroAventura.setOnAction(event -> generoClicked("12"));
@@ -157,6 +160,10 @@ public class PeliculaController {
 		GeneroTerror.setOnAction(event -> generoClicked("27"));
 		GeneroSuspenso.setOnAction(event -> generoClicked("53"));
 		GeneroDrama.setOnAction(event -> generoClicked("18"));
+		GeneroMisterio.setOnAction(event -> generoClicked(""));
+		GeneroMusical.setOnAction(event -> generoClicked(""));
+		GeneroCienciaFiccion.setOnAction(event -> generoClicked(""));
+		GeneroAnimacion.setOnAction(event -> generoClicked(""));
 
 		Aleatoria.setOnAction(event -> peliAleatoriaClicked());
 
@@ -187,6 +194,7 @@ public class PeliculaController {
 					imageView.setOnMouseClicked(event -> detallesClicked(imageView));
 				}
 			}
+
 		} catch (IOException e) {
 			// Manejar excepciones
 			e.printStackTrace();
@@ -281,34 +289,51 @@ public class PeliculaController {
 		stage = (Stage) scene.getWindow();
 	}
 
-	// Para abrir la pantalla de generos
-	private void abrirVentanaBuscadorGenero(String generoId) {
-		setSceneAndStage();
-		gestorVentanas.muestraVentana(stage, Constants.URL_GENEROS_FXML, "Generos");
-	}
-
-	@FXML
 	void generoClicked(String generoId) {
-		cargarImagenesPeliculasPorGenero(generoId);
-
-		abrirVentanaBuscadorGenero(generoId);
-	}
-
-	// para abrir la pantalla de peli aleatoria
-	private void abrirVentanaPeliAleatoria() {
 		setSceneAndStage();
-		gestorVentanas.muestraVentana(stage, Constants.URL_PELI_SERIE_ALEATORIA_FXML, "Pelicula/Serie Aleatoria");
+		gestorVentanas.muestraBuscadorGenero(stage, "movie", generoId);
 	}
 
+	// para la pelicula aleatoria
 	@FXML
 	void peliAleatoriaClicked() {
 		abrirVentanaPeliAleatoria();
 	}
 
-	@FXML
-	void perfilClicked(MouseEvent event) {
+	private void abrirVentanaPeliAleatoria() {
+		// Obtener una película aleatoria
+		Pelicula peliculaAleatoria = obtenerPeliculaAleatoria();
+
+		// Verificar si se encontró una película aleatoria
+		if (peliculaAleatoria != null) {
+			// Obtener el ID de la película aleatoria
+			String movieId = String.valueOf(peliculaAleatoria.getId());
+
+			// Abrir la ventana de detalles de la película aleatoria
+			abrirVentanaDetalles(movieId);
+		} else {
+			// Manejar la situación en la que no se pudo obtener una película aleatoria
+			System.out.println("No se pudo obtener una película aleatoria");
+		}
+	}
+
+	private Pelicula obtenerPeliculaAleatoria() {
+		// Verificar si hay películas disponibles
+		if (!todasLasPeliculas.isEmpty()) {
+			// Obtener un índice aleatorio dentro del rango de la lista de películas
+			int indiceAleatorio = new Random().nextInt(todasLasPeliculas.size());
+
+			// Obtener y devolver la película aleatoria
+			return todasLasPeliculas.get(indiceAleatorio);
+		} else {
+			return null;
+		}
+	}
+
+	// Para abrir la pantalla de generos
+	private void abrirVentanaBuscadorGenero(String generoId) {
 		setSceneAndStage();
-		gestorVentanas.muestraVentana(stage, Constants.URL_USUARIO_FXML, "Perfil");
+		gestorVentanas.muestraVentana(stage, Constants.URL_GENEROS_FXML, "Generos");
 	}
 
 	public void setBuscarGeneroController(BuscarGeneroController buscarGeneroController) {

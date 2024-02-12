@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -129,6 +128,9 @@ public class AgregadasManualmenteController {
 	/** URL del poster añadido */
 	private String poster = null;
 
+	@FXML
+	private ImageView lupa;
+
 	/** Cliente para la api */
 	private OkHttpClient client;
 
@@ -146,6 +148,9 @@ public class AgregadasManualmenteController {
 		// Establece la imagen del logo
 		Image imagen = new Image(getClass().getResourceAsStream(Constants.URL_LOGO_AMPLIADO));
 		imagenLogoCabecera.setImage(imagen);
+
+		Image imagenLupa = new Image(getClass().getResourceAsStream(Constants.URL_LUPA));
+		lupa.setImage(imagenLupa);
 		// Establece la imagen de subir foto
 		imagen = new Image(getClass().getResourceAsStream(Constants.URL_FOTO_SUBIR_FOTO));
 		imagenCartel.setImage(imagen);
@@ -255,10 +260,7 @@ public class AgregadasManualmenteController {
 				List<Actores> listActores = getListaActores();
 				List<Directores> listDirectores = getListaDirectores();
 				List<Genero> listGenero = getListaGenero();
-				SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-				Date fecha;
-				fecha = formato.parse(txtEstreno.getText());
-				Pelicula pelicula = new Pelicula(Utils.generaMovieId(), txtTitulo.getText(), fecha, company,
+				Pelicula pelicula = new Pelicula(Utils.generaMovieId(), txtTitulo.getText(), txtEstreno.getText(), company,
 						txtDescripcion.getText(), poster, vote, listActores, listDirectores, listGenero);
 				// Si acepta, se guarda la peli
 				if (Utils.confirmacion()) {
@@ -292,10 +294,8 @@ public class AgregadasManualmenteController {
 	private void guardarDatosPersonalesPelicula(Pelicula pelicula) {
 		UsuarioPeliculaDaoImpl upDao = new UsuarioPeliculaDaoImpl(session);
 		Localizacion localizacion = searchLocalizacion();
-		UsuarioPelicula up = new UsuarioPelicula(
-				new UsuarioPeliculaID(UsuarioController.getUsuarioRegistrado(), pelicula),
-				getVote(txtValoracionPersonal.getText()), new Date(), txtComentarios.getText(), localizacion, false,
-				false);
+		UsuarioPelicula up = new UsuarioPelicula(new UsuarioPeliculaID(UsuarioController.getUsuarioRegistrado(), pelicula),
+				getVote(txtValoracionPersonal.getText()), new Date(), txtComentarios.getText(), localizacion, false, false);
 		upDao.update(up);
 	}
 
@@ -367,13 +367,11 @@ public class AgregadasManualmenteController {
 				Request request;
 				if (isSerie) {
 					request = new Request.Builder().url("https://api.themoviedb.org/3/genre/tv/list?language=es").get()
-							.addHeader("accept", "application/json").addHeader("Authorization", "Bearer " + API_KEY)
-							.build();
+							.addHeader("accept", "application/json").addHeader("Authorization", "Bearer " + API_KEY).build();
 
 				} else {
-					request = new Request.Builder().url("https://api.themoviedb.org/3/genre/movie/list?language=es")
-							.get().addHeader("accept", "application/json")
-							.addHeader("Authorization", "Bearer " + API_KEY).build();
+					request = new Request.Builder().url("https://api.themoviedb.org/3/genre/movie/list?language=es").get()
+							.addHeader("accept", "application/json").addHeader("Authorization", "Bearer " + API_KEY).build();
 				}
 
 				// Ejecuta la solicitud y obtiene la respuesta
@@ -445,8 +443,7 @@ public class AgregadasManualmenteController {
 				Request request = new Request.Builder()
 						.url("https://api.themoviedb.org/3/search/person?query=" + director
 								+ "&include_adult=false&language=es-ES&page=1")
-						.get().addHeader("accept", "application/json").addHeader("Authorization", "Bearer " + API_KEY)
-						.build();
+						.get().addHeader("accept", "application/json").addHeader("Authorization", "Bearer " + API_KEY).build();
 
 				// Ejecutar la solicitud y obtener la respuesta
 				Response response;
@@ -499,8 +496,7 @@ public class AgregadasManualmenteController {
 				Request request = new Request.Builder()
 						.url("https://api.themoviedb.org/3/search/person?query=" + actor
 								+ "&include_adult=false&language=es-ES&page=1")
-						.get().addHeader("accept", "application/json").addHeader("Authorization", "Bearer " + API_KEY)
-						.build();
+						.get().addHeader("accept", "application/json").addHeader("Authorization", "Bearer " + API_KEY).build();
 
 				// Ejecutar la solicitud y obtener la respuesta
 				Response response;
@@ -630,12 +626,9 @@ public class AgregadasManualmenteController {
 				List<Actores> listActores = getListaActores();
 				List<Directores> listDirectores = getListaDirectores();
 				List<Genero> listGenero = getListaGenero();
-				SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-				Date fecha;
-				fecha = formato.parse(txtEstreno.getText());
-				Series serie = new Series(Utils.generaMovieId(), txtTitulo.getText(), fecha, company,
-						txtDescripcion.getText(), poster, vote, numEpisodios, numTemporadas, listActores,
-						listDirectores, listGenero);
+				Series serie = new Series(Utils.generaMovieId(), txtTitulo.getText(), txtEstreno.getText(), company,
+						txtDescripcion.getText(), poster, vote, numEpisodios, numTemporadas, listActores, listDirectores,
+						listGenero);
 				// Si acepta, se guarda la serie
 				if (Utils.confirmacion()) {
 					// Guarda la compañia, actores, directores, generos
@@ -689,8 +682,7 @@ public class AgregadasManualmenteController {
 		UsuarioSerieDaoImpl upDao = new UsuarioSerieDaoImpl(session);
 		Localizacion localizacion = searchLocalizacion();
 		UsuarioSerie us = new UsuarioSerie(new UsuarioSerieID(UsuarioController.getUsuarioRegistrado(), serie),
-				getVote(txtValoracionPersonal.getText()), new Date(), txtComentarios.getText(), localizacion, false,
-				false);
+				getVote(txtValoracionPersonal.getText()), new Date(), txtComentarios.getText(), localizacion, false, false);
 		upDao.update(us);
 	}
 
@@ -703,10 +695,9 @@ public class AgregadasManualmenteController {
 	private boolean isCompleto() {
 		return !txtTitulo.getText().isBlank() && !txtCompañia.getText().isBlank() && !txtGuardado.getText().isBlank()
 				&& !txtEstreno.getText().isBlank() && !txtValoracionPersonal.getText().isBlank()
-				&& !txtValoracionGlobal.getText().isBlank() && !txtGenero.getText().isBlank()
-				&& !txtActores.getText().isBlank() && !txtDirectores.getText().isBlank()
-				&& !txtDescripcion.getText().isBlank() && !txtComentarios.getText().isBlank() && poster != null
-				&& !poster.isBlank();
+				&& !txtValoracionGlobal.getText().isBlank() && !txtGenero.getText().isBlank() && !txtActores.getText().isBlank()
+				&& !txtDirectores.getText().isBlank() && !txtDescripcion.getText().isBlank()
+				&& !txtComentarios.getText().isBlank() && poster != null && !poster.isBlank();
 	}
 
 	/**

@@ -7,7 +7,6 @@ import java.util.List;
 
 import com.google.gson.Gson;
 import constants.Constants;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -45,6 +44,7 @@ public class BuscadorController {
 	private StackPane stackPanePeliculasCabecera;
 
 	private Stage stage;
+
 	private GestorVentanas gestorVentanas;
 
 	@FXML
@@ -55,6 +55,9 @@ public class BuscadorController {
 
 	@FXML
 	private Button buscar;
+
+	@FXML
+	private ImageView lupa;
 
 	@FXML
 	void inicioClicked(MouseEvent event) {
@@ -95,6 +98,8 @@ public class BuscadorController {
 		gestorVentanas = new GestorVentanas();
 		Image imagenLogo = new Image(getClass().getResourceAsStream(Constants.URL_LOGO_AMPLIADO));
 		imagenLogoCabecera.setImage(imagenLogo);
+		Image imagenLupa = new Image(getClass().getResourceAsStream(Constants.URL_LUPA));
+		lupa.setImage(imagenLupa);
 	}
 
 	@FXML
@@ -103,12 +108,6 @@ public class BuscadorController {
 		if (!searchTerm.isEmpty()) {
 			buscarPeliculasYSeriesPorTitulo(searchTerm);
 		}
-	}
-
-	@FXML
-	void agregarManualmenteClicked(ActionEvent event) {
-		setSceneAndStage();
-		gestorVentanas.muestraVentana(stage, Constants.URL_AGREGADAS_MANUALMENTE_FXML, "Agregar Manualmente");
 	}
 
 	private void buscarPeliculasYSeriesPorTitulo(String titulo) {
@@ -147,9 +146,9 @@ public class BuscadorController {
 		Gson gson = new Gson();
 		RespuestaApiSeries respApi = gson.fromJson(responseBody, RespuestaApiSeries.class);
 
-//      if (respApi.getResults() != null) {
-//          results.addAll(Arrays.asList(respApi.getResults()));
-//      }
+		if (respApi.getResults() != null) {
+			results.addAll(Arrays.asList(respApi.getResults()));
+		}
 
 		return results;
 	}
@@ -160,7 +159,6 @@ public class BuscadorController {
 			System.out.println("Error: " + response.code());
 			return results;
 		}
-
 		String responseBody = response.body().string();
 		Gson gson = new Gson();
 		RespuestaApi respApi = gson.fromJson(responseBody, RespuestaApi.class);

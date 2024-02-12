@@ -79,6 +79,9 @@ public class InicioController {
 	/** Instancia del gestor de ventanas **/
 	private GestorVentanas gestorVentanas;
 
+	@FXML
+	private ImageView lupa;
+
 	/** Conexion con la base de datos */
 	private Session session;
 
@@ -92,6 +95,9 @@ public class InicioController {
 		// Establece la imagen del logo
 		Image imagenLogo = new Image(getClass().getResourceAsStream(Constants.URL_LOGO_AMPLIADO));
 		imagenLogoCabecera.setImage(imagenLogo);
+
+		Image imagenLupa = new Image(getClass().getResourceAsStream(Constants.URL_LUPA));
+		lupa.setImage(imagenLupa);
 		try {
 			// Configuración del cliente HTTP (OkHttpClient)
 			OkHttpClient client = new OkHttpClient();
@@ -252,7 +258,6 @@ public class InicioController {
 			// Iterar sobre las películas y agregar imágenes al HBox
 			int contador = 0;
 			for (Pelicula pelicula : respApi.getResults()) {
-				System.out.println("Adding image: " + pelicula.getPoster_path());
 				if (contador < 10) { // Limitar a 10 películas
 					ImageView imageView = null;
 					if (pelicula.getPoster_path() != null) {
@@ -291,7 +296,6 @@ public class InicioController {
 
 		// Configurar el evento de clic para llamar a detallesClicked
 		imageView.setOnMouseClicked(event -> detallesClicked(imageView));
-
 		return imageView;
 	}
 

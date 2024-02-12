@@ -22,7 +22,7 @@ public class HibernateUtil {
 	/**
 	 * Construye la SessionFactory
 	 * 
-	 */ 
+	 */
 	public static synchronized void buildSessionFactory() {
 		if (sf == null) {
 			// Generador de sesiones

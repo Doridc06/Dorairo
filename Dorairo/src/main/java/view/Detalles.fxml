@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -12,11 +17,11 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DetallesController">
 	<children>
-		<ScrollPane layoutY="150.0" prefHeight="832.0" prefWidth="1512.0" styleClass="fondo">
+		<ScrollPane hbarPolicy="NEVER" hmax="0.0" layoutY="150.0" pannable="true" prefHeight="832.0" prefWidth="1512.0" styleClass="fondo" vbarPolicy="NEVER">
 			<content>
 				<AnchorPane fx:id="paneFondo" minHeight="0.0" minWidth="0.0" prefHeight="982.0" prefWidth="1512.0" styleClass="fondo">
                <children>
-               <ImageView fx:id="fondoIm"></ImageView>
+               <ImageView fx:id="fondoIm" />
                 
                   <Text fx:id="titulo" layoutX="61.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="1226.13671875">
                      <font>
@@ -29,11 +34,36 @@
                         <Font size="23.0" />
                      </font>
                   </Text>
-                  <Text layoutX="59.0" layoutY="543.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Detalles de la película:">
+                  <Text layoutX="59.0" layoutY="543.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Detalles:">
                      <font>
-                        <Font size="26.0" />
+                        <Font name="System Bold" size="26.0" />
                      </font>
                   </Text>
+                  <MenuButton fx:id="Agregar" layoutX="526.0" layoutY="108.0" mnemonicParsing="false" styleClass="cabeceraBotones" text="Añadir">
+                    <items>
+                      <MenuItem fx:id="miLista" mnemonicParsing="false" text="Mi Lista" />
+                      <MenuItem fx:id="yaVisto" mnemonicParsing="false" text="Ya visto" />
+                    </items>
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </MenuButton>
+                  <MenuButton fx:id="Exportar" layoutX="674.0" layoutY="108.0" mnemonicParsing="false" styleClass="cabeceraBotones" text="Exportar">
+                    <items>
+                      <MenuItem fx:id="csv" mnemonicParsing="false" text="CSV" />
+                      <MenuItem fx:id="json" mnemonicParsing="false" text="JSON" />
+                    </items>
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </MenuButton>
+                  <Text layoutX="528.0" layoutY="236.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Guardado en:">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <TextField layoutX="526.0" layoutY="254.0" prefHeight="37.0" prefWidth="230.0" />
+                  <Button fx:id="guardar" layoutX="621.0" layoutY="311.0" mnemonicParsing="false" styleClass="cabeceraBotones" text="Guardar" />
                </children></AnchorPane>
 			</content>
 		</ScrollPane>
@@ -83,6 +113,14 @@
 								<Font size="30.0" />
 							</font>
 						</Label>
+                  <ImageView fx:id="lupa" fitHeight="35.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/application/images/lupa.png" />
+                     </image>
+                     <StackPane.margin>
+                        <Insets left="180.0" />
+                     </StackPane.margin>
+                  </ImageView>
 					</children>
 				</StackPane>
 				<StackPane fx:id="stackPanePeliculasCabecera" layoutX="442.0" layoutY="53.0" onMouseClicked="#peliculasClicked" prefHeight="44.0" prefWidth="200.0" styleClass="cabeceraBotones">

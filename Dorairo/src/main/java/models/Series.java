@@ -2,9 +2,7 @@ package models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +13,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 @Entity
 @Table(name = "Series")
@@ -27,10 +27,10 @@ public class Series implements Serializable {
 	private int id;
 
 	@Column(name = "titulo", length = 200)
-	private String title;
+	private String name;
 
 	@Column(name = "fecha_estreno")
-	private Date release_date;
+	private String first_air_date;
 
 	@ManyToOne
 	@JoinColumn(name = "compañia")
@@ -46,10 +46,10 @@ public class Series implements Serializable {
 	private double vote_average;
 
 	@Column(name = "num_episodios")
-	private int numeroEpisodios;
+	private int number_of_episodes;
 
 	@Column(name = "num_temporadas")
-	private int numeroTemporadas;
+	private int number_of_seasons;
 
 	/**
 	 * Relación de serie con la tabla de los id de usuarioSerie
@@ -94,37 +94,38 @@ public class Series implements Serializable {
 	 * @param numeroEpisodios
 	 * @param numeroTemporadas
 	 */
-	public Series(int id, String titulo, Date año, Compañia compañia, String descripcion, String cartel, int valoracion,
-			int numeroEpisodios, int numeroTemporadas) {
+	public Series(int id, String name, String first_air_date, Compañia compañia, String descripcion, String cartel,
+			double valoracion, int number_of_episodes, int number_of_seasons) {
 		super();
 		this.id = id;
-		this.title = titulo;
-		this.release_date = año;
+		this.name = name;
+		this.first_air_date = first_air_date;
 		this.company = compañia;
 		this.overview = descripcion;
 		this.poster_path = cartel;
 		this.vote_average = valoracion;
-		this.numeroEpisodios = numeroEpisodios;
-		this.numeroTemporadas = numeroTemporadas;
+		this.number_of_episodes = number_of_episodes;
+		this.number_of_seasons = number_of_seasons;
+		this.genres = new ArrayList<>();
 	}
-
-	public Series(int id, String titulo, Date fecha, Compañia company, String descripcion, String cartel,
+	
+	public Series(int id, String titulo, String fecha, Compañia company, String descripcion, String cartel,
 			double valoracion, int numeroEpisodios, int numeroTemporadas, List<Actores> listActores,
 			List<Directores> listDirectores, List<Genero> listGenero) {
 		this.id = id;
-		this.title = titulo;
-		this.release_date = fecha;
+		this.name = titulo;
+		this.first_air_date = fecha;
 		this.company = company;
 		this.overview = descripcion;
 		this.poster_path = cartel;
 		this.vote_average = valoracion;
-		this.numeroEpisodios = numeroEpisodios;
-		this.numeroTemporadas = numeroTemporadas;
+		this.number_of_episodes = numeroEpisodios;
+		this.number_of_seasons = numeroTemporadas;
 		this.actores = listActores;
 		this.directores = listDirectores;
 		this.genres = listGenero;
 	}
-	
+
 	public Series() {
 	}
 
@@ -145,29 +146,29 @@ public class Series implements Serializable {
 	/**
 	 * @return the title
 	 */
-	public String getTitle() {
-		return title;
+	public String getName() {
+		return name;
 	}
 
 	/**
 	 * @param title the title to set
 	 */
-	public void setTitle(String title) {
-		this.title = title;
+	public void setName(String title) {
+		this.name = title;
 	}
 
 	/**
 	 * @return the release_date
 	 */
-	public Date getRelease_date() {
-		return release_date;
+	public String getFirst_air_date() {
+		return first_air_date;
 	}
 
 	/**
 	 * @param release_date the release_date to set
 	 */
-	public void setRelease_date(Date release_date) {
-		this.release_date = release_date;
+	public void setFirst_air_date(String first_air_date) {
+		this.first_air_date = first_air_date;
 	}
 
 	/**
@@ -229,29 +230,16 @@ public class Series implements Serializable {
 	/**
 	 * @return the numeroEpisodios
 	 */
-	public int getNumeroEpisodios() {
-		return numeroEpisodios;
+	public int getNumber_of_episodes() {
+		return number_of_episodes;
 	}
 
 	/**
 	 * @param numeroEpisodios the numeroEpisodios to set
 	 */
-	public void setNumeroEpisodios(int numeroEpisodios) {
-		this.numeroEpisodios = numeroEpisodios;
-	}
+	public void setNumber_of_episodes(int number_of_episodes) {
+		this.number_of_episodes = number_of_episodes;
 
-	/**
-	 * @return the numeroTemporadas
-	 */
-	public int getNumeroTemporadas() {
-		return numeroTemporadas;
-	}
-
-	/**
-	 * @param numeroTemporadas the numeroTemporadas to set
-	 */
-	public void setNumeroTemporadas(int numeroTemporadas) {
-		this.numeroTemporadas = numeroTemporadas;
 	}
 
 	/**
@@ -308,6 +296,66 @@ public class Series implements Serializable {
 	 */
 	public void setGeneros(List<Genero> generos) {
 		this.genres = generos;
+	}
+
+	/**
+	 * @return the numeroTemporadas
+	 */
+	public int getNumber_of_seasons() {
+		return number_of_seasons;
+	}
+
+	/**
+	 * @param numeroTemporadas the numeroTemporadas to set
+	 */
+	public void setNumber_of_seasons(int number_of_seasons) {
+		this.number_of_seasons = number_of_seasons;
+	}
+
+	/**
+	 * @return the generos
+	 */
+	public List<Genero> getGenres() {
+		return genres;
+	}
+
+	public void setGenres(List<Genero> genres) {
+		this.genres = genres;
+	}
+
+	public String getTipo() {
+		return "tv";
+	}
+
+	public String toStringCsv() {
+		return name + "\",\"" + first_air_date + "\",\"" + overview + "\",\"" + poster_path + "\",\"" + vote_average
+				+ "\",\"" + number_of_episodes + "\",\"" + number_of_seasons + "\"";
+	}
+
+	public String toStringJson() {
+		JsonObject jsonObject = new JsonObject();
+
+		jsonObject.addProperty("titulo", name);
+		jsonObject.addProperty("detalles", overview);
+		jsonObject.addProperty("fecha", first_air_date);
+
+		// Construir la cadena de géneros
+		StringBuilder generosString = new StringBuilder();
+		for (Genero genero : genres) {
+			generosString.append(genero.getName()).append(", ");
+		}
+		// Eliminar la coma y el espacio extra al final
+		if (generosString.length() > 0) {
+			generosString.setLength(generosString.length() - 2);
+		}
+		jsonObject.addProperty("Géneros", generosString.toString());
+
+		jsonObject.addProperty("Valoracion", vote_average);
+		jsonObject.addProperty("Número de episodios", number_of_episodes);
+		jsonObject.addProperty("Número de temporadas", number_of_seasons);
+
+		Gson gson = new Gson();
+		return gson.toJson(jsonObject);
 	}
 
 }

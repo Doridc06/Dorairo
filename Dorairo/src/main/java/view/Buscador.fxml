@@ -14,49 +14,74 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.BuscadorController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity"
+	minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0"
+	prefWidth="1512.0" stylesheets="@application.css"
+	xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="controller.BuscadorController">
 	<children>
-		<ScrollPane layoutY="150.0" prefHeight="832.0" prefWidth="1512.0" styleClass="fondo">
+		<ScrollPane hbarPolicy="NEVER" layoutY="150.0"
+			pannable="true" prefHeight="832.0" prefWidth="1512.0"
+			styleClass="fondo" vbarPolicy="NEVER">
 			<content>
-				<AnchorPane fx:id="paneFondo" minHeight="0.0" minWidth="0.0" prefHeight="832.0" prefWidth="1512.0" styleClass="fondo">
-               <children>
-                  <Text layoutX="120.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="¿Qué estas buscando?">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Text>
-                  <TextField fx:id="estasBuscando" layoutX="120.0" layoutY="134.0" prefHeight="45.0" prefWidth="478.0" promptText="Escribe lo que estas buscando" />
-                  <ScrollPane layoutX="28.0" layoutY="227.0" prefHeight="269.0" prefWidth="1513.0" styleClass="fondo">
-                     <content>
-                        <HBox fx:id="seEncontro" prefHeight="258.0" prefWidth="1830.0" styleClass="fondo">
-                           <padding>
-                              <Insets left="20.0" />
-                           </padding>
-                        </HBox>
-                     </content>
-                  </ScrollPane>
-                  <Button fx:id="buscar" layoutX="678.0" layoutY="134.0" mnemonicParsing="false" onMouseClicked="#clickBuscar" prefHeight="45.0" prefWidth="84.0" text="Buscar" />
-                  <Button fx:id="btnAgregarManualmente" layoutX="1074.0" layoutY="54.0" mnemonicParsing="false" onAction="#agregarManualmenteClicked" text="Agregar manualmente">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Button>
-             
-               </children></AnchorPane>
+				<AnchorPane fx:id="paneFondo" minHeight="0.0"
+					minWidth="0.0" prefHeight="832.0" prefWidth="1512.0"
+					styleClass="fondo">
+					<children>
+						<Text layoutX="120.0" layoutY="105.0" strokeType="OUTSIDE"
+							strokeWidth="0.0" text="¿Qué estas buscando?">
+							<font>
+								<Font size="24.0" />
+							</font>
+						</Text>
+						<TextField fx:id="estasBuscando" layoutX="120.0"
+							layoutY="134.0" prefHeight="45.0" prefWidth="478.0"
+							promptText="Escribe lo que estas buscando" />
+						<ScrollPane hbarPolicy="NEVER" layoutX="28.0"
+							layoutY="227.0" pannable="true" prefHeight="250.0"
+							prefWidth="1513.0" styleClass="fondo" vbarPolicy="NEVER"
+							vmax="0.0">
+							<content>
+								<HBox fx:id="seEncontro" prefHeight="258.0"
+									prefWidth="1830.0" styleClass="fondo">
+									<padding>
+										<Insets left="20.0" />
+									</padding>
+								</HBox>
+							</content>
+						</ScrollPane>
+						<Button fx:id="buscar" layoutX="678.0" layoutY="134.0"
+							mnemonicParsing="false" onMouseClicked="#clickBuscar"
+							prefHeight="45.0" prefWidth="84.0" text="Buscar" />
+						<Button fx:id="btnAgregarManualmente" layoutX="1074.0"
+							layoutY="54.0" mnemonicParsing="false"
+							onAction="#agregarManualmenteClicked" text="Agregar manualmente">
+							<font>
+								<Font size="18.0" />
+							</font>
+						</Button>
+
+					</children>
+				</AnchorPane>
 			</content>
 		</ScrollPane>
 		<Pane fx:id="paneCabecera" prefHeight="150.0" prefWidth="1512.0">
 			<children>
-				<StackPane fx:id="stackPaneLogoCabecera" layoutX="50.0" layoutY="14.0" prefHeight="125.0" prefWidth="125.0">
+				<StackPane fx:id="stackPaneLogoCabecera" layoutX="50.0"
+					layoutY="14.0" prefHeight="125.0" prefWidth="125.0">
 					<children>
-						<ImageView fx:id="imagenLogoCabecera" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+						<ImageView fx:id="imagenLogoCabecera" fitHeight="90.0"
+							fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
 							<image>
-								<Image url="@../../resources/application/images/logoAmpliado.jpg" />
+								<Image
+									url="@../../resources/application/images/logoAmpliado.jpg" />
 							</image>
 						</ImageView>
 					</children>
 				</StackPane>
-				<StackPane fx:id="stackPaneInicioCabecera" layoutX="215.0" layoutY="53.0" onMouseClicked="#inicioClicked" prefHeight="44.0" prefWidth="200.0" styleClass="cabeceraBotones">
+				<StackPane fx:id="stackPaneInicioCabecera" layoutX="215.0"
+					layoutY="53.0" onMouseClicked="#inicioClicked" prefHeight="44.0"
+					prefWidth="200.0" styleClass="cabeceraBotones">
 					<children>
 						<Label text="Inicio">
 							<font>
@@ -65,7 +90,9 @@
 						</Label>
 					</children>
 				</StackPane>
-				<StackPane layoutX="675.0" layoutY="53.0" onMouseClicked="#seriesClicked" prefHeight="44.0" prefWidth="200.0" styleClass="cabeceraBotones">
+				<StackPane layoutX="675.0" layoutY="53.0"
+					onMouseClicked="#seriesClicked" prefHeight="44.0" prefWidth="200.0"
+					styleClass="cabeceraBotones">
 					<children>
 						<Label text="Series">
 							<font>
@@ -74,7 +101,9 @@
 						</Label>
 					</children>
 				</StackPane>
-				<StackPane layoutX="905.0" layoutY="53.0" onMouseClicked="#perfilClicked" prefHeight="44.0" prefWidth="200.0" styleClass="cabeceraBotones">
+				<StackPane layoutX="905.0" layoutY="53.0"
+					onMouseClicked="#perfilClicked" prefHeight="44.0" prefWidth="200.0"
+					styleClass="cabeceraBotones">
 					<children>
 						<Label text="Perfil">
 							<font>
@@ -83,16 +112,29 @@
 						</Label>
 					</children>
 				</StackPane>
-				<StackPane layoutX="1225.0" layoutY="53.0" onMouseClicked="#buscadorClicked" prefHeight="44.0" prefWidth="250.0" styleClass="cabeceraBotones">
+				<StackPane layoutX="1225.0" layoutY="53.0"
+					onMouseClicked="#buscadorClicked" prefHeight="44.0"
+					prefWidth="250.0" styleClass="cabeceraBotones">
 					<children>
 						<Label text="Buscador">
 							<font>
 								<Font size="30.0" />
 							</font>
 						</Label>
+						<ImageView fx:id="lupa" fitHeight="35.0" fitWidth="44.0"
+							pickOnBounds="true" preserveRatio="true">
+							<image>
+								<Image url="@../../resources/application/images/lupa.png" />
+							</image>
+							<StackPane.margin>
+								<Insets left="180.0" />
+							</StackPane.margin>
+						</ImageView>
 					</children>
 				</StackPane>
-				<StackPane fx:id="stackPanePeliculasCabecera" layoutX="442.0" layoutY="53.0" onMouseClicked="#peliculasClicked" prefHeight="44.0" prefWidth="200.0" styleClass="cabeceraBotones">
+				<StackPane fx:id="stackPanePeliculasCabecera"
+					layoutX="442.0" layoutY="53.0" onMouseClicked="#peliculasClicked"
+					prefHeight="44.0" prefWidth="200.0" styleClass="cabeceraBotones">
 					<children>
 						<Label text="Películas">
 							<font>

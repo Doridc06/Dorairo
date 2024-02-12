@@ -62,6 +62,9 @@ public class UsuarioController {
 	/** Instancia del gestor de ventanas **/
 	private GestorVentanas gestorVentanas;
 
+	@FXML
+	private ImageView lupa;
+
 	/** Perfil registrado */
 	private static Usuario usuarioRegistrado;
 
@@ -78,7 +81,6 @@ public class UsuarioController {
 		// Establece la imagen del logo
 		Image imagen = new Image(getClass().getResourceAsStream(Constants.URL_LOGO_AMPLIADO));
 		imagenLogoCabecera.setImage(imagen);
-
 		// Establece la imagen de fondo
 		imagen = new Image(getClass().getResourceAsStream(Constants.URL_FOTO_FONDO_PERFIL));
 		imagenFondoPerfil.setImage(imagen);
@@ -156,7 +158,7 @@ public class UsuarioController {
 		usuarioRegistrado = null;
 		muestraLogin();
 	}
-	
+
 	/**
 	 * Muestra la pantalla de login
 	 */

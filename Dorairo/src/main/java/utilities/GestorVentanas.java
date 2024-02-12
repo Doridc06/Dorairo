@@ -183,15 +183,8 @@ public class GestorVentanas {
 		}
 	}
 
-	/**
-	 * Muestra la ventana de Genero
-	 * 
-	 * @param stageAnterior
-	 * @param id
-	 */
-	public void muestraBuscadorGenero(Stage stageAnterior, String id) {
-		try {
-			// Cierra el stage anterior
+	public void muestraBuscadorGenero(Stage stageAnterior, String tipo, String id) {
+		try {// Cierra el stage anterior
 			stageAnterior.close();
 
 			// Ruta a la ventana
@@ -203,7 +196,7 @@ public class GestorVentanas {
 			BuscarGeneroController buscadorController = loader.getController();
 
 			// Inicializar los datos en el controlador de detalles
-			buscadorController.initData(id);
+			buscadorController.initData(tipo, id);
 
 			// Asigna la ventana al nuevo stage
 			Stage stage = new Stage();
@@ -218,7 +211,7 @@ public class GestorVentanas {
 			stage.getIcons().add(icon);
 
 			// Cambia el titulo de la ventana
-			stage.setTitle("Detalles");
+			stage.setTitle("Generos");
 
 			// Define el tipo de modalidad
 			stage.initModality(Modality.APPLICATION_MODAL);
@@ -237,10 +230,11 @@ public class GestorVentanas {
 	}
 
 	/**
-	 * Muestra la ventana de Registro y desenfoca la anterior para que no se pueda
-	 * hacer uso de ella hasta que se cierre la de Registro
+	 * Muestra la ventana de Cambiar contraseña o nombre y desenfoca la anterior
+	 * para que no se pueda hacer uso de ella hasta que se cierre
 	 * 
-	 * @param anteriorScene
+	 * @param anteriorScene Scena anterior
+	 * @param titulo        Titulo de la ventana
 	 */
 	public void muestraCambiarPasswordNombre(Scene anteriorScene, String titulo) {
 		// Aplica el desenfoque a la escena

@@ -401,4 +401,9 @@ public class BuscarGeneroController {
   }
 
 
+	public void initData(String id) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -2,9 +2,9 @@ package models;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -30,7 +30,7 @@ public class Usuario implements Serializable {
 	private String correo;
 
 	@Column(name = "imagen_de_perfil")
-	private String igamenPerfil;
+	private String imagenPerfil;
 
 	@Column(name = "clave", length = 20)
 	private String clave;
@@ -39,9 +39,9 @@ public class Usuario implements Serializable {
 	private Date fechaMiembro;
 
 	@OneToMany(mappedBy = "id.usuario", cascade = CascadeType.ALL)
-	private Set<UsuarioPelicula> usuarioPelicula = new HashSet<>();
+	private List<UsuarioPelicula> usuarioPelicula = new ArrayList<>();
 	@OneToMany(mappedBy = "id.usuario", cascade = CascadeType.ALL)
-	private Set<UsuarioSerie> usuarioSerie = new HashSet<>();
+	private List<UsuarioSerie> usuarioSerie = new ArrayList<>();
 
 	/**
 	 * Constructor para el momento en el que se crea un perfil
@@ -53,7 +53,6 @@ public class Usuario implements Serializable {
 	 * @param fechaMiembro
 	 */
 	public Usuario(String usuario, String nombre, String correo, String clave, Date fechaMiembro) {
-		super();
 		this.user = usuario;
 		this.nombre = nombre;
 		this.correo = correo;
@@ -62,17 +61,32 @@ public class Usuario implements Serializable {
 	}
 
 	/**
-	 * @return the usuario
+	 * Constructor por defecto, vacío
 	 */
-	public String getUsuario() {
+	public Usuario() {
+	}
+
+	public Usuario(String usuario, String nombre, String correo, String clave, Date fechaMiembro, List<UsuarioPelicula> listPe) {
+		this.user = usuario;
+		this.nombre = nombre;
+		this.correo = correo;
+		this.clave = clave;
+		this.fechaMiembro = fechaMiembro;
+		this.usuarioPelicula = listPe;
+	}
+
+	/**
+	 * @return the user
+	 */
+	public String getUser() {
 		return user;
 	}
 
 	/**
-	 * @param usuario the usuario to set
+	 * @param user the user to set
 	 */
-	public void setUsuario(String usuario) {
-		this.user = usuario;
+	public void setUser(String user) {
+		this.user = user;
 	}
 
 	/**
@@ -104,17 +118,17 @@ public class Usuario implements Serializable {
 	}
 
 	/**
-	 * @return the igamenPerfil
+	 * @return the imagenPerfil
 	 */
-	public String getIgamenPerfil() {
-		return igamenPerfil;
+	public String getImagenPerfil() {
+		return imagenPerfil;
 	}
 
 	/**
-	 * @param igamenPerfil the igamenPerfil to set
+	 * @param imagenPerfil the igamenPerfil to set
 	 */
-	public void setIgamenPerfil(String igamenPerfil) {
-		this.igamenPerfil = igamenPerfil;
+	public void setImagenPerfil(String imagenPerfil) {
+		this.imagenPerfil = imagenPerfil;
 	}
 
 	/**
@@ -139,6 +153,41 @@ public class Usuario implements Serializable {
 	}
 
 	/**
+	 * @param fechaMiembro the fechaMiembro to set
+	 */
+	public void setFechaMiembro(Date fechaMiembro) {
+		this.fechaMiembro = fechaMiembro;
+	}
+
+	/**
+	 * @return the usuarioPelicula
+	 */
+	public List<UsuarioPelicula> getUsuarioPelicula() {
+		return usuarioPelicula;
+	}
+
+	/**
+	 * @param usuarioPelicula the usuarioPelicula to set
+	 */
+	public void setUsuarioPelicula(List<UsuarioPelicula> usuarioPelicula) {
+		this.usuarioPelicula = usuarioPelicula;
+	}
+
+	/**
+	 * @return the usuarioSerie
+	 */
+	public List<UsuarioSerie> getUsuarioSerie() {
+		return usuarioSerie;
+	}
+
+	/**
+	 * @param usuarioSerie the usuarioSerie to set
+	 */
+	public void setUsuarioSerie(List<UsuarioSerie> usuarioSerie) {
+		this.usuarioSerie = usuarioSerie;
+	}
+
+	/**
 	 * Devuelve la fecha en la que se hizo miembro en formato string, dd-MM-yyyy
 	 * 
 	 * @return Fecha en string
@@ -146,21 +195,14 @@ public class Usuario implements Serializable {
 	public String getFechaMiembroString() {
 		// Define el formato de salida
 		SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
-System.out.println(fechaMiembro.toString());
+		System.out.println(fechaMiembro.toString());
 		// Formatea la fecha como una cadena y la devuelve
 		return formato.format(fechaMiembro);
 	}
 
-	/**
-	 * @param fechaMiembro the fechaMiembro to set
-	 */
-	public void setFechaMiembro(Date fechaMiembro) {
-		this.fechaMiembro = fechaMiembro;
-	}
-
 	@Override
 	public String toString() {
-		return "Perfil [usuario=" + user + ", nombre=" + nombre + ", correo=" + correo + ", igamenPerfil=" + igamenPerfil
+		return "Perfil [usuario=" + user + ", nombre=" + nombre + ", correo=" + correo + ", igamenPerfil=" + imagenPerfil
 				+ ", clave=" + clave + ", fechaMiembro=" + fechaMiembro + "]";
 	}
 }

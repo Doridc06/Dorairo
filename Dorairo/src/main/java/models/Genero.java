@@ -1,8 +1,8 @@
 package models;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -25,12 +25,27 @@ public class Genero implements Serializable {
 	private String name;
 
 	/** Relacion de Generos con Series */
-	@ManyToMany(cascade = { CascadeType.ALL }, mappedBy = "generos")
-	private Set<Series> series = new HashSet<>();
+	@ManyToMany(cascade = { CascadeType.ALL }, mappedBy = "genres")
+	private List<Series> series = new ArrayList<>();
 
 	/** Relacion de Generos con Peliculas */
-	@ManyToMany(cascade = { CascadeType.ALL }, mappedBy = "generos")
-	private Set<Pelicula> peliculas = new HashSet<>();
+	@ManyToMany(cascade = { CascadeType.ALL }, mappedBy = "genres")
+	private List<Pelicula> peliculas = new ArrayList<>();
+
+	/**
+	 * Constructor Genero
+	 * 
+	 * @param id
+	 * @param name
+	 */
+	public Genero(int id, String name) {
+		super();
+		this.id = id;
+		this.name = name;
+	}
+	
+	public Genero() {
+	}
 
 	public String getName() {
 		return name;
@@ -62,28 +77,29 @@ public class Genero implements Serializable {
 	/**
 	 * @return the series
 	 */
-	public Set<Series> getSeries() {
+	public List<Series> getSeries() {
 		return series;
 	}
 
 	/**
 	 * @param series the series to set
 	 */
-	public void setSeries(Set<Series> series) {
+	public void setSeries(List<Series> series) {
 		this.series = series;
 	}
 
 	/**
 	 * @return the peliculas
 	 */
-	public Set<Pelicula> getPeliculas() {
+	public List<Pelicula> getPeliculas() {
 		return peliculas;
 	}
 
 	/**
 	 * @param peliculas the peliculas to set
 	 */
-	public void setPeliculas(Set<Pelicula> peliculas) {
+	public void setPeliculas(List<Pelicula> peliculas) {
 		this.peliculas = peliculas;
 	}
+
 }

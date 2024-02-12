@@ -40,8 +40,8 @@ public interface CommonDaoI<T> {
 	public List<T> searchAll();
 
 	/**
-	 * Checks if the transaction is not active to activate it
+	 * Tries to active the transaction
 	 */
-	public void checkActiveTransaction();
+	public void activeTransaction();
 
 }

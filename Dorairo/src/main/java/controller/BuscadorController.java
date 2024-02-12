@@ -1,14 +1,13 @@
 package controller;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import com.google.gson.Gson;
-
 import constants.Constants;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -20,6 +19,8 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import models.Pelicula;
 import models.RespuestaApi;
+import models.RespuestaApiSeries;
+import models.Series;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -27,207 +28,246 @@ import utilities.GestorVentanas;
 
 public class BuscadorController {
 
-	@FXML
-	private ResourceBundle resources;
+  @FXML
+  private ImageView imagenLogoCabecera;
 
-	@FXML
-	private URL location;
+  @FXML
+  private Pane paneCabecera;
 
-	@FXML
-	private ImageView imagenLogoCabecera;
+  @FXML
+  private StackPane stackPaneInicioCabecera;
 
-	@FXML
-	private Pane paneCabecera;
+  @FXML
+  private StackPane stackPaneLogoCabecera;
 
-	@FXML
-	private StackPane stackPaneInicioCabecera;
+  @FXML
+  private StackPane stackPanePeliculasCabecera;
 
-	@FXML
-	private StackPane stackPaneLogoCabecera;
+  private Stage stage;
 
-	@FXML
-	private StackPane stackPanePeliculasCabecera;
+  private GestorVentanas gestorVentanas;
 
-	/** Scene de la ventana de Inicio */
-	private Scene scene;
+  @FXML
+  private TextField estasBuscando;
 
-	/** Stage de la ventana de Inicio */
-	private Stage stage;
+  @FXML
+  private HBox seEncontro;
 
-	/** Instancia del gestor de ventanas **/
-	private GestorVentanas gestorVentanas;
+  @FXML
+  private Button buscar;
 
-	@FXML
-	private TextField estasBuscando;
+  @FXML
+  private ImageView lupa;
 
-	@FXML
-	private HBox seEncontro;
 
-	@FXML
-	private Button buscar;
+  @FXML
+  void inicioClicked(MouseEvent event) {
+    setSceneAndStage();
+    gestorVentanas.muestraVentana(stage, Constants.URL_INICIO_FXML, "Inicio");
+  }
 
-	@FXML
-	void initialize() {
-		// Inicializamos el Gestor de ventanas
-		gestorVentanas = new GestorVentanas();
-		// Establece la imagen del logo
-		Image imagenLogo = new Image(getClass().getResourceAsStream(Constants.URL_LOGO_AMPLIADO));
-		imagenLogoCabecera.setImage(imagenLogo);
-	}
+  @FXML
+  void peliculasClicked(MouseEvent event) {
+    setSceneAndStage();
+    gestorVentanas.muestraVentana(stage, Constants.URL_PELICULA_FXML, "Pelicula");
+  }
 
-	@FXML
-	void inicioClicked(MouseEvent event) {
-		setSceneAndStage();
-		gestorVentanas.muestraVentana(stage, Constants.URL_INICIO_FXML, "Inicio");
-	}
+  @FXML
+  void seriesClicked(MouseEvent event) {
+    setSceneAndStage();
+    gestorVentanas.muestraVentana(stage, Constants.URL_SERIES_FXML, "Series");
+  }
 
-	@FXML
-	void peliculasClicked(MouseEvent event) {
-		setSceneAndStage();
-		gestorVentanas.muestraVentana(stage, Constants.URL_PELICULA_FXML, "Pelicula");
-	}
+  @FXML
+  void buscadorClicked(MouseEvent event) {
+    setSceneAndStage();
+    gestorVentanas.muestraVentana(stage, Constants.URL_BUSCADOR_FXML, "Buscador");
+  }
 
-	@FXML
-	void seriesClicked(MouseEvent event) {
-		setSceneAndStage();
-		gestorVentanas.muestraVentana(stage, Constants.URL_SERIES_FXML, "Series");
-	}
+  @FXML
+  void perfilClicked(MouseEvent event) {
+    setSceneAndStage();
+    gestorVentanas.muestraVentana(stage, Constants.URL_USUARIO_FXML, "Perfil");
+  }
 
-	@FXML
-	void buscadorClicked(MouseEvent event) {
-		setSceneAndStage();
-		gestorVentanas.muestraVentana(stage, Constants.URL_BUSCADOR_FXML, "Buscador");
-	}
+  public void setSceneAndStage() {
+    stage = (Stage) imagenLogoCabecera.getScene().getWindow();
+  }
 
-	@FXML
-	void perfilClicked(MouseEvent event) {
-		setSceneAndStage();
-		gestorVentanas.muestraVentana(stage, Constants.URL_USUARIO_FXML, "Perfil");
-	}
+  @FXML
+  void initialize() {
+    gestorVentanas = new GestorVentanas();
+    Image imagenLogo = new Image(getClass().getResourceAsStream(Constants.URL_LOGO_AMPLIADO));
+    imagenLogoCabecera.setImage(imagenLogo);
 
-	/**
-	 * Asigna los valores correspondientes del stage y el scene
-	 * 
-	 */
-	public void setSceneAndStage() {
-		scene = imagenLogoCabecera.getScene();
-		stage = (Stage) scene.getWindow();
-	}
+    Image imagenLupa = new Image(getClass().getResourceAsStream(Constants.URL_LUPA));
+    lupa.setImage(imagenLupa);
+  }
 
-	@FXML
-	void clickBuscar(MouseEvent event) {
-		String searchTerm = estasBuscando.getText();
-		if (!searchTerm.isEmpty()) {
-			buscarPeliculaPorTitulo(searchTerm);
-		}
-	}
+  @FXML
+  void clickBuscar(MouseEvent event) {
+    String searchTerm = estasBuscando.getText();
+    if (!searchTerm.isEmpty()) {
+      buscarPeliculasYSeriesPorTitulo(searchTerm);
+    }
+  }
 
-	private void buscarPeliculaPorTitulo(String titulo) {
-		OkHttpClient client = new OkHttpClient();
-		String apiUrl = "https://api.themoviedb.org/3/search/movie";
-		String queryParams = "?language=es-ES&query=" + titulo + "&page=1";
-		String fullUrl = apiUrl + queryParams;
+  private void buscarPeliculasYSeriesPorTitulo(String titulo) {
+    OkHttpClient client = new OkHttpClient();
+    String movieApiUrl = "https://api.themoviedb.org/3/search/movie";
+    String tvApiUrl = "https://api.themoviedb.org/3/search/tv";
+    String queryParams = "?language=es-ES&query=" + titulo + "&page=1";
 
-		Request request = new Request.Builder().url(fullUrl).get().addHeader("accept", "application/json")
-				.addHeader("Authorization", "Bearer " + PeliculaController.API_KEY).build();
+    String movieFullUrl = movieApiUrl + queryParams;
+    Request movieRequest =
+        new Request.Builder().url(movieFullUrl).get().addHeader("accept", "application/json")
+            .addHeader("Authorization", "Bearer " + PeliculaController.API_KEY).build();
 
-		try (Response response = client.newCall(request).execute()) {
-			if (!response.isSuccessful()) {
-				// Manejar respuestas no exitosas
-				System.out.println("Error: " + response.code());
-				seEncontro.getChildren().clear();
-				return;
-			}
+    String tvFullUrl = tvApiUrl + queryParams;
+    Request tvRequest =
+        new Request.Builder().url(tvFullUrl).get().addHeader("accept", "application/json")
+            .addHeader("Authorization", "Bearer " + PeliculaController.API_KEY).build();
 
-			String responseBody = response.body().string();
-			Gson gson = new Gson();
-			RespuestaApi respApi = gson.fromJson(responseBody, RespuestaApi.class);
+    try {
+      List<Pelicula> movieResults = getSearchResults(client.newCall(movieRequest).execute());
+      List<Series> tvResults = getSeriesSearchResults(client.newCall(tvRequest).execute());
 
-			if (respApi.getResults() != null && respApi.getResults().length > 0) {
-				mostrarResultados(respApi.getResults());
-			} else {
-				// Manejar la situación donde no hay resultados
-				seEncontro.getChildren().clear();
-				System.out.println("No se encontraron resultados.");
-			}
-		} catch (IOException e) {
-			// Manejar excepciones relacionadas con la conexión a la API
-			e.printStackTrace();
-			seEncontro.getChildren().clear();
-			System.out.println("Error al conectar con la API: " + e.getMessage());
-		}
-	}
+      mostrarResultados(movieResults, tvResults); // Pasar ambas listas como argumentos
+    } catch (IOException e) {
+      e.printStackTrace();
+      System.out.println("Error al conectar con la API: " + e.getMessage());
+    }
+  }
 
-	private void mostrarResultados(Pelicula[] datos) {
-		seEncontro.getChildren().clear();
+  private List<Series> getSeriesSearchResults(Response response) throws IOException {
+    List<Series> results = new ArrayList<>();
+    if (!response.isSuccessful()) {
+      System.out.println("Error: " + response.code());
+      return results;
+    }
 
-		for (Pelicula dato : datos) {
-			ImageView imageView = getImageView(dato);
-			seEncontro.getChildren().add(imageView);
+    String responseBody = response.body().string();
+    Gson gson = new Gson();
+    RespuestaApiSeries respApi = gson.fromJson(responseBody, RespuestaApiSeries.class);
 
-			// Configurar el evento de clic para llamar a un método que maneje la lógica
-			// deseada
-			imageView.setOnMouseClicked(event -> handleImageClick(dato));
-			// Establecer el espaciado entre las imágenes en el HBox
-			seEncontro.setSpacing(50.0);
-		}
-	}
+    if (respApi.getResults() != null) {
+      results.addAll(Arrays.asList(respApi.getResults()));
+    }
 
-	private ImageView getImageView(Pelicula datos) {
-		ImageView imageView = new ImageView();
-		imageView.setFitHeight(250.0);
-		imageView.setFitWidth(290.0);
-		imageView.setPreserveRatio(true);
+    return results;
+  }
 
-		// Construir la URL del póster de la película
-		String imageUrl = "https://image.tmdb.org/t/p/w500" + datos.getPoster_path();
+  private List<Pelicula> getSearchResults(Response response) throws IOException {
+    List<Pelicula> results = new ArrayList<>();
+    if (!response.isSuccessful()) {
+      System.out.println("Error: " + response.code());
+      return results;
+    }
 
-		// Configurar la imagen en el ImageView
-		Image image = new Image(imageUrl);
-		imageView.setImage(image);
+    String responseBody = response.body().string();
+    Gson gson = new Gson();
+    RespuestaApi respApi = gson.fromJson(responseBody, RespuestaApi.class);
 
-		return imageView;
-	}
+    if (respApi.getResults() != null) {
+      results.addAll(Arrays.asList(respApi.getResults()));
+    }
 
-	private String getSerieIdFromImageView(ImageView imageView) {
-		// Obtén el ID de la serie almacenado en el userData del ImageView
-		Object userData = imageView.getUserData();
+    return results;
+  }
 
-		if (userData instanceof String) {
-			return (String) userData;
-		} else {
-			// Manejar la situación donde no hay un ID almacenado
-			return "";
-		}
-	}
-	
-	
-	@FXML
-	void detallesClicked(ImageView clickedImageView) {
-		// Obtener el identificador de la serie desde el ImageView
-		String serieId = getSerieIdFromImageView(clickedImageView);
+  private void mostrarResultados(List<Pelicula> datosPeliculas, List<Series> datosSeries) {
+    // Limpiar el contenido solo si hay datos disponibles para mostrar
+    if ((datosPeliculas != null && !datosPeliculas.isEmpty())
+        || (datosSeries != null && !datosSeries.isEmpty())) {
+      seEncontro.getChildren().clear();
 
-		// Abrir la ventana de detalles
-		abrirVentanaDetalles(serieId);
-	}
+      // Procesar películas
+      if (datosPeliculas != null && !datosPeliculas.isEmpty()) {
+        for (Pelicula pelicula : datosPeliculas) {
+          ImageView imageView = getImageViewFromPelicula(pelicula);
+          seEncontro.getChildren().add(imageView);
+          asociarEventoClicPelicula(imageView, pelicula); // Asociar evento de clic
+        }
+      }
 
-	
-	private void abrirVentanaDetalles(String serieId) {
-		setSceneAndStage();
-		gestorVentanas.muestraDetalles(stage,serieId,"tv");
-	}
-	
-	
-	
-	private void handleImageClick(Pelicula datos) {
-		// lógica que deseas realizar cuando se hace clic en una imagen
-		
-		ImageView imageView = new ImageView();
-		
-		// Almacenar el ID de la película en el userData del ImageView
-		imageView.setUserData(String.valueOf(datos.getId()));
+      // Procesar series
+      if (datosSeries != null && !datosSeries.isEmpty()) {
+        for (Series serie : datosSeries) {
+          ImageView imageView = getImageViewFromSerie(serie);
+          seEncontro.getChildren().add(imageView);
+          asociarEventoClicSerie(imageView, serie); // Asociar evento de clic
+        }
+      }
+    }
+    seEncontro.setSpacing(50.0);
+  }
 
-		// Configurar el evento de clic para llamar a detallesClicked
-		imageView.setOnMouseClicked(event -> detallesClicked(imageView));
-	}
+
+  private void mostrarDetallesPelicula(Pelicula pelicula) {
+    // Obtener el ID de la película
+    int id = pelicula.getId();
+    // Llamar al método para abrir la ventana de detalles con el tipo "movie"
+    abrirVentanaDetalles(id, "movie");
+  }
+
+  private void mostrarDetallesSerie(Series serie) {
+    // Obtener el ID de la serie
+    int id = serie.getId();
+    // Llamar al método para abrir la ventana de detalles con el tipo "tv"
+    abrirVentanaDetalles(id, "tv");
+  }
+
+  private void asociarEventoClicPelicula(ImageView imageView, Pelicula pelicula) {
+    imageView.setOnMouseClicked(event -> mostrarDetallesPelicula(pelicula));
+  }
+
+  private void asociarEventoClicSerie(ImageView imageView, Series serie) {
+    imageView.setOnMouseClicked(event -> mostrarDetallesSerie(serie));
+  }
+
+  private ImageView getImageViewFromSerie(Series serie) {
+    ImageView imageView = new ImageView();
+    imageView.setFitHeight(230.0);
+    imageView.setFitWidth(290.0);
+    imageView.setPreserveRatio(true);
+
+    // Construir la URL del póster de la película o serie
+    String imageUrl = "https://image.tmdb.org/t/p/w500" + serie.getPoster_path();
+
+    // Configurar la imagen en el ImageView
+    Image image = new Image(imageUrl);
+    imageView.setImage(image);
+
+    // Asociar el evento de clic para mostrar los detalles
+    asociarEventoClicSerie(imageView, serie);
+
+    return imageView;
+  }
+
+  private ImageView getImageViewFromPelicula(Pelicula pelicula) {
+    ImageView imageView = new ImageView();
+    imageView.setFitHeight(230.0);
+    imageView.setFitWidth(290.0);
+    imageView.setPreserveRatio(true);
+
+    // Construir la URL del póster de la película o serie
+    String imageUrl = "https://image.tmdb.org/t/p/w500" + pelicula.getPoster_path();
+
+    // Configurar la imagen en el ImageView
+    Image image = new Image(imageUrl);
+    imageView.setImage(image);
+
+    // Asociar el evento de clic para mostrar los detalles
+    asociarEventoClicPelicula(imageView, pelicula);
+
+    return imageView;
+  }
+
+  public void abrirVentanaDetalles(int id, String tipo) {
+    setSceneAndStage();
+
+    // Mostrar la ventana de detalles con el ID y el tipo proporcionados
+    gestorVentanas.muestraDetalles(stage, String.valueOf(id), tipo);
+  }
+
 }

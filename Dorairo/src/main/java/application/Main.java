@@ -30,8 +30,8 @@ public class Main extends Application {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		HibernateUtil.buildSessionFactory();
-		//launch(args);
+		//HibernateUtil.buildSessionFactory();
+		launch(args);
 	}
 
 	@Override

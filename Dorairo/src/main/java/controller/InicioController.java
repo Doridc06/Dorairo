@@ -69,6 +69,9 @@ public class InicioController {
 
 	/** Instancia del gestor de ventanas **/
 	private GestorVentanas gestorVentanas;
+	
+    @FXML
+    private ImageView lupa;
 
 	private static final String API_KEY = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlYjc0NTA5ZjRiZDBlODJlMTFlYzA2YWM1MDRhMGRlMCIsInN1YiI6IjY1Mzc3ZmRmZjQ5NWVlMDBmZjY1YTEyOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ehIu08LoiMRTccPoD4AfADXOpQPlqNAKUMvGgwY3XU8";
 
@@ -79,6 +82,9 @@ public class InicioController {
 		// Establece la imagen del logo
 		Image imagenLogo = new Image(getClass().getResourceAsStream(Constants.URL_LOGO_AMPLIADO));
 		imagenLogoCabecera.setImage(imagenLogo);
+		
+		 Image imagenLupa = new Image(getClass().getResourceAsStream(Constants.URL_LUPA));
+	     lupa.setImage(imagenLupa);
 		try {
 			// Configuración del cliente HTTP (OkHttpClient)
 			OkHttpClient client = new OkHttpClient();
@@ -115,7 +121,6 @@ public class InicioController {
 			// Iterar sobre las películas y agregar imágenes al HBox
 			int contador = 0;
 			for (Pelicula pelicula : respApi.getResults()) {
-				System.out.println("Adding image: " + pelicula.getPoster_path());
 				if (contador < 10) { // Limitar a 10 películas
 					ImageView imageView = null;
 					if (pelicula.getPoster_path() != null) {
@@ -146,8 +151,6 @@ public class InicioController {
 		Image image = new Image(imageUrl);
 		imageView.getStyleClass().add("sombraDerecha");
 		imageView.setImage(image);
-
-		System.out.println("W:" + imageView.getFitWidth() + "; H:" + imageView.getFitHeight());
 
 		return imageView;
 	}

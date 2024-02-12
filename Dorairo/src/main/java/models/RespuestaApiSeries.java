@@ -2,17 +2,12 @@ package models;
 
 import java.util.Arrays;
 
-/**
- * Clase que representa la respuesta de la API
- * 
- * @author Doriana Dc
- *
- */
-public class RespuestaApi {
+public class RespuestaApiSeries {
+
 
   // Atributos de la respuesta de la API
   private int page;
-  private Pelicula[] results;
+  private Series[] results;
   private int total_pages;
   private int total_results;
 
@@ -41,7 +36,7 @@ public class RespuestaApi {
    * 
    * @return
    */
-  public Pelicula[] getResults() {
+  public Series[] getResults() {
     return results;
   }
 
@@ -50,7 +45,7 @@ public class RespuestaApi {
    * 
    * @param results
    */
-  public void setResults(Pelicula[] results) {
+  public void setResults(Series[] results) {
     this.results = results;
   }
 
@@ -92,9 +87,10 @@ public class RespuestaApi {
 
   @Override
   public String toString() {
-    return "RespuestaApi [page=" + page + ", results=" + Arrays.toString(results) + ", total_pages="
-        + total_pages + ", total_results=" + total_results + "]";
+    return "RespuestaApiSeries [page=" + page + ", results=" + Arrays.toString(results)
+        + ", total_pages=" + total_pages + ", total_results=" + total_results + "]";
   }
+
 
   
   

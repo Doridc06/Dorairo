@@ -94,6 +94,9 @@ public class Constants {
 
 	/** Ruta a la imagen del logo */
 	public static final String URL_LOGO_NORMAL = "/application/images/logoDorairo.jpg";
+	
+	/** Ruta a la imagen de la lupa de la aplicación */
+    public static final String URL_LUPA = "/application/images/lupa.png";
 
 	// Metodos
 

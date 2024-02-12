@@ -42,7 +42,8 @@ public class UsuarioPeliculaDaoImpl extends CommonDaoImpl<UsuarioPelicula> imple
 	@Override
 	public String searchNumeroPeliculas(String usuario) {
 		activeTransaction();
-		Long numero = (Long) session.createQuery("SELECT count(*) FROM UsuarioPelicula WHERE id.usuario = '" + usuario + "'")
+		Long numero = (Long) session
+				.createQuery("SELECT count(*) FROM UsuarioPelicula WHERE id.usuario = '" + usuario + "' and vista = true")
 				.uniqueResult();
 		return numero.toString();
 

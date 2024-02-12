@@ -28,7 +28,7 @@ public class SeriesDaoImpl extends CommonDaoImpl<Series> implements SeriesDaoI {
 	}
 
 	@Override
-	public Series searchById(String id) {
+	public Series searchById(int id) {
 		activeTransaction();
 
 		// Searches for the series with the id

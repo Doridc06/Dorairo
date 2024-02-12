@@ -48,6 +48,7 @@ public abstract class CommonDaoImpl<T> implements CommonDaoI<T> {
 		// Updates the object and commits the changes
 		session.saveOrUpdate(paramT);
 		session.flush();
+		session.clear();
 		session.getTransaction().commit();
 	}
 

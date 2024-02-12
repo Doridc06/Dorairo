@@ -136,7 +136,7 @@ public class Utils {
 			return Integer.parseInt(maxId) + 1;
 		} else {
 			// Sino, crea el primer id manual
-			return Integer.parseInt(Constants.PREFIJO_ID_PELIS_MANUALES + 0);
+			return Integer.parseInt(Constants.PREFIJO_ID_PELIS_MANUALES + "00");
 		}
 	}
 
@@ -154,7 +154,7 @@ public class Utils {
 			return Integer.parseInt(maxId) + 1;
 		} else {
 			// Sino, crea el primer id manual
-			return Integer.parseInt(Constants.PREFIJO_ID_SERIES_MANUALES + 0);
+			return Integer.parseInt(Constants.PREFIJO_ID_SERIES_MANUALES + "00");
 		}
 	}
 
@@ -172,7 +172,7 @@ public class Utils {
 			return Integer.parseInt(maxId) + 1;
 		} else {
 			// Sino, crea el primer id manual
-			return Integer.parseInt(Constants.PREFIJO_ID_COMPANIES_MANUALES + 0);
+			return Integer.parseInt(Constants.PREFIJO_ID_COMPANIES_MANUALES + "00");
 		}
 	}
 
@@ -190,7 +190,7 @@ public class Utils {
 			return Integer.parseInt(maxId) + 1;
 		} else {
 			// Sino, crea el primer id manual
-			return Integer.parseInt(Constants.PREFIJO_ID_ACTORES_MANUALES + 0);
+			return Integer.parseInt(Constants.PREFIJO_ID_ACTORES_MANUALES + "00");
 		}
 	}
 
@@ -208,7 +208,7 @@ public class Utils {
 			return Integer.parseInt(maxId) + 1;
 		} else {
 			// Sino, crea el primer id manual
-			return Integer.parseInt(Constants.PREFIJO_ID_DIRECTORES_MANUALES + 0);
+			return Integer.parseInt(Constants.PREFIJO_ID_DIRECTORES_MANUALES + "00");
 		}
 	}
 
@@ -226,7 +226,7 @@ public class Utils {
 			return Integer.parseInt(maxId) + 1;
 		} else {
 			// Sino, crea el primer id manual
-			return Integer.parseInt(Constants.PREFIJO_ID_GENEROS_MANUALES + 0);
+			return Integer.parseInt(Constants.PREFIJO_ID_GENEROS_MANUALES + "00");
 		}
 	}
 

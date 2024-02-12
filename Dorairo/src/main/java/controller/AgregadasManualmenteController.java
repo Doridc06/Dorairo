@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.time.DateTimeException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -254,35 +255,83 @@ public class AgregadasManualmenteController {
 	private void crearPelicula() {
 		try {
 			// Comprueba si todos los campos se han rellenado
-			Compañia company = searchCompany();
 			if (isCompleto()) {
+				Compañia company = searchCompany();
 				double vote = getVote(txtValoracionGlobal.getText().strip());
+				getVote(txtValoracionPersonal.getText());
 				List<Actores> listActores = getListaActores();
 				List<Directores> listDirectores = getListaDirectores();
 				List<Genero> listGenero = getListaGenero();
+				comprobarFecha();
 				Pelicula pelicula = new Pelicula(Utils.generaMovieId(), txtTitulo.getText(), txtEstreno.getText(), company,
 						txtDescripcion.getText(), poster, vote, listActores, listDirectores, listGenero);
 				// Si acepta, se guarda la peli
 				if (Utils.confirmacion()) {
-					// Guarda la compañia, los actores, generos y directores
-					CompañiaDaoImpl compDao = new CompañiaDaoImpl(session);
-					compDao.update(company);
-					// Guarda la pelicual
-					PeliculaDaoImpl peliDao = new PeliculaDaoImpl(session);
-					peliDao.update(pelicula);
+					// Guarda todos los datos en la bbdd
+					guardarCompany(company);
+					guardarPelicula(pelicula);
 					guardarDatosPersonalesPelicula(pelicula);
 					Utils.mostrarAlerta("Pelicula guardada correctamente.", Constants.INFORMATION_TYPE);
 					borrarDatos();
 				}
-
 			} else {
 				// Muestra alerta de error
-				Utils.mostrarAlerta("Falta algún campo por rellenar.", Constants.ERROR_TYPE);
+				Utils.mostrarAlerta(
+						"Falta algún campo por rellenar.\n(No obligatorios: valoración personal, comentarios y guardado en...)",
+						Constants.ERROR_TYPE);
 			}
 		} catch (Exception e) {
 			HibernateUtil.rollbackCambios();
 			e.printStackTrace();
-			Utils.mostrarAlerta("Error en la creacion del elemento, revisa todos los campos.", Constants.ERROR_TYPE);
+			Utils.mostrarAlerta("Error en la creacion del elemento.\nMensaje original: " + e.getMessage(),
+					Constants.ERROR_TYPE);
+		}
+	}
+
+	/**
+	 * Guarda la pelicula
+	 * 
+	 * @param pelicula Pelicula a buscar
+	 */
+	public void guardarPelicula(Pelicula pelicula) {
+		// Comprueba si ya existe, para no guardarla de nuevo
+		PeliculaDaoImpl peliDao = new PeliculaDaoImpl(session);
+		if (peliDao.searchById(pelicula.getId()) == null) {
+			peliDao.update(pelicula);
+		}
+	}
+
+	/**
+	 * Guarda la serie
+	 * 
+	 * @param serie Serie a buscar
+	 */
+	public void guardarSerie(Series serie) {
+		SeriesDaoImpl serieDao = new SeriesDaoImpl(session);
+		if (serieDao.searchById(serie.getId()) == null) {
+			serieDao.update(serie);
+		}
+	}
+
+	/**
+	 * Guarda la compañia
+	 * 
+	 * @param company Compañia a guardar
+	 */
+	public void guardarCompany(Compañia company) {
+		// Comprueba si ya existe, para no guardarla de nuevo
+		CompañiaDaoImpl compDao = new CompañiaDaoImpl(session);
+		if (compDao.searchById(company.getId()) == null) {
+			compDao.update(company);
+		}
+	}
+
+	/**
+	 * Comprueba que la fecha escrita sea válida
+	 */
+	private void comprobarFecha() {
+		if (!txtEstreno.getText().matches("\\d{4}-(0[1-9]|1[012])-(0[1-9]|[12]\\d|3[01])")) {
+			throw new DateTimeException("Error en el formato de la fecha");
 		}
 	}
 
@@ -295,7 +344,7 @@ public class AgregadasManualmenteController {
 		UsuarioPeliculaDaoImpl upDao = new UsuarioPeliculaDaoImpl(session);
 		Localizacion localizacion = searchLocalizacion();
 		UsuarioPelicula up = new UsuarioPelicula(new UsuarioPeliculaID(UsuarioController.getUsuarioRegistrado(), pelicula),
-				getVote(txtValoracionPersonal.getText()), new Date(), txtComentarios.getText(), localizacion, false, false);
+				(getVote(txtValoracionPersonal.getText())), new Date(), txtComentarios.getText(), localizacion, true, false);
 		upDao.update(up);
 	}
 
@@ -307,9 +356,11 @@ public class AgregadasManualmenteController {
 	private Localizacion searchLocalizacion() {
 		LocalizacionDaoImpl lDao = new LocalizacionDaoImpl(session);
 		Localizacion lugar = lDao.searchByName(txtGuardado.getText());
-		if (lugar == null) {
+		if (lugar == null && !txtGuardado.getText().isBlank()) {
 			lugar = new Localizacion(txtGuardado.getText());
 			lDao.update(lugar);
+		} else if (txtGuardado.getText().isBlank()) {
+			return null;
 		}
 		return lugar;
 	}
@@ -320,8 +371,11 @@ public class AgregadasManualmenteController {
 	 * @param listGenero Lista a guardar
 	 */
 	private void guardarGenero(Genero g) {
+		// Comprueba si ya existe, para no guardarlo de nuevo
 		GeneroDaoImpl genDao = new GeneroDaoImpl(session);
-		genDao.update(g);
+		if (genDao.searchById(g.getId()) == null) {
+			genDao.update(g);
+		}
 	}
 
 	/**
@@ -330,8 +384,11 @@ public class AgregadasManualmenteController {
 	 * @param d Lista a guardar
 	 */
 	private void guardarDirector(Directores d) {
+		// Comprueba si ya existe, para no guardarlo de nuevo
 		DirectoresDaoImpl dirDao = new DirectoresDaoImpl(session);
-		dirDao.update(d);
+		if (dirDao.searchById(d.getId()) == null) {
+			dirDao.update(d);
+		}
 	}
 
 	/**
@@ -340,8 +397,11 @@ public class AgregadasManualmenteController {
 	 * @param listActores Lista a guardar
 	 */
 	private void guardarActor(Actores a) {
+		// Comprueba si ya existe, para no guardarlo de nuevo
 		ActoresDaoImpl actDao = new ActoresDaoImpl(session);
-		actDao.update(a);
+		if (actDao.searchById(a.getId()) == null) {
+			actDao.update(a);
+		}
 	}
 
 	/**
@@ -391,7 +451,8 @@ public class AgregadasManualmenteController {
 					listGenero.add(g);
 				} else {
 					// Se crea uno nuevo y se añade
-					listGenero.add(new Genero(Utils.generaGeneroID(), genero.strip()));
+					g = new Genero(Utils.generaGeneroID(), genero.strip());
+					listGenero.add(g);
 
 				}
 				guardarGenero(g);
@@ -555,20 +616,31 @@ public class AgregadasManualmenteController {
 	 * @return Double voto
 	 * @throws NumberFormatException
 	 */
-	public double getVote(String voto) throws NumberFormatException {
+	public Double getVote(String voto) throws NumberFormatException {
 		// Reemplaza coma por punto
 		String voteString = voto.replace(',', '.');
 
 		// Intenta parsear a double
-		double parsedVote = Double.parseDouble(voteString);
+		if (!voto.isEmpty()) {
+			double parsedVote;
+			try {
+				parsedVote = Double.parseDouble(voteString);
+			} catch (NullPointerException | NumberFormatException e) {
+				throw new NumberFormatException(
+						"Error con el numero decimal: '" + voto + "' Debe ser mayor de 0 y menor de 10.");
+			}
 
-		// Verificar condiciones de decimales y dígitos en la parte entera
-		if (Math.abs(parsedVote) <= 10) {
-			// Redondear a 3 decimales
-			return Math.round(parsedVote * 1000.0) / 1000.0;
-		} else {
-			throw new NumberFormatException();
+			// Verificar condiciones de decimales y dígitos en la parte entera
+			if (Math.abs(parsedVote) <= 10 && Math.abs(parsedVote) >= 0) {
+				// Redondear a 3 decimales
+				return Math.round(parsedVote * 1000.0) / 1000.0;
+			} else {
+				throw new NumberFormatException(
+						"Error con el numero decimal: '" + voto + "' Debe ser mayor de 0 y menor de 10.");
+			}
 		}
+		return 0.0;
+
 	}
 
 	/**
@@ -621,32 +693,34 @@ public class AgregadasManualmenteController {
 			if (isCompleto() && !txtEpisodios.getText().isBlank() && !txtTemporadas.getText().isBlank()) {
 				Compañia company = searchCompany();
 				double vote = getVote(txtValoracionGlobal.getText());
+				getVote(txtValoracionPersonal.getText());
 				int numEpisodios = Integer.parseInt(txtEpisodios.getText());
 				int numTemporadas = Integer.parseInt(txtTemporadas.getText());
 				List<Actores> listActores = getListaActores();
 				List<Directores> listDirectores = getListaDirectores();
 				List<Genero> listGenero = getListaGenero();
+				comprobarFecha();
 				Series serie = new Series(Utils.generaMovieId(), txtTitulo.getText(), txtEstreno.getText(), company,
 						txtDescripcion.getText(), poster, vote, numEpisodios, numTemporadas, listActores, listDirectores,
 						listGenero);
 				// Si acepta, se guarda la serie
 				if (Utils.confirmacion()) {
-					// Guarda la compañia, actores, directores, generos
-					CompañiaDaoImpl compDao = new CompañiaDaoImpl(session);
-					compDao.update(company);
-					// Guarda la serie
-					SeriesDaoImpl serieDao = new SeriesDaoImpl(session);
-					serieDao.update(serie);
+					// Guarda todos los datos en la bbdd
+					guardarCompany(company);
+					guardarSerie(serie);
 					guardarDatosPersonalesSerie(serie);
 					Utils.mostrarAlerta("Serie guardada correctamente.", Constants.INFORMATION_TYPE);
 					borrarDatos();
 				}
 			} else {
 				// Muestra alerta de error
-				Utils.mostrarAlerta("Falta algún campo por rellenar.", Constants.ERROR_TYPE);
+				Utils.mostrarAlerta(
+						"Falta algún campo por rellenar.\n(No obligatorios: valoración personal, comentarios y guardado en...)",
+						Constants.ERROR_TYPE);
 			}
 		} catch (Exception e) {
-			Utils.mostrarAlerta("Error en la creacion del elemento, revisa todos los campos.", Constants.ERROR_TYPE);
+			Utils.mostrarAlerta("Error en la creacion del elemento.\nMensaje original: " + e.getMessage(),
+					Constants.ERROR_TYPE);
 		}
 	}
 
@@ -682,7 +756,7 @@ public class AgregadasManualmenteController {
 		UsuarioSerieDaoImpl upDao = new UsuarioSerieDaoImpl(session);
 		Localizacion localizacion = searchLocalizacion();
 		UsuarioSerie us = new UsuarioSerie(new UsuarioSerieID(UsuarioController.getUsuarioRegistrado(), serie),
-				getVote(txtValoracionPersonal.getText()), new Date(), txtComentarios.getText(), localizacion, false, false);
+				getVote(txtValoracionPersonal.getText()), new Date(), txtComentarios.getText(), localizacion, false, true);
 		upDao.update(us);
 	}
 
@@ -693,11 +767,10 @@ public class AgregadasManualmenteController {
 	 * @return True: todos rellenos. False: alguno sin rellenar
 	 */
 	private boolean isCompleto() {
-		return !txtTitulo.getText().isBlank() && !txtCompañia.getText().isBlank() && !txtGuardado.getText().isBlank()
-				&& !txtEstreno.getText().isBlank() && !txtValoracionPersonal.getText().isBlank()
+		return !txtTitulo.getText().isBlank() && !txtCompañia.getText().isBlank() && !txtEstreno.getText().isBlank()
 				&& !txtValoracionGlobal.getText().isBlank() && !txtGenero.getText().isBlank() && !txtActores.getText().isBlank()
-				&& !txtDirectores.getText().isBlank() && !txtDescripcion.getText().isBlank()
-				&& !txtComentarios.getText().isBlank() && poster != null && !poster.isBlank();
+				&& !txtDirectores.getText().isBlank() && !txtDescripcion.getText().isBlank() && poster != null
+				&& !poster.isBlank();
 	}
 
 	/**

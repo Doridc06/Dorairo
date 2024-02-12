@@ -28,11 +28,11 @@ public class GeneroDaoImpl extends CommonDaoImpl<Genero> implements GeneroDaoI {
 	}
 
 	@Override
-	public Genero searchById(String id) {
+	public Genero searchById(int i) {
 		activeTransaction();
 
 		// Searches for the genre with the id
-		return (Genero) session.createQuery("FROM Genero WHERE id = " + id).uniqueResult();
+		return (Genero) session.createQuery("FROM Genero WHERE id = " + i).uniqueResult();
 	}
 
 	@Override

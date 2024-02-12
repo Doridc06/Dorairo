@@ -480,6 +480,7 @@ public class PeliculaController {
 	    System.out.println("Se agregó la imagen correctamente a 'Mi Lista'");
 	}
 
+	
 	public void agregarImagenAYaVistas(Pelicula pelicula) {
 	    // Obtener la imagen de la película
 	    ImageView imageView = getImageViewFromPelicula(pelicula);
@@ -497,8 +498,7 @@ public class PeliculaController {
 	    System.out.println("Se agregó la imagen correctamente a 'Ya Vistas'");
 	}
 
-
-
+	
 
 /*private void guardarInformacionEnBaseDeDatos(Usuario usuarioActual, Pelicula pelicula, boolean enMiLista) {
   // Obtiene la sesión actual de Hibernate

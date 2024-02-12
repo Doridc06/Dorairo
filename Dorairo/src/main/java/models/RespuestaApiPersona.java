@@ -17,6 +17,9 @@ public class RespuestaApiPersona {
 	private int totalPages;
 
 	private int totalResults;
+	
+	public RespuestaApiPersona() {
+	}
 
 	/**
 	 * @return the page

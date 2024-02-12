@@ -16,6 +16,9 @@ public class RespuestaApi {
   private int total_pages;
   private int total_results;
 
+  public RespuestaApi() {
+  }
+  
   // Métodos getter y setter para cada atributo
 
   /**

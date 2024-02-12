@@ -43,4 +43,14 @@ public class DirectoresDaoImpl extends CommonDaoImpl<Directores> implements Dire
 		return session.createQuery("FROM Directores WHERE nombre = '" + name + "'").list();
 	}
 
+	@Override
+	public String searchMaxId() {
+		activeTransaction();
+
+		// Searches for the max id
+		Integer max = (Integer) session.createQuery("SELECT MAX(id) FROM Directores").uniqueResult();
+		String maxId = "" + max;
+		return maxId;
+	}
+
 }

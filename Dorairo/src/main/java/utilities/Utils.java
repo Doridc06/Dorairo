@@ -2,7 +2,14 @@ package utilities;
 
 import java.util.Optional;
 
+import conexion.HibernateUtil;
 import constants.Constants;
+import dao.ActoresDaoImpl;
+import dao.CompañiaDaoImpl;
+import dao.DirectoresDaoImpl;
+import dao.GeneroDaoImpl;
+import dao.PeliculaDaoImpl;
+import dao.SeriesDaoImpl;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
@@ -19,18 +26,6 @@ public class Utils {
 
 	/** Stage principal */
 	private static Stage ownerStage;
-
-	private static int sufijoIdPelisManuales = 0;
-
-	private static int sufijoIdSeriesManuales = 0;
-
-	private static int sufijoIdCompaniesManuales = 0;
-
-	private static int sufijoIdActoresManuales = 0;
-
-	private static int sufijoIdDirectoresManuales = 0;
-
-	private static int sufijoIdGeneroManuales = 0;
 
 	/**
 	 * Private Utils Constructor
@@ -75,7 +70,7 @@ public class Utils {
 
 			// Agrega filtros para facilitar la busqueda
 			fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("JPG", "*.jpg"),
-					new FileChooser.ExtensionFilter("PNG", "*.png"));
+					new FileChooser.ExtensionFilter("PNG", "*.png"), new FileChooser.ExtensionFilter("JFIF", "*.jfif"));
 
 			// Obtiene la imagen seleccionada
 			return fileChooser.showOpenDialog(stage).getAbsolutePath();
@@ -133,10 +128,16 @@ public class Utils {
 	 * @return Nuevo id
 	 */
 	public static Integer generaMovieId() {
-		// Une ambas partes como cadena y lo pasa a un numero entero
-		int id = Integer.parseInt(Constants.PREFIJO_ID_PELIS_MANUALES + sufijoIdPelisManuales);
-		sufijoIdPelisManuales++;
-		return id;
+		PeliculaDaoImpl pDao = new PeliculaDaoImpl(HibernateUtil.openSession());
+		// Recoge el maximo id
+		String maxId = pDao.searchMaxId();
+		// Comprueba si es una peli manual, para crear el siguiente id
+		if (maxId != null && maxId.startsWith(Constants.PREFIJO_ID_PELIS_MANUALES)) {
+			return Integer.parseInt(maxId) + 1;
+		} else {
+			// Sino, crea el primer id manual
+			return Integer.parseInt(Constants.PREFIJO_ID_PELIS_MANUALES + 0);
+		}
 	}
 
 	/**
@@ -145,10 +146,16 @@ public class Utils {
 	 * @return Nuevo id
 	 */
 	public static Integer generaSerieId() {
-		// Une ambas partes como cadena y lo pasa a un numero entero
-		int id = Integer.parseInt(Constants.PREFIJO_ID_SERIES_MANUALES + sufijoIdSeriesManuales);
-		sufijoIdSeriesManuales++;
-		return id;
+		SeriesDaoImpl sDao = new SeriesDaoImpl(HibernateUtil.openSession());
+		// Recoge el maximo id
+		String maxId = sDao.searchMaxId();
+		// Comprueba si es una serie manual, para crear el siguiente id
+		if (maxId != null && maxId.startsWith(Constants.PREFIJO_ID_SERIES_MANUALES)) {
+			return Integer.parseInt(maxId) + 1;
+		} else {
+			// Sino, crea el primer id manual
+			return Integer.parseInt(Constants.PREFIJO_ID_SERIES_MANUALES + 0);
+		}
 	}
 
 	/**
@@ -157,10 +164,16 @@ public class Utils {
 	 * @return Nuevo id
 	 */
 	public static Integer generaCompanyId() {
-		// Une ambas partes como cadena y lo pasa a un numero entero
-		int id = Integer.parseInt(Constants.PREFIJO_ID_SERIES_MANUALES + sufijoIdCompaniesManuales);
-		sufijoIdCompaniesManuales++;
-		return id;
+		CompañiaDaoImpl cDao = new CompañiaDaoImpl(HibernateUtil.openSession());
+		// Recoge el maximo id
+		String maxId = cDao.searchMaxId();
+		// Comprueba si es una compañia manual, para crear el siguiente id
+		if (maxId != null && maxId.startsWith(Constants.PREFIJO_ID_COMPANIES_MANUALES)) {
+			return Integer.parseInt(maxId) + 1;
+		} else {
+			// Sino, crea el primer id manual
+			return Integer.parseInt(Constants.PREFIJO_ID_COMPANIES_MANUALES + 0);
+		}
 	}
 
 	/**
@@ -169,10 +182,16 @@ public class Utils {
 	 * @return Nuevo id
 	 */
 	public static Integer generaActorId() {
-		// Une ambas partes como cadena y lo pasa a un numero entero
-		int id = Integer.parseInt(Constants.PREFIJO_ID_ACTORES_MANUALES + sufijoIdActoresManuales);
-		sufijoIdActoresManuales++;
-		return id;
+		ActoresDaoImpl aDao = new ActoresDaoImpl(HibernateUtil.openSession());
+		// Recoge el maximo id
+		String maxId = aDao.searchMaxId();
+		// Comprueba si es un actor manual, para crear el siguiente id
+		if (maxId != null && maxId.startsWith(Constants.PREFIJO_ID_ACTORES_MANUALES)) {
+			return Integer.parseInt(maxId) + 1;
+		} else {
+			// Sino, crea el primer id manual
+			return Integer.parseInt(Constants.PREFIJO_ID_ACTORES_MANUALES + 0);
+		}
 	}
 
 	/**
@@ -181,10 +200,16 @@ public class Utils {
 	 * @return Nuevo id
 	 */
 	public static Integer generaDirectorId() {
-		// Une ambas partes como cadena y lo pasa a un numero entero
-		int id = Integer.parseInt(Constants.PREFIJO_ID_DIRECTORES_MANUALES + sufijoIdDirectoresManuales);
-		sufijoIdDirectoresManuales++;
-		return id;
+		DirectoresDaoImpl dDao = new DirectoresDaoImpl(HibernateUtil.openSession());
+		// Recoge el maximo id
+		String maxId = dDao.searchMaxId();
+		// Comprueba si es un director manual, para crear el siguiente id
+		if (maxId != null && maxId.startsWith(Constants.PREFIJO_ID_DIRECTORES_MANUALES)) {
+			return Integer.parseInt(maxId) + 1;
+		} else {
+			// Sino, crea el primer id manual
+			return Integer.parseInt(Constants.PREFIJO_ID_DIRECTORES_MANUALES + 0);
+		}
 	}
 
 	/**
@@ -193,12 +218,16 @@ public class Utils {
 	 * @return Nuevo id
 	 */
 	public static Integer generaGeneroID() {
-		
-		
-		
-		// Une ambas partes como cadena y lo pasa a un numero entero
-		int id = Integer.parseInt(Constants.PREFIJO_ID_GENERO_MANUALES + sufijoIdGeneroManuales);
-		sufijoIdGeneroManuales++;
-		return id;
+		GeneroDaoImpl gDao = new GeneroDaoImpl(HibernateUtil.openSession());
+		// Recoge el maximo id
+		String maxId = gDao.searchMaxId();
+		// Comprueba si es un genero manual, para crear el siguiente id
+		if (maxId != null && maxId.startsWith(Constants.PREFIJO_ID_GENEROS_MANUALES)) {
+			return Integer.parseInt(maxId) + 1;
+		} else {
+			// Sino, crea el primer id manual
+			return Integer.parseInt(Constants.PREFIJO_ID_GENEROS_MANUALES + 0);
+		}
 	}
+
 }

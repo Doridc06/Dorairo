@@ -7,6 +7,9 @@ public class PersonaApi {
 	private String known_for_department;
 
 	private String name;
+	
+	public PersonaApi() {
+	}
 
 	/**
 	 * @return the id

@@ -28,5 +28,12 @@ public interface ActoresDaoI extends CommonDaoI<Actores> {
 	 * @return Lista de Actores con el nombre
 	 */
 	public List<Actores> searchByName(final String name);
+	
+	/**
+	 * Busca el mayor id de los actores
+	 * 
+	 * @return Max id
+	 */
+	public String searchMaxId();
 
 }

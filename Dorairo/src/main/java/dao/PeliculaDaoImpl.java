@@ -43,4 +43,14 @@ public class PeliculaDaoImpl extends CommonDaoImpl<Pelicula> implements Pelicula
 		return session.createQuery("FROM Pelicula WHERE titulo = '" + title + "'").list();
 	}
 
+	@Override
+	public String searchMaxId() {
+		activeTransaction();
+
+		// Searches for the max id
+		Integer max = (Integer) session.createQuery("SELECT MAX(id) FROM Pelicula").uniqueResult();
+		String maxId = "" + max;
+		return maxId;
+	}
+
 }

@@ -129,6 +129,9 @@ public class Pelicula implements Serializable {
 		this.directores = directores;
 		this.genres = genres;
 	}
+	
+	public Pelicula() {
+	}
 
 	/**
 	 * @return the id

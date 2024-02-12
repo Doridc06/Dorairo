@@ -43,4 +43,14 @@ public class SeriesDaoImpl extends CommonDaoImpl<Series> implements SeriesDaoI {
 		return session.createQuery("FROM Series WHERE titulo = '" + title + "'").list();
 	}
 
+	@Override
+	public String searchMaxId() {
+		activeTransaction();
+
+		// Searches for the max id
+		Integer max = (Integer) session.createQuery("SELECT MAX(id) FROM Series").uniqueResult();
+		String maxId = "" + max;
+		return maxId;
+	}
+
 }

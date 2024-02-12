@@ -27,5 +27,12 @@ public interface PeliculasDaoI extends CommonDaoI<Pelicula> {
 	 * @return List of all movies with this title
 	 */
 	public List<Pelicula> searchByTitle(final String title);
+	
+	/**
+	 * Searches for the greatest id of the movie
+	 * 
+	 * @return Max id
+	 */
+	public String searchMaxId();
 
 }

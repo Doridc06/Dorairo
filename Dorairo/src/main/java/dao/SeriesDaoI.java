@@ -27,5 +27,12 @@ public interface SeriesDaoI extends CommonDaoI<Series> {
 	 * @return List of all series with this title
 	 */
 	public List<Series> searchByTitle(final String title);
+	
+	/**
+	 * Searches for the greatest id of the serie
+	 * 
+	 * @return Max id
+	 */
+	public String searchMaxId();
 
 }

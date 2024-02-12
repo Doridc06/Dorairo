@@ -30,6 +30,9 @@ public class Compañia implements Serializable {
 		this.id = id;
 		this.name = name;
 	}
+	
+	public Compañia() {
+	}
 
 	public int getId() {
 		return id;

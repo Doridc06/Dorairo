@@ -27,4 +27,11 @@ public interface DirectoresDaoI extends CommonDaoI<Directores> {
 	 * @return Lista de Directores con el nombre
 	 */
 	public List<Directores> searchByName(final String name);
+
+	/**
+	 * Busca el mayor id de los directores
+	 * 
+	 * @return Max id
+	 */
+	public String searchMaxId();
 }

@@ -251,7 +251,7 @@ public class AgregadasManualmenteController {
 			// Comprueba si todos los campos se han rellenado
 			Compañia company = searchCompany();
 			if (isCompleto()) {
-				double vote = getVote(txtValoracionGlobal.getText());
+				double vote = getVote(txtValoracionGlobal.getText().strip());
 				List<Actores> listActores = getListaActores();
 				List<Directores> listDirectores = getListaDirectores();
 				List<Genero> listGenero = getListaGenero();
@@ -265,9 +265,6 @@ public class AgregadasManualmenteController {
 					// Guarda la compañia, los actores, generos y directores
 					CompañiaDaoImpl compDao = new CompañiaDaoImpl(session);
 					compDao.update(company);
-					guardarListaActores(listActores);
-					guardarListaDirectores(listDirectores);
-					guardarListaGeneros(listGenero);
 					// Guarda la pelicual
 					PeliculaDaoImpl peliDao = new PeliculaDaoImpl(session);
 					peliDao.update(pelicula);
@@ -295,8 +292,10 @@ public class AgregadasManualmenteController {
 	private void guardarDatosPersonalesPelicula(Pelicula pelicula) {
 		UsuarioPeliculaDaoImpl upDao = new UsuarioPeliculaDaoImpl(session);
 		Localizacion localizacion = searchLocalizacion();
-		UsuarioPelicula up = new UsuarioPelicula(new UsuarioPeliculaID(UsuarioController.getUsuarioRegistrado(), pelicula),
-				getVote(txtValoracionPersonal.getText()), new Date(), txtComentarios.getText(), localizacion, false, false);
+		UsuarioPelicula up = new UsuarioPelicula(
+				new UsuarioPeliculaID(UsuarioController.getUsuarioRegistrado(), pelicula),
+				getVote(txtValoracionPersonal.getText()), new Date(), txtComentarios.getText(), localizacion, false,
+				false);
 		upDao.update(up);
 	}
 
@@ -320,23 +319,19 @@ public class AgregadasManualmenteController {
 	 * 
 	 * @param listGenero Lista a guardar
 	 */
-	private void guardarListaGeneros(List<Genero> listGenero) {
+	private void guardarGenero(Genero g) {
 		GeneroDaoImpl genDao = new GeneroDaoImpl(session);
-		for (Genero g : listGenero) {
-			genDao.update(g);
-		}
+		genDao.update(g);
 	}
 
 	/**
 	 * Guarda la lista de directores en la bbdd listDirectores
 	 * 
-	 * @param listDirectores Lista a guardar
+	 * @param d Lista a guardar
 	 */
-	private void guardarListaDirectores(List<Directores> listDirectores) {
+	private void guardarDirector(Directores d) {
 		DirectoresDaoImpl dirDao = new DirectoresDaoImpl(session);
-		for (Directores d : listDirectores) {
-			dirDao.update(d);
-		}
+		dirDao.update(d);
 	}
 
 	/**
@@ -344,11 +339,9 @@ public class AgregadasManualmenteController {
 	 * 
 	 * @param listActores Lista a guardar
 	 */
-	private void guardarListaActores(List<Actores> listActores) {
+	private void guardarActor(Actores a) {
 		ActoresDaoImpl actDao = new ActoresDaoImpl(session);
-		for (Actores a : listActores) {
-			actDao.update(a);
-		}
+		actDao.update(a);
 	}
 
 	/**
@@ -373,12 +366,14 @@ public class AgregadasManualmenteController {
 				// Construir la solicitud para la API
 				Request request;
 				if (isSerie) {
-					request = new Request.Builder().url("https://api.themoviedb.org/3/genre/movie/list?language=es").get()
-							.addHeader("accept", "application/json").addHeader("Authorization", "Bearer " + API_KEY).build();
+					request = new Request.Builder().url("https://api.themoviedb.org/3/genre/tv/list?language=es").get()
+							.addHeader("accept", "application/json").addHeader("Authorization", "Bearer " + API_KEY)
+							.build();
 
 				} else {
-					request = new Request.Builder().url("https://api.themoviedb.org/3/genre/tv/list?language=en").get()
-							.addHeader("accept", "application/json").addHeader("Authorization", "Bearer " + API_KEY).build();
+					request = new Request.Builder().url("https://api.themoviedb.org/3/genre/movie/list?language=es")
+							.get().addHeader("accept", "application/json")
+							.addHeader("Authorization", "Bearer " + API_KEY).build();
 				}
 
 				// Ejecuta la solicitud y obtiene la respuesta
@@ -392,15 +387,16 @@ public class AgregadasManualmenteController {
 				Gson gson = new Gson();
 				RespuestaApiGenero respApi = gson.fromJson(responseBody, RespuestaApiGenero.class);
 
-				Genero g = searchGenero(respApi, genero);
+				Genero g = searchGenero(respApi, genero.strip());
 				// Si se ha encontrado, se añade a la lista
 				if (g != null) {
 					listGenero.add(g);
 				} else {
 					// Se crea uno nuevo y se añade
-					listGenero.add(new Genero(Utils.generaGeneroID(), genero));
+					listGenero.add(new Genero(Utils.generaGeneroID(), genero.strip()));
 
 				}
+				guardarGenero(g);
 			}
 		}
 		return listGenero;
@@ -449,7 +445,8 @@ public class AgregadasManualmenteController {
 				Request request = new Request.Builder()
 						.url("https://api.themoviedb.org/3/search/person?query=" + director
 								+ "&include_adult=false&language=es-ES&page=1")
-						.get().addHeader("accept", "application/json").addHeader("Authorization", "Bearer " + API_KEY).build();
+						.get().addHeader("accept", "application/json").addHeader("Authorization", "Bearer " + API_KEY)
+						.build();
 
 				// Ejecutar la solicitud y obtener la respuesta
 				Response response;
@@ -464,13 +461,16 @@ public class AgregadasManualmenteController {
 
 				// Busca la persona
 				PersonaApi persona = searchPersona(respApi, "Directing");
+				Directores d;
 				if (persona != null) {
-					listDirectores.add(new Directores(persona.getId(), persona.getName()));
+					d = new Directores(persona.getId(), persona.getName());
+					listDirectores.add(d);
 				} else {
 					// Crea un nuevo actor y añade a la lista
-					Directores a = new Directores(Utils.generaDirectorId(), director);
-					listDirectores.add(a);
+					d = new Directores(Utils.generaDirectorId(), director.strip());
+					listDirectores.add(d);
 				}
+				guardarDirector(d);
 			}
 		}
 		return listDirectores;
@@ -499,7 +499,8 @@ public class AgregadasManualmenteController {
 				Request request = new Request.Builder()
 						.url("https://api.themoviedb.org/3/search/person?query=" + actor
 								+ "&include_adult=false&language=es-ES&page=1")
-						.get().addHeader("accept", "application/json").addHeader("Authorization", "Bearer " + API_KEY).build();
+						.get().addHeader("accept", "application/json").addHeader("Authorization", "Bearer " + API_KEY)
+						.build();
 
 				// Ejecutar la solicitud y obtener la respuesta
 				Response response;
@@ -514,13 +515,16 @@ public class AgregadasManualmenteController {
 
 				// Busca la persona
 				PersonaApi persona = searchPersona(respApi, "Acting");
+				Actores a;
 				if (persona != null) {
-					listActores.add(new Actores(persona.getId(), persona.getName()));
+					a = new Actores(persona.getId(), persona.getName());
+					listActores.add(a);
 				} else {
 					// Crea un nuevo actor y añade a la lista
-					Actores a = new Actores(Utils.generaActorId(), actor);
+					a = new Actores(Utils.generaActorId(), actor.strip());
 					listActores.add(a);
 				}
+				guardarActor(a);
 			}
 		}
 		return listActores;
@@ -629,16 +633,14 @@ public class AgregadasManualmenteController {
 				SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 				Date fecha;
 				fecha = formato.parse(txtEstreno.getText());
-				Series serie = new Series(Utils.generaMovieId(), txtTitulo.getText(), fecha, company, txtDescripcion.getText(),
-						poster, vote, numEpisodios, numTemporadas, listActores, listDirectores, listGenero);
+				Series serie = new Series(Utils.generaMovieId(), txtTitulo.getText(), fecha, company,
+						txtDescripcion.getText(), poster, vote, numEpisodios, numTemporadas, listActores,
+						listDirectores, listGenero);
 				// Si acepta, se guarda la serie
 				if (Utils.confirmacion()) {
 					// Guarda la compañia, actores, directores, generos
 					CompañiaDaoImpl compDao = new CompañiaDaoImpl(session);
 					compDao.update(company);
-					guardarListaActores(listActores);
-					guardarListaDirectores(listDirectores);
-					guardarListaGeneros(listGenero);
 					// Guarda la serie
 					SeriesDaoImpl serieDao = new SeriesDaoImpl(session);
 					serieDao.update(serie);
@@ -687,7 +689,8 @@ public class AgregadasManualmenteController {
 		UsuarioSerieDaoImpl upDao = new UsuarioSerieDaoImpl(session);
 		Localizacion localizacion = searchLocalizacion();
 		UsuarioSerie us = new UsuarioSerie(new UsuarioSerieID(UsuarioController.getUsuarioRegistrado(), serie),
-				getVote(txtValoracionPersonal.getText()), new Date(), txtComentarios.getText(), localizacion, false, false);
+				getVote(txtValoracionPersonal.getText()), new Date(), txtComentarios.getText(), localizacion, false,
+				false);
 		upDao.update(us);
 	}
 
@@ -700,9 +703,10 @@ public class AgregadasManualmenteController {
 	private boolean isCompleto() {
 		return !txtTitulo.getText().isBlank() && !txtCompañia.getText().isBlank() && !txtGuardado.getText().isBlank()
 				&& !txtEstreno.getText().isBlank() && !txtValoracionPersonal.getText().isBlank()
-				&& !txtValoracionGlobal.getText().isBlank() && !txtGenero.getText().isBlank() && !txtActores.getText().isBlank()
-				&& !txtDirectores.getText().isBlank() && !txtDescripcion.getText().isBlank()
-				&& !txtComentarios.getText().isBlank() && poster != null && !poster.isBlank();
+				&& !txtValoracionGlobal.getText().isBlank() && !txtGenero.getText().isBlank()
+				&& !txtActores.getText().isBlank() && !txtDirectores.getText().isBlank()
+				&& !txtDescripcion.getText().isBlank() && !txtComentarios.getText().isBlank() && poster != null
+				&& !poster.isBlank();
 	}
 
 	/**

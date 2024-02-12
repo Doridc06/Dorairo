@@ -42,4 +42,14 @@ public class ActoresDaoImpl extends CommonDaoImpl<Actores> implements ActoresDao
 		return session.createQuery("FROM Actores WHERE nombre = '" + name + "'").list();
 	}
 
+	@Override
+	public String searchMaxId() {
+		activeTransaction();
+
+		// Searches for the max id
+		Integer max = (Integer) session.createQuery("SELECT MAX(id) FROM Actores").uniqueResult();
+		String maxId = "" + max;
+		return maxId;
+	}
+
 }

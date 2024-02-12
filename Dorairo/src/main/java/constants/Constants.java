@@ -119,9 +119,7 @@ public class Constants {
 	public static final String PREFIJO_ID_DIRECTORES_MANUALES = "7777777";
 
 	/** Prefijo para los actores manuales */
-	public static final String PREFIJO_ID_GENEROS_MANUALES = "8888888";
-
-	public static final String PREFIJO_ID_GENERO_MANUALES = "99999";
+	public static final String PREFIJO_ID_GENEROS_MANUALES = "88888";
 
 	// Metodos
 

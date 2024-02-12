@@ -10,20 +10,23 @@ import java.util.List;
  */
 public class RespuestaApiGenero {
 
-	private List<Genero> generos;
+	private Genero[] genres;
+
+	public RespuestaApiGenero() {
+	}
 
 	/**
 	 * @return the generos
 	 */
-	public List<Genero> getGeneros() {
-		return generos;
+	public Genero[] getGeneros() {
+		return genres;
 	}
 
 	/**
 	 * @param generos the generos to set
 	 */
-	public void setGeneros(List<Genero> generos) {
-		this.generos = generos;
+	public void setGeneros(Genero[] generos) {
+		this.genres = generos;
 	}
 
 }

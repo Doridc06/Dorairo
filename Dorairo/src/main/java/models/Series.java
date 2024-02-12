@@ -124,6 +124,9 @@ public class Series implements Serializable {
 		this.directores = listDirectores;
 		this.genres = listGenero;
 	}
+	
+	public Series() {
+	}
 
 	/**
 	 * @return the id

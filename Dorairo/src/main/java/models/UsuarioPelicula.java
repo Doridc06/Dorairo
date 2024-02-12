@@ -71,6 +71,9 @@ public class UsuarioPelicula implements Serializable {
 		this.id = new UsuarioPeliculaID(usuario, p);
 	}
 
+	public UsuarioPelicula() {
+	}
+
 	/**
 	 * @return the id
 	 */

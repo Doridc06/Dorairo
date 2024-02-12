@@ -43,4 +43,14 @@ public class GeneroDaoImpl extends CommonDaoImpl<Genero> implements GeneroDaoI {
 		return session.createQuery("FROM Genero WHERE nombre = '" + nombre + "'").list();
 	}
 
+	@Override
+	public String searchMaxId() {
+		activeTransaction();
+
+		// Searches for the max id
+		Integer max = (Integer) session.createQuery("SELECT MAX(id) FROM Genero").uniqueResult();
+		String maxId = "" + max;
+		return maxId;
+	}
+
 }

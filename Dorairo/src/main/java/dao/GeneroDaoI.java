@@ -28,4 +28,11 @@ public interface GeneroDaoI extends CommonDaoI<Genero> {
 	 */
 	public List<Genero> searchByName(final String nombre);
 
+	/**
+	 * Searches for the greatest id of the genres
+	 * 
+	 * @return Max id
+	 */
+	public String searchMaxId();
+
 }

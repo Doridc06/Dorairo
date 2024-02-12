@@ -43,4 +43,14 @@ public class CompañiaDaoImpl extends CommonDaoImpl<Compañia> implements Compa�
 		return session.createQuery("FROM Compañia WHERE nombre = '" + name + "'").list();
 	}
 
+	@Override
+	public String searchMaxId() {
+		activeTransaction();
+
+		// Searches for the max id
+		Integer max = (Integer) session.createQuery("SELECT MAX(id) FROM Compañia").uniqueResult();
+		String maxId = "" + max;
+		return maxId;
+	}
+
 }

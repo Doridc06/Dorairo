@@ -149,7 +149,7 @@
 							</VBox.margin>
 							<content>
 
-								<HBox prefHeight="258.0" prefWidth="1512.0" styleClass="fondo">
+								<HBox fx:id="peliculasVistas" prefHeight="258.0" prefWidth="1512.0" styleClass="fondo">
 
 									<padding>
 										<Insets left="20.0" />
@@ -167,7 +167,7 @@
 						</Text>
                   <ScrollPane hbarPolicy="NEVER" pannable="true" prefHeight="244.0" prefWidth="1513.0" styleClass="fondo" vbarPolicy="NEVER" vmax="0.0">
                      <content>
-                        <HBox prefHeight="258.0" prefWidth="1512.0" styleClass="fondo">
+                        <HBox fx:id="miLista" prefHeight="258.0" prefWidth="1512.0" styleClass="fondo">
                            <padding>
                               <Insets left="20.0" />
                            </padding>

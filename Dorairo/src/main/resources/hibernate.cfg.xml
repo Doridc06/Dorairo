@@ -4,11 +4,7 @@
 	<session-factory>
 		<property name="hibernate.bytecode.use_reflection_optimizer">false</property>
 		<property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-<<<<<<< HEAD
-		<property name="hibernate.connection.password">po2004po</property>
-=======
 		<property name="hibernate.connection.password">Dori123456</property>
->>>>>>> cb3d819f8fb26d24ff61b7cff346997c9e7013b6
 		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/dorairo_db?serverTimezone=UTC&amp;createDatabaseIfNotExist=true</property>
 		<property name="hibernate.connection.username">hibernate_user</property>
 		<property name="hibernate.default_schema">dorairo_db</property>
@@ -17,6 +13,8 @@
 		<property name="hibernate.search.autoregister_listeners">true</property>
 		<property name="hibernate.show_sql">true</property>
 		<property name="hibernate.validator.apply_to_ddl">false</property>
+		<property name="hibernate.current_session_context_class">thread</property>
+		
 
 		<mapping class="models.Actores" />
 		<mapping class="models.Compañia" />

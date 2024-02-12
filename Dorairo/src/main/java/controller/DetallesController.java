@@ -3,10 +3,17 @@ package controller;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import conexion.HibernateUtil;
 import constants.Constants;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
@@ -14,6 +21,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
@@ -22,6 +30,8 @@ import javafx.stage.Stage;
 import models.Genero;
 import models.Pelicula;
 import models.Series;
+import models.Usuario;
+import models.UsuarioPelicula;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -75,21 +85,37 @@ public class DetallesController {
   
   @FXML
   private Button guardar;
+  
+  
+  @FXML
+  private PeliculaController peliculaController;
 
   private static final String API_KEY =
       "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlYjc0NTA5ZjRiZDBlODJlMTFlYzA2YWM1MDRhMGRlMCIsInN1YiI6IjY1Mzc3ZmRmZjQ5NWVlMDBmZjY1YTEyOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ehIu08LoiMRTccPoD4AfADXOpQPlqNAKUMvGgwY3XU8";
 
+  
+  
   @FXML
-  void initialize() {
+  void initialize() throws IOException {
     gestorVentanas = new GestorVentanas();
     Image imagenLogo = new Image(getClass().getResourceAsStream(Constants.URL_LOGO_AMPLIADO));
     imagenLogoCabecera.setImage(imagenLogo);
 
     Image imagenLupa = new Image(getClass().getResourceAsStream(Constants.URL_LUPA));
     lupa.setImage(imagenLupa);
+    
+    FXMLLoader loader = new FXMLLoader(getClass().getResource(Constants.URL_PELICULA_FXML));
+    Parent parent = loader.load();
+    PeliculaController peliculaController = loader.getController();
 
     csv.setOnAction(event -> exportarPeliculaYSerie("csv"));
     json.setOnAction(event -> exportarPeliculaYSerie("json"));
+    
+   
+ // Agregar evento de clic a miLista
+    miLista.setOnAction(event ->  peliculaController.agregarImagenAMiLista(pelicula));
+    // Agregar evento de clic a peliculasVistas
+    yaVisto.setOnAction(event ->  peliculaController.agregarImagenAYaVistas(pelicula));
   }
 
   @FXML
@@ -247,5 +273,21 @@ public class DetallesController {
       }
     }
   }
+  
+
+  @FXML
+  private void onMiListaClicked() {
+      // Llamar al método en PeliculaController para agregar la imagen a "Mi Lista"
+      peliculaController.agregarImagenAMiLista(pelicula);
+  }
+  
+  @FXML
+  private void onYaVistasClicked() {
+      // Llamar al método en PeliculaController para agregar la imagen a "Ya Vistas"
+      peliculaController.agregarImagenAYaVistas(pelicula);
+  }
+  
+
+
 
 }

@@ -23,10 +23,10 @@ import com.google.gson.JsonObject;
  * @author JairoAB
  *
  */
+
 @Entity
 @Table(name = "Peliculas")
 public class Pelicula implements Serializable {
-
 	private static final long serialVersionUID = 1L;
 
 	@Id

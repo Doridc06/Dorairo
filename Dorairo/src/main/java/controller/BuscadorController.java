@@ -6,7 +6,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.google.gson.Gson;
+
+import conexion.HibernateUtil;
 import constants.Constants;
+import dao.PeliculaDaoImpl;
+import dao.UsuarioPeliculaDaoImpl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -22,6 +26,7 @@ import models.Pelicula;
 import models.RespuestaApi;
 import models.RespuestaApiSeries;
 import models.Series;
+import models.UsuarioPelicula;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -60,6 +65,8 @@ public class BuscadorController {
 	@FXML
 	private ImageView lupa;
 
+	private String searchTerm;
+
 	@FXML
 	void inicioClicked(MouseEvent event) {
 		setSceneAndStage();
@@ -89,13 +96,13 @@ public class BuscadorController {
 		setSceneAndStage();
 		gestorVentanas.muestraVentana(stage, Constants.URL_USUARIO_FXML, "Perfil");
 	}
-	
+
 	@FXML
 	void agregarManualmenteClicked(ActionEvent event) {
 		setSceneAndStage();
 		gestorVentanas.muestraVentana(stage, Constants.URL_AGREGADAS_MANUALMENTE_FXML, "Agregar Manualmente");
 	}
-	
+
 	public void setSceneAndStage() {
 		stage = (Stage) imagenLogoCabecera.getScene().getWindow();
 	}
@@ -111,17 +118,18 @@ public class BuscadorController {
 
 	@FXML
 	void clickBuscar(MouseEvent event) {
-		String searchTerm = estasBuscando.getText();
+		searchTerm = estasBuscando.getText();
 		if (!searchTerm.isEmpty()) {
-			buscarPeliculasYSeriesPorTitulo(searchTerm);
+			buscarPeliculasYSeriesPorTitulo();
+			agregarImagenABuscador();
 		}
 	}
 
-	private void buscarPeliculasYSeriesPorTitulo(String titulo) {
+	private void buscarPeliculasYSeriesPorTitulo() {
 		OkHttpClient client = new OkHttpClient();
 		String movieApiUrl = "https://api.themoviedb.org/3/search/movie";
 		String tvApiUrl = "https://api.themoviedb.org/3/search/tv";
-		String queryParams = "?language=es-ES&query=" + titulo + "&page=1";
+		String queryParams = "?language=es-ES&query=" + searchTerm + "&page=1";
 
 		String movieFullUrl = movieApiUrl + queryParams;
 		Request movieRequest = new Request.Builder().url(movieFullUrl).get().addHeader("accept", "application/json")
@@ -270,4 +278,29 @@ public class BuscadorController {
 		gestorVentanas.muestraDetalles(stage, String.valueOf(id), tipo);
 	}
 
+	public void agregarImagenABuscador() {
+
+		PeliculaDaoImpl pDao = new PeliculaDaoImpl(HibernateUtil.openSession());
+
+		List<Pelicula> listaPelicula = pDao.searchByTitle(searchTerm);
+
+		for (Pelicula peli : listaPelicula) {
+			// Obtener la imagen de la película
+			ImageView imageView = new ImageView(new Image("file:" + peli.getPoster_path()));
+
+			// Establecer el tamaño de la imagen si es necesario
+			imageView.setFitWidth(200); // Ajusta el ancho según tus necesidades
+			imageView.setPreserveRatio(true); // Mantiene la proporción de la imagen
+			// Almacena el ID de la película en el userData del ImageView
+			imageView.setUserData(String.valueOf(peli.getId()));
+			imageView.setOnMouseClicked(event -> mostrarDetallesPelicula(peli));
+
+			// Agregar la imagen al HBox de "Mi Lista"
+			seEncontro.getChildren().add(imageView);
+			
+
+			System.out.println("Se agregó la imagen correctamente a 'Mi Lista'");
+		}
+
+	}
 }

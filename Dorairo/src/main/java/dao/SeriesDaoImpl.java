@@ -28,7 +28,7 @@ public class SeriesDaoImpl extends CommonDaoImpl<Series> implements SeriesDaoI {
 	}
 
 	@Override
-	public Series searchById(String id) {
+	public Series searchById(int id) {
 		activeTransaction();
 
 		// Searches for the series with the id
@@ -40,7 +40,7 @@ public class SeriesDaoImpl extends CommonDaoImpl<Series> implements SeriesDaoI {
 		activeTransaction();
 
 		// Searches for all series with this title
-		return session.createQuery("FROM Series WHERE titulo = '" + title + "'").list();
+		return session.createQuery("FROM Series WHERE name = '" + title + "'").list();
 	}
 
 	@Override

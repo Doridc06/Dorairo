@@ -45,5 +45,5 @@ public class UsuarioSerieDaoImpl extends CommonDaoImpl<UsuarioSerie> implements 
 				.uniqueResult();
 		return numero.toString();
 	}
-
+	
 }

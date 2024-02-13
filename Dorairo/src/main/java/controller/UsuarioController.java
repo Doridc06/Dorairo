@@ -204,6 +204,7 @@ public class UsuarioController {
 	@FXML
 	void eliminarCuenta(MouseEvent event) {
 		if (Utils.confirmacion()) {
+			
 			usuarioDaoImpl.delete(usuarioRegistrado);
 			muestraLogin();
 		}

@@ -11,6 +11,7 @@ import org.hibernate.Transaction;
 import com.google.gson.Gson;
 import conexion.HibernateUtil;
 import constants.Constants;
+import dao.UsuarioPeliculaDaoImpl;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -101,8 +102,7 @@ public class PeliculaController {
 	
 	@FXML
 	private HBox peliculasVistas;
-	
-	Usuario usuario;
+
 
 	
 	/** Conexion con la base de datos */
@@ -201,6 +201,8 @@ public class PeliculaController {
 			// Llamada a la API para próximas películas
 			handleMovieApiCall(client, "https://api.themoviedb.org/3/movie/upcoming?language=es-ES&page=1",
 					peliculasEstrenos);
+			
+			agregarImagenAMiLista();
 
 			// Configuración del evento para cada ImageView en peliculasEstrenos
 			for (Node node : peliculasEstrenos.getChildren()) {
@@ -463,21 +465,30 @@ public class PeliculaController {
 	}
 	
 	
-	public void agregarImagenAMiLista(Pelicula pelicula) {
-	    // Obtener la imagen de la película
-	    ImageView imageView = getImageViewFromPelicula(pelicula);
+	public void agregarImagenAMiLista() {
+		
+		UsuarioPeliculaDaoImpl upDao = new UsuarioPeliculaDaoImpl(session);
+		
+		List<UsuarioPelicula> listaUsuarioPelicula = upDao.searchPeliculasMiLista(UsuarioController.getUsuarioRegistrado().getUser());
+		
+		for (UsuarioPelicula up : listaUsuarioPelicula) {
+			// Obtener la imagen de la película
+		    ImageView imageView = getImageViewFromPelicula(up.getId().getPelicula());
+		    
+		    // Establecer el tamaño de la imagen si es necesario
+		    imageView.setFitWidth(200); // Ajusta el ancho según tus necesidades
+		    imageView.setPreserveRatio(true); // Mantiene la proporción de la imagen
+		 // Almacena el ID de la película en el userData del ImageView
+			imageView.setUserData(String.valueOf(up.getId().getPelicula().getId()));
+			
+		    
+		    // Agregar la imagen al HBox de "Mi Lista"
+		    miLista.getChildren().add(imageView);
+		   
+		    
+		    System.out.println("Se agregó la imagen correctamente a 'Mi Lista'");
+		}
 	    
-	    // Establecer el tamaño de la imagen si es necesario
-	    imageView.setFitWidth(200); // Ajusta el ancho según tus necesidades
-	    imageView.setPreserveRatio(true); // Mantiene la proporción de la imagen
-	    
-	    // Agregar la imagen al HBox de "Mi Lista"
-	    miLista.getChildren().add(imageView);
-	    
-	    // Guardar la información de la película en la base de datos
-	   // guardarInformacionEnBaseDeDatos(usuario, pelicula, true);
-	    
-	    System.out.println("Se agregó la imagen correctamente a 'Mi Lista'");
 	}
 
 	
@@ -491,59 +502,13 @@ public class PeliculaController {
 	    
 	    // Agregar la imagen al HBox de "Ya Vistas"
 	    peliculasVistas.getChildren().add(imageView);
-	    
-	    // Guardar la información de la película en la base de datos
-	   // guardarInformacionEnBaseDeDatos(usuario, pelicula, false);
+	   
 	    
 	    System.out.println("Se agregó la imagen correctamente a 'Ya Vistas'");
 	}
 
 	
 
-/*private void guardarInformacionEnBaseDeDatos(Usuario usuarioActual, Pelicula pelicula, boolean enMiLista) {
-  // Obtiene la sesión actual de Hibernate
-  Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-  Transaction transaction = session.getTransaction(); // Obtener la transacción actual
-  
-  // Check if usuarioActual and pelicula are not null
-  if (usuarioActual == null || pelicula == null) {
-      // Handle the case where either usuarioActual or pelicula is null
-      System.err.println("Usuario actual o película es nula.");
-      return;
-  }
-
-  try {
-      if (!transaction.isActive()) { // Verificar si hay una transacción activa
-          // Inicia una transacción solo si no hay una ya activa
-          transaction.begin();
-      }
-
-      // Crea una nueva instancia de UsuarioPelicula para guardar en la base de datos
-      UsuarioPelicula usuarioPelicula = new UsuarioPelicula();
-
-      // Completa los detalles de la instancia UsuarioPelicula
-      usuarioPelicula.setId(new UsuarioPeliculaID(usuarioActual, pelicula)); // Se crea el ID con el usuario y la película
-      usuarioPelicula.setFechaVisualizacionUsuario(new Date()); // Fecha actual
-      usuarioPelicula.setVista(!enMiLista); // Si está en la lista, no está vista; si está vista, no está en la lista
-      usuarioPelicula.setMiLista(enMiLista);
-
-      // Guarda la instancia de UsuarioPelicula en la base de datos
-      session.saveOrUpdate(usuarioPelicula);
-
-  
-  } catch (HibernateException e) {
-      // Manejo de errores
-      if (transaction != null && transaction.isActive()) {
-          transaction.rollback();
-      }
-      e.printStackTrace();
-  } finally {
-      // Cierra la sesión de Hibernate solo si fue abierta en este método
-      if (session != null && session.isOpen()) {
-          session.close();
-      }
-  }
-}*/
 
 
 }

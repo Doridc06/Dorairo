@@ -37,4 +37,12 @@ public interface UsuarioPeliculaDaoI extends CommonDaoI<UsuarioPelicula> {
 	 */
 	public String searchNumeroPeliculas(final String usuario);
 
+	/**
+	 * Searches for the list of movies with miLista true of the user
+	 * 
+	 * @param usuario User to find
+	 * @return List of UsuarioPelicula
+	 */
+	public List<UsuarioPelicula> searchPeliculasMiLista(String usuario);
+
 }

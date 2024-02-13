@@ -18,7 +18,7 @@ public interface PeliculasDaoI extends CommonDaoI<Pelicula> {
 	 * @param id Id movie to find
 	 * @return Movie that has this id
 	 */
-	public Pelicula searchById(final String id);
+	public Pelicula searchById(final int id);
 
 	/**
 	 * Searches for all movies with this title and returns them

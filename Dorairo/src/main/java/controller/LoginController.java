@@ -72,7 +72,7 @@ public class LoginController {
 		gestorVentanas = new GestorVentanas();
 
 		// Establece la imagen del logo
-		Image imagen = new Image(getClass().getResourceAsStream(Constants.URL_LOGO_NORMAL));
+		Image imagen = new Image(getClass().getResourceAsStream(Constants.URL_LOGO_AMPLIADO));
 		imgLogo.setImage(imagen);
 
 		// Establece la imagen de la portada

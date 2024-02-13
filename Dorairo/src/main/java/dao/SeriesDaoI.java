@@ -18,7 +18,7 @@ public interface SeriesDaoI extends CommonDaoI<Series> {
 	 * @param id Id series to find
 	 * @return Series that has this id
 	 */
-	public Series searchById(final String id);
+	public Series searchById(final int id);
 
 	/**
 	 * Searches for all series with this title and returns them

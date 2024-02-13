@@ -28,7 +28,7 @@ public class PeliculaDaoImpl extends CommonDaoImpl<Pelicula> implements Pelicula
 	}
 
 	@Override
-	public Pelicula searchById(String id) {
+	public Pelicula searchById(int id) {
 		activeTransaction();
 
 		// Searches for the movie with the id

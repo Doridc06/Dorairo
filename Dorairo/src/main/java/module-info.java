@@ -8,6 +8,7 @@ module Dorairo {
 	requires java.sql;
 	requires java.persistence;
 	requires org.hibernate.orm.core;
+	requires json.simple;
 
 	opens models to com.google.gson, javafx.fxml, org.hibernate.orm.core;
 	opens controller to javafx.fxml;

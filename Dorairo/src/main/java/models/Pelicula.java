@@ -18,6 +18,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
 /**
  * Clase que representa la tabla de Pelicula
  * 
@@ -93,14 +96,14 @@ public class Pelicula implements Serializable {
    * @param poster
    * @param valoracionGlobal
    */
-  public Pelicula(String titulo, String fechaEstreno, Compañia compañia, String descripcion,
-      String poster, String valoracionGlobal) {
-    this.title = titulo;
-    this.release_date = fechaEstreno;
-    this.company = compañia;
-    this.overview = descripcion;
-    this.poster_path = poster;
-    this.vote_average = Double.parseDouble(valoracionGlobal);
+  public Pelicula(String title, String release_date, Compañia company, String overview,
+      String poster_path, String vote_average) {
+    this.title = title;
+    this.release_date = release_date;
+    this.company = company;
+    this.overview = overview;
+    this.poster_path = poster_path;
+    this.vote_average = Double.parseDouble(vote_average);
     this.genres = new ArrayList<>();
   }
 
@@ -267,16 +270,30 @@ public class Pelicula implements Serializable {
     return false;
   }
 
-  @Override
-  public String toString() {
-    return "Pelicula [id=" + id + ", title=" + title + ", release_date=" + release_date
-        + ", company=" + company + ", overview=" + overview + ", poster_path=" + poster_path
-        + ", vote_average=" + vote_average + ", usuarioPelicula=" + usuarioPelicula + ", actores="
-        + actores + ", directores=" + directores + ", genres=" + genres + "]";
-  }
+  public String toStringCsv() {
+	    return  title + "\",\"" + release_date + "\",\""  + overview + "\",\"" + poster_path + "\",\"" + vote_average + "\"";
+	}
 
+	public String toStringJson() {
+	    Gson gson = new Gson();
+	    JsonObject jsonObject = new JsonObject();
+	    jsonObject.addProperty("id", id);
+	    jsonObject.addProperty("title", title);
+	    jsonObject.addProperty("release_date", release_date);
+	    jsonObject.addProperty("overview", overview);
+	    jsonObject.addProperty("poster_path", poster_path);
+	    jsonObject.addProperty("vote_average", vote_average);
+	    jsonObject.addProperty("company", company.getName());
+	    jsonObject.add("usuarioPelicula", gson.toJsonTree(usuarioPelicula));
+	    jsonObject.add("actores", gson.toJsonTree(actores));
+	    jsonObject.add("directores", gson.toJsonTree(directores));
+	    jsonObject.add("genres", gson.toJsonTree(genres));
+	    return jsonObject.toString();
+	}
 
-  public String getTipo() {
+  
+  
+  public String getTipo() { 
     return "movie";
   }
 

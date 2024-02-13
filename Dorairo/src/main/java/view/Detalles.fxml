@@ -62,6 +62,11 @@
                      </font>
                   </Text>
                   <TextField layoutX="526.0" layoutY="254.0" prefHeight="37.0" prefWidth="230.0" />
+                  <Text fx:id="fecha" layoutX="59.0" layoutY="598.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="444.13671875" />
+                  <Text fx:id="generos" layoutX="50.0" layoutY="654.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+                  <Text fx:id="valoracion" layoutX="59.0" layoutY="677.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+                  <Text fx:id="episodios" layoutX="61.0" layoutY="735.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+                  <Text fx:id="temporadas" layoutX="39.0" layoutY="773.0" strokeType="OUTSIDE" strokeWidth="0.0" />
                </children></AnchorPane>
 			</content>
 		</ScrollPane>

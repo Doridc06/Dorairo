@@ -69,6 +69,8 @@ public class DetallesController {
 
   @FXML
   private MenuItem yaVisto;
+  
+  Pelicula pelicula;
 
 
   private static final String API_KEY =
@@ -180,6 +182,8 @@ public class DetallesController {
         detalles.setText("Descripción: " + datos.getOverview() + "\n" + "Fecha de estreno: "
             + datos.getRelease_date() + "\n" + "Géneros: " + generosString.toString() + "\n"
             + "Valoracion: " + datos.getVote_average() + "\n");
+        
+        setPelicula(datos);
 
       } else if (tipo.equals("tv")) {
         Series datos = gson.fromJson(responseBody, Series.class);
@@ -219,7 +223,9 @@ public class DetallesController {
             + "Valoracion: " + datos.getVote_average() + "\n" + "Episodios: "
             + datos.getNumber_of_episodes() + "\n" + "Temporadas: " + datos.getNumber_of_seasons());
 
+        
       }
+      
 
     } catch (IOException e) {
       e.printStackTrace();
@@ -228,56 +234,59 @@ public class DetallesController {
 
   
   
+  public void setPelicula(Pelicula pelicula) {
+	    this.pelicula = pelicula;
+	}
+
   
   // para exportar 
   private void exportarPeliculaYSerie(String formato) {
-    // Obtener la información de la película actual
-    String tituloPelicula = titulo.getText();
-    String detallesPelicula = detalles.getText();
+	    // Obtener la información de la película actual
+	    String datosPeliculaCsv = "\"" + pelicula.toStringCsv() + "\"";
 
-    // Crear un objeto FileChooser para elegir la ubicación del archivo
-    FileChooser fileChooser = new FileChooser();
-    fileChooser.setTitle("Guardar película");
+	    // Crear un objeto FileChooser para elegir la ubicación del archivo
+	    FileChooser fileChooser = new FileChooser();
+	    fileChooser.setTitle("Guardar película");
 
-    // Configurar el filtro de extensión de archivo según el formato seleccionado
-    FileChooser.ExtensionFilter extFilter = null;
-    if (formato.equals("csv")) {
-        extFilter = new FileChooser.ExtensionFilter("Archivos CSV (*.csv)", "*.csv");
-    } else if (formato.equals("json")) {
-        extFilter = new FileChooser.ExtensionFilter("Archivos JSON (*.json)", "*.json");
-    }
-    if (extFilter != null) {
-        fileChooser.getExtensionFilters().add(extFilter);
-    }
+	    // Configurar el filtro de extensión de archivo según el formato seleccionado
+	    FileChooser.ExtensionFilter extFilter = null;
+	    if (formato.equals("csv")) {
+	        extFilter = new FileChooser.ExtensionFilter("Archivos CSV (*.csv)", "*.csv");
+	    } else if (formato.equals("json")) {
+	        extFilter = new FileChooser.ExtensionFilter("Archivos JSON (*.json)", "*.json");
+	    }
+	    if (extFilter != null) {
+	        fileChooser.getExtensionFilters().add(extFilter);
+	    }
 
-    // Mostrar el diálogo de guardar archivo y obtener la ubicación del archivo
-    File archivo = fileChooser.showSaveDialog(stage);
+	    // Mostrar el diálogo de guardar archivo y obtener la ubicación del archivo
+	    File archivo = fileChooser.showSaveDialog(stage);
 
-    // Verificar si se ha seleccionado una ubicación de archivo
-    if (archivo != null) {
-        try {
-            // Escribir la información de la película en el archivo
-            FileWriter escritor = new FileWriter(archivo);
-            if (formato.equals("csv")) {
-                escritor.write(tituloPelicula + "\n");
-                escritor.write(detallesPelicula);
-            } else if (formato.equals("json")) {
-                // Crear un objeto JSON con los datos de la película
-                JsonObject peliculaJson = new JsonObject();
-                peliculaJson.addProperty("titulo", tituloPelicula);
-                peliculaJson.addProperty("detalles", detallesPelicula);
+	    // Verificar si se ha seleccionado una ubicación de archivo
+	    if (archivo != null) {
+	        try {
+	            // Escribir la información de la película en el archivo
+	            FileWriter escritor = new FileWriter(archivo);
+	            if (formato.equals("csv")) {
+	                escritor.write(datosPeliculaCsv);
+	            } else if (formato.equals("json")) {
+	                // Crear un objeto JSON con los datos de la película
+	                JsonObject peliculaJson = new JsonObject();
+	                peliculaJson.addProperty("datosPeliculaCsv", datosPeliculaCsv);
 
-                // Escribir el objeto JSON en el archivo
-                Gson gson = new Gson();
-                String peliculaJsonString = gson.toJson(peliculaJson);
-                escritor.write(peliculaJsonString);
-            }
-            escritor.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-}
+	                // Escribir el objeto JSON en el archivo
+	                Gson gson = new Gson();
+	                String peliculaJsonString = gson.toJson(peliculaJson);
+	                escritor.write(peliculaJsonString);
+	            }
+	            escritor.close();
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	}
+
+
 
 
 }

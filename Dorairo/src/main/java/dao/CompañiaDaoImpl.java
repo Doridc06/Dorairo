@@ -29,18 +29,28 @@ public class CompañiaDaoImpl extends CommonDaoImpl<Compañia> implements Compa�
 
 	@Override
 	public Compañia searchById(int id) {
-		checkActiveTransaction();
+		activeTransaction();
 
 		// Busca la compañia con el id y la devuelve
-		return (Compañia) session.createQuery("FROM Compañias WHERE id = " + id).uniqueResult();
+		return (Compañia) session.createQuery("FROM Compañia WHERE id = " + id).uniqueResult();
 	}
 
 	@Override
 	public List<Compañia> searchByName(String name) {
-		checkActiveTransaction();
+		activeTransaction();
 
 		// Busca las compañias con dicho nombre
-		return session.createQuery("FROM Compañias WHERE nombre = '" + name + "'").list();
+		return session.createQuery("FROM Compañia WHERE nombre = '" + name + "'").list();
+	}
+
+	@Override
+	public String searchMaxId() {
+		activeTransaction();
+
+		// Searches for the max id
+		Integer max = (Integer) session.createQuery("SELECT MAX(id) FROM Compañia").uniqueResult();
+		String maxId = "" + max;
+		return maxId;
 	}
 
 }

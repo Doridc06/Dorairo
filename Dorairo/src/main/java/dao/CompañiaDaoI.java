@@ -28,4 +28,11 @@ public interface CompañiaDaoI extends CommonDaoI<Compañia> {
 	 */
 	public List<Compañia> searchByName(final String name);
 
+	/**
+	 * Busca el mayor id de las compañias
+	 * 
+	 * @return Max id
+	 */
+	public String searchMaxId();
+
 }

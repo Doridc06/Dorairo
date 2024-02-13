@@ -8,6 +8,7 @@ import com.google.gson.JsonObject;
 import constants.Constants;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
@@ -41,9 +42,7 @@ public class DetallesController {
   private Text detalles;
 
   private Scene scene;
-
   private Stage stage;
-
   private GestorVentanas gestorVentanas;
 
   @FXML
@@ -72,6 +71,12 @@ public class DetallesController {
   
   Pelicula pelicula;
 
+  private Pelicula pelicula;
+
+  private Series series;
+  
+  @FXML
+  private Button guardar;
 
   private static final String API_KEY =
       "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlYjc0NTA5ZjRiZDBlODJlMTFlYzA2YWM1MDRhMGRlMCIsInN1YiI6IjY1Mzc3ZmRmZjQ5NWVlMDBmZjY1YTEyOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ehIu08LoiMRTccPoD4AfADXOpQPlqNAKUMvGgwY3XU8";
@@ -85,8 +90,6 @@ public class DetallesController {
     Image imagenLupa = new Image(getClass().getResourceAsStream(Constants.URL_LUPA));
     lupa.setImage(imagenLupa);
 
-
-    // Configurar eventos para los elementos del menú Exportar
     csv.setOnAction(event -> exportarPeliculaYSerie("csv"));
     json.setOnAction(event -> exportarPeliculaYSerie("json"));
   }
@@ -126,112 +129,93 @@ public class DetallesController {
     stage = (Stage) scene.getWindow();
   }
 
-  /**
-   * Inicializa la información de la película en la ventana de detalles.
-   * 
-   * @param id El ID de la película seleccionada.
-   */
   public void initData(String id, String tipo) {
     OkHttpClient client = new OkHttpClient();
     String apiUrl = "https://api.themoviedb.org/3/" + tipo + "/" + id;
     String queryParams = "?language=es-ES";
     String fullUrl = apiUrl + queryParams;
-
     Request request =
         new Request.Builder().url(fullUrl).get().addHeader("accept", "application/json")
             .addHeader("Authorization", "Bearer " + API_KEY).build();
 
     try (Response response = client.newCall(request).execute()) {
       String responseBody = response.body().string();
-
       Gson gson = new Gson();
 
       if (tipo.equals("movie")) {
         Pelicula datos = gson.fromJson(responseBody, Pelicula.class);
         titulo.setText(datos.getTitle());
         cartel.setImage(new Image("https://image.tmdb.org/t/p/w500" + datos.getPoster_path()));
-
-        // Configurar la imagen de fondo con transparencia
-        // Obtener las dimensiones de la pantalla
         double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
         double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
-        // Mantener la relación de aspecto original de la imagen
         fondoIm.setPreserveRatio(true);
-        // Ajustar la posición de la imagen para que esté en el lado derecho de la
-        // pantalla
-        fondoIm.setLayoutX(screenWidth / 2); // Colocar en el centro horizontalmente
-        fondoIm.setLayoutY(0); // Colocar en la parte superior
-
-        // Establecer las dimensiones del ImageView para que abarque toda la pantalla
+        fondoIm.setLayoutX(screenWidth / 2);
+        fondoIm.setLayoutY(0);
         fondoIm.setFitWidth(screenWidth);
         fondoIm.setFitHeight(screenHeight);
         fondoIm.setImage(new Image("https://image.tmdb.org/t/p/w500" + datos.getPoster_path()));
         fondoIm.setOpacity(0.5);
         fondoIm.toBack();
 
-        // Construir la cadena de géneros
         StringBuilder generosString = new StringBuilder();
         for (Genero genero : datos.getGenres()) {
           generosString.append(genero.getName()).append(", ");
         }
-        // Eliminar la coma y el espacio extra al final
         if (generosString.length() > 0) {
           generosString.setLength(generosString.length() - 2);
         }
-
         detalles.setText("Descripción: " + datos.getOverview() + "\n" + "Fecha de estreno: "
             + datos.getRelease_date() + "\n" + "Géneros: " + generosString.toString() + "\n"
             + "Valoracion: " + datos.getVote_average() + "\n");
+<<<<<<< HEAD
         
         setPelicula(datos);
 
+=======
+        setPelicula(datos);
+>>>>>>> 6232c88f092a7ab8907a3268e1c89ebe21343d45
       } else if (tipo.equals("tv")) {
         Series datos = gson.fromJson(responseBody, Series.class);
         titulo.setText(datos.getName());
         cartel.setImage(new Image("https://image.tmdb.org/t/p/w500" + datos.getPoster_path()));
-        // Configurar la imagen de fondo con transparencia
-        // Obtener las dimensiones de la pantalla
         double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
         double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
-
-        // Mantener la relación de aspecto original de la imagen
         fondoIm.setPreserveRatio(true);
-        // Ajustar la posición de la imagen para que esté en el lado derecho de la
-        // pantalla
-        fondoIm.setLayoutX(screenWidth / 2); // Colocar en el centro horizontalmente
-        fondoIm.setLayoutY(0); // Colocar en la parte superior
-
-        // Establecer las dimensiones del ImageView para que abarque toda la pantalla
+        fondoIm.setLayoutX(screenWidth / 2);
+        fondoIm.setLayoutY(0);
         fondoIm.setFitWidth(screenWidth);
         fondoIm.setFitHeight(screenHeight);
         fondoIm.setImage(new Image("https://image.tmdb.org/t/p/w500" + datos.getPoster_path()));
         fondoIm.setOpacity(0.15);
         fondoIm.toBack();
 
-        // Construir la cadena de géneros
         StringBuilder generosString = new StringBuilder();
         for (Genero genero : datos.getGenres()) {
           generosString.append(genero.getName()).append(", ");
         }
-        // Eliminar la coma y el espacio extra al final
         if (generosString.length() > 0) {
           generosString.setLength(generosString.length() - 2);
         }
-
         detalles.setText("Descripción: " + datos.getOverview() + "\n" + "Fecha de estreno: "
             + datos.getFirst_air_date() + "\n" + "Géneros: " + generosString.toString() + "\n"
             + "Valoracion: " + datos.getVote_average() + "\n" + "Episodios: "
             + datos.getNumber_of_episodes() + "\n" + "Temporadas: " + datos.getNumber_of_seasons());
+<<<<<<< HEAD
 
         
       }
       
 
+=======
+        setSeries(datos);
+      }
+>>>>>>> 6232c88f092a7ab8907a3268e1c89ebe21343d45
     } catch (IOException e) {
       e.printStackTrace();
     }
   }
 
+<<<<<<< HEAD
   
   
   public void setPelicula(Pelicula pelicula) {
@@ -288,5 +272,55 @@ public class DetallesController {
 
 
 
+=======
+  public void setPelicula(Pelicula pelicula) {
+    this.pelicula = pelicula;
+  }
+
+  public void setSeries(Series series) {
+    this.series = series;
+
+
+  }
+
+  private void exportarPeliculaYSerie(String formato) {
+    if (pelicula == null && series == null) {
+      return;
+    }
+
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.setTitle("Guardar película o serie");
+
+    FileChooser.ExtensionFilter extFilter = null;
+    if (formato.equals("csv")) {
+      extFilter = new FileChooser.ExtensionFilter("Archivos CSV (*.csv)", "*.csv");
+    } else if (formato.equals("json")) {
+      extFilter = new FileChooser.ExtensionFilter("Archivos JSON (*.json)", "*.json");
+    }
+    if (extFilter != null) {
+      fileChooser.getExtensionFilters().add(extFilter);
+    }
+
+    File archivo = fileChooser.showSaveDialog(stage);
+
+    if (archivo != null) {
+      try {
+        FileWriter escritor = new FileWriter(archivo);
+        if (pelicula != null && formato.equals("csv")) {
+          escritor.write(pelicula.toStringCsv());
+        } else if (pelicula != null && formato.equals("json")) {
+          escritor.write(pelicula.toStringJson());
+        } else if (series != null && formato.equals("csv")) {
+          escritor.write(series.toStringCsv());
+        } else if (series != null && formato.equals("json")) {
+          escritor.write(series.toStringJson());
+        }
+        escritor.close();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+>>>>>>> 6232c88f092a7ab8907a3268e1c89ebe21343d45
 
 }

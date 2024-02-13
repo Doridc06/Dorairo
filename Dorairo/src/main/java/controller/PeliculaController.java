@@ -5,15 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.reflect.TypeToken;
 import constants.Constants;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.MenuItem;
@@ -28,9 +22,6 @@ import models.RespuestaApi;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import java.lang.reflect.Type;
-import com.google.gson.reflect.TypeToken;
-import javafx.event.ActionEvent;
 
 import utilities.GestorVentanas;
 
@@ -89,8 +80,8 @@ public class PeliculaController {
 	@FXML
 	private MenuItem Aleatoria;
 
-    @FXML
-    private ImageView lupa;
+	@FXML
+	private ImageView lupa;
 
 	private BuscarGeneroController buscarGeneroController;
 
@@ -131,14 +122,13 @@ public class PeliculaController {
 		setSceneAndStage();
 		gestorVentanas.muestraVentana(stage, Constants.URL_BUSCADOR_FXML, "Buscador");
 	}
-	
-	 @FXML
-	    void perfilClicked(MouseEvent event) {
-	        setSceneAndStage();
-	        gestorVentanas.muestraVentana(stage, Constants.URL_USUARIO_FXML, "Perfil");
-	    }
 
-	   
+	@FXML
+	void perfilClicked(MouseEvent event) {
+		setSceneAndStage();
+		gestorVentanas.muestraVentana(stage, Constants.URL_USUARIO_FXML, "Perfil");
+	}
+
 	void detallesClicked(ImageView clickedImageView) {
 		// Obtener el identificador de la película desde el ImageView
 		String movieId = getMovieIdFromImageView(clickedImageView);
@@ -159,10 +149,9 @@ public class PeliculaController {
 		// Establece la imagen del logo
 		Image imagenLogo = new Image(getClass().getResourceAsStream(Constants.URL_LOGO_AMPLIADO));
 		imagenLogoCabecera.setImage(imagenLogo);
-		
-		 Image imagenLupa = new Image(getClass().getResourceAsStream(Constants.URL_LUPA));
-	     lupa.setImage(imagenLupa);
-	        
+
+		Image imagenLupa = new Image(getClass().getResourceAsStream(Constants.URL_LUPA));
+		lupa.setImage(imagenLupa);
 
 		// Configuración de los eventos para los CheckBox de género
 		GeneroAccion.setOnAction(event -> generoClicked("28"));
@@ -205,7 +194,7 @@ public class PeliculaController {
 					imageView.setOnMouseClicked(event -> detallesClicked(imageView));
 				}
 			}
-			
+
 		} catch (IOException e) {
 			// Manejar excepciones
 			e.printStackTrace();
@@ -301,46 +290,153 @@ public class PeliculaController {
 	}
 
 	void generoClicked(String generoId) {
-	  setSceneAndStage();
-      gestorVentanas. muestraBuscadorGenero(stage,"movie",generoId);
+		setSceneAndStage();
+		gestorVentanas.muestraBuscadorGenero(stage, "movie", generoId);
 	}
 
-
-// para la pelicula aleatoria
+	// para la pelicula aleatoria
 	@FXML
 	void peliAleatoriaClicked() {
 		abrirVentanaPeliAleatoria();
 	}
 
-    private void abrirVentanaPeliAleatoria() {
-      // Obtener una película aleatoria
-      Pelicula peliculaAleatoria = obtenerPeliculaAleatoria();
+	private void abrirVentanaPeliAleatoria() {
+		// Obtener una película aleatoria
+		Pelicula peliculaAleatoria = obtenerPeliculaAleatoria();
 
-      // Verificar si se encontró una película aleatoria
-      if (peliculaAleatoria != null) {
-          // Obtener el ID de la película aleatoria
-          String movieId = String.valueOf(peliculaAleatoria.getId());
+		// Verificar si se encontró una película aleatoria
+		if (peliculaAleatoria != null) {
+			// Obtener el ID de la película aleatoria
+			String movieId = String.valueOf(peliculaAleatoria.getId());
 
-          // Abrir la ventana de detalles de la película aleatoria
-          abrirVentanaDetalles(movieId);
-      } else {
-          // Manejar la situación en la que no se pudo obtener una película aleatoria
-          System.out.println("No se pudo obtener una película aleatoria");
-      }
-  }
+			// Abrir la ventana de detalles de la película aleatoria
+			abrirVentanaDetalles(movieId);
+		} else {
+			// Manejar la situación en la que no se pudo obtener una película aleatoria
+			System.out.println("No se pudo obtener una película aleatoria");
+		}
+	}
 
-  private Pelicula obtenerPeliculaAleatoria() {
-      // Verificar si hay películas disponibles
-      if (!todasLasPeliculas.isEmpty()) {
-          // Obtener un índice aleatorio dentro del rango de la lista de películas
-          int indiceAleatorio = new Random().nextInt(todasLasPeliculas.size());
+	private Pelicula obtenerPeliculaAleatoria() {
+		// Verificar si hay películas disponibles
+		if (!todasLasPeliculas.isEmpty()) {
+			// Obtener un índice aleatorio dentro del rango de la lista de películas
+			int indiceAleatorio = new Random().nextInt(todasLasPeliculas.size());
 
-          // Obtener y devolver la película aleatoria
-          return todasLasPeliculas.get(indiceAleatorio);
-      } else {
-          return null;
-      }
-  }
+			// Obtener y devolver la película aleatoria
+			return todasLasPeliculas.get(indiceAleatorio);
+		} else {
+			return null;
+		}
+	}
 
+	// Para abrir la pantalla de generos
+	private void abrirVentanaBuscadorGenero(String generoId) {
+		setSceneAndStage();
+		gestorVentanas.muestraVentana(stage, Constants.URL_GENEROS_FXML, "Generos");
+	}
+
+	public void setBuscarGeneroController(BuscarGeneroController buscarGeneroController) {
+		this.buscarGeneroController = buscarGeneroController;
+	}
+
+	private void cargarImagenesPeliculasPorGenero(String generoId) {
+		// Crear un cliente OkHttpClient para realizar la solicitud HTTP
+		OkHttpClient client = new OkHttpClient();
+
+		// Construir la URL de la API con los parámetros necesarios
+		String apiUrl = "https://api.themoviedb.org/3/discover/movie";
+		String queryParams = "?language=es-ES&page=1&with_genres=" + generoId;
+		String fullUrl = apiUrl + queryParams;
+
+		// Construir la solicitud HTTP GET con la URL completa y los encabezados
+		// necesarios
+		Request request = new Request.Builder().url(fullUrl).get().addHeader("accept", "application/json")
+				.addHeader("Authorization", "Bearer " + API_KEY).build();
+
+		try (Response response = client.newCall(request).execute()) {
+			// Verificar si la solicitud fue exitosa (código de estado 200)
+			if (response.isSuccessful()) {
+				// Obtener el cuerpo de la respuesta en formato de cadena JSON
+				String responseBody = response.body().string();
+				System.out.println("1" + responseBody);
+				Gson gson = new Gson();
+
+				// Convertir la respuesta JSON en un objeto RespuestaApi utilizando Gson
+				RespuestaApi respApi = gson.fromJson(responseBody, RespuestaApi.class);
+				System.out.println("2" + respApi);
+
+				// Verificar si la respuesta contiene resultados de películas
+				if (respApi != null && respApi.getResults() != null && respApi.getResults().length > 0) {
+					// Verificar si el controlador de búsqueda de género no es nulo
+					if (buscarGeneroController != null) {
+						// Obtener el contenedor HBox de películas del controlador de búsqueda de género
+						HBox hBoxPeliculas = buscarGeneroController.getHBoxPeliculas();
+
+						// Limpiar el contenedor de imágenes de películas por género
+						hBoxPeliculas.getChildren().clear();
+						System.out.println("25" + hBoxPeliculas);
+						// Iterar sobre las películas obtenidas y agregar imágenes al contenedor
+						for (Pelicula pelicula : respApi.getResults()) {
+							System.out.println("3" + pelicula);
+							// Crear un nuevo ImageView para la película actual
+							ImageView imageView = new ImageView();
+							System.out.println("4" + imageView);
+
+							// Configurar la imagen en el ImageView
+							try {
+								// Construir la URL completa de la imagen de la película
+								String imageUrl = "https://image.tmdb.org/t/p/w500" + pelicula.getPoster_path();
+								Image image = new Image(imageUrl);
+								System.out.println("5" + imageView);
+								imageView.setImage(image);
+								imageView.setFitHeight(230.0);
+								imageView.setFitWidth(290.0);
+								imageView.setPreserveRatio(true);
+
+								// Agregar el ImageView al contenedor HBox
+								hBoxPeliculas.getChildren().add(imageView);
+								System.out.println("6" + hBoxPeliculas);
+							} catch (Exception e) {
+								// Manejar cualquier error al cargar la imagen
+								System.out.println("Error al cargar la imagen para la película: " + pelicula.getTitle());
+								e.printStackTrace(); // Imprimir detalles del error
+							}
+						}
+					}
+				} else {
+					// Informar si no se encontraron películas para el género especificado
+					System.out.println("No se encontraron películas para el género con ID: " + generoId);
+				}
+			} else {
+				// Informar si hubo un error al obtener películas por género (código de estado
+				// no 200)
+				System.out.println("Error al obtener películas por género. Código de estado: " + response.code());
+			}
+		} catch (IOException e) {
+			// Manejar cualquier error de entrada/salida al realizar la solicitud HTTP
+			System.out.println("Error al realizar la solicitud HTTP: " + e.getMessage());
+		}
+	}
+
+	/*
+	 * 1: El cuerpo de la respuesta de la API, que contiene toda la información
+	 * sobre las películas. 2: El objeto RespuestaApi que se obtiene al convertir el
+	 * cuerpo de la respuesta JSON en un objeto Java. 3: Cada una de las películas
+	 * obtenidas de la respuesta. 4: Cada ImageView creado para mostrar la imagen de
+	 * cada película. 5: La configuración de la imagen en el ImageView, donde se
+	 * establece la URL de la imagen y se carga en el ImageView. 6: El HBox al que
+	 * se está agregando el ImageView que muestra la imagen de la película.
+	 */
+	private String obtenerIdGenero(String generoBuscado) {
+		// Itera sobre la lista de géneros para encontrar el ID del género buscado
+		for (Genero genero : listaGeneros) {
+			if (genero.getName().equalsIgnoreCase(generoBuscado)) {
+				return String.valueOf(genero.getId());
+			}
+		}
+		// Devuelve una cadena vacía si el género no se encuentra
+		return "";
+	}
 
 }

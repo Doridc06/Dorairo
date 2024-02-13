@@ -38,6 +38,9 @@ public class UsuarioSerieID implements Serializable {
 		this.series = series;
 	}
 
+	public UsuarioSerieID() {
+	}
+
 	/**
 	 * @return the usuario
 	 */

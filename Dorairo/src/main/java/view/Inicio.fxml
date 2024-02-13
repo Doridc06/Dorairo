@@ -49,7 +49,7 @@
                   </Text>
                   <ScrollPane hbarPolicy="NEVER" pannable="true" prefHeight="245.0" prefWidth="1042.0" styleClass="fondo" vbarPolicy="NEVER" vmax="0.0">
                      <content>
-                        <HBox fx:id="top5" prefHeight="243.0" prefWidth="1512.0" styleClass="fondo">
+                        <HBox fx:id="top10" prefHeight="243.0" prefWidth="1512.0" styleClass="fondo">
                            <padding>
                               <Insets left="20.0" />
                            </padding>

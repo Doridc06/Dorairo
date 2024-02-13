@@ -22,6 +22,12 @@ import javafx.stage.Stage;
 public class GestorVentanas {
 
 	/**
+	 * Array con las pantallas que no deben seguir el tamaño normal, sino que tienen
+	 * el suyo propio y se superponen a la ventana anterior
+	 */
+	private String[] pantallasTamañoDistintoYSuperpuestas = { "Registro", "Cambiar Contraseña", "Cambiar Nombre" };
+
+	/**
 	 * Muestra la ventana que corresponda y cierra la anterior
 	 * 
 	 * @param stageAnterior Stage que se va a cerrar
@@ -72,7 +78,7 @@ public class GestorVentanas {
 			Scene scene = null;
 
 			// Comprueba si es Registro o Inicio para dejarlos con sus tamaños por defecto
-			if (titulo.equalsIgnoreCase("Registro") || titulo.equalsIgnoreCase("Dorairo")) {
+			if (isPantallaTamañoDistintoYSuperpuesta(titulo) || titulo.equalsIgnoreCase("Dorairo")) {
 				scene = new Scene(root);
 			} else {
 				scene = new Scene(root, 1512, 982);
@@ -93,7 +99,7 @@ public class GestorVentanas {
 			stage.setResizable(false);
 
 			// Muestra la ventana
-			if (titulo.equalsIgnoreCase("Registro")) {
+			if (isPantallaTamañoDistintoYSuperpuesta(titulo)) {
 				stage.showAndWait();
 			} else {
 				stage.show();
@@ -105,12 +111,36 @@ public class GestorVentanas {
 		}
 	}
 
+	/**
+	 * Comprueba si el titulo pasado es una de las pantallas con tamaño distinto
+	 * 
+	 * @param titulo Titulo a comprobar
+	 * @return True si es una de las pantallas con tamaño distinto; False si no lo
+	 *         es.
+	 */
+	private boolean isPantallaTamañoDistintoYSuperpuesta(String titulo) {
+// Recorre el array de las pantallas con tamaño distinto para comprobar si se encuentra el titulo
+		for (String pantalla : pantallasTamañoDistintoYSuperpuestas) {
+			if (pantalla.equalsIgnoreCase(titulo)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Muestra la ventana de Detalles
+	 * 
+	 * @param stageAnterior
+	 * @param id
+	 * @param tipo
+	 */
 	public void muestraDetalles(Stage stageAnterior, String id, String tipo) {
 		try {
-			
+
 			// Cierra el stage anterior
 			stageAnterior.close();
-			
+
 			// Ruta a la ventana
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(Constants.URL_DETALLES_FXML));
 			Parent root;
@@ -120,7 +150,7 @@ public class GestorVentanas {
 			DetallesController detallesController = loader.getController();
 
 			// Inicializar los datos en el controlador de detalles
-			detallesController.initData(id,tipo);
+			detallesController.initData(id, tipo);
 
 			// Asigna la ventana al nuevo stage
 			Stage stage = new Stage();
@@ -152,54 +182,73 @@ public class GestorVentanas {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	public void muestraBuscadorGenero(Stage stageAnterior, String tipo,String id) {
-      try {// Cierra el stage anterior
-          stageAnterior.close();
 
-              // Ruta a la ventana
-              FXMLLoader loader = new FXMLLoader(getClass().getResource(Constants.URL_GENEROS_FXML));
-              Parent root;
-              root = loader.load();
+	public void muestraBuscadorGenero(Stage stageAnterior, String tipo, String id) {
+		try {// Cierra el stage anterior
+			stageAnterior.close();
 
-              // Obtener el controlador de la ventana de generos
-              BuscarGeneroController buscadorController = loader.getController();
+			// Ruta a la ventana
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(Constants.URL_GENEROS_FXML));
+			Parent root;
+			root = loader.load();
 
-              // Inicializar los datos en el controlador de detalles
-              buscadorController.initData(tipo,id);
+			// Obtener el controlador de la ventana de generos
+			BuscarGeneroController buscadorController = loader.getController();
 
-              // Asigna la ventana al nuevo stage
-              Stage stage = new Stage();
-              Scene scene = null;
+			// Inicializar los datos en el controlador de detalles
+			buscadorController.initData(tipo, id);
 
-              // Establece el tamaño por defecto
-              scene = new Scene(root, 1512, 982);
-              stage.setScene(scene);
+			// Asigna la ventana al nuevo stage
+			Stage stage = new Stage();
+			Scene scene = null;
 
-              // Cambia el icono de la ventana
-              Image icon = new Image(getClass().getResourceAsStream(Constants.URL_LOGO_AMPLIADO));
-              stage.getIcons().add(icon);
+			// Establece el tamaño por defecto
+			scene = new Scene(root, 1512, 982);
+			stage.setScene(scene);
 
-              // Cambia el titulo de la ventana
-              stage.setTitle("Generos");
+			// Cambia el icono de la ventana
+			Image icon = new Image(getClass().getResourceAsStream(Constants.URL_LOGO_AMPLIADO));
+			stage.getIcons().add(icon);
 
-              // Define el tipo de modalidad
-              stage.initModality(Modality.APPLICATION_MODAL);
+			// Cambia el titulo de la ventana
+			stage.setTitle("Generos");
 
-              // Inhabilita la redimension de la ventana
-              stage.setResizable(false);
+			// Define el tipo de modalidad
+			stage.initModality(Modality.APPLICATION_MODAL);
 
-              // Muestra la ventana
-              stage.show();
+			// Inhabilita la redimension de la ventana
+			stage.setResizable(false);
 
-              // Establecemos el stage como owner Stage
-              Utils.setOwnerStage(stage);
-          } catch (IOException e) {
-              e.printStackTrace();
-          }
-      }
+			// Muestra la ventana
+			stage.show();
+
+			// Establecemos el stage como owner Stage
+			Utils.setOwnerStage(stage);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Muestra la ventana de Cambiar contraseña o nombre y desenfoca la anterior
+	 * para que no se pueda hacer uso de ella hasta que se cierre
+	 * 
+	 * @param anteriorScene Scena anterior
+	 * @param titulo        Titulo de la ventana
+	 */
+	public void muestraCambiarPasswordNombre(Scene anteriorScene, String titulo) {
+		// Aplica el desenfoque a la escena
+		BoxBlur blur = new BoxBlur(10, 10, 3);
+		anteriorScene.getRoot().setEffect(blur);
+
+		if (titulo.equalsIgnoreCase("Cambiar Contraseña")) {
+			setNewStage(Constants.URL_CAMBIAR_PASSWORD_FXML, titulo);
+		} else if (titulo.equalsIgnoreCase("Cambiar Nombre")) {
+			setNewStage(Constants.URL_CAMBIAR_NOMBRE_FXML, titulo);
+		}
+
+		// Desactiva el efecto de desenfoque
+		anteriorScene.getRoot().setEffect(null);
+	}
+
 }
-
-
-

@@ -1,8 +1,8 @@
 package models;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -32,11 +32,11 @@ public class Actores implements Serializable {
 
 	/** Relacion de Actores con Series */
 	@ManyToMany(cascade = { CascadeType.ALL }, mappedBy = "actores")
-	private Set<Series> series = new HashSet<>();
+	private List<Series> series = new ArrayList<>();
 
 	/** Relacion de Actores con Peliculas */
 	@ManyToMany(cascade = { CascadeType.ALL }, mappedBy = "actores")
-	private Set<Pelicula> peliculas = new HashSet<>();
+	private List<Pelicula> peliculas = new ArrayList<>();
 
 	/**
 	 * Constructor para la tabla Actores
@@ -48,21 +48,64 @@ public class Actores implements Serializable {
 		this.id = id;
 		this.name = name;
 	}
+	
+	public Actores() {
+	}
 
+	/**
+	 * @return the id
+	 */
 	public int getId() {
 		return id;
 	}
 
+	/**
+	 * @param id the id to set
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
+	/**
+	 * @return the name
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * @param name the name to set
+	 */
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	/**
+	 * @return the series
+	 */
+	public List<Series> getSeries() {
+		return series;
+	}
+
+	/**
+	 * @param series the series to set
+	 */
+	public void setSeries(List<Series> series) {
+		this.series = series;
+	}
+
+	/**
+	 * @return the peliculas
+	 */
+	public List<Pelicula> getPeliculas() {
+		return peliculas;
+	}
+
+	/**
+	 * @param peliculas the peliculas to set
+	 */
+	public void setPeliculas(List<Pelicula> peliculas) {
+		this.peliculas = peliculas;
 	}
 
 }

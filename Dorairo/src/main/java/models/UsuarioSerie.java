@@ -59,6 +59,9 @@ public class UsuarioSerie implements Serializable {
 		this.vista = vista;
 		this.miLista = miLista;
 	}
+	
+	public UsuarioSerie() {
+	}
 
 	/**
 	 * @return the id

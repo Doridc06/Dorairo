@@ -98,7 +98,7 @@ public class LoginController {
 		if (comprobarPerfil(usuario, contrasena)) {
 			Utils.mostrarAlerta("Inicio de sesión exitoso. ¡Bienvenido/a, " + usuario + "!", Constants.INFORMATION_TYPE);
 			// Muestra la ventana de inicio
-			gestorVentanas.muestraVentana(stage, Constants.URL_AGREGADAS_MANUALMENTE_FXML, "Inicio");
+			gestorVentanas.muestraVentana(stage, Constants.URL_INICIO_FXML, "Inicio");
 		} else {
 			Utils.mostrarAlerta("Error de inicio de sesión. Usuario o contraseña incorrectos", Constants.ERROR_TYPE);
 		}

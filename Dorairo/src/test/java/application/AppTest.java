@@ -1,8 +1,5 @@
 package application;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
@@ -11,13 +8,12 @@ import org.testfx.api.FxAssert;
 import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
-import org.testfx.matcher.control.LabeledMatchers;
+import org.testfx.matcher.base.NodeMatchers;
+import org.testfx.matcher.base.WindowMatchers;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 @ExtendWith(ApplicationExtension.class)
@@ -40,33 +36,54 @@ class AppTest {
 	}
 
 	@Test
-	void compruebaTextoBoton() {
-		FxAssert.verifyThat("#btnBuscar", LabeledMatchers.hasText("BUSCAR"));
-	}
-
-	@Test
-	void testTexto() {
+	void testUsuarioNoExiste() {
+		// Crea el FxRobot
 		FxRobot fxRobot = new FxRobot();
+		// Introduce un usuario y contraseña inexistentes
 		fxRobot.clickOn("#txtUsuario");
 		fxRobot.write("Usuario");
 		fxRobot.clickOn("#pwContrasena");
 		fxRobot.write("password");
+		// Le da al boton de logearse
 		fxRobot.clickOn("#btnLogin");
-
-		// Busca un nodo con el mensaje de error
-		Node errorNode = mainNode.lookup(".dialog-pane");
-
-		// Verifica si el nodo con el mensaje de error está presente
-		assertNotNull(errorNode, "Se esperaba un mensaje de error, pero no se encontró.");
-		assertEquals("Error de inicio de sesión. Usuario o contraseña incorrectos", ((Label) errorNode).getText(),
-				"El mensaje de error no coincide con lo esperado.");
+		// Verifica que salta la alerta de error
+		FxAssert.verifyThat("#alertaError", NodeMatchers.isEnabled());
+		// Le da al boton de Aceptar para cerrar la alerta
+		fxRobot.clickOn("#btnAceptar");
 	}
 
 	@Test
-	void testVentana() {
-//		FxRobot fxRobot = new FxRobot();
-//		fxRobot.clickOn("#btnBuscar");
-//		FxAssert.verifyThat("#lblTexto", NodeMatchers.isVisible());
+	void testUsuarioExiste() {
+		// Crea el FxRobot
+		FxRobot fxRobot = new FxRobot();
+		// Introduce un usuario y contraseña existentes
+		fxRobot.clickOn("#txtUsuario");
+		fxRobot.write(".");
+		fxRobot.clickOn("#pwContrasena");
+		fxRobot.write(".");
+		// Le da al boton de logearse
+		fxRobot.clickOn("#btnLogin");
+		// Verifica que salta la alerta de informacion
+		FxAssert.verifyThat("#alertaInformacion", NodeMatchers.isEnabled());
+		// Le da al boton de Aceptar para cerrar la alerta
+		fxRobot.clickOn("#btnAceptar");
+		// Comprueba que se abre la ventana de inicio
+		FxAssert.verifyThat(fxRobot.window("Inicio"), WindowMatchers.isShowing());
 	}
 
+	@Test
+	void testRegistroFunciona() {
+		// Crea el FxRobot
+		FxRobot fxRobot = new FxRobot();
+		// Introduce un nombre y correo no existentes
+		fxRobot.clickOn("#txtUsuario");
+		fxRobot.write("Enrique");
+		fxRobot.clickOn("#txtCorreo");
+		fxRobot.write("enrique@ejemplo.com");
+		fxRobot.clickOn("#txtNombre");
+		fxRobot.write("Enrique Martínez Fernández");
+		fxRobot.clickOn("#pwContrasena");
+		fxRobot.write("enrique");
+		// terminar
+	}
 }

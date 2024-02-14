@@ -12,6 +12,7 @@ import dao.PeliculaDaoImpl;
 import dao.SeriesDaoImpl;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -41,11 +42,17 @@ public class Utils {
 	 */
 	public static void mostrarAlerta(String mensaje, String tipo) {
 		Alert alert = new Alert(AlertType.valueOf(tipo));
-		alert.getDialogPane().getStyleClass().add(".dialog-pane");
 		alert.setTitle(tipo);
-		alert.setHeaderText(null);
 		alert.setContentText(mensaje);
 		alert.initOwner(ownerStage);
+		Button boton = (Button) alert.getDialogPane().lookupButton(ButtonType.OK);
+		boton.setId("btnAceptar");
+		boton.setText("Aceptar");
+		if (tipo.equalsIgnoreCase(Constants.ERROR_TYPE)) {
+			alert.getDialogPane().setId("alertaError");
+		} else if (tipo.equalsIgnoreCase(Constants.INFORMATION_TYPE)) {
+			alert.getDialogPane().setId("alertaInformacion");
+		}
 		alert.showAndWait();
 	}
 

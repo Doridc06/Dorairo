@@ -327,7 +327,7 @@ public class Pelicula implements Serializable {
 		}
 		jsonObject.addProperty("Géneros", generosString.toString());
 
-		jsonObject.addProperty("Valoracion", vote_average);
+		 jsonObject.addProperty("Valoracion", String.valueOf(vote_average));
 
 		Gson gson = new Gson();
 		return gson.toJson(jsonObject);

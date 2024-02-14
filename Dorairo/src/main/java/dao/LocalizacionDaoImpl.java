@@ -34,5 +34,10 @@ public class LocalizacionDaoImpl extends CommonDaoImpl<Localizacion> implements 
 		// Searches for the Localizacion with the id
 		return (Localizacion) session.createQuery("FROM Localizacion WHERE id = " + id).uniqueResult();
 	}
+	
+	
+	
+	
+	
 
 }

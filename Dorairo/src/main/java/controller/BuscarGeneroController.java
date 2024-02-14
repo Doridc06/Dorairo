@@ -3,22 +3,12 @@ package controller;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.reflect.TypeToken;
 import constants.Constants;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -27,7 +17,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import models.Genero;
 import models.Pelicula;
 import models.RespuestaApi;
 import models.RespuestaApiSeries;
@@ -36,8 +25,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import utilities.GestorVentanas;
-import java.lang.reflect.Type;
-import com.google.gson.reflect.TypeToken;
 
 public class BuscarGeneroController {
 
@@ -85,11 +72,6 @@ public class BuscarGeneroController {
 
   // Lista para almacenar todas las películas obtenidas de la API
   static List<Pelicula> todasLasPeliculas = new ArrayList<>();
-
-  // Lista para almacenar las películas filtradas por género
-  private List<Pelicula> peliculasFiltradas = new ArrayList<>();
-
-  private List<Genero> listaGeneros = new ArrayList<>();
 
   private String tipo;
 
@@ -377,8 +359,7 @@ public class BuscarGeneroController {
       } else {
         // Informar si hubo un error al obtener películas por género (código de estado
         // no 200)
-        System.out
-            .println("Error al obtener películas por género. Código de estado: " + response.code());
+        System.out.println("Error al obtener películas por género. Código de estado: " + response.code());
       }
     } catch (IOException e) {
       // Manejar cualquier error de entrada/salida al realizar la solicitud HTTP

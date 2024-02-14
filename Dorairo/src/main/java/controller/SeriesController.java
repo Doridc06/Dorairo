@@ -6,10 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
-
+import org.hibernate.Session;
 import com.google.gson.Gson;
-
+import conexion.HibernateUtil;
 import constants.Constants;
+import dao.UsuarioSerieDaoImpl;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
@@ -24,6 +25,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import models.RespuestaApiSeries;
 import models.Series;
+import models.UsuarioSerie;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -59,13 +61,13 @@ public class SeriesController {
 	private CheckBox GeneroMisterio;
 
 	@FXML
-	private CheckBox GeneroMusical;
+	private CheckBox GeneroDocumental;
 
 	@FXML
-	private CheckBox GeneroSuspenso;
+	private CheckBox GeneroFamilia;
 
 	@FXML
-	private CheckBox GeneroTerror;
+	private CheckBox GeneroInfantil;
 
 	@FXML
 	private ImageView imagenLogoCabecera;
@@ -105,6 +107,15 @@ public class SeriesController {
 
 	@FXML
 	private ImageView lupa;
+	
+    @FXML
+    private HBox miLista;
+    
+    @FXML
+    private HBox yaVisto;
+    
+    /** Conexion con la base de datos */
+    private Session session;
 
 	private static final String API_KEY = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlYjc0NTA5ZjRiZDBlODJlMTFlYzA2YWM1MDRhMGRlMCIsInN1YiI6IjY1Mzc3ZmRmZjQ5NWVlMDBmZjY1YTEyOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ehIu08LoiMRTccPoD4AfADXOpQPlqNAKUMvGgwY3XU8";
 
@@ -158,6 +169,9 @@ public class SeriesController {
 
 	@FXML
 	void initialize() {
+	  
+	// Recogemos la sesion
+      session = HibernateUtil.openSession();
 		// Inicializamos el Gestor de ventanas
 		gestorVentanas = new GestorVentanas();
 		// Establece la imagen del logo
@@ -166,14 +180,24 @@ public class SeriesController {
 
 		Image imagenLupa = new Image(getClass().getResourceAsStream(Constants.URL_LUPA));
 		lupa.setImage(imagenLupa);
+		
+		 miLista.setSpacing(50);
+		 yaVisto.setSpacing(50);
 
 		Aleatoria.setOnAction(event -> peliAleatoriaClicked());
-		GeneroAccion.setOnAction(event -> generoClicked("28"));
-		GeneroAventura.setOnAction(event -> generoClicked("12"));
-		GeneroComedia.setOnAction(event -> generoClicked("35"));
-		GeneroTerror.setOnAction(event -> generoClicked("27"));
-		GeneroSuspenso.setOnAction(event -> generoClicked("53"));
-		GeneroDrama.setOnAction(event -> generoClicked("18"));
+		
+		GeneroAccion.setOnAction(event -> generoClicked("10759"));
+	    GeneroComedia.setOnAction(event -> generoClicked("35"));
+	    GeneroInfantil.setOnAction(event -> generoClicked("10762"));
+	    GeneroFamilia.setOnAction(event -> generoClicked("10751"));
+	    GeneroDrama.setOnAction(event -> generoClicked("18"));
+	    GeneroMisterio.setOnAction(event -> generoClicked("9648"));
+	    GeneroDocumental.setOnAction(event -> generoClicked("99"));
+	    GeneroCienciaFiccion.setOnAction(event -> generoClicked("10765"));
+	    GeneroAnimacion.setOnAction(event -> generoClicked("16"));
+		
+		agregarImagenAMiListaSerie();
+		agregarImagenAYaVistaSerie();
 
 		try {
 			// Configuración del cliente HTTP (OkHttpClient)
@@ -318,5 +342,69 @@ public class SeriesController {
 			return null;
 		}
 	}
+	
+	
+    public void agregarImagenAMiListaSerie() {
+      
+      UsuarioSerieDaoImpl usDao = new UsuarioSerieDaoImpl(session);
+      
+      List<UsuarioSerie> listaUsuarioSerie = usDao.searchSeriesMiLista(UsuarioController.getUsuarioRegistrado().getUser());
+      
+      for (UsuarioSerie us : listaUsuarioSerie) {
+          // Obtener la imagen de la película
+          ImageView imageView = getImageViewFromSerie(us.getId().getSeries());
+          
+          // Establecer el tamaño de la imagen si es necesario
+          imageView.setFitWidth(200); // Ajusta el ancho según tus necesidades
+          imageView.setPreserveRatio(true); // Mantiene la proporción de la imagen
+       // Almacena el ID de la película en el userData del ImageView
+          imageView.setUserData(String.valueOf(us.getId().getSeries().getId()));
+          
+          // Agregar la imagen al HBox de "Mi Lista"
+          miLista.getChildren().add(imageView);
+      }
+      
+  }
+    
+  public void agregarImagenAYaVistaSerie() {
+      
+      UsuarioSerieDaoImpl usDao = new UsuarioSerieDaoImpl(session);
+      
+      List<UsuarioSerie> listaUsuarioSerie = usDao.searchSeriesYaVista(UsuarioController.getUsuarioRegistrado().getUser());
+      
+      for (UsuarioSerie us : listaUsuarioSerie) {
+          // Obtener la imagen de la película
+          ImageView imageView = getImageViewFromSerie(us.getId().getSeries());
+          
+          // Establecer el tamaño de la imagen si es necesario
+          imageView.setFitWidth(200); // Ajusta el ancho según tus necesidades
+          imageView.setPreserveRatio(true); // Mantiene la proporción de la imagen
+       // Almacena el ID de la película en el userData del ImageView
+          imageView.setUserData(String.valueOf(us.getId().getSeries().getId()));
+          
+          // Agregar la imagen al HBox de "ya vistas"
+          yaVisto.getChildren().add(imageView);
+      }
+      
+  }
+    
+    private ImageView getImageViewFromSerie(Series series) {
+      ImageView imageView = new ImageView();
+      imageView.setFitHeight(230.0);
+      imageView.setFitWidth(290.0);
+      imageView.setPreserveRatio(true);
+
+      // Construir la URL del póster de la película
+      String imageUrl = "https://image.tmdb.org/t/p/w500" + series.getPoster_path();
+
+      // Configurar la imagen en el ImageView
+      Image image = new Image(imageUrl);
+      imageView.getStyleClass().add("imagenSeries");
+      imageView.setImage(image);
+
+      // Configurar el evento de clic para llamar a detallesClicked
+      imageView.setOnMouseClicked(event -> detallesClicked(imageView));
+      return imageView;
+  }
 
 }

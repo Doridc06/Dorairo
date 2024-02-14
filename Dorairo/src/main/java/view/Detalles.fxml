@@ -28,18 +28,18 @@
                         <Font name="System Bold" size="34.0" />
                      </font>
                   </Text>
-                  <ImageView fx:id="cartel" fitHeight="400.0" fitWidth="400.0" layoutX="61.0" layoutY="91.0" pickOnBounds="true" preserveRatio="true" />
-                  <Text fx:id="detalles" layoutX="59.0" layoutY="582.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="1311.0">
+                  <ImageView fx:id="cartel" fitHeight="400.0" fitWidth="300.0" layoutX="61.0" layoutY="91.0" pickOnBounds="true" preserveRatio="true" />
+                  <Text fx:id="detalles" layoutX="61.0" layoutY="592.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="1311.0">
                      <font>
-                        <Font size="23.0" />
+                        <Font size="18.0" />
                      </font>
                   </Text>
-                  <Text layoutX="59.0" layoutY="543.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Detalles:">
+                  <Text layoutX="61.0" layoutY="555.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Detalles:">
                      <font>
                         <Font name="System Bold" size="26.0" />
                      </font>
                   </Text>
-                  <MenuButton fx:id="Agregar" layoutX="526.0" layoutY="108.0" mnemonicParsing="false" styleClass="cabeceraBotones" text="Añadir">
+                  <MenuButton fx:id="Agregar" layoutX="379.0" layoutY="95.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="141.0" styleClass="cabeceraBotones" text="Añadir">
                     <items>
                       <MenuItem fx:id="miLista" mnemonicParsing="false" text="Mi Lista" />
                       <MenuItem fx:id="yaVisto" mnemonicParsing="false" text="Ya visto" />
@@ -48,7 +48,7 @@
                         <Font size="22.0" />
                      </font>
                   </MenuButton>
-                  <MenuButton fx:id="Exportar" layoutX="674.0" layoutY="108.0" mnemonicParsing="false" styleClass="cabeceraBotones" text="Exportar">
+                  <MenuButton fx:id="Exportar" layoutX="379.0" layoutY="158.0" mnemonicParsing="false" styleClass="cabeceraBotones" text="Exportar">
                     <items>
                       <MenuItem fx:id="csv" mnemonicParsing="false" text="CSV" />
                       <MenuItem fx:id="json" mnemonicParsing="false" text="JSON" />
@@ -57,13 +57,22 @@
                         <Font size="22.0" />
                      </font>
                   </MenuButton>
-                  <Text layoutX="528.0" layoutY="236.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Guardado en:">
+                  <Text layoutX="636.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Guardado en:">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Text>
-                  <TextField layoutX="526.0" layoutY="254.0" prefHeight="37.0" prefWidth="230.0" />
-                  <Button fx:id="guardar" layoutX="621.0" layoutY="311.0" mnemonicParsing="false" styleClass="cabeceraBotones" text="Guardar" />
+                  <TextField fx:id="guardadoEn" layoutX="636.0" layoutY="131.0" prefHeight="37.0" prefWidth="230.0" />
+                  <Button fx:id="guardar" layoutX="717.0" layoutY="181.0" mnemonicParsing="false" styleClass="cabeceraBotones" text="Guardar" />
+                  <Text fx:id="actoresYdirectores" layoutX="379.0" layoutY="268.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="1067.0">
+                     <font>
+                        <Font size="16.0" />
+                     </font></Text>
+                  <Text fx:id="compania" layoutX="382.0" layoutY="236.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="1061.0">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Text>
                </children></AnchorPane>
 			</content>
 		</ScrollPane>

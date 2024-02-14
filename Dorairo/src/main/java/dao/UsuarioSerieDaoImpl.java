@@ -3,7 +3,7 @@ package dao;
 import java.util.List;
 
 import org.hibernate.Session;
-
+import models.UsuarioPelicula;
 import models.UsuarioSerie;
 
 public class UsuarioSerieDaoImpl extends CommonDaoImpl<UsuarioSerie> implements UsuarioSerieDaoI {
@@ -35,7 +35,7 @@ public class UsuarioSerieDaoImpl extends CommonDaoImpl<UsuarioSerie> implements 
 
 		// Searches for the UsuarioSerie and returns it
 		return (UsuarioSerie) session
-				.createQuery("FROM UsuarioSerie WHERE id.usuario = '" + usuario + "' and id.serie = " + serieId).uniqueResult();
+				.createQuery("FROM UsuarioSerie WHERE id.usuario = '" + usuario + "' and id.series = " + serieId).uniqueResult();
 	}
 
 	@Override
@@ -45,5 +45,22 @@ public class UsuarioSerieDaoImpl extends CommonDaoImpl<UsuarioSerie> implements 
 				.uniqueResult();
 		return numero.toString();
 	}
+	
+	@Override
+    public List<UsuarioSerie> searchSeriesMiLista(String usuario) {
+        activeTransaction();
+
+        // Searches for all UsuarioSerie with this user and miLista true
+        return session.createQuery("FROM UsuarioSerie WHERE id.usuario = '" + usuario + "' and miLista = true").list();
+    }
+
+  public List<UsuarioSerie> searchSeriesYaVista(String usuario) {
+    activeTransaction();
+
+    // Searches for all UsuarioSerie with this user and miLista true
+    return session.createQuery("FROM UsuarioSerie WHERE id.usuario = '" + usuario + "' and vista = true").list();
+}
+
+
 	
 }

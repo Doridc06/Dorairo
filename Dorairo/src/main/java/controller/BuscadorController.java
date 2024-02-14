@@ -10,7 +10,7 @@ import com.google.gson.Gson;
 import conexion.HibernateUtil;
 import constants.Constants;
 import dao.PeliculaDaoImpl;
-import dao.UsuarioPeliculaDaoImpl;
+import dao.SeriesDaoImpl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -26,7 +26,6 @@ import models.Pelicula;
 import models.RespuestaApi;
 import models.RespuestaApiSeries;
 import models.Series;
-import models.UsuarioPelicula;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -122,6 +121,7 @@ public class BuscadorController {
 		if (!searchTerm.isEmpty()) {
 			buscarPeliculasYSeriesPorTitulo();
 			agregarImagenABuscador();
+			agregarImagenABuscadorSeries();
 		}
 	}
 
@@ -278,29 +278,43 @@ public class BuscadorController {
 		gestorVentanas.muestraDetalles(stage, String.valueOf(id), tipo);
 	}
 
+	// metodo para mostrar las imagenes de las peliculas de la base de datos en el buscador
 	public void agregarImagenABuscador() {
-
 		PeliculaDaoImpl pDao = new PeliculaDaoImpl(HibernateUtil.openSession());
-
 		List<Pelicula> listaPelicula = pDao.searchByTitle(searchTerm);
 
 		for (Pelicula peli : listaPelicula) {
 			// Obtener la imagen de la película
 			ImageView imageView = new ImageView(new Image("file:" + peli.getPoster_path()));
 
-			// Establecer el tamaño de la imagen si es necesario
-			imageView.setFitWidth(200); // Ajusta el ancho según tus necesidades
-			imageView.setPreserveRatio(true); // Mantiene la proporción de la imagen
+			 // Establecer el tamaño de la imagen
+	        imageView.setFitWidth(200); // Ancho fijo
+	        imageView.setFitHeight(300); // Alto fijo (opcional)
+	        imageView.setPreserveRatio(true); // Mantiene la proporción de la imagen
 			// Almacena el ID de la película en el userData del ImageView
 			imageView.setUserData(String.valueOf(peli.getId()));
 			imageView.setOnMouseClicked(event -> mostrarDetallesPelicula(peli));
-
-			// Agregar la imagen al HBox de "Mi Lista"
 			seEncontro.getChildren().add(imageView);
-			
-
-			System.out.println("Se agregó la imagen correctamente a 'Mi Lista'");
 		}
-
 	}
+	
+	// metodo para mostrar las imagenes de las series de la base de datos en el buscador
+	public void agregarImagenABuscadorSeries() {
+      SeriesDaoImpl sDao = new SeriesDaoImpl(HibernateUtil.openSession());
+      List<Series> listaSeries = sDao.searchByTitle(searchTerm);
+
+      for (Series serie : listaSeries) {
+          // Obtener la imagen de la película
+          ImageView imageView = new ImageView(new Image("file:" + serie.getPoster_path()));
+
+          // Establecer el tamaño de la imagen
+          imageView.setFitWidth(200); // Ancho fijo
+          imageView.setFitHeight(300); // Alto fijo (opcional)
+          imageView.setPreserveRatio(true); // Mantiene la proporción de la imagen
+          // Almacena el ID de la película en el userData del ImageView
+          imageView.setUserData(String.valueOf(serie.getId()));
+          imageView.setOnMouseClicked(event -> mostrarDetallesSerie(serie));
+          seEncontro.getChildren().add(imageView);
+      }
+  }
 }

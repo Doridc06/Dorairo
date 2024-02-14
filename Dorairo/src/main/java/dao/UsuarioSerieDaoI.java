@@ -37,4 +37,6 @@ public interface UsuarioSerieDaoI extends CommonDaoI<UsuarioSerie> {
 	 */
 	public String searchNumeroSeries(final String usuario);
 
+  List<UsuarioSerie> searchSeriesMiLista(String usuario);
+
 }

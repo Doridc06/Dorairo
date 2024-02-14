@@ -338,7 +338,10 @@ public class Series implements Serializable {
 		jsonObject.addProperty("titulo", name);
 		jsonObject.addProperty("detalles", overview);
 		jsonObject.addProperty("fecha", first_air_date);
-
+		// Parsear a String y añadir como cadenas
+	    jsonObject.addProperty("Valoracion", String.valueOf(vote_average));
+	    jsonObject.addProperty("Número de episodios", String.valueOf(number_of_episodes));
+	    jsonObject.addProperty("Número de temporadas", String.valueOf(number_of_seasons));
 		// Construir la cadena de géneros
 		StringBuilder generosString = new StringBuilder();
 		for (Genero genero : genres) {
@@ -349,11 +352,6 @@ public class Series implements Serializable {
 			generosString.setLength(generosString.length() - 2);
 		}
 		jsonObject.addProperty("Géneros", generosString.toString());
-
-		jsonObject.addProperty("Valoracion", vote_average);
-		jsonObject.addProperty("Número de episodios", number_of_episodes);
-		jsonObject.addProperty("Número de temporadas", number_of_seasons);
-
 		Gson gson = new Gson();
 		return gson.toJson(jsonObject);
 	}

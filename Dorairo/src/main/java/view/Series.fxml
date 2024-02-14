@@ -34,27 +34,22 @@
                                     <Font size="16.0" />
                                  </font>
                               </CheckBox>
-                              <CheckBox fx:id="GeneroSuspenso" layoutX="150.0" layoutY="51.0" mnemonicParsing="false" text="Suspenso">
+                              <CheckBox fx:id="GeneroFamilia" layoutX="150.0" layoutY="51.0" mnemonicParsing="false" text="Familia">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </CheckBox>
-                              <CheckBox fx:id="GeneroMisterio" layoutX="286.0" layoutY="51.0" mnemonicParsing="false" text="Misterio">
+                              <CheckBox fx:id="GeneroMisterio" layoutX="275.0" layoutY="51.0" mnemonicParsing="false" text="Misterio">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </CheckBox>
-                              <CheckBox fx:id="GeneroMusical" layoutX="420.0" layoutY="51.0" mnemonicParsing="false" text="Musical">
+                              <CheckBox fx:id="GeneroDocumental" layoutX="402.0" layoutY="51.0" mnemonicParsing="false" text="Documental">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </CheckBox>
-                              <CheckBox fx:id="GeneroAventura" layoutX="554.0" layoutY="51.0" mnemonicParsing="false" text="Aventura">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </CheckBox>
-                              <CheckBox fx:id="GeneroTerror" layoutX="694.0" layoutY="51.0" mnemonicParsing="false" text="Terror">
+                              <CheckBox fx:id="GeneroInfantil" layoutX="694.0" layoutY="51.0" mnemonicParsing="false" text="Infantil">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -69,12 +64,12 @@
                                     <Font size="16.0" />
                                  </font>
                               </CheckBox>
-                              <CheckBox fx:id="GeneroAccion" layoutX="1122.0" layoutY="49.0" mnemonicParsing="false" text="Acción">
+                              <CheckBox fx:id="GeneroAccion" layoutX="1122.0" layoutY="49.0" mnemonicParsing="false" text="Acción y Aventura">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </CheckBox>
-                              <CheckBox fx:id="GeneroComedia" layoutX="1237.0" layoutY="48.0" mnemonicParsing="false" text="Comedia">
+                              <CheckBox fx:id="GeneroComedia" layoutX="559.0" layoutY="51.0" mnemonicParsing="false" text="Comedia">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -137,7 +132,7 @@
                               <Insets top="20.0" />
                            </VBox.margin>
                            <content>
-                              <HBox prefHeight="258.0" prefWidth="1501.0" styleClass="fondo">
+                              <HBox fx:id="miLista" prefHeight="258.0" prefWidth="1501.0" styleClass="fondo">
                            <padding>
                               <Insets left="20.0" />
                            </padding>
@@ -154,7 +149,7 @@
                         </Text>
                         <ScrollPane hbarPolicy="NEVER" pannable="true" prefHeight="244.0" prefWidth="1513.0" styleClass="fondo" vbarPolicy="NEVER" vmax="0.0">
                            <content>
-                              <HBox prefHeight="258.0" prefWidth="1509.0" styleClass="fondo">
+                              <HBox fx:id="yaVisto" prefHeight="258.0" prefWidth="1509.0" styleClass="fondo">
                            <padding>
                               <Insets left="20.0" />
                            </padding>

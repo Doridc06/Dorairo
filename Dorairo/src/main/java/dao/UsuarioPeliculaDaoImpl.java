@@ -56,5 +56,12 @@ public class UsuarioPeliculaDaoImpl extends CommonDaoImpl<UsuarioPelicula> imple
 		// Searches for all UsuarioPelicula with this user and miLista true
 		return session.createQuery("FROM UsuarioPelicula WHERE id.usuario = '" + usuario + "' and miLista = true").list();
 	}
+
+  public List<UsuarioPelicula> searchPeliculasYaVistas(String usuario) {
+    activeTransaction();
+
+    // Searches for all UsuarioPelicula with this user and miLista true
+    return session.createQuery("FROM UsuarioPelicula WHERE id.usuario = '" + usuario + "' and vista = true").list();
+  }
 	
 }

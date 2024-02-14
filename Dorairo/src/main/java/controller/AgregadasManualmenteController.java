@@ -700,7 +700,7 @@ public class AgregadasManualmenteController {
 				List<Directores> listDirectores = getListaDirectores();
 				List<Genero> listGenero = getListaGenero();
 				comprobarFecha();
-				Series serie = new Series(Utils.generaMovieId(), txtTitulo.getText(), txtEstreno.getText(), company,
+				Series serie = new Series(Utils.generaSerieId(), txtTitulo.getText(), txtEstreno.getText(), company,
 						txtDescripcion.getText(), poster, vote, numEpisodios, numTemporadas, listActores, listDirectores,
 						listGenero);
 				// Si acepta, se guarda la serie

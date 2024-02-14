@@ -154,7 +154,7 @@ public class DetallesController {
           API_KEY, null, true, false);
 
       UsuarioPeliculaDaoImpl upDao = new UsuarioPeliculaDaoImpl(session);
-      if (upDao.searchByUsuarioAndMovieId(usuario.getUser(), pelicula.getId()) != null) {
+      if (upDao.searchByUsuarioAndMovieId(usuario.getUser(), pelicula.getId()).isVista()) {
         Utils.mostrarAlerta("Película ya agregada a ya vistas", Constants.INFORMATION_TYPE);
       } else {
         upDao.update(up);

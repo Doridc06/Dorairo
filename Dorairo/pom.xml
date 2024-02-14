@@ -102,7 +102,7 @@
 						<!-- Usage: mvn clean javafx:run -->
 						<id>default-cli</id>
 						<configuration>
-							<mainClass>application.Main</mainClass>
+							<mainClass>application.Launcher</mainClass>
 						</configuration>
 					</execution>
 				</executions>

@@ -26,15 +26,16 @@ class AppTest {
 
 	private Stage stage;
 	private Parent mainNode;
-	private Usuario usuarioTest = new Usuario("UsuarioPrueba", "Enrique Martínez", "enrique@ejemplo.com",
-			"1234", new Date());
+	private Usuario usuarioTest = new Usuario("UsuarioPrueba", "Enrique Martínez", "enrique@ejemplo.com", "1234",
+			new Date());
 
 	@Start
 	public void start(Stage primaryStage) {
 		// Comprueba si existe el usuario para eliminarlo
 		UsuarioDaoImpl uDao = new UsuarioDaoImpl(HibernateUtil.openSession());
-		if (uDao.searchByUsuario(usuarioTest.getUser()) != null) {
-			uDao.delete(usuarioTest);
+		Usuario user = uDao.searchByUsuario(usuarioTest.getUser());
+		if (user != null) {
+			uDao.delete(user);
 		}
 		stage = primaryStage;
 		try {
@@ -53,9 +54,9 @@ class AppTest {
 		// Crea el FxRobot
 		FxRobot fxRobot = new FxRobot();
 		// Introduce un usuario y contraseña de una persona no registrada
-		fxRobot.clickOn("#txtUsuario");
+		fxRobot.clickOn("#txtUser");
 		fxRobot.write(usuarioTest.getUser());
-		fxRobot.clickOn("#pwContrasena");
+		fxRobot.clickOn("#pwPassword");
 		fxRobot.write(usuarioTest.getClave());
 		// Le da al boton de logearse
 		fxRobot.clickOn("#btnLogin");
@@ -87,8 +88,6 @@ class AppTest {
 		fxRobot.clickOn("#btnRegistrarse");
 		// Verifica que salta la alerta de informacion
 		FxAssert.verifyThat("#alertaInformacion", NodeMatchers.isEnabled());
-		// Le da al boton de Aceptar para cerrar la alerta y ventana
-		fxRobot.clickOn("#btnAceptar");
 	}
 
 	@Test
@@ -97,9 +96,9 @@ class AppTest {
 		// Crea el FxRobot
 		FxRobot fxRobot = new FxRobot();
 		// Introduce un usuario y contraseña de una persona registrada
-		fxRobot.clickOn("#txtUsuario");
+		fxRobot.clickOn("#txtUser");
 		fxRobot.write(usuarioTest.getUser());
-		fxRobot.clickOn("#pwContrasena");
+		fxRobot.clickOn("#pwPassword");
 		fxRobot.write(usuarioTest.getClave());
 		// Le da al boton de logearse
 		fxRobot.clickOn("#btnLogin");

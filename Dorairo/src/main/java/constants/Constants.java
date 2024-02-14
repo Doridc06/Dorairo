@@ -124,6 +124,8 @@ public class Constants {
 	/** Prefijo para los actores manuales */
 	public static final String PREFIJO_ID_GENEROS_MANUALES = "88888";
 
+	public static final String FORMATO_CORREO = "(([^<>()\\[\\]\\\\.,;:\\s@”]+(\\.[^<>()\\[\\]\\\\.,;:\\s@”]+)*)|(“.+”))@((\\[[0–9]{1,3}\\.[0–9]{1,3}\\.[0–9]{1,3}\\.[0–9]{1,3}])|(([a-zA-Z\\-0–9]+\\.)+[a-zA-Z]{2,}))";
+
 	// Metodos
 
 	/**

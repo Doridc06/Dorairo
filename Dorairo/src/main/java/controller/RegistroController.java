@@ -67,26 +67,34 @@ public class RegistroController {
 		String contrasena = pwContrasena.getText();
 		String repeticionContrasena = pwRepetirContrasena.getText();
 
-		// Comprueba que los campos estén llenos, las contraseñas coincidan y no exista
-		// un perfil con un usuario o correo igual
-		if (camposLlenos(usuario, correo, nombre, contrasena, repeticionContrasena)
+		// Comprueba que los campos estén llenos y no superen los
+		// caracteres permitidos, las contraseñas coincidan, no exista
+		// un perfil con un usuario o correo igual y que este tenga un formato correo
+		if (camposLlenos(usuario, correo, nombre, contrasena, repeticionContrasena) && compruebaCorreo(correo)
 				&& Utils.compruebaContrasenas(contrasena, repeticionContrasena) && !isPerfil(usuario, correo)) {
 			// Crea el nuevo perfil
-			try {
-				usuarioDaoImpl.update(new Usuario(usuario, nombre, correo, repeticionContrasena, new Date()));
-				setSceneAndStage();
-				stage.close();
-				Utils.mostrarAlerta("¡El nuevo perfil se ha creado con éxito!", Constants.INFORMATION_TYPE);
-			} catch (Exception e) {
-				Utils.mostrarAlerta(
-						"Error guardando el perfil. Reglas de campos (c = caracteres):\nusuario, nombre y clave máx. 20c\ncorreo máx. 100",
-						repeticionContrasena);
-			}
+			usuarioDaoImpl.update(new Usuario(usuario, nombre, correo, repeticionContrasena, new Date()));
+			setSceneAndStage();
+			// Cierra la ventana
+			stage.close();
+			Utils.mostrarAlerta("¡El nuevo perfil se ha creado con éxito!", Constants.INFORMATION_TYPE);
 		}
 	}
 
 	/**
-	 * Comprueba que todos los campos estén llenos
+	 * @param correo
+	 * @return
+	 */
+	public boolean compruebaCorreo(String correo) {
+		if (!correo.matches(Constants.FORMATO_CORREO)) {
+			Utils.mostrarAlerta("El correo introducido parece no seguir el formato de un correo.", Constants.WARNING_TYPE);
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Comprueba que todos los campos estén llenos y cumplen con las medidas exactas
 	 * 
 	 * @param usuario
 	 * @param correo
@@ -97,11 +105,19 @@ public class RegistroController {
 	 */
 	private boolean camposLlenos(String usuario, String correo, String nombre, String contrasena,
 			String repeticionContrasena) {
+		// Comprueba si hay añgún campo vacío
 		if (usuario.isBlank() || correo.isBlank() || nombre.isBlank() || contrasena.isBlank()
 				|| repeticionContrasena.isBlank()) {
 			Utils.mostrarAlerta("Alguno de los campos se encuentra vacío.", Constants.WARNING_TYPE);
 			return false;
 		} else {
+			// Comprueba que no superen los caracteres maximos
+			if (usuario.length() > 20 || correo.length() > 100 || nombre.length() > 20) {
+				Utils.mostrarAlerta(
+						"Reglas de campos:\nusuario y nombre -> máximo 20 caracteres.\ncorreo -> máximo 100 caracteres.",
+						Constants.WARNING_TYPE);
+				return false;
+			}
 			return true;
 		}
 	}

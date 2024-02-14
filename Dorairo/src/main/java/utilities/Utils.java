@@ -37,8 +37,8 @@ public class Utils {
 	/**
 	 * Muestra un dialog con el mensaje proporcionado segun el tipo de alerta
 	 * 
-	 * @param mensaje a mostrar en el dialog
-	 * @param tipo    de la alerta
+	 * @param mensaje Mensaje a mostrar en el dialog
+	 * @param tipo    Tipo de la alerta
 	 */
 	public static void mostrarAlerta(String mensaje, String tipo) {
 		Alert alert = new Alert(AlertType.valueOf(tipo));

@@ -1,33 +1,41 @@
 package application;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 import java.io.IOException;
+import java.util.Date;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.testfx.api.FxAssert;
 import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
-import org.testfx.matcher.control.LabeledMatchers;
+import org.testfx.matcher.base.NodeMatchers;
+import org.testfx.matcher.base.WindowMatchers;
 
+import conexion.HibernateUtil;
+import dao.UsuarioDaoImpl;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import models.Usuario;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @ExtendWith(ApplicationExtension.class)
 class AppTest {
 
 	private Stage stage;
 	private Parent mainNode;
+	private Usuario usuarioTest = new Usuario("UsuarioPrueba", "Enrique Martínez", "enrique@ejemplo.com",
+			"1234", new Date());
 
 	@Start
 	public void start(Stage primaryStage) {
+		// Comprueba si existe el usuario para eliminarlo
+		UsuarioDaoImpl uDao = new UsuarioDaoImpl(HibernateUtil.openSession());
+		if (uDao.searchByUsuario(usuarioTest.getUser()) != null) {
+			uDao.delete(usuarioTest);
+		}
 		stage = primaryStage;
 		try {
 			mainNode = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
@@ -40,33 +48,67 @@ class AppTest {
 	}
 
 	@Test
-	void compruebaTextoBoton() {
-		FxAssert.verifyThat("#btnBuscar", LabeledMatchers.hasText("BUSCAR"));
-	}
-
-	@Test
-	void testTexto() {
+	@Order(1)
+	void testUsuarioNoExiste() {
+		// Crea el FxRobot
 		FxRobot fxRobot = new FxRobot();
+		// Introduce un usuario y contraseña de una persona no registrada
 		fxRobot.clickOn("#txtUsuario");
-		fxRobot.write("Usuario");
+		fxRobot.write(usuarioTest.getUser());
 		fxRobot.clickOn("#pwContrasena");
-		fxRobot.write("password");
+		fxRobot.write(usuarioTest.getClave());
+		// Le da al boton de logearse
 		fxRobot.clickOn("#btnLogin");
-
-		// Busca un nodo con el mensaje de error
-		Node errorNode = mainNode.lookup(".dialog-pane");
-
-		// Verifica si el nodo con el mensaje de error está presente
-		assertNotNull(errorNode, "Se esperaba un mensaje de error, pero no se encontró.");
-		assertEquals("Error de inicio de sesión. Usuario o contraseña incorrectos", ((Label) errorNode).getText(),
-				"El mensaje de error no coincide con lo esperado.");
+		// Verifica que salta la alerta de error
+		FxAssert.verifyThat("#alertaError", NodeMatchers.isEnabled());
+		// Le da al boton de Aceptar para cerrar la alerta
+		fxRobot.clickOn("#btnAceptar");
 	}
 
 	@Test
-	void testVentana() {
-//		FxRobot fxRobot = new FxRobot();
-//		fxRobot.clickOn("#btnBuscar");
-//		FxAssert.verifyThat("#lblTexto", NodeMatchers.isVisible());
+	@Order(2)
+	void testRegistroFunciona() {
+		// Crea el FxRobot
+		FxRobot fxRobot = new FxRobot();
+		// Abre la pantalla de registro
+		fxRobot.clickOn("#lblPulsaAqui");
+		// Introduce los datos
+		fxRobot.clickOn("#txtUsuario");
+		fxRobot.write(usuarioTest.getUser());
+		fxRobot.clickOn("#txtCorreo");
+		fxRobot.write(usuarioTest.getCorreo());
+		fxRobot.clickOn("#txtNombre");
+		fxRobot.write(usuarioTest.getNombre());
+		fxRobot.clickOn("#pwContrasena");
+		fxRobot.write(usuarioTest.getClave());
+		fxRobot.clickOn("#pwRepetirContrasena");
+		fxRobot.write(usuarioTest.getClave());
+		// Presiona el boton de registro
+		fxRobot.clickOn("#btnRegistrarse");
+		// Verifica que salta la alerta de informacion
+		FxAssert.verifyThat("#alertaInformacion", NodeMatchers.isEnabled());
+		// Le da al boton de Aceptar para cerrar la alerta y ventana
+		fxRobot.clickOn("#btnAceptar");
+	}
+
+	@Test
+	@Order(3)
+	void testUsuarioExiste() {
+		// Crea el FxRobot
+		FxRobot fxRobot = new FxRobot();
+		// Introduce un usuario y contraseña de una persona registrada
+		fxRobot.clickOn("#txtUsuario");
+		fxRobot.write(usuarioTest.getUser());
+		fxRobot.clickOn("#pwContrasena");
+		fxRobot.write(usuarioTest.getClave());
+		// Le da al boton de logearse
+		fxRobot.clickOn("#btnLogin");
+		// Verifica que salta la alerta de informacion
+		FxAssert.verifyThat("#alertaInformacion", NodeMatchers.isEnabled());
+		// Le da al boton de Aceptar para cerrar la alerta
+		fxRobot.clickOn("#btnAceptar");
+		// Comprueba que se abre la ventana de inicio
+		FxAssert.verifyThat(fxRobot.window("Inicio"), WindowMatchers.isShowing());
 	}
 
 }

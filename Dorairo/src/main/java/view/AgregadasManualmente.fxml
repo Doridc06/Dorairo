@@ -57,7 +57,7 @@
                         <Font name="System Bold" size="25.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtEstreno" layoutX="70.0" layoutY="470.0" prefHeight="34.0" prefWidth="150.0" promptText="dd/MM/yyyy">
+                  <TextField fx:id="txtEstreno" layoutX="70.0" layoutY="470.0" prefHeight="34.0" prefWidth="150.0" promptText="yyyy-MM-dd">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -77,7 +77,7 @@
                         <Font name="System Bold" size="25.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtValoracionGlobal" layoutX="70.0" layoutY="580.0" prefHeight="34.0" prefWidth="150.0">
+                  <TextField fx:id="txtValoracionGlobal" layoutX="70.0" layoutY="580.0" prefHeight="34.0" prefWidth="150.0" promptText="9">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -87,7 +87,7 @@
                         <Font name="System Bold" size="25.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtValoracionPersonal" layoutX="350.0" layoutY="580.0" prefHeight="34.0" prefWidth="380.0">
+                  <TextField fx:id="txtValoracionPersonal" layoutX="350.0" layoutY="580.0" prefHeight="34.0" prefWidth="380.0" promptText="5.5">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -127,13 +127,19 @@
                         <Font name="System Bold" size="25.0" />
                      </font>
                   </Label>
-                  <TextArea fx:id="txtDescripcion" layoutX="70.0" layoutY="1020.0" prefHeight="100.0" prefWidth="660.0" />
+                  <TextArea fx:id="txtDescripcion" layoutX="70.0" layoutY="1020.0" prefHeight="100.0" prefWidth="660.0">
+                     <font>
+                        <Font size="15.0" />
+                     </font></TextArea>
                   <Label layoutX="70.0" layoutY="1150.0" prefHeight="36.0" prefWidth="220.0" text="Comentarios">
                      <font>
                         <Font name="System Bold" size="25.0" />
                      </font>
                   </Label>
-                  <TextArea fx:id="txtComentarios" layoutX="70.0" layoutY="1200.0" prefHeight="100.0" prefWidth="660.0" />
+                  <TextArea fx:id="txtComentarios" layoutX="70.0" layoutY="1200.0" prefHeight="100.0" prefWidth="660.0">
+                     <font>
+                        <Font size="15.0" />
+                     </font></TextArea>
                   <Label layoutX="138.0" layoutY="1320.0" prefHeight="36.0" prefWidth="188.0" text="Nº Temporadas">
                      <font>
                         <Font name="System Bold" size="25.0" />

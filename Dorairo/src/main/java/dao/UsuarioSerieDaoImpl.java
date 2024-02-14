@@ -41,7 +41,8 @@ public class UsuarioSerieDaoImpl extends CommonDaoImpl<UsuarioSerie> implements 
 	@Override
 	public String searchNumeroSeries(String usuario) {
 		activeTransaction();
-		Long numero = (Long) session.createQuery("SELECT count(*) FROM UsuarioSerie WHERE id.usuario = '" + usuario + "'")
+		Long numero = (Long) session
+				.createQuery("SELECT count(*) FROM UsuarioSerie WHERE id.usuario = '" + usuario + "' and vista = true")
 				.uniqueResult();
 		return numero.toString();
 	}

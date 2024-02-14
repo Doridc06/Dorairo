@@ -12,6 +12,7 @@ import dao.PeliculaDaoImpl;
 import dao.SeriesDaoImpl;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -41,11 +42,17 @@ public class Utils {
 	 */
 	public static void mostrarAlerta(String mensaje, String tipo) {
 		Alert alert = new Alert(AlertType.valueOf(tipo));
-		alert.getDialogPane().getStyleClass().add(".dialog-pane");
 		alert.setTitle(tipo);
-		alert.setHeaderText(null);
 		alert.setContentText(mensaje);
 		alert.initOwner(ownerStage);
+		Button boton = (Button) alert.getDialogPane().lookupButton(ButtonType.OK);
+		boton.setId("btnAceptar");
+		boton.setText("Aceptar");
+		if (tipo.equalsIgnoreCase(Constants.ERROR_TYPE)) {
+			alert.getDialogPane().setId("alertaError");
+		} else if (tipo.equalsIgnoreCase(Constants.INFORMATION_TYPE)) {
+			alert.getDialogPane().setId("alertaInformacion");
+		}
 		alert.showAndWait();
 	}
 
@@ -136,7 +143,7 @@ public class Utils {
 			return Integer.parseInt(maxId) + 1;
 		} else {
 			// Sino, crea el primer id manual
-			return Integer.parseInt(Constants.PREFIJO_ID_PELIS_MANUALES + 0);
+			return Integer.parseInt(Constants.PREFIJO_ID_PELIS_MANUALES + "00");
 		}
 	}
 
@@ -154,7 +161,7 @@ public class Utils {
 			return Integer.parseInt(maxId) + 1;
 		} else {
 			// Sino, crea el primer id manual
-			return Integer.parseInt(Constants.PREFIJO_ID_SERIES_MANUALES + 0);
+			return Integer.parseInt(Constants.PREFIJO_ID_SERIES_MANUALES + "00");
 		}
 	}
 
@@ -172,7 +179,7 @@ public class Utils {
 			return Integer.parseInt(maxId) + 1;
 		} else {
 			// Sino, crea el primer id manual
-			return Integer.parseInt(Constants.PREFIJO_ID_COMPANIES_MANUALES + 0);
+			return Integer.parseInt(Constants.PREFIJO_ID_COMPANIES_MANUALES + "00");
 		}
 	}
 
@@ -190,7 +197,7 @@ public class Utils {
 			return Integer.parseInt(maxId) + 1;
 		} else {
 			// Sino, crea el primer id manual
-			return Integer.parseInt(Constants.PREFIJO_ID_ACTORES_MANUALES + 0);
+			return Integer.parseInt(Constants.PREFIJO_ID_ACTORES_MANUALES + "00");
 		}
 	}
 
@@ -208,7 +215,7 @@ public class Utils {
 			return Integer.parseInt(maxId) + 1;
 		} else {
 			// Sino, crea el primer id manual
-			return Integer.parseInt(Constants.PREFIJO_ID_DIRECTORES_MANUALES + 0);
+			return Integer.parseInt(Constants.PREFIJO_ID_DIRECTORES_MANUALES + "00");
 		}
 	}
 
@@ -226,7 +233,7 @@ public class Utils {
 			return Integer.parseInt(maxId) + 1;
 		} else {
 			// Sino, crea el primer id manual
-			return Integer.parseInt(Constants.PREFIJO_ID_GENEROS_MANUALES + 0);
+			return Integer.parseInt(Constants.PREFIJO_ID_GENEROS_MANUALES + "00");
 		}
 	}
 

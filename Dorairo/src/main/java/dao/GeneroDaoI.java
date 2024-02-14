@@ -18,7 +18,7 @@ public interface GeneroDaoI extends CommonDaoI<Genero> {
 	 * @param id Id genre to find
 	 * @return Genre that has this id
 	 */
-	public Genero searchById(final String id);
+	public Genero searchById(final int id);
 
 	/**
 	 * Searches for all genres with this name and returns them

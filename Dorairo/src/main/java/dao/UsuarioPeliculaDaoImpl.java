@@ -43,12 +43,13 @@ public class UsuarioPeliculaDaoImpl extends CommonDaoImpl<UsuarioPelicula> imple
 	@Override
 	public String searchNumeroPeliculas(String usuario) {
 		activeTransaction();
-		Long numero = (Long) session.createQuery("SELECT count(*) FROM UsuarioPelicula WHERE id.usuario = '" + usuario + "'  and vista = true")
+		Long numero = (Long) session
+				.createQuery("SELECT count(*) FROM UsuarioPelicula WHERE id.usuario = '" + usuario + "' and vista = true")
 				.uniqueResult();
 		return numero.toString();
 
 	}
-	
+
 	@Override
 	public List<UsuarioPelicula> searchPeliculasMiLista(String usuario) {
 		activeTransaction();
@@ -57,11 +58,11 @@ public class UsuarioPeliculaDaoImpl extends CommonDaoImpl<UsuarioPelicula> imple
 		return session.createQuery("FROM UsuarioPelicula WHERE id.usuario = '" + usuario + "' and miLista = true").list();
 	}
 
-  public List<UsuarioPelicula> searchPeliculasYaVistas(String usuario) {
-    activeTransaction();
+	public List<UsuarioPelicula> searchPeliculasYaVistas(String usuario) {
+		activeTransaction();
 
-    // Searches for all UsuarioPelicula with this user and miLista true
-    return session.createQuery("FROM UsuarioPelicula WHERE id.usuario = '" + usuario + "' and vista = true").list();
-  }
-	
+		// Searches for all UsuarioPelicula with this user and miLista true
+		return session.createQuery("FROM UsuarioPelicula WHERE id.usuario = '" + usuario + "' and vista = true").list();
+	}
+
 }

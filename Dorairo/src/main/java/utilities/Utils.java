@@ -52,6 +52,8 @@ public class Utils {
 			alert.getDialogPane().setId("alertaError");
 		} else if (tipo.equalsIgnoreCase(Constants.INFORMATION_TYPE)) {
 			alert.getDialogPane().setId("alertaInformacion");
+		} else {
+			alert.getDialogPane().setId("alertaWarning");
 		}
 		alert.showAndWait();
 	}

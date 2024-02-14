@@ -72,12 +72,16 @@ public class RegistroController {
 		if (camposLlenos(usuario, correo, nombre, contrasena, repeticionContrasena)
 				&& Utils.compruebaContrasenas(contrasena, repeticionContrasena) && !isPerfil(usuario, correo)) {
 			// Crea el nuevo perfil
-			usuarioDaoImpl.update(new Usuario(usuario, nombre, correo, repeticionContrasena, new Date()));
-
-			setSceneAndStage();
-			stage.close();
-
-			Utils.mostrarAlerta("¡El nuevo perfil se ha creado con éxito!", Constants.INFORMATION_TYPE);
+			try {
+				usuarioDaoImpl.update(new Usuario(usuario, nombre, correo, repeticionContrasena, new Date()));
+				setSceneAndStage();
+				stage.close();
+				Utils.mostrarAlerta("¡El nuevo perfil se ha creado con éxito!", Constants.INFORMATION_TYPE);
+			} catch (Exception e) {
+				Utils.mostrarAlerta(
+						"Error guardando el perfil. Reglas de campos (c = caracteres):\nusuario, nombre y clave máx. 20c\ncorreo máx. 100",
+						repeticionContrasena);
+			}
 		}
 	}
 

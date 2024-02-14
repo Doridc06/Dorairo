@@ -13,6 +13,7 @@ import org.testfx.matcher.base.NodeMatchers;
 import org.testfx.matcher.base.WindowMatchers;
 
 import conexion.HibernateUtil;
+import constants.Constants;
 import dao.UsuarioDaoImpl;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -68,6 +69,114 @@ class AppTest {
 
 	@Test
 	@Order(2)
+	void testUsuarioExiste() {
+		// Crea el FxRobot
+		FxRobot fxRobot = new FxRobot();
+		// Introduce un usuario y contraseña de una persona registrada
+		fxRobot.clickOn("#txtUser");
+		fxRobot.write(".");
+		fxRobot.clickOn("#pwPassword");
+		fxRobot.write(".");
+		// Le da al boton de logearse
+		fxRobot.clickOn("#btnLogin");
+		// Verifica que salta la alerta de informacion
+		FxAssert.verifyThat("#alertaInformacion", NodeMatchers.isEnabled());
+		// Le da al boton de Aceptar para cerrar la alerta
+		fxRobot.clickOn("#btnAceptar");
+		// Comprueba que se abre la ventana de inicio
+		FxAssert.verifyThat(fxRobot.window("Inicio"), WindowMatchers.isShowing());
+	}
+
+	@Test
+	@Order(3)
+	void testRegistroCamposVacio() {
+		// Crea el FxRobot
+		FxRobot fxRobot = new FxRobot();
+		// Abre la pantalla de registro
+		fxRobot.clickOn("#lblPulsaAqui");
+		// Introduce los datos
+		fxRobot.clickOn("#txtUsuario");
+		fxRobot.write(usuarioTest.getUser());
+		// Presiona el boton de registro
+		fxRobot.clickOn("#btnRegistrarse");
+		// Verifica que salta la alerta de warning
+		FxAssert.verifyThat("#alertaWarning", NodeMatchers.isEnabled());
+	}
+
+	@Test
+	@Order(4)
+	void testRegistroUsuarioYaExistente() {
+		// Crea el FxRobot
+		FxRobot fxRobot = new FxRobot();
+		// Abre la pantalla de registro
+		fxRobot.clickOn("#lblPulsaAqui");
+		// Introduce los datos
+		fxRobot.clickOn("#txtUsuario");
+		fxRobot.write(".");
+		fxRobot.clickOn("#txtCorreo");
+		fxRobot.write(usuarioTest.getCorreo());
+		fxRobot.clickOn("#txtNombre");
+		fxRobot.write(usuarioTest.getNombre());
+		fxRobot.clickOn("#pwContrasena");
+		fxRobot.write(usuarioTest.getClave());
+		fxRobot.clickOn("#pwRepetirContrasena");
+		fxRobot.write(usuarioTest.getClave());
+		// Presiona el boton de registro
+		fxRobot.clickOn("#btnRegistrarse");
+		// Verifica que salta la alerta de warning
+		FxAssert.verifyThat("#alertaWarning", NodeMatchers.isEnabled());
+	}
+	
+	@Test
+	@Order(5)
+	void testRegistroCorreoYaExistente() {
+		// Crea el FxRobot
+		FxRobot fxRobot = new FxRobot();
+		// Abre la pantalla de registro
+		fxRobot.clickOn("#lblPulsaAqui");
+		// Introduce los datos
+		fxRobot.clickOn("#txtUsuario");
+		fxRobot.write(".");
+		fxRobot.clickOn("#txtCorreo");
+		fxRobot.write(usuarioTest.getCorreo());
+		fxRobot.clickOn("#txtNombre");
+		fxRobot.write(usuarioTest.getNombre());
+		fxRobot.clickOn("#pwContrasena");
+		fxRobot.write(usuarioTest.getClave());
+		fxRobot.clickOn("#pwRepetirContrasena");
+		fxRobot.write(usuarioTest.getClave());
+		// Presiona el boton de registro
+		fxRobot.clickOn("#btnRegistrarse");
+		// Verifica que salta la alerta de warning
+		FxAssert.verifyThat("#alertaWarning", NodeMatchers.isEnabled());
+	}
+
+	@Test
+	@Order(6)
+	void testRegistroContraseñasIncorrectas() {
+		// Crea el FxRobot
+		FxRobot fxRobot = new FxRobot();
+		// Abre la pantalla de registro
+		fxRobot.clickOn("#lblPulsaAqui");
+		// Introduce los datos
+		fxRobot.clickOn("#txtUsuario");
+		fxRobot.write(usuarioTest.getUser());
+		fxRobot.clickOn("#txtCorreo");
+		fxRobot.write(usuarioTest.getCorreo());
+		fxRobot.clickOn("#txtNombre");
+		fxRobot.write(usuarioTest.getNombre());
+		fxRobot.clickOn("#pwContrasena");
+		fxRobot.write(usuarioTest.getClave());
+		fxRobot.clickOn("#pwRepetirContrasena");
+		fxRobot.write("mal");
+		// Presiona el boton de registro
+		fxRobot.clickOn("#btnRegistrarse");
+		// Verifica que salta la alerta de warning
+		FxAssert.verifyThat("#alertaWarning", NodeMatchers.isEnabled());
+	}
+
+	@Test
+	@Order(7)
 	void testRegistroFunciona() {
 		// Crea el FxRobot
 		FxRobot fxRobot = new FxRobot();
@@ -87,27 +196,8 @@ class AppTest {
 		// Presiona el boton de registro
 		fxRobot.clickOn("#btnRegistrarse");
 		// Verifica que salta la alerta de informacion
-		FxAssert.verifyThat("#alertaInformacion", NodeMatchers.isEnabled());
-	}
-
-	@Test
-	@Order(3)
-	void testUsuarioExiste() {
-		// Crea el FxRobot
-		FxRobot fxRobot = new FxRobot();
-		// Introduce un usuario y contraseña de una persona registrada
-		fxRobot.clickOn("#txtUser");
-		fxRobot.write(usuarioTest.getUser());
-		fxRobot.clickOn("#pwPassword");
-		fxRobot.write(usuarioTest.getClave());
-		// Le da al boton de logearse
-		fxRobot.clickOn("#btnLogin");
-		// Verifica que salta la alerta de informacion
-		FxAssert.verifyThat("#alertaInformacion", NodeMatchers.isEnabled());
-		// Le da al boton de Aceptar para cerrar la alerta
-		fxRobot.clickOn("#btnAceptar");
-		// Comprueba que se abre la ventana de inicio
-		FxAssert.verifyThat(fxRobot.window("Inicio"), WindowMatchers.isShowing());
+		// FxAssert.verifyThat("#alertaInformacion", NodeMatchers.isEnabled());
+		FxAssert.verifyThat(fxRobot.window(Constants.INFORMATION_TYPE), WindowMatchers.isShowing());
 	}
 
 }

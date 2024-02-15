@@ -47,75 +47,183 @@ import okhttp3.Response;
 import utilities.GestorVentanas;
 import utilities.Utils;
 
+/**
+ * Clase Detalles que nos ayuda a ver toda la información de las peliculas y de las series
+ * 
+ * @author Doriana dc
+ * 
+ */
+
 public class DetallesController {
 
+  /** ImageView para el logo de la cabecera. */
   @FXML
   private ImageView imagenLogoCabecera;
 
+  /** Texto para mostrar el título. */
   @FXML
   private Text titulo;
 
+  /** ImageView para mostrar el cartel de la película o serie. */
   @FXML
   private ImageView cartel;
 
+  /** Texto para mostrar detalles adicionales. */
   @FXML
   private Text detalles;
 
+  /**
+   * Escena de la ventana.
+   */
   private Scene scene;
+
+  /**
+   * Escenario de la ventana.
+   */
   private Stage stage;
+
+  /**
+   * Instancia del gestor de ventanas.
+   */
   private GestorVentanas gestorVentanas;
 
+  /**
+   * ImageView para el fondo de la interfaz.
+   */
   @FXML
   private ImageView fondoIm;
 
+  /**
+   * ImageView para el icono de lupa.
+   */
   @FXML
   private ImageView lupa;
 
+  /**
+   * Menú desplegable para opciones de agregar.
+   */
   @FXML
   private MenuButton Agregar;
 
+  /**
+   * Menú desplegable para opciones de exportar.
+   */
   @FXML
   private MenuButton Exportar;
 
+  /**
+   * Elemento del menú para exportar a CSV.
+   */
   @FXML
   private MenuItem csv;
 
+  /**
+   * Elemento del menú para exportar a JSON.
+   */
   @FXML
   private MenuItem json;
 
+  /**
+   * Elemento del menú para agregar a "Mi Lista".
+   */
   @FXML
   private MenuItem miLista;
 
+  /**
+   * Elemento del menú para marcar como "Ya Visto".
+   */
   @FXML
   private MenuItem yaVisto;
 
-  private Pelicula pelicula;
-
-  private Series series;
-
+  /**
+   * Botón para guardar información.
+   */
   @FXML
   private Button guardar;
 
-  private Session session;
-
-  private String tipo;
-
-  private Usuario usuario;
-
-  private String id;
-
+  /**
+   * Texto para mostrar actores y directores.
+   */
   @FXML
   private Text actoresYdirectores;
 
+  /**
+   * Texto para mostrar la compañía productora.
+   */
   @FXML
   private Text compania;
+
+  /**
+   * Campo de texto para ingresar la ubicación de guardado.
+   */
   @FXML
   private TextField guardadoEn;
 
+  /**
+   * Botón para agregar un comentario.
+   */
+  @FXML
+  private Button agregarComentario;
 
+  /**
+   * Campo de texto para ingresar un comentario.
+   */
+  @FXML
+  private TextField comentarioUsuario;
+
+  /**
+   * Texto para mostrar un comentario.
+   */
+  @FXML
+  private Text comentario;
+
+  /**
+   * Comentario actual almacenado.
+   */
+  private String comentarioActual = "";
+
+  /**
+   * Película actual.
+   */
+  private Pelicula pelicula;
+
+  /**
+   * Serie actual.
+   */
+  private Series series;
+
+  /**
+   * Sesión actual.
+   */
+  private Session session;
+
+  /**
+   * Tipo de contenido (película o serie).
+   */
+  private String tipo;
+
+  /**
+   * Usuario actual.
+   */
+  private Usuario usuario;
+
+  /**
+   * ID del contenido.
+   */
+  private String id;
+
+  /**
+   * clave de la api
+   * 
+   */
   private static final String API_KEY =
       "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlYjc0NTA5ZjRiZDBlODJlMTFlYzA2YWM1MDRhMGRlMCIsInN1YiI6IjY1Mzc3ZmRmZjQ5NWVlMDBmZjY1YTEyOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ehIu08LoiMRTccPoD4AfADXOpQPlqNAKUMvGgwY3XU8";
 
+  /**
+   * Método que inicia el controlador
+   * 
+   * @throws IOException
+   */
   @FXML
   void initialize() throws IOException {
     // Recogemos la sesion
@@ -136,133 +244,224 @@ public class DetallesController {
     miLista.setOnAction(event -> addMiLista());
     // Agregar evento de clic a peliculasVistas
     yaVisto.setOnAction(event -> addYaVistas());
-    
+
     guardar.setOnAction(event -> searchLocalizacion());
 
+    agregarComentario.setOnAction(event -> addComentarioUser());
+
     searchLocalizacion();
-  }
+ // Cargar el comentario desde la base de datos
+    cargarComentarioDesdeDB();
 
-  private void addYaVistas() {
-    if (tipo.equals("movie")) {
-      PeliculaDaoImpl pDao = new PeliculaDaoImpl(HibernateUtil.openSession());
-
-      if (pDao.searchById(pelicula.getId()) == null) {
-        pDao.update(pelicula);
-
-      }
-      UsuarioPelicula up = new UsuarioPelicula(new UsuarioPeliculaID(usuario, pelicula), 0, null,
-          API_KEY, null, true, false);
-
-      UsuarioPeliculaDaoImpl upDao = new UsuarioPeliculaDaoImpl(session);
-      if (upDao.searchByUsuarioAndMovieId(usuario.getUser(), pelicula.getId()) != null) {
-        Utils.mostrarAlerta("Película ya agregada a ya vistas", Constants.INFORMATION_TYPE);
-      } else {
-        upDao.update(up);
-        Utils.mostrarAlerta("¡Película agregada a ya vistas correctamente!",
-            Constants.INFORMATION_TYPE);
-      }
-    } else {
-      // serie
-      SeriesDaoImpl sDao = new SeriesDaoImpl(HibernateUtil.openSession());
-
-      if (sDao.searchById(series.getId()) == null) {
-        sDao.update(series);
-
-      }
-
-      UsuarioSerie us = new UsuarioSerie(new UsuarioSerieID(usuario, series), 0, null, API_KEY,
-          null, true, false);
-      UsuarioSerieDaoImpl usDao = new UsuarioSerieDaoImpl(session);
-      if (usDao.searchByUsuarioAndSerieId(usuario.getUser(), series.getId()) != null) {
-        Utils.mostrarAlerta("Serie ya agregada a ya vistas", Constants.INFORMATION_TYPE);
-
-      } else {
-        usDao.update(us);
-        Utils.mostrarAlerta("¡Serie agregada a ya vistas correctamente!",
-            Constants.INFORMATION_TYPE);
-      }
-    }
+    // Establecer el comentario en el TextField
+    comentarioUsuario.setText(comentarioActual);
 
   }
 
-  private void addMiLista() {
-    if (tipo.equals("movie")) {
-      PeliculaDaoImpl pDao = new PeliculaDaoImpl(HibernateUtil.openSession());
-
-      if (pDao.searchById(pelicula.getId()) == null) {
-        pDao.update(pelicula);
-
-      }
-      UsuarioPelicula up = new UsuarioPelicula(new UsuarioPeliculaID(usuario, pelicula), 0, null,
-          API_KEY, null, false, true);
-
-      UsuarioPeliculaDaoImpl upDao = new UsuarioPeliculaDaoImpl(session);
-      if (upDao.searchByUsuarioAndMovieId(usuario.getUser(), pelicula.getId()) != null) {
-        Utils.mostrarAlerta("Película ya agregada a mi lista", Constants.INFORMATION_TYPE);
-      } else {
-        upDao.update(up);
-        Utils.mostrarAlerta("¡Película agregada a mi lista correctamente!",
-            Constants.INFORMATION_TYPE);
-      }
-    } else {
-      // serie
-      SeriesDaoImpl sDao = new SeriesDaoImpl(HibernateUtil.openSession());
-
-      if (sDao.searchById(series.getId()) == null) {
-        sDao.update(series);
-
-      }
-
-      UsuarioSerie us = new UsuarioSerie(new UsuarioSerieID(usuario, series), 0, null, API_KEY,
-          null, false, true);
-      UsuarioSerieDaoImpl usDao = new UsuarioSerieDaoImpl(session);
-      if (usDao.searchByUsuarioAndSerieId(usuario.getUser(), series.getId()) != null) {
-        Utils.mostrarAlerta("Serie ya agregada a mi lista", Constants.INFORMATION_TYPE);
-
-      } else {
-        usDao.update(us);
-        Utils.mostrarAlerta("¡Serie agregada a mi lista correctamente!",
-            Constants.INFORMATION_TYPE);
-      }
-    }
-
-  }
-
+  /**
+   * Maneja el evento de clic en la opción de inicio. Configura la escena y el escenario y muestra
+   * la ventana de perfil.
+   * 
+   * @param event El evento de clic del mouse.
+   */
   @FXML
   void inicioClicked(MouseEvent event) {
     setSceneAndStage();
     gestorVentanas.muestraVentana(stage, Constants.URL_INICIO_FXML, "Inicio");
   }
 
+  /**
+   * Maneja el evento de clic en la opción de película. Configura la escena y el escenario y muestra
+   * la ventana de perfil.
+   * 
+   * @param event El evento de clic del mouse.
+   */
   @FXML
   void peliculasClicked(MouseEvent event) {
     setSceneAndStage();
     gestorVentanas.muestraVentana(stage, Constants.URL_PELICULA_FXML, "Pelicula");
   }
 
+  /**
+   * Maneja el evento de clic en la opción de serie. Configura la escena y el escenario y muestra la
+   * ventana de perfil.
+   * 
+   * @param event El evento de clic del mouse.
+   */
   @FXML
   void seriesClicked(MouseEvent event) {
     setSceneAndStage();
     gestorVentanas.muestraVentana(stage, Constants.URL_SERIES_FXML, "Series");
   }
 
+  /**
+   * Maneja el evento de clic en la opción de buscador. Configura la escena y el escenario y muestra
+   * la ventana de perfil.
+   * 
+   * @param event El evento de clic del mouse.
+   */
   @FXML
   void buscadorClicked(MouseEvent event) {
     setSceneAndStage();
     gestorVentanas.muestraVentana(stage, Constants.URL_BUSCADOR_FXML, "Buscador");
   }
 
+  /**
+   * Maneja el evento de clic en la opción de perfil. Configura la escena y el escenario y muestra
+   * la ventana de perfil.
+   * 
+   * @param event El evento de clic del mouse.
+   */
   @FXML
   void perfilClicked(MouseEvent event) {
     setSceneAndStage();
     gestorVentanas.muestraVentana(stage, Constants.URL_USUARIO_FXML, "Perfil");
   }
 
+  /**
+   * Establece la escena y el escenario actuales utilizando el ImageView imagenLogoCabecera como
+   * referencia.
+   */
   public void setSceneAndStage() {
     scene = imagenLogoCabecera.getScene();
     stage = (Stage) scene.getWindow();
   }
 
+  /**
+   * Método que agrega las peliculas y series a ya vistas
+   * 
+   */
+  private void addYaVistas() {
+    if (tipo.equals("movie")) {
+      PeliculaDaoImpl pDao = new PeliculaDaoImpl(HibernateUtil.openSession());
+      UsuarioPeliculaDaoImpl upDao = new UsuarioPeliculaDaoImpl(session);
+
+      // Verificar si la película ya está en la lista de "Ya vistas"
+      UsuarioPelicula usuarioPelicula =
+          upDao.searchByUsuarioAndMovieId(usuario.getUser(), pelicula.getId());
+      if (usuarioPelicula != null && usuarioPelicula.isVista()) {
+        Utils.mostrarAlerta("Película ya agregada a ya vistas", Constants.INFORMATION_TYPE);
+      } else {
+        // Si la película está en la lista personalizada, quitarla de ahí
+        UsuarioPelicula listaPersonalizada =
+            upDao.searchByUsuarioAndMovieId(usuario.getUser(), pelicula.getId());
+        if (listaPersonalizada != null && listaPersonalizada.isMiLista()) {
+          listaPersonalizada.setMiLista(false);
+          upDao.update(listaPersonalizada);
+        }
+
+        // Agregar la película a "Ya vistas"
+        if (pDao.searchById(pelicula.getId()) == null) {
+          pDao.update(pelicula);
+        }
+        UsuarioPelicula up = new UsuarioPelicula(new UsuarioPeliculaID(usuario, pelicula), 0, null,
+            API_KEY, null, true, false);
+        upDao.update(up);
+        Utils.mostrarAlerta("¡Película agregada a ya vistas correctamente!",
+            Constants.INFORMATION_TYPE);
+      }
+    } else {
+      // Serie
+      SeriesDaoImpl sDao = new SeriesDaoImpl(HibernateUtil.openSession());
+      UsuarioSerieDaoImpl usDao = new UsuarioSerieDaoImpl(session);
+
+      // Verificar si la serie ya está en la lista de "Ya vistas"
+      UsuarioSerie usuarioSerie =
+          usDao.searchByUsuarioAndSerieId(usuario.getUser(), series.getId());
+      if (usuarioSerie != null && usuarioSerie.isVista()) {
+        Utils.mostrarAlerta("Serie ya agregada a ya vistas", Constants.INFORMATION_TYPE);
+      } else {
+        // Si la serie está en la lista personalizada, quitarla de ahí
+        UsuarioSerie listaPersonalizada =
+            usDao.searchByUsuarioAndSerieId(usuario.getUser(), series.getId());
+        if (listaPersonalizada != null && listaPersonalizada.isMiLista()) {
+          listaPersonalizada.setMiLista(false);
+          usDao.update(listaPersonalizada);
+        }
+
+        // Agregar la serie a "Ya vistas"
+        if (sDao.searchById(series.getId()) == null) {
+          sDao.update(series);
+        }
+        UsuarioSerie us = new UsuarioSerie(new UsuarioSerieID(usuario, series), 0, null, API_KEY,
+            null, true, false);
+        usDao.update(us);
+        Utils.mostrarAlerta("¡Serie agregada a ya vistas correctamente!",
+            Constants.INFORMATION_TYPE);
+      }
+    }
+  }
+
+  /**
+   * Método que agrega las peliculas y series a mi lista
+   * 
+   */
+  private void addMiLista() {
+    if (tipo.equals("movie")) {
+      PeliculaDaoImpl pDao = new PeliculaDaoImpl(HibernateUtil.openSession());
+      UsuarioPeliculaDaoImpl upDao = new UsuarioPeliculaDaoImpl(session);
+
+      // Verificar si la película ya está en la lista personalizada
+      UsuarioPelicula usuarioPelicula =
+          upDao.searchByUsuarioAndMovieId(usuario.getUser(), pelicula.getId());
+      if (usuarioPelicula != null && usuarioPelicula.isMiLista()) {
+        Utils.mostrarAlerta("Película ya agregada a mi lista", Constants.INFORMATION_TYPE);
+      } else {
+        // Si la película está en la lista de "Ya vistas", quitarla de ahí
+        UsuarioPelicula yaVista =
+            upDao.searchByUsuarioAndMovieId(usuario.getUser(), pelicula.getId());
+        if (yaVista != null && yaVista.isVista()) {
+          yaVista.setVista(false);
+          upDao.update(yaVista);
+        }
+
+        // Agregar la película a la lista personalizada
+        if (pDao.searchById(pelicula.getId()) == null) {
+          pDao.update(pelicula);
+        }
+        UsuarioPelicula up = new UsuarioPelicula(new UsuarioPeliculaID(usuario, pelicula), 0, null,
+            API_KEY, null, false, true);
+        upDao.update(up);
+        Utils.mostrarAlerta("¡Película agregada a mi lista correctamente!",
+            Constants.INFORMATION_TYPE);
+      }
+    } else {
+      // Serie
+      SeriesDaoImpl sDao = new SeriesDaoImpl(HibernateUtil.openSession());
+      UsuarioSerieDaoImpl usDao = new UsuarioSerieDaoImpl(session);
+
+      // Verificar si la serie ya está en la lista personalizada
+      UsuarioSerie usuarioSerie =
+          usDao.searchByUsuarioAndSerieId(usuario.getUser(), series.getId());
+      if (usuarioSerie != null && usuarioSerie.isMiLista()) {
+        Utils.mostrarAlerta("Serie ya agregada a mi lista", Constants.INFORMATION_TYPE);
+      } else {
+        // Si la serie está en la lista de "Ya vistas", quitarla de ahí
+        UsuarioSerie yaVista = usDao.searchByUsuarioAndSerieId(usuario.getUser(), series.getId());
+        if (yaVista != null && yaVista.isVista()) {
+          yaVista.setVista(false);
+          usDao.update(yaVista);
+        }
+
+        // Agregar la serie a la lista personalizada
+        if (sDao.searchById(series.getId()) == null) {
+          sDao.update(series);
+        }
+        UsuarioSerie us = new UsuarioSerie(new UsuarioSerieID(usuario, series), 0, null, API_KEY,
+            null, false, true);
+        usDao.update(us);
+        Utils.mostrarAlerta("¡Serie agregada a mi lista correctamente!",
+            Constants.INFORMATION_TYPE);
+      }
+    }
+  }
+
+  /**
+   * Inicializa los datos de la ventana de detalles de una película o serie según su tipo y ID.
+   * 
+   * @param id El ID de la película o serie.
+   * @param type El tipo de contenido (movie o tv).
+   */
   public void initData(String id, String type) {
     this.tipo = type;
     this.id = id;
@@ -279,7 +478,7 @@ public class DetallesController {
             + formatDirectores(pelicula.getDirectores()) + "\n" + "Géneros: "
             + formatGeneros(pelicula.getGenres()) + "\n" + "Compañía: "
             + pelicula.getCompany().getName() + "\n");
-        
+
         // Cargar la imagen de la película
         String posterPath = pelicula.getPoster_path();
         if (posterPath != null && !posterPath.isEmpty()) {
@@ -323,7 +522,12 @@ public class DetallesController {
     }
   }
 
-  // Método auxiliar para formatear la lista de actores
+  /**
+   * Método auxiliar para formatear la lista de actores
+   * 
+   * @param actores
+   * @return
+   */
   private String formatActores(List<Actores> actores) {
     StringBuilder sb = new StringBuilder();
     for (Actores actor : actores) {
@@ -335,7 +539,12 @@ public class DetallesController {
     return sb.toString();
   }
 
-  // Método auxiliar para formatear la lista de directores
+  /**
+   * Método auxiliar para formatear la lista de directores
+   * 
+   * @param directores
+   * @return
+   */
   private String formatDirectores(List<Directores> directores) {
     StringBuilder sb = new StringBuilder();
     for (Directores director : directores) {
@@ -347,7 +556,12 @@ public class DetallesController {
     return sb.toString();
   }
 
-  // Método auxiliar para formatear la lista de géneros
+  /**
+   * Método auxiliar para formatear la lista de géneros
+   * 
+   * @param generos
+   * @return
+   */
   private String formatGeneros(List<Genero> generos) {
     StringBuilder sb = new StringBuilder();
     for (Genero genero : generos) {
@@ -359,7 +573,10 @@ public class DetallesController {
     return sb.toString();
   }
 
-
+  /**
+   * Método que muestra los datos de la api
+   * 
+   */
   private void mostrarDatosApi() {
     OkHttpClient client = new OkHttpClient();
     String apiUrl = "https://api.themoviedb.org/3/" + tipo + "/" + id;
@@ -464,15 +681,30 @@ public class DetallesController {
   }
 
 
+  /**
+   * Establece la película actual para mostrar sus detalles.
+   * 
+   * @param pelicula La película a establecer.
+   */
   public void setPelicula(Pelicula pelicula) {
     this.pelicula = pelicula;
   }
 
+  /**
+   * Establece la serie actual para mostrar sus detalles.
+   * 
+   * @param series La serie a establecer.
+   */
   public void setSeries(Series series) {
     this.series = series;
-
   }
 
+
+  /**
+   * Método para exportar las peliculas y series en archivos JSON Y CSV
+   * 
+   * @param formato
+   */
   private void exportarPeliculaYSerie(String formato) {
     if (pelicula == null && series == null) {
       return;
@@ -513,7 +745,11 @@ public class DetallesController {
   }
 
 
-
+  /**
+   * Método para obtener los actores y directos de la api
+   * 
+   * @param id
+   */
   private void obtenerActoresYDirectores(String id) {
     OkHttpClient client = new OkHttpClient();
     String creditsUrl = "https://api.themoviedb.org/3/" + tipo + "/" + id + "/credits";
@@ -566,7 +802,12 @@ public class DetallesController {
     }
   }
 
-
+  /**
+   * muestra los actores y directores
+   * 
+   * @param actores
+   * @param directores
+   */
   private void mostrarActoresYDirectores(String actores, String directores) {
     // Actualizar el texto del Text con la información de los actores y directores
     actoresYdirectores.setText("Actores: " + actores + "\n" + "\nDirectores: " + directores);
@@ -584,10 +825,87 @@ public class DetallesController {
     if (lugar == null && !guardadoEn.getText().isBlank()) {
       lugar = new Localizacion(guardadoEn.getText());
       lDao.update(lugar);
+      Utils.mostrarAlerta("¡Guardado correctamente!", Constants.INFORMATION_TYPE);
     } else if (guardadoEn.getText().isBlank()) {
       return null;
     }
     return lugar;
+
+
+  }
+
+  /**
+   * Método para agregar los comentarios de los usuarios
+   * 
+   */
+  private void addComentarioUser() {
+    // Obtener el comentario del TextField
+    String comentarioTexto = comentarioUsuario.getText();
+
+    // Verificar que el comentario no esté vacío
+    if (!comentarioTexto.isBlank()) {
+        // Guardar el comentario actual
+        comentarioActual = comentarioTexto;
+
+        // Agregar el comentario a la interfaz de usuario
+        comentario.setText(comentarioTexto);
+
+        // Actualizar el comentario en la base de datos
+        UsuarioPeliculaDaoImpl upDao = new UsuarioPeliculaDaoImpl(session);
+        UsuarioSerieDaoImpl usDao = new UsuarioSerieDaoImpl(session);
+
+        // Actualizar el comentario en la base de datos
+        if ("movie".equals(tipo)) {
+            // Crear el objeto UsuarioPelicula correspondiente
+            UsuarioPelicula usuarioPelicula =
+                upDao.searchByUsuarioAndMovieId(usuario.getUser(), pelicula.getId());
+            if (usuarioPelicula != null) {
+                usuarioPelicula.setComentariosUsuario(comentarioTexto);
+                upDao.update(usuarioPelicula);
+            }
+        } else if ("tv".equals(tipo)) {
+            UsuarioSerie usuarioSerie =
+                usDao.searchByUsuarioAndSerieId(usuario.getUser(), series.getId());
+            if (usuarioSerie != null) {
+                usuarioSerie.setComentariosUsuario(comentarioTexto);
+                usDao.update(usuarioSerie);
+            }
+        }
+
+        // Informar al usuario que el comentario se ha agregado correctamente
+        Utils.mostrarAlerta("¡Comentario agregado correctamente!", Constants.INFORMATION_TYPE);
+    } else {
+        // Informar al usuario que el comentario está vacío
+        Utils.mostrarAlerta("El comentario no puede estar vacío", Constants.ERROR_TYPE);
+    }
+}
+
+  
+/** Método para cargar el comentario desde la base de datos
+ * 
+ */
+    private void cargarComentarioDesdeDB() {
+      if ("movie".equals(tipo)) {
+          UsuarioPeliculaDaoImpl upDao = new UsuarioPeliculaDaoImpl(session);
+          UsuarioPelicula usuarioPelicula =
+              upDao.searchByUsuarioAndMovieId(usuario.getUser(), pelicula.getId());
+          if (usuarioPelicula != null) {
+              comentarioActual = usuarioPelicula.getComentariosUsuario();
+          }
+      } else if ("tv".equals(tipo)) {
+          UsuarioSerieDaoImpl usDao = new UsuarioSerieDaoImpl(session);
+          UsuarioSerie usuarioSerie =
+              usDao.searchByUsuarioAndSerieId(usuario.getUser(), series.getId());
+          if (usuarioSerie != null) {
+              comentarioActual = usuarioSerie.getComentariosUsuario();
+          }
+      } else {
+          // Manejar el caso en que tipo no sea ni "movie" ni "tv"
+          System.out.println("El tipo no es válido. No se puede cargar el comentario desde la base de datos.");
+          return;
+      }
   }
 
 }
+
+

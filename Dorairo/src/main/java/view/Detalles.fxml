@@ -39,7 +39,7 @@
                         <Font name="System Bold" size="26.0" />
                      </font>
                   </Text>
-                  <MenuButton fx:id="Agregar" layoutX="379.0" layoutY="95.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="141.0" styleClass="cabeceraBotones" text="Añadir">
+                  <MenuButton fx:id="Agregar" layoutX="363.0" layoutY="101.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="141.0" styleClass="cabeceraBotones" text="Añadir">
                     <items>
                       <MenuItem fx:id="miLista" mnemonicParsing="false" text="Mi Lista" />
                       <MenuItem fx:id="yaVisto" mnemonicParsing="false" text="Ya visto" />
@@ -48,7 +48,7 @@
                         <Font size="22.0" />
                      </font>
                   </MenuButton>
-                  <MenuButton fx:id="Exportar" layoutX="379.0" layoutY="158.0" mnemonicParsing="false" styleClass="cabeceraBotones" text="Exportar">
+                  <MenuButton fx:id="Exportar" layoutX="363.0" layoutY="161.0" mnemonicParsing="false" styleClass="cabeceraBotones" text="Exportar">
                     <items>
                       <MenuItem fx:id="csv" mnemonicParsing="false" text="CSV" />
                       <MenuItem fx:id="json" mnemonicParsing="false" text="JSON" />
@@ -57,22 +57,39 @@
                         <Font size="22.0" />
                      </font>
                   </MenuButton>
-                  <Text layoutX="636.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Guardado en:">
+                  <Text layoutX="530.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Guardado en:" wrappingWidth="212.208984375">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="guardadoEn" layoutX="636.0" layoutY="131.0" prefHeight="37.0" prefWidth="230.0" />
-                  <Button fx:id="guardar" layoutX="717.0" layoutY="181.0" mnemonicParsing="false" styleClass="cabeceraBotones" text="Guardar" />
-                  <Text fx:id="actoresYdirectores" layoutX="379.0" layoutY="268.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="1067.0">
+                  <TextField fx:id="guardadoEn" layoutX="657.0" layoutY="106.0" prefHeight="28.0" prefWidth="186.0" />
+                  <Button fx:id="guardar" layoutX="855.0" layoutY="105.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="67.0" styleClass="cabeceraBotones" text="Guardar" />
+                  <Text fx:id="actoresYdirectores" layoutX="367.0" layoutY="309.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="1067.0">
                      <font>
                         <Font size="16.0" />
                      </font></Text>
-                  <Text fx:id="compania" layoutX="382.0" layoutY="236.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="1061.0">
+                  <Text fx:id="compania" layoutX="367.0" layoutY="274.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="1061.0">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Text>
+                  <Text fx:id="comentarioU" layoutX="532.0" layoutY="179.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Comentario Usuario:" wrappingWidth="105.0">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="comentarioUsuario" layoutX="653.0" layoutY="162.0" prefHeight="45.0" prefWidth="186.0" />
+                  <Button fx:id="agregarComentario" layoutX="854.0" layoutY="171.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="67.0" styleClass="cabeceraBotones" text="Agregar" />
+                  <Text fx:id="comentario" layoutX="458.0" layoutY="242.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="992.13671875">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Text>
+                  <Label layoutX="366.0" layoutY="226.0" text="Comentario:">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
                </children></AnchorPane>
 			</content>
 		</ScrollPane>

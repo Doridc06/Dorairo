@@ -122,6 +122,7 @@ public class Utils {
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 		alert.setHeaderText(null);
 		alert.setTitle("Confirmación");
+		alert.initOwner(ownerStage);
 		alert.setContentText("¿Estás seguro de querer realizar la acción?");
 		// Muestra la alerta y espera hasta que se cierre
 		Optional<ButtonType> result = alert.showAndWait();

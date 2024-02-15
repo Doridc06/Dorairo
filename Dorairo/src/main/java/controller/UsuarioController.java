@@ -157,7 +157,7 @@ public class UsuarioController {
 	 */
 	@FXML
 	void cerrarSesion(MouseEvent event) {
-		usuarioRegistrado = null;
+		setUsuarioRegistrado(null);
 		muestraLogin();
 	}
 
@@ -185,6 +185,7 @@ public class UsuarioController {
 	@FXML
 	void eliminarDatos(MouseEvent event) {
 		if (Utils.confirmacion()) {
+			usuarioDaoImpl.searchByUsuario(usuarioRegistrado.getUser());
 			usuarioDaoImpl.deleteDataUser(usuarioRegistrado.getUser());
 			setDatosPerfil();
 		}
@@ -206,7 +207,8 @@ public class UsuarioController {
 	@FXML
 	void eliminarCuenta(MouseEvent event) {
 		if (Utils.confirmacion()) {
-			
+			// Recoge el verdadero objeto del usuario en la base de datos y lo elimina
+			setUsuarioRegistrado(usuarioDaoImpl.searchByUsuario(usuarioRegistrado.getUser()));
 			usuarioDaoImpl.delete(usuarioRegistrado);
 			muestraLogin();
 		}

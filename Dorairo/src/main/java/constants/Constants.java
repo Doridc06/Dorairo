@@ -124,16 +124,18 @@ public class Constants {
 	/** Prefijo para los actores manuales */
 	public static final String PREFIJO_ID_GENEROS_MANUALES = "88888";
 
+	// Otros
+
+	/** Formato de un correo electronico */
+	public static final String FORMATO_CORREO = "(([^<>()\\[\\]\\\\.,;:\\s@”]+(\\.[^<>()\\[\\]\\\\.,;:\\s@”]+)*)|(“.+”))@((\\[[0–9]{1,3}\\.[0–9]{1,3}\\.[0–9]{1,3}\\.[0–9]{1,3}])|(([a-zA-Z\\-0–9]+\\.)+[a-zA-Z]{2,}))";
+
+	/** Identificador de peliculas en api */
+	public static final String PELICULA = "movie";
+
+	/** Identificador de series en api */
+	public static final String SERIES = "tv";
+
 	// Metodos
-	
-	  /** Formato de un correo electronico */
-    public static final String FORMATO_CORREO = "(([^<>()\\[\\]\\\\.,;:\\s@”]+(\\.[^<>()\\[\\]\\\\.,;:\\s@”]+)*)|(“.+”))@((\\[[0–9]{1,3}\\.[0–9]{1,3}\\.[0–9]{1,3}\\.[0–9]{1,3}])|(([a-zA-Z\\-0–9]+\\.)+[a-zA-Z]{2,}))";
-
-    /** Identificador de peliculas en api */
-    public static final String PELICULA = "movie";
-
-    /** Identificador de series en api */
-    public static final String SERIES = "tv";
 
 	/**
 	 * Devuelve una fecha tipo Date a partir de una fecha string proporcionada
@@ -144,7 +146,6 @@ public class Constants {
 	private static Date getFecha(String fecha) {
 		// Formato de la cadena de fecha
 		SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
-
 		try {
 			// Convertir la cadena a un objeto Date
 			return formato.parse(fecha);

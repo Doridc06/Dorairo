@@ -14,7 +14,6 @@ import constants.Constants;
 import dao.UsuarioPeliculaDaoImpl;
 import dao.UsuarioSerieDaoImpl;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -25,6 +24,9 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import models.Pelicula;
 import models.RespuestaApi;
+import models.RespuestaApiTrending;
+import models.RespuestaApiTrending.MediaItem;
+import models.Series;
 import models.UsuarioPelicula;
 import models.UsuarioSerie;
 import okhttp3.OkHttpClient;
@@ -103,139 +105,106 @@ public class InicioController {
 			OkHttpClient client = new OkHttpClient();
 
 			// Llamada a la API para películas novedades
-			handleMovieApiCall(client, "https://api.themoviedb.org/3/movie/popular?language=es-ES&page=1", novedades);
+			handleMovieApiCall(client, "https://api.themoviedb.org/3/movie/now_playing?language=es-ES&page=1", novedades);
 
 			// Llamada a la API para top 5
 			handleMovieApiCall(client, "https://api.themoviedb.org/3/trending/all/day?language=es-ES", top10);
 
-			// Muestra la lista
-			mostrarMiLista();
-
-			// Sacar pelis de mi lista, de la bbdd
-			/* METODO QUE BUSQUE EN BBDD LAS PELIS // SERIES QUE TIENEN MI LISTA = TRUE */
-
-			// Configuración del evento para cada ImageView en novedades
-			for (Node node : novedades.getChildren()) {
-				if (node instanceof ImageView) {
-					ImageView imageView = (ImageView) node;
-					imageView.setOnMouseClicked(event -> detallesClicked(imageView));
-				}
-			}
-
-			// Configuración del evento para cada ImageView en top10
-			for (Node node : top10.getChildren()) {
-				if (node instanceof ImageView) {
-					ImageView imageView = (ImageView) node;
-					imageView.setOnMouseClicked(event -> detallesClicked(imageView));
-				}
-			}
-
-			// Configuración del evento para cada ImageView en miLista
-			for (Node node : miLista.getChildren()) {
-				if (node instanceof ImageView) {
-					ImageView imageView = (ImageView) node;
-					imageView.setOnMouseClicked(event -> detallesClicked(imageView));
-				}
-			}
-
+			mostrarMiListaPeliculas();
+			mostrarMiListaSeries();
+			miLista.setSpacing(50.0);
 		} catch (IOException e) {
 			// Manejar excepciones
 			e.printStackTrace();
 		}
 	}
 
-	private void mostrarMiLista() {
-		// Coge el numero de peliculas y series que hay registradas para el usuario
-		UsuarioSerieDaoImpl usDao = new UsuarioSerieDaoImpl(session);
+	private void mostrarMiListaPeliculas() {
 		UsuarioPeliculaDaoImpl upDao = new UsuarioPeliculaDaoImpl(session);
-		String user = UsuarioController.getUsuarioRegistrado().getNombre();
-		int numeroSeries = Integer.parseInt(usDao.searchNumeroSeries(user));
-		int numeroPeliculas = Integer.parseInt(upDao.searchNumeroPeliculas(user));
+		String user = UsuarioController.getUsuarioRegistrado().getUser();
+		// Trae las peliculas guardadas en mi lista
+		List<UsuarioPelicula> upLista = upDao.searchPeliculasMiLista(user);
+		for (UsuarioPelicula up : upLista) {
+			// Obtener la imagen de la película
+			ImageView imageView = getImageViewFromPelicula(up.getId().getPelicula());
 
-		// Comprueba que haya algo guardado
-		if (numeroSeries > 0 || numeroPeliculas > 0) {
-			// Trae la lista de series y peliculas guardadas
-			List<UsuarioSerie> listaUserSerie = usDao.searchByUsuario(user);
-			List<UsuarioPelicula> listaUserPeli = upDao.searchByUsuario(user);
-			// Coge el numero total de pelis y series guardados
-			int totalSeries = listaUserSerie.size();
+			// Establecer el tamaño de la imagen si es necesario
+			imageView.setFitWidth(200); // Ajusta el ancho según tus necesidades
+			imageView.setPreserveRatio(true); // Mantiene la proporción de la imagen
+			imageView.setOnMouseClicked(
+					event -> abrirVentanaDetalles(String.valueOf(up.getId().getPelicula().getId()), Constants.PELICULA));
 
-//			for (int i = 1; i <= totalGuardadas; i++) {
-//				// Muestra una de peli y otra de serie, para que salgan mezcladas
-//				if (i % 2 == 0) {
-//							ImageView imageView = null;
-//							if (pelicula.getPoster_path() != null) {
-//								imageView = getImageViewFromPelicula(pelicula);
-//
-//								// Almacena el ID de la película en el userData del ImageView
-//								imageView.setUserData(String.valueOf(pelicula.getId()));
-//
-//							}
-//							// Verificar si imageView no es nulo antes de agregarlo al HBox
-//							if (imageView != null) {
-//								targetHBox.getChildren().add(imageView);
-//							}
-//
-//							contador++;
-//						} else {
-//							break; // Se han agregado 10 películas, salir del bucle
-//						}
-//					}
-//				}
-//				} else {
-//					// peli
-//				}
-//			}
-
+			// Agregar la imagen al HBox de "Mi Lista"
+			miLista.getChildren().add(imageView);
 		}
-
-//			for (Pelicula pelicula : respApi.getResults()) {
-//				System.out.println("Adding image: " + pelicula.getPoster_path());
-//				if (contador < 10) { // Limitar a 10 películas
-//					ImageView imageView = null;
-//					if (pelicula.getPoster_path() != null) {
-//						imageView = getImageViewFromPelicula(pelicula);
-//
-//						// Almacena el ID de la película en el userData del ImageView
-//						imageView.setUserData(String.valueOf(pelicula.getId()));
-//
-//					}
-//					// Verificar si imageView no es nulo antes de agregarlo al HBox
-//					if (imageView != null) {
-//						targetHBox.getChildren().add(imageView);
-//					}
-//
-//					contador++;
-//				} else {
-//					break; // Se han agregado 10 películas, salir del bucle
-//				}
-//			}
-//		}
 	}
 
-	void detallesClicked(ImageView clickedImageView) {
-		// Obtener el identificador de la película desde el ImageView
-		String movieId = getMovieIdFromImageView(clickedImageView);
+	private void mostrarMiListaSeries() {
+		UsuarioSerieDaoImpl usDao = new UsuarioSerieDaoImpl(session);
+		String user = UsuarioController.getUsuarioRegistrado().getUser();
+		// Trae las series guardadas en mi lista
+		for (UsuarioSerie us : usDao.searchSeriesMiLista(user)) {
+			// Obtener la imagen de la serie
+			ImageView imageView = getImageViewFromSeries(us.getId().getSeries());
 
-		// Abrir la ventana de detalles
-		abrirVentanaDetalles(movieId);
+			// Establecer el tamaño de la imagen si es necesario
+			imageView.setFitWidth(200);
+			imageView.setPreserveRatio(true); // Mantiene la proporción de la imagen
+			imageView.setOnMouseClicked(
+					event -> abrirVentanaDetalles(String.valueOf(us.getId().getSeries().getId()), Constants.SERIES));
+
+			// Agregar la imagen al HBox de "Mi Lista"
+			miLista.getChildren().add(imageView);
+		}
 	}
 
-	private String getMovieIdFromImageView(ImageView imageView) {
-		// Obtén el ID de la película almacenado en el userData del ImageView
+	private ImageView getImageViewFromSeries(Series series) {
+		ImageView imageView = new ImageView();
+		imageView.setFitHeight(230.0);
+		imageView.setPreserveRatio(true);
+		String id = "" + series.getId();
+		Image image;
+		// Comprueba si se trata de una serie manual y recoge su imagen en ambos casos
+		if (id.startsWith(Constants.PREFIJO_ID_SERIES_MANUALES)) {
+			image = new Image("file:" + series.getPoster_path());
+		} else {
+			String imageUrl = "https://image.tmdb.org/t/p/w500" + series.getPoster_path();
+			image = new Image(imageUrl);
+		}
+		// Configurar la imagen en el ImageView
+		imageView.getStyleClass().add("sombraDerecha");
+		imageView.setImage(image);
+
+		return imageView;
+	}
+
+	/**
+	 * Devuelve el id almacenado en el userData de la imagen pasada
+	 * 
+	 * @param imageView Imagen de la que se saca el id
+	 * @return Id almacenado
+	 */
+	private String getIdFromImageView(ImageView imageView) {
+		// Obtén el ID almacenado en el userData del ImageView
 		Object userData = imageView.getUserData();
 
 		if (userData instanceof String) {
 			return (String) userData;
 		} else {
-			// Manejar la situación donde no hay un ID almacenado
 			return "";
 		}
 	}
 
-	private void abrirVentanaDetalles(String movieId) {
+	/**
+	 * Abre la ventana de detalles con los datos de la pelicula/serie con el id
+	 * proporcionado
+	 * 
+	 * @param id   Id de la obra
+	 * @param tipo Tipo de obra (tv/movie)
+	 */
+	private void abrirVentanaDetalles(String id, String tipo) {
 		setSceneAndStage();
-		gestorVentanas.muestraDetalles(stage, movieId, "movie");
+		gestorVentanas.muestraDetalles(stage, id, tipo);
 	}
 
 	private void handleMovieApiCall(OkHttpClient client, String apiUrl, HBox targetHBox) throws IOException {
@@ -251,51 +220,105 @@ public class InicioController {
 
 		// Utilizar Gson para convertir la respuesta JSON a objetos Java
 		Gson gson = new Gson();
-		RespuestaApi respApi = gson.fromJson(responseBody, RespuestaApi.class);
+		// Comprueba si es la lista de top10
+		if (targetHBox.getId().equalsIgnoreCase("top10")) {
+			getResultTrending(targetHBox, responseBody, gson);
+		} else {
+			RespuestaApi respApi = gson.fromJson(responseBody, RespuestaApi.class);
 
-		// Verificar si hay resultados en la respuesta
+			// Verificar si hay resultados en la respuesta
+			if (respApi.getResults() != null && respApi.getResults().length > 0) {
+				// Iterar sobre las películas y agregar imágenes al HBox
+				int contador = 0;
+				for (Pelicula pelicula : respApi.getResults()) {
+					if (contador < 10) { // Limitar a 10 películas
+						ImageView imageView = null;
+						if (pelicula.getPoster_path() != null) {
+							imageView = getImageViewFromPelicula(pelicula);
+							imageView.setOnMouseClicked(
+									event -> abrirVentanaDetalles(String.valueOf(pelicula.getId()), Constants.PELICULA));
+
+						}
+						// Verificar si imageView no es nulo antes de agregarlo al HBox
+						if (imageView != null) {
+							targetHBox.getChildren().add(imageView);
+						}
+
+						contador++;
+					} else {
+						break; // Se han agregado 10 películas, salir del bucle
+					}
+				}
+			}
+		}
+
+		targetHBox.setSpacing(50.0);
+	}
+
+	/**
+	 * Recoge el resultado de la api sobre las peliculas/series trending y las añade
+	 * al hbox
+	 * 
+	 * @param targetHBox
+	 * @param responseBody
+	 * @param gson
+	 */
+	public void getResultTrending(HBox targetHBox, String responseBody, Gson gson) {
+		RespuestaApiTrending respApi = gson.fromJson(responseBody, RespuestaApiTrending.class);
+		// Verifica si hay resultados en la respuesta
 		if (respApi.getResults() != null && respApi.getResults().length > 0) {
-			// Iterar sobre las películas y agregar imágenes al HBox
 			int contador = 0;
-			for (Pelicula pelicula : respApi.getResults()) {
+			for (MediaItem item : respApi.getResults()) {
 				if (contador < 10) { // Limitar a 10 películas
 					ImageView imageView = null;
-					if (pelicula.getPoster_path() != null) {
-						imageView = getImageViewFromPelicula(pelicula);
-
-						// Almacena el ID de la película en el userData del ImageView
-						imageView.setUserData(String.valueOf(pelicula.getId()));
-
+					if (item.getPoster_path() != null) {
+						imageView = getImageViewFromItem(item);
+						imageView
+								.setOnMouseClicked(event -> abrirVentanaDetalles(String.valueOf(item.getId()), item.getMediaType()));
 					}
 					// Verificar si imageView no es nulo antes de agregarlo al HBox
 					if (imageView != null) {
 						targetHBox.getChildren().add(imageView);
 					}
-
 					contador++;
 				} else {
 					break; // Se han agregado 10 películas, salir del bucle
 				}
 			}
 		}
-		targetHBox.setSpacing(50.0);
+	}
+
+	private ImageView getImageViewFromItem(MediaItem item) {
+		ImageView imageView = new ImageView();
+		imageView.setFitHeight(230.0);
+		imageView.setPreserveRatio(true);
+		Image image;
+		String imageUrl = "https://image.tmdb.org/t/p/w500" + item.getPoster_path();
+		image = new Image(imageUrl);
+		// Configurar la imagen en el ImageView
+		imageView.getStyleClass().add("sombraDerecha");
+		imageView.setImage(image);
+
+		return imageView;
 	}
 
 	private ImageView getImageViewFromPelicula(Pelicula pelicula) {
 		ImageView imageView = new ImageView();
 		imageView.setFitHeight(230.0);
 		imageView.setPreserveRatio(true);
-
-		// Construir la URL del póster de la película
-		String imageUrl = "https://image.tmdb.org/t/p/w500" + pelicula.getPoster_path();
-
+		String id = "" + pelicula.getId();
+		Image image;
+		// Comprueba si se trata de una peli manual y recoge su imagen en ambos casos
+		if (id.startsWith(Constants.PREFIJO_ID_PELIS_MANUALES)) {
+			image = new Image("file:" + pelicula.getPoster_path());
+		} else {
+			String imageUrl = "https://image.tmdb.org/t/p/w500" + pelicula.getPoster_path();
+			image = new Image(imageUrl);
+		}
 		// Configurar la imagen en el ImageView
-		Image image = new Image(imageUrl);
 		imageView.getStyleClass().add("sombraDerecha");
 		imageView.setImage(image);
 
-		// Configurar el evento de clic para llamar a detallesClicked
-		imageView.setOnMouseClicked(event -> detallesClicked(imageView));
 		return imageView;
 	}
 

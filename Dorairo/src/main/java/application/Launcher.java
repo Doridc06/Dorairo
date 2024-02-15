@@ -1,8 +1,19 @@
 package application;
 
+/**
+ * Clase para lanzar la aplicación
+ * 
+ * @author JairoAB
+ *
+ */
 public class Launcher {
 
-      public static void main(String[] args) {
-          Main.main(args);
-      }
-  }
+	/**
+	 * Método principal
+	 * 
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		Main.main(args);
+	}
+}

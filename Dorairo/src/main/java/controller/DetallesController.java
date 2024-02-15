@@ -19,7 +19,6 @@ import dao.SeriesDaoImpl;
 import dao.UsuarioPeliculaDaoImpl;
 import dao.UsuarioSerieDaoImpl;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
@@ -71,11 +70,6 @@ public class DetallesController {
 	/** Texto para mostrar detalles adicionales. */
 	@FXML
 	private Text detalles;
-
-	/**
-	 * Escena de la ventana.
-	 */
-	private Scene scene;
 
 	/**
 	 * Escenario de la ventana.
@@ -263,7 +257,7 @@ public class DetallesController {
 	 */
 	@FXML
 	void inicioClicked(MouseEvent event) {
-		setSceneAndStage();
+		setStage();
 		gestorVentanas.muestraVentana(stage, Constants.URL_INICIO_FXML, "Inicio");
 	}
 
@@ -276,7 +270,7 @@ public class DetallesController {
 	 */
 	@FXML
 	void peliculasClicked(MouseEvent event) {
-		setSceneAndStage();
+		setStage();
 		gestorVentanas.muestraVentana(stage, Constants.URL_PELICULA_FXML, "Pelicula");
 	}
 
@@ -289,7 +283,7 @@ public class DetallesController {
 	 */
 	@FXML
 	void seriesClicked(MouseEvent event) {
-		setSceneAndStage();
+		setStage();
 		gestorVentanas.muestraVentana(stage, Constants.URL_SERIES_FXML, "Series");
 	}
 
@@ -303,7 +297,7 @@ public class DetallesController {
 	 */
 	@FXML
 	void buscadorClicked(MouseEvent event) {
-		setSceneAndStage();
+		setStage();
 		gestorVentanas.muestraVentana(stage, Constants.URL_BUSCADOR_FXML, "Buscador");
 	}
 
@@ -316,19 +310,16 @@ public class DetallesController {
 	 */
 	@FXML
 	void perfilClicked(MouseEvent event) {
-		setSceneAndStage();
+		setStage();
 		gestorVentanas.muestraVentana(stage, Constants.URL_USUARIO_FXML, "Perfil");
 
 	}
 
 	/**
-	 * Establece la escena y el escenario actuales utilizando el ImageView
-	 * 
-	 * imagenLogoCabecera como referencia.
+	 * Establece el valor del stage
 	 */
-	public void setSceneAndStage() {
-		scene = imagenLogoCabecera.getScene();
-		stage = (Stage) scene.getWindow();
+	public void setStage() {
+		stage = (Stage) imagenLogoCabecera.getScene().getWindow();
 	}
 
 	/**

@@ -1,9 +1,7 @@
 package controller;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import org.hibernate.Session;
 
@@ -14,13 +12,12 @@ import constants.Constants;
 import dao.UsuarioPeliculaDaoImpl;
 import dao.UsuarioSerieDaoImpl;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import models.Pelicula;
 import models.RespuestaApi;
@@ -38,42 +35,24 @@ import utilities.GestorVentanas;
  * Clase con las funciones del Inicio
  * 
  * @author JairoAB
- *
  */
 public class InicioController {
 
-	@FXML
-	private ResourceBundle resources;
-
-	@FXML
-	private URL location;
-
+	/** ImageView para el logo en la cabecera */
 	@FXML
 	private ImageView imagenLogoCabecera;
 
+	/** HBox para mi lista */
 	@FXML
 	private HBox miLista;
 
+	/** HBox para novedades */
 	@FXML
 	private HBox novedades;
 
-	@FXML
-	private Pane paneCabecera;
-
-	@FXML
-	private StackPane stackPaneInicioCabecera;
-
-	@FXML
-	private StackPane stackPaneLogoCabecera;
-
-	@FXML
-	private StackPane stackPanePeliculasCabecera;
-
+	/** HBox para top10 */
 	@FXML
 	private HBox top10;
-
-	/** Scene de la ventana de Inicio */
-	private Scene scene;
 
 	/** Stage de la ventana de Inicio */
 	private Stage stage;
@@ -81,14 +60,19 @@ public class InicioController {
 	/** Instancia del gestor de ventanas **/
 	private GestorVentanas gestorVentanas;
 
+	/** ImageView para la lupa */
 	@FXML
 	private ImageView lupa;
 
 	/** Conexion con la base de datos */
 	private Session session;
 
+	/** Clave para la API */
 	private static final String API_KEY = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlYjc0NTA5ZjRiZDBlODJlMTFlYzA2YWM1MDRhMGRlMCIsInN1YiI6IjY1Mzc3ZmRmZjQ5NWVlMDBmZjY1YTEyOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ehIu08LoiMRTccPoD4AfADXOpQPlqNAKUMvGgwY3XU8";
 
+	/**
+	 * Método que se ejecuta al iniciar la clase
+	 */
 	@FXML
 	void initialize() {
 		session = HibernateUtil.openSession();
@@ -97,21 +81,18 @@ public class InicioController {
 		// Establece la imagen del logo
 		Image imagenLogo = new Image(getClass().getResourceAsStream(Constants.URL_LOGO_AMPLIADO));
 		imagenLogoCabecera.setImage(imagenLogo);
-
+		// Establece la imagen de la lupa
 		Image imagenLupa = new Image(getClass().getResourceAsStream(Constants.URL_LUPA));
 		lupa.setImage(imagenLupa);
 		try {
 			// Configuración del cliente HTTP (OkHttpClient)
 			OkHttpClient client = new OkHttpClient();
-
 			// Llamada a la API para películas novedades
 			handleMovieApiCall(client, "https://api.themoviedb.org/3/movie/now_playing?language=es-ES&page=1", novedades);
-
-			// Llamada a la API para top 5
+			// Llamada a la API para top 10
 			handleMovieApiCall(client, "https://api.themoviedb.org/3/trending/all/day?language=es-ES", top10);
-
-			mostrarMiListaPeliculas();
-			mostrarMiListaSeries();
+			// Muestra mi lista
+			muestraMiLista();
 			miLista.setSpacing(50.0);
 		} catch (IOException e) {
 			// Manejar excepciones
@@ -119,48 +100,84 @@ public class InicioController {
 		}
 	}
 
+	/**
+	 * Gestiona la muestra de Mi Lista en la interfaz
+	 */
+	public void muestraMiLista() {
+		// Recibe el número de películas en mi lista
+		String user = UsuarioController.getUsuarioRegistrado().getUser();
+		UsuarioPeliculaDaoImpl upDao = new UsuarioPeliculaDaoImpl(session);
+		int contPelisMiLista = upDao.searchPeliculasMiLista(user).size();
+		// Recibe el número de series en mi lista
+		UsuarioSerieDaoImpl usDao = new UsuarioSerieDaoImpl(session);
+		int contSeriesMiLista = usDao.searchSeriesMiLista(user).size();
+		// Recoge el total y comprueba si hay alguna peli/serie
+		int total = contPelisMiLista + contSeriesMiLista;
+		if (total > 0) {
+			mostrarMiListaPeliculas();
+			mostrarMiListaSeries();
+		} else {
+			mostrarMensajeEnHBox(miLista, "No hay nada en mi lista");
+		}
+	}
+
+	/**
+	 * Añade la lista de peliculas que se encuentran en Mi Lista y las muestra por
+	 * pantalla
+	 */
 	private void mostrarMiListaPeliculas() {
+		// Trae las peliculas guardadas en mi lista
 		UsuarioPeliculaDaoImpl upDao = new UsuarioPeliculaDaoImpl(session);
 		String user = UsuarioController.getUsuarioRegistrado().getUser();
-		// Trae las peliculas guardadas en mi lista
 		List<UsuarioPelicula> upLista = upDao.searchPeliculasMiLista(user);
+		// Recorre la lista mostrando cada película
 		for (UsuarioPelicula up : upLista) {
 			// Obtener la imagen de la película
 			ImageView imageView = getImageViewFromPelicula(up.getId().getPelicula());
-
 			// Establecer el tamaño de la imagen si es necesario
 			imageView.setFitWidth(200); // Ajusta el ancho según tus necesidades
 			imageView.setPreserveRatio(true); // Mantiene la proporción de la imagen
 			imageView.setOnMouseClicked(
 					event -> abrirVentanaDetalles(String.valueOf(up.getId().getPelicula().getId()), Constants.PELICULA));
-
 			// Agregar la imagen al HBox de "Mi Lista"
 			miLista.getChildren().add(imageView);
 		}
 	}
 
+	/**
+	 * Añade la lista de series que se encuentran en Mi Lista y las muestra por
+	 * pantalla
+	 */
 	private void mostrarMiListaSeries() {
+		// Trae las series guardadas en mi lista
 		UsuarioSerieDaoImpl usDao = new UsuarioSerieDaoImpl(session);
 		String user = UsuarioController.getUsuarioRegistrado().getUser();
+		List<UsuarioSerie> listaUS = usDao.searchSeriesMiLista(user);
 		// Trae las series guardadas en mi lista
-		for (UsuarioSerie us : usDao.searchSeriesMiLista(user)) {
+		for (UsuarioSerie us : listaUS) {
 			// Obtener la imagen de la serie
 			ImageView imageView = getImageViewFromSeries(us.getId().getSeries());
-
 			// Establecer el tamaño de la imagen si es necesario
 			imageView.setFitWidth(200);
 			imageView.setPreserveRatio(true); // Mantiene la proporción de la imagen
 			imageView.setOnMouseClicked(
 					event -> abrirVentanaDetalles(String.valueOf(us.getId().getSeries().getId()), Constants.SERIES));
-
 			// Agregar la imagen al HBox de "Mi Lista"
 			miLista.getChildren().add(imageView);
 		}
 	}
 
+	/**
+	 * Crea y configura un ImageView para mostrar la imagen de una serie.
+	 * 
+	 * @param series La serie de la que se va a mostrar la imagen.
+	 * @return El ImageView configurado.
+	 */
 	private ImageView getImageViewFromSeries(Series series) {
+		// Crea el imageView con la configuracion
 		ImageView imageView = new ImageView();
 		imageView.setFitHeight(230.0);
+		imageView.setFitWidth(290.0);
 		imageView.setPreserveRatio(true);
 		String id = "" + series.getId();
 		Image image;
@@ -179,23 +196,6 @@ public class InicioController {
 	}
 
 	/**
-	 * Devuelve el id almacenado en el userData de la imagen pasada
-	 * 
-	 * @param imageView Imagen de la que se saca el id
-	 * @return Id almacenado
-	 */
-	private String getIdFromImageView(ImageView imageView) {
-		// Obtén el ID almacenado en el userData del ImageView
-		Object userData = imageView.getUserData();
-
-		if (userData instanceof String) {
-			return (String) userData;
-		} else {
-			return "";
-		}
-	}
-
-	/**
 	 * Abre la ventana de detalles con los datos de la pelicula/serie con el id
 	 * proporcionado
 	 * 
@@ -203,10 +203,18 @@ public class InicioController {
 	 * @param tipo Tipo de obra (tv/movie)
 	 */
 	private void abrirVentanaDetalles(String id, String tipo) {
-		setSceneAndStage();
+		setStage();
 		gestorVentanas.muestraDetalles(stage, id, tipo);
 	}
 
+	/**
+	 * Método de la llamada a la api para la información de cada película
+	 * 
+	 * @param client
+	 * @param apiUrl
+	 * @param targetHBox
+	 * @throws IOException
+	 */
 	private void handleMovieApiCall(OkHttpClient client, String apiUrl, HBox targetHBox) throws IOException {
 		// Construir la solicitud para la API de películas
 		Request request = new Request.Builder().url(apiUrl).get().addHeader("accept", "application/json")
@@ -225,7 +233,6 @@ public class InicioController {
 			getResultTrending(targetHBox, responseBody, gson);
 		} else {
 			RespuestaApi respApi = gson.fromJson(responseBody, RespuestaApi.class);
-
 			// Verificar si hay resultados en la respuesta
 			if (respApi.getResults() != null && respApi.getResults().length > 0) {
 				// Iterar sobre las películas y agregar imágenes al HBox
@@ -243,7 +250,6 @@ public class InicioController {
 						if (imageView != null) {
 							targetHBox.getChildren().add(imageView);
 						}
-
 						contador++;
 					} else {
 						break; // Se han agregado 10 películas, salir del bucle
@@ -251,7 +257,6 @@ public class InicioController {
 				}
 			}
 		}
-
 		targetHBox.setSpacing(50.0);
 	}
 
@@ -288,9 +293,17 @@ public class InicioController {
 		}
 	}
 
+	/**
+	 * Crea y configura un ImageView para mostrar la imagen de un MediaItem.
+	 * 
+	 * @param item La MediaItem de la que se va a mostrar la imagen.
+	 * @return El ImageView configurado.
+	 */
 	private ImageView getImageViewFromItem(MediaItem item) {
+		// Crea el imageView con la configuracion
 		ImageView imageView = new ImageView();
 		imageView.setFitHeight(230.0);
+		imageView.setFitWidth(290.0);
 		imageView.setPreserveRatio(true);
 		Image image;
 		String imageUrl = "https://image.tmdb.org/t/p/w500" + item.getPoster_path();
@@ -298,13 +311,20 @@ public class InicioController {
 		// Configurar la imagen en el ImageView
 		imageView.getStyleClass().add("sombraDerecha");
 		imageView.setImage(image);
-
 		return imageView;
 	}
 
+	/**
+	 * Crea y configura un ImageView para mostrar la imagen de una película.
+	 * 
+	 * @param pelicula La película de la que se va a mostrar la imagen.
+	 * @return El ImageView configurado.
+	 */
 	private ImageView getImageViewFromPelicula(Pelicula pelicula) {
+		// Crea el imageView con la configuracion
 		ImageView imageView = new ImageView();
 		imageView.setFitHeight(230.0);
+		imageView.setFitWidth(290.0);
 		imageView.setPreserveRatio(true);
 		String id = "" + pelicula.getId();
 		Image image;
@@ -322,43 +342,79 @@ public class InicioController {
 		return imageView;
 	}
 
+	/**
+	 * Muestra la pantalla de inicio
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void inicioClicked(MouseEvent event) {
-		setSceneAndStage();
+		setStage();
 		gestorVentanas.muestraVentana(stage, Constants.URL_INICIO_FXML, "Inicio");
 	}
 
+	/**
+	 * Muestra la pantalla de peliculas
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void peliculasClicked(MouseEvent event) {
-		setSceneAndStage();
+		setStage();
 		gestorVentanas.muestraVentana(stage, Constants.URL_PELICULA_FXML, "Pelicula");
 	}
 
+	/**
+	 * Muestra la pantalla de series
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void seriesClicked(MouseEvent event) {
-		setSceneAndStage();
+		setStage();
 		gestorVentanas.muestraVentana(stage, Constants.URL_SERIES_FXML, "Series");
 	}
 
+	/**
+	 * Muestra la pantalla de buscador
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void buscadorClicked(MouseEvent event) {
-		setSceneAndStage();
+		setStage();
 		gestorVentanas.muestraVentana(stage, Constants.URL_BUSCADOR_FXML, "Buscador");
 	}
 
+	/**
+	 * Muestra la pantalla de perfil del usuario
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void perfilClicked(MouseEvent event) {
-		setSceneAndStage();
+		setStage();
 		gestorVentanas.muestraVentana(stage, Constants.URL_USUARIO_FXML, "Perfil");
 	}
 
 	/**
-	 * Asigna los valores correspondientes del stage y el scene
-	 * 
+	 * Establece el valor de stage
 	 */
-	public void setSceneAndStage() {
-		scene = imagenLogoCabecera.getScene();
-		stage = (Stage) scene.getWindow();
+	public void setStage() {
+		stage = (Stage) imagenLogoCabecera.getScene().getWindow();
+	}
+
+	/**
+	 * Método para mostrar un mensaje en un HBox.
+	 * 
+	 * @param hbox    El HBox en el que se mostrará el mensaje.
+	 * @param mensaje El mensaje a mostrar.
+	 */
+	private void mostrarMensajeEnHBox(HBox hbox, String mensaje) {
+		hbox.getChildren().clear(); // Limpiar cualquier contenido previo
+		Label mensajeLabel = new Label(mensaje); // Crear un Label con el mensaje
+		mensajeLabel.setFont(new Font(16));
+		hbox.getChildren().add(mensajeLabel); // Agregar el Label al HBox
 	}
 
 }

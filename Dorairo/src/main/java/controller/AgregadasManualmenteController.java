@@ -23,7 +23,6 @@ import dao.UsuarioPeliculaDaoImpl;
 import dao.UsuarioSerieDaoImpl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -60,56 +59,69 @@ import utilities.Utils;
  */
 public class AgregadasManualmenteController {
 
+	/** ChoiceBx de los tipos de obras */
 	@FXML
 	private ChoiceBox<String> choiceTipo;
 
+	/** ImageView del logo de la cabecera */
 	@FXML
 	private ImageView imagenLogoCabecera;
 
+	/** ImageView del cartel */
 	@FXML
 	private ImageView imagenCartel;
 
+	/** Campo para el actores */
 	@FXML
 	private TextField txtActores;
 
+	/** Campo para el comentarios */
 	@FXML
 	private TextArea txtComentarios;
 
+	/** Campo para el compañia */
 	@FXML
-	private TextField txtCompañia;
+	private TextField txtCompany;
 
+	/** Campo para el descripcion */
 	@FXML
 	private TextArea txtDescripcion;
 
+	/** Campo para el director */
 	@FXML
 	private TextField txtDirectores;
 
+	/** Campo para el numero de episodios */
 	@FXML
 	private TextField txtEpisodios;
 
+	/** Campo para la fecha de estreno */
 	@FXML
 	private TextField txtEstreno;
 
+	/** Campo para los generos */
 	@FXML
 	private TextField txtGenero;
 
+	/** Campo para el lugar de guardado */
 	@FXML
 	private TextField txtGuardado;
 
+	/** Campo para la valoracion personal */
 	@FXML
 	private TextField txtValoracionPersonal;
 
+	/** Campo para el numero de temporadas */
 	@FXML
 	private TextField txtTemporadas;
 
+	/** Campo para el titulo */
 	@FXML
 	private TextField txtTitulo;
 
+	/** Campo para el valoracion global */
 	@FXML
 	private TextField txtValoracionGlobal;
-
-	/** Scene de la ventana de Agregado Manual */
-	private Scene scene;
 
 	/** Stage de la ventana de Agregado Manual */
 	private Stage stage;
@@ -138,18 +150,19 @@ public class AgregadasManualmenteController {
 	/** API KEY */
 	public static final String API_KEY = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlYjc0NTA5ZjRiZDBlODJlMTFlYzA2YWM1MDRhMGRlMCIsInN1YiI6IjY1Mzc3ZmRmZjQ5NWVlMDBmZjY1YTEyOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ehIu08LoiMRTccPoD4AfADXOpQPlqNAKUMvGgwY3XU8";
 
+	/**
+	 * Método que se ejecuta al iniciar la clase
+	 */
 	@FXML
 	void initialize() {
-
 		// Configuración del cliente HTTP (OkHttpClient)
 		client = new OkHttpClient();
-
 		// Inicializamos el Gestor de ventanas
 		gestorVentanas = new GestorVentanas();
 		// Establece la imagen del logo
 		Image imagen = new Image(getClass().getResourceAsStream(Constants.URL_LOGO_AMPLIADO));
 		imagenLogoCabecera.setImage(imagen);
-
+		// Establece la imagen de la lupa
 		Image imagenLupa = new Image(getClass().getResourceAsStream(Constants.URL_LUPA));
 		lupa.setImage(imagenLupa);
 		// Establece la imagen de subir foto
@@ -157,38 +170,62 @@ public class AgregadasManualmenteController {
 		imagenCartel.setImage(imagen);
 		// Establece las opciones de tipo serie o pelicula
 		choiceTipo.getItems().addAll("Pelicula", "Serie");
-
 		// Recogemos la sesion
 		session = HibernateUtil.openSession();
 	}
 
+	/**
+	 * Muestra la pantalla de inicio
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void inicioClicked(MouseEvent event) {
-		setSceneAndStage();
+		setStage();
 		gestorVentanas.muestraVentana(stage, Constants.URL_INICIO_FXML, "Inicio");
 	}
 
+	/**
+	 * Muestra la pantalla de peliculas
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void peliculasClicked(MouseEvent event) {
-		setSceneAndStage();
+		setStage();
 		gestorVentanas.muestraVentana(stage, Constants.URL_PELICULA_FXML, "Pelicula");
 	}
 
+	/**
+	 * Muestra la pantalla de series
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void seriesClicked(MouseEvent event) {
-		setSceneAndStage();
+		setStage();
 		gestorVentanas.muestraVentana(stage, Constants.URL_SERIES_FXML, "Series");
 	}
 
+	/**
+	 * Muestra la pantalla de buscador
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void buscadorClicked(MouseEvent event) {
-		setSceneAndStage();
+		setStage();
 		gestorVentanas.muestraVentana(stage, Constants.URL_BUSCADOR_FXML, "Buscador");
 	}
 
+	/**
+	 * Muestra la pantalla de perfil del usuario
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void perfilClicked(MouseEvent event) {
-		setSceneAndStage();
+		setStage();
 		gestorVentanas.muestraVentana(stage, Constants.URL_USUARIO_FXML, "Perfil");
 	}
 
@@ -199,7 +236,7 @@ public class AgregadasManualmenteController {
 	 */
 	@FXML
 	void subirFoto(MouseEvent event) {
-		setSceneAndStage();
+		setStage();
 		// Coge la url de la nueva foto
 		poster = Utils.buscarFotoArchivos(stage);
 		// Muestra la imagen
@@ -213,15 +250,19 @@ public class AgregadasManualmenteController {
 	 */
 	@FXML
 	void compruebaTipo() {
+		// Establece un evento para cuando se pulsa el tipo
 		choiceTipo.setOnAction(event -> {
+			// Recoge el valor y comprueba que no sea nulo
 			tipo = choiceTipo.getValue();
 			if (tipo != null) {
+				// Comprueba si es una serie
 				isSerie = tipo.equalsIgnoreCase("Serie");
 				if (!isSerie) {
 					// Si no es una serie quita el texto que tuviera
 					txtEpisodios.setText("");
 					txtTemporadas.setText("");
 				}
+				// Activa o desactiva los campos segun sea una serie o no
 				txtEpisodios.setDisable(!isSerie);
 				txtTemporadas.setDisable(!isSerie);
 			}
@@ -256,6 +297,7 @@ public class AgregadasManualmenteController {
 		try {
 			// Comprueba si todos los campos se han rellenado
 			if (isCompleto()) {
+				// Recoge todos los campos, pasandolos de string a sus respectivas clases
 				Compañia company = searchCompany();
 				double vote = getVote(txtValoracionGlobal.getText().strip());
 				getVote(txtValoracionPersonal.getText());
@@ -263,6 +305,7 @@ public class AgregadasManualmenteController {
 				List<Directores> listDirectores = getListaDirectores();
 				List<Genero> listGenero = getListaGenero();
 				comprobarFecha();
+				// Crea el objeto de pelicula
 				Pelicula pelicula = new Pelicula(Utils.generaMovieId(), txtTitulo.getText(), txtEstreno.getText(), company,
 						txtDescripcion.getText(), poster, vote, listActores, listDirectores, listGenero);
 				// Si acepta, se guarda la peli
@@ -289,9 +332,51 @@ public class AgregadasManualmenteController {
 	}
 
 	/**
+	 * Gestiona la creacion de una serie nueva
+	 */
+	private void crearSerie() {
+		try {
+			// Comprueba si todos los campos se han rellenado
+			if (isCompleto() && !txtEpisodios.getText().isBlank() && !txtTemporadas.getText().isBlank()) {
+				// Recoge todos los campos, pasandolos de string a sus respectivas clases
+				Compañia company = searchCompany();
+				double vote = getVote(txtValoracionGlobal.getText());
+				getVote(txtValoracionPersonal.getText());
+				int numEpisodios = Integer.parseInt(txtEpisodios.getText());
+				int numTemporadas = Integer.parseInt(txtTemporadas.getText());
+				List<Actores> listActores = getListaActores();
+				List<Directores> listDirectores = getListaDirectores();
+				List<Genero> listGenero = getListaGenero();
+				comprobarFecha();
+				// Crea el objeto de series
+				Series serie = new Series(Utils.generaSerieId(), txtTitulo.getText(), txtEstreno.getText(), company,
+						txtDescripcion.getText(), poster, vote, numEpisodios, numTemporadas, listActores, listDirectores,
+						listGenero);
+				// Si acepta, se guarda la serie
+				if (Utils.confirmacion()) {
+					// Guarda todos los datos en la bbdd
+					guardarCompany(company);
+					guardarSerie(serie);
+					guardarDatosPersonalesSerie(serie);
+					Utils.mostrarAlerta("Serie guardada correctamente.", Constants.INFORMATION_TYPE);
+					borrarDatos();
+				}
+			} else {
+				// Muestra alerta de error
+				Utils.mostrarAlerta(
+						"Falta algún campo por rellenar.\n(No obligatorios: valoración personal, comentarios y guardado en...)",
+						Constants.ERROR_TYPE);
+			}
+		} catch (Exception e) {
+			Utils.mostrarAlerta("Error en la creacion del elemento.\nMensaje original: " + e.getMessage(),
+					Constants.ERROR_TYPE);
+		}
+	}
+
+	/**
 	 * Guarda la pelicula
 	 * 
-	 * @param pelicula Pelicula a buscar
+	 * @param pelicula Pelicula a guardar
 	 */
 	public void guardarPelicula(Pelicula pelicula) {
 		// Comprueba si ya existe, para no guardarla de nuevo
@@ -304,9 +389,10 @@ public class AgregadasManualmenteController {
 	/**
 	 * Guarda la serie
 	 * 
-	 * @param serie Serie a buscar
+	 * @param serie Serie a guardar
 	 */
 	public void guardarSerie(Series serie) {
+		// Comprueba si ya existe, para no guardarla de nuevo
 		SeriesDaoImpl serieDao = new SeriesDaoImpl(session);
 		if (serieDao.searchById(serie.getId()) == null) {
 			serieDao.update(serie);
@@ -338,7 +424,7 @@ public class AgregadasManualmenteController {
 	/**
 	 * Guarda los datos personales del usuario sobre la pelicula
 	 * 
-	 * @param pelicula
+	 * @param pelicula Pelicula sobre la que se guarda
 	 */
 	private void guardarDatosPersonalesPelicula(Pelicula pelicula) {
 		UsuarioPeliculaDaoImpl upDao = new UsuarioPeliculaDaoImpl(session);
@@ -349,13 +435,27 @@ public class AgregadasManualmenteController {
 	}
 
 	/**
+	 * Guarda los datos personales del usuario sobre la serie
+	 * 
+	 * @param serie Serie de la que se guarda
+	 */
+	private void guardarDatosPersonalesSerie(Series serie) {
+		UsuarioSerieDaoImpl upDao = new UsuarioSerieDaoImpl(session);
+		Localizacion localizacion = searchLocalizacion();
+		UsuarioSerie us = new UsuarioSerie(new UsuarioSerieID(UsuarioController.getUsuarioRegistrado(), serie),
+				getVote(txtValoracionPersonal.getText()), new Date(), txtComentarios.getText(), localizacion, false, true);
+		upDao.update(us);
+	}
+
+	/**
 	 * Busca la localizacion en la bbdd, si no existe, se crea una nueva
 	 * 
-	 * @return Localizacion
+	 * @return Localizacion encontrada/creada
 	 */
 	private Localizacion searchLocalizacion() {
 		LocalizacionDaoImpl lDao = new LocalizacionDaoImpl(session);
 		Localizacion lugar = lDao.searchByName(txtGuardado.getText());
+		// Si no la encuentra, la crea y guarda
 		if (lugar == null && !txtGuardado.getText().isBlank()) {
 			lugar = new Localizacion(txtGuardado.getText());
 			lDao.update(lugar);
@@ -366,9 +466,9 @@ public class AgregadasManualmenteController {
 	}
 
 	/**
-	 * Guarda la lista de generos en la bbdd
+	 * Guarda el generos en la bbdd
 	 * 
-	 * @param listGenero Lista a guardar
+	 * @param g Genero a guardar
 	 */
 	private void guardarGenero(Genero g) {
 		// Comprueba si ya existe, para no guardarlo de nuevo
@@ -379,9 +479,9 @@ public class AgregadasManualmenteController {
 	}
 
 	/**
-	 * Guarda la lista de directores en la bbdd listDirectores
+	 * Guarda el director en la bbdd
 	 * 
-	 * @param d Lista a guardar
+	 * @param d Director a guardar
 	 */
 	private void guardarDirector(Directores d) {
 		// Comprueba si ya existe, para no guardarlo de nuevo
@@ -392,9 +492,9 @@ public class AgregadasManualmenteController {
 	}
 
 	/**
-	 * Guarda la lista de actores en la bbdd
+	 * Guarda el actor en la bbdd
 	 * 
-	 * @param listActores Lista a guardar
+	 * @param a Actor a guardar
 	 */
 	private void guardarActor(Actores a) {
 		// Comprueba si ya existe, para no guardarlo de nuevo
@@ -416,20 +516,24 @@ public class AgregadasManualmenteController {
 		GeneroDaoImpl generoDaoImpl = new GeneroDaoImpl(session);
 		// Lista de generos
 		List<Genero> listGenero = new ArrayList<>();
+		// Recorre el array de generos
 		for (String genero : generosArr) {
+			// Lista de los generos con el nombre pasado
 			List<Genero> genList = generoDaoImpl.searchByName(genero.strip());
-
 			// Comprueba si está en la bbdd
 			if (!genList.isEmpty()) {
+				// Lo añade a la lista
 				listGenero.add(genList.get(0));
 			} else {
 				// Construir la solicitud para la API
 				Request request;
 				if (isSerie) {
+					// Para serie
 					request = new Request.Builder().url("https://api.themoviedb.org/3/genre/tv/list?language=es").get()
 							.addHeader("accept", "application/json").addHeader("Authorization", "Bearer " + API_KEY).build();
 
 				} else {
+					// Para pelicula
 					request = new Request.Builder().url("https://api.themoviedb.org/3/genre/movie/list?language=es").get()
 							.addHeader("accept", "application/json").addHeader("Authorization", "Bearer " + API_KEY).build();
 				}
@@ -445,6 +549,7 @@ public class AgregadasManualmenteController {
 				Gson gson = new Gson();
 				RespuestaApiGenero respApi = gson.fromJson(responseBody, RespuestaApiGenero.class);
 
+				// Recoge el genero de la api
 				Genero g = searchGenero(respApi, genero.strip());
 				// Si se ha encontrado, se añade a la lista
 				if (g != null) {
@@ -464,8 +569,8 @@ public class AgregadasManualmenteController {
 	/**
 	 * Busca el genero en la respuesta de la api
 	 * 
-	 * @param respApi
-	 * @param name
+	 * @param respApi Respuesta de la api
+	 * @param name    Nombre por el que buscar
 	 * @return Genero encontrado
 	 */
 	private Genero searchGenero(RespuestaApiGenero respApi, String name) {
@@ -491,9 +596,11 @@ public class AgregadasManualmenteController {
 		// Paso a array
 		String[] directoresArr = txtDirectores.getText().split(",");
 		DirectoresDaoImpl directoresDaoImpl = new DirectoresDaoImpl(session);
-
+		// Lista de directores
 		List<Directores> listDirectores = new ArrayList<>();
+		// Recorre el array de directores
 		for (String director : directoresArr) {
+			// Lista de los generos con el nombre pasado
 			List<Directores> dirList = directoresDaoImpl.searchByName(director.strip());
 
 			// Comprueba si está en la bbdd
@@ -521,10 +628,11 @@ public class AgregadasManualmenteController {
 				PersonaApi persona = searchPersona(respApi, "Directing");
 				Directores d;
 				if (persona != null) {
+					// Crea el director segun los datos de la persona
 					d = new Directores(persona.getId(), persona.getName());
 					listDirectores.add(d);
 				} else {
-					// Crea un nuevo actor y añade a la lista
+					// Crea un nuevo director y añade a la lista
 					d = new Directores(Utils.generaDirectorId(), director.strip());
 					listDirectores.add(d);
 				}
@@ -544,9 +652,11 @@ public class AgregadasManualmenteController {
 		// Paso a array
 		String[] actoresArr = txtActores.getText().split(",");
 		ActoresDaoImpl actoresDaoImpl = new ActoresDaoImpl(session);
-
+		// Lista de actores
 		List<Actores> listActores = new ArrayList<>();
+		// Recorre el array de actores
 		for (String actor : actoresArr) {
+			// Lista de actores con el nombre pasado
 			List<Actores> actList = actoresDaoImpl.searchByName(actor.strip());
 
 			// Comprueba si está en la bbdd
@@ -574,6 +684,7 @@ public class AgregadasManualmenteController {
 				PersonaApi persona = searchPersona(respApi, "Acting");
 				Actores a;
 				if (persona != null) {
+					// Crea el actor segund los datos de la persona
 					a = new Actores(persona.getId(), persona.getName());
 					listActores.add(a);
 				} else {
@@ -620,7 +731,7 @@ public class AgregadasManualmenteController {
 		// Reemplaza coma por punto
 		String voteString = voto.replace(',', '.');
 
-		// Intenta parsear a double
+		// Intenta parsear a double si no está vacío
 		if (!voto.isEmpty()) {
 			double parsedVote;
 			try {
@@ -630,9 +741,9 @@ public class AgregadasManualmenteController {
 						"Error con el numero decimal: '" + voto + "' Debe ser mayor de 0 y menor de 10.");
 			}
 
-			// Verificar condiciones de decimales y dígitos en la parte entera
+			// Verifica las condiciones de decimales y dígitos en la parte entera
 			if (Math.abs(parsedVote) <= 10 && Math.abs(parsedVote) >= 0) {
-				// Redondear a 3 decimales
+				// Redondea a 3 decimales
 				return Math.round(parsedVote * 1000.0) / 1000.0;
 			} else {
 				throw new NumberFormatException(
@@ -640,26 +751,27 @@ public class AgregadasManualmenteController {
 			}
 		}
 		return 0.0;
-
 	}
 
 	/**
 	 * Busca la compañia por el nombre
 	 * 
-	 * @return Compañia
+	 * @return Compañia Compañia encontrada/creada
 	 * @throws IOException
 	 */
 	private Compañia searchCompany() throws IOException {
-		CompañiaDaoImpl compañiaDaoImpl = new CompañiaDaoImpl(session);
-		List<Compañia> compList = compañiaDaoImpl.searchByName(txtCompañia.getText());
+		// Recoge la lista de compañias con el nombre pasado
+		CompañiaDaoImpl companyDaoImpl = new CompañiaDaoImpl(session);
+		List<Compañia> compList = companyDaoImpl.searchByName(txtCompany.getText());
 
 		// Comprueba si la compañia está registrada en la bbdd
 		if (!compList.isEmpty()) {
+			// Coge la primera y la devulve
 			return compList.get(0);
 		} else {
 			// Construir la solicitud para la API de compañias
 			Request request = new Request.Builder()
-					.url("https://api.themoviedb.org/3/search/company?query=" + txtCompañia.getText() + "&page=1").get()
+					.url("https://api.themoviedb.org/3/search/company?query=" + txtCompany.getText() + "&page=1").get()
 					.addHeader("accept", "application/json").addHeader("Authorization", "Bearer " + API_KEY).build();
 
 			// Ejecutar la solicitud y obtener la respuesta
@@ -675,52 +787,12 @@ public class AgregadasManualmenteController {
 
 			// Verificar si hay resultados en la respuesta
 			if (respApi != null && respApi.getResults() != null && !respApi.getResults().isEmpty()) {
+				// Devuelve el primer resultado
 				return respApi.getResults().get(0);
 			} else {
-				// Crea una nueva compañia y la suba a la bbdd
-				Compañia c = new Compañia(Utils.generaCompanyId(), txtCompañia.getText());
-				return c;
+				// Crea una nueva compañia y la devuelve
+				return new Compañia(Utils.generaCompanyId(), txtCompany.getText());
 			}
-		}
-	}
-
-	/**
-	 * Gestiona la creacion de una serie nueva
-	 */
-	private void crearSerie() {
-		try {
-			// Comprueba si todos los campos se han rellenado
-			if (isCompleto() && !txtEpisodios.getText().isBlank() && !txtTemporadas.getText().isBlank()) {
-				Compañia company = searchCompany();
-				double vote = getVote(txtValoracionGlobal.getText());
-				getVote(txtValoracionPersonal.getText());
-				int numEpisodios = Integer.parseInt(txtEpisodios.getText());
-				int numTemporadas = Integer.parseInt(txtTemporadas.getText());
-				List<Actores> listActores = getListaActores();
-				List<Directores> listDirectores = getListaDirectores();
-				List<Genero> listGenero = getListaGenero();
-				comprobarFecha();
-				Series serie = new Series(Utils.generaSerieId(), txtTitulo.getText(), txtEstreno.getText(), company,
-						txtDescripcion.getText(), poster, vote, numEpisodios, numTemporadas, listActores, listDirectores,
-						listGenero);
-				// Si acepta, se guarda la serie
-				if (Utils.confirmacion()) {
-					// Guarda todos los datos en la bbdd
-					guardarCompany(company);
-					guardarSerie(serie);
-					guardarDatosPersonalesSerie(serie);
-					Utils.mostrarAlerta("Serie guardada correctamente.", Constants.INFORMATION_TYPE);
-					borrarDatos();
-				}
-			} else {
-				// Muestra alerta de error
-				Utils.mostrarAlerta(
-						"Falta algún campo por rellenar.\n(No obligatorios: valoración personal, comentarios y guardado en...)",
-						Constants.ERROR_TYPE);
-			}
-		} catch (Exception e) {
-			Utils.mostrarAlerta("Error en la creacion del elemento.\nMensaje original: " + e.getMessage(),
-					Constants.ERROR_TYPE);
 		}
 	}
 
@@ -730,7 +802,7 @@ public class AgregadasManualmenteController {
 	private void borrarDatos() {
 		choiceTipo.setValue("");
 		txtTitulo.setText("");
-		txtCompañia.setText("");
+		txtCompany.setText("");
 		txtActores.setText("");
 		txtComentarios.setText("");
 		txtDescripcion.setText("");
@@ -748,38 +820,23 @@ public class AgregadasManualmenteController {
 	}
 
 	/**
-	 * Guarda los datos personales del usuario sobre la pelicula
-	 * 
-	 * @param serie
-	 */
-	private void guardarDatosPersonalesSerie(Series serie) {
-		UsuarioSerieDaoImpl upDao = new UsuarioSerieDaoImpl(session);
-		Localizacion localizacion = searchLocalizacion();
-		UsuarioSerie us = new UsuarioSerie(new UsuarioSerieID(UsuarioController.getUsuarioRegistrado(), serie),
-				getVote(txtValoracionPersonal.getText()), new Date(), txtComentarios.getText(), localizacion, false, true);
-		upDao.update(us);
-	}
-
-	/**
 	 * Indica si se han rellanado todos los campos (excepto número de episodios y
-	 * temporadas
+	 * temporadas y los personales (comentario, localizacio y valoracion pers.)
 	 * 
 	 * @return True: todos rellenos. False: alguno sin rellenar
 	 */
 	private boolean isCompleto() {
-		return !txtTitulo.getText().isBlank() && !txtCompañia.getText().isBlank() && !txtEstreno.getText().isBlank()
+		return !txtTitulo.getText().isBlank() && !txtCompany.getText().isBlank() && !txtEstreno.getText().isBlank()
 				&& !txtValoracionGlobal.getText().isBlank() && !txtGenero.getText().isBlank() && !txtActores.getText().isBlank()
 				&& !txtDirectores.getText().isBlank() && !txtDescripcion.getText().isBlank() && poster != null
 				&& !poster.isBlank();
 	}
 
 	/**
-	 * Asigna los valores correspondientes del stage y el scene
-	 * 
+	 * Establece el valor de stage
 	 */
-	public void setSceneAndStage() {
-		scene = imagenLogoCabecera.getScene();
-		stage = (Stage) scene.getWindow();
+	public void setStage() {
+		stage = (Stage) imagenLogoCabecera.getScene().getWindow();
 	}
 
 }

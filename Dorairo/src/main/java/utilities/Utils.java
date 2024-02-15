@@ -43,6 +43,7 @@ public class Utils {
 	 * 
 	 */
 	public static void mostrarAlerta(String mensaje, String tipo) {
+		// Crea la alerta con los datos, boton e id
 		Alert alert = new Alert(AlertType.valueOf(tipo));
 		alert.setTitle(tipo);
 		alert.setContentText(mensaje);
@@ -57,6 +58,7 @@ public class Utils {
 		} else {
 			alert.getDialogPane().setId("alertaWarning");
 		}
+		// Lo muestra y espera
 		alert.showAndWait();
 
 	}
@@ -79,9 +81,7 @@ public class Utils {
 	 * @param stage
 	 * 
 	 */
-
 	public static String buscarFotoArchivos(Stage stage) {
-
 		try {
 			FileChooser fileChooser = new FileChooser();
 			fileChooser.setTitle("Buscar Imagen");
@@ -97,10 +97,7 @@ public class Utils {
 	}
 
 	/**
-	 * 
 	 * Comprueba que la contraseña y la repetición sean iguales
-	 *
-	 * 
 	 * 
 	 * @param contrasena
 	 * 
@@ -109,9 +106,7 @@ public class Utils {
 	 * @return True si coinciden; false si son distintas
 	 * 
 	 */
-
 	public static boolean compruebaContrasenas(String contrasena, String repeticionContrasena) {
-
 		if (contrasena.compareTo(repeticionContrasena) == 0) {
 			if (contrasena.length() > 0 && contrasena.length() <= 20) {
 				return true;
@@ -127,24 +122,17 @@ public class Utils {
 	}
 
 	/**
-	 * 
 	 * Muestra una alerta de confirmacion
-	 *
-	 * 
 	 * 
 	 * @return True si se pulsa aceptar; False si se pulsa cancelar
-	 * 
 	 */
-
 	public static boolean confirmacion() {
 		// Crea una alerta de tipo confirmacion
-
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 		alert.setHeaderText(null);
 		alert.setTitle("Confirmación");
 		alert.initOwner(ownerStage);
 		alert.setContentText("¿Estás seguro de querer realizar la acción?");
-
 		// Muestra la alerta y espera hasta que se cierre
 		Optional<ButtonType> result = alert.showAndWait();
 		// Comprueba si se ha pulsado el boton de ok y lo envia
@@ -153,15 +141,10 @@ public class Utils {
 	}
 
 	/**
-	 * 
 	 * Genera un nuevo id para las peliculas
 	 *
-	 * 
-	 * 
 	 * @return Nuevo id
-	 * 
 	 */
-
 	public static Integer generaMovieId() {
 		PeliculaDaoImpl pDao = new PeliculaDaoImpl(HibernateUtil.openSession());
 		// Recoge el maximo id
@@ -173,14 +156,12 @@ public class Utils {
 			// Sino, crea el primer id manual
 			return Integer.parseInt(Constants.PREFIJO_ID_PELIS_MANUALES + "00");
 		}
-
 	}
 
 	/**
 	 * Genera un nuevo id para las series
 	 * 
 	 * @return Nuevo id
-	 * 
 	 */
 	public static Integer generaSerieId() {
 		SeriesDaoImpl sDao = new SeriesDaoImpl(HibernateUtil.openSession());
@@ -199,7 +180,6 @@ public class Utils {
 	 * Genera un nuevo id para las compañias
 	 *
 	 * @return Nuevo id
-	 * 
 	 */
 	public static Integer generaCompanyId() {
 		CompañiaDaoImpl cDao = new CompañiaDaoImpl(HibernateUtil.openSession());

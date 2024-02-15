@@ -19,16 +19,26 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import models.Usuario;
 
+/**
+ * Clase que realiza las pruebas con JUnit del login y registro
+ * 
+ * @author JairoAB
+ */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-
 @ExtendWith(ApplicationExtension.class)
 class AppTest {
 
-	private Stage stage;
+	/** Main node */
 	private Parent mainNode;
+	/** Usuario para testear */
 	private Usuario usuarioTest = new Usuario("UsuarioPrueba", "Enrique Martínez", "enrique@ejemplo.com", "1234",
 			new Date());
 
+	/**
+	 * Método al inicio que carga la pantalla de login
+	 * 
+	 * @param primaryStage
+	 */
 	@Start
 	public void start(Stage primaryStage) {
 		// Comprueba si existe el usuario para eliminarlo
@@ -37,7 +47,7 @@ class AppTest {
 		if (user != null) {
 			uDao.delete(user);
 		}
-		stage = primaryStage;
+		// Intenta cargar el login
 		try {
 			mainNode = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
 			primaryStage.setScene(new Scene(mainNode));
@@ -48,6 +58,9 @@ class AppTest {
 		}
 	}
 
+	/**
+	 * Prueba para cuando un usuario no existe
+	 */
 	@Test
 	@Order(1)
 	void testUsuarioNoExiste() {
@@ -66,6 +79,9 @@ class AppTest {
 		fxRobot.clickOn("#btnAceptar");
 	}
 
+	/**
+	 * Prueba para cuando un usuario existe
+	 */
 	@Test
 	@Order(2)
 	void testUsuarioExiste() {
@@ -86,6 +102,9 @@ class AppTest {
 		FxAssert.verifyThat(fxRobot.window("Inicio"), WindowMatchers.isShowing());
 	}
 
+	/**
+	 * Prueba para cuando se dejan campos vacios en registro
+	 */
 	@Test
 	@Order(3)
 	void testRegistroCamposVacio() {
@@ -102,6 +121,9 @@ class AppTest {
 		FxAssert.verifyThat("#alertaWarning", NodeMatchers.isEnabled());
 	}
 
+	/**
+	 * Prueba para cuando se introduce un usuario existente en registro
+	 */
 	@Test
 	@Order(4)
 	void testRegistroUsuarioYaExistente() {
@@ -126,6 +148,9 @@ class AppTest {
 		FxAssert.verifyThat("#alertaWarning", NodeMatchers.isEnabled());
 	}
 
+	/**
+	 * Prueba para cuando se introduce un correo existente en registro
+	 */
 	@Test
 	@Order(5)
 	void testRegistroCorreoYaExistente() {
@@ -150,6 +175,9 @@ class AppTest {
 		FxAssert.verifyThat("#alertaWarning", NodeMatchers.isEnabled());
 	}
 
+	/**
+	 * Prueba para cuando se introducen mal las contraseñas en registro
+	 */
 	@Test
 	@Order(6)
 	void testRegistroContraseñasIncorrectas() {
@@ -174,6 +202,9 @@ class AppTest {
 		FxAssert.verifyThat("#alertaWarning", NodeMatchers.isEnabled());
 	}
 
+	/**
+	 * Prueba para cuando se introducen todos los campos correctamente
+	 */
 	@Test
 	@Order(7)
 	void testRegistroFunciona() {

@@ -25,7 +25,7 @@ public class GestorVentanas {
 	 * Array con las pantallas que no deben seguir el tamaño normal, sino que tienen
 	 * el suyo propio y se superponen a la ventana anterior
 	 */
-	private String[] pantallasTamañoDistintoYSuperpuestas = { "Registro", "Cambiar Contraseña", "Cambiar Nombre" };
+	private String[] pantallasTamanioDistintoYSuperpuestas = { "Registro", "Cambiar Contraseña", "Cambiar Nombre" };
 
 	/**
 	 * Muestra la ventana que corresponda y cierra la anterior
@@ -78,7 +78,7 @@ public class GestorVentanas {
 			Scene scene = null;
 
 			// Comprueba si es Registro o Inicio para dejarlos con sus tamaños por defecto
-			if (isPantallaTamañoDistintoYSuperpuesta(titulo) || titulo.equalsIgnoreCase("Dorairo")) {
+			if (isPantallaTamanioDistintoYSuperpuesta(titulo) || titulo.equalsIgnoreCase("Dorairo")) {
 				scene = new Scene(root);
 			} else {
 				scene = new Scene(root, 1512, 982);
@@ -99,7 +99,7 @@ public class GestorVentanas {
 			stage.setResizable(false);
 
 			// Muestra la ventana
-			if (isPantallaTamañoDistintoYSuperpuesta(titulo)) {
+			if (isPantallaTamanioDistintoYSuperpuesta(titulo)) {
 				stage.showAndWait();
 			} else {
 				stage.show();
@@ -118,26 +118,26 @@ public class GestorVentanas {
 	 * @return True si es una de las pantallas con tamaño distinto; False si no lo
 	 *         es.
 	 */
-	private boolean isPantallaTamañoDistintoYSuperpuesta(String titulo) {
-// Recorre el array de las pantallas con tamaño distinto para comprobar si se encuentra el titulo
-		for (String pantalla : pantallasTamañoDistintoYSuperpuestas) {
+	private boolean isPantallaTamanioDistintoYSuperpuesta(String titulo) {
+		// Recorre el array de las pantallas con tamaño distinto para comprobar si se
+		// encuentra el titulo
+		for (String pantalla : pantallasTamanioDistintoYSuperpuestas) {
 			if (pantalla.equalsIgnoreCase(titulo)) {
 				return true;
 			}
 		}
 		return false;
 	}
-
+	
 	/**
 	 * Muestra la ventana de Detalles
 	 * 
-	 * @param stageAnterior
-	 * @param id
-	 * @param tipo
+	 * @param stageAnterior Stage anterior
+	 * @param id            Id de la pelicula/serie
+	 * @param tipo          Tipo de pelicula/serie
 	 */
 	public void muestraDetalles(Stage stageAnterior, String id, String tipo) {
 		try {
-
 			// Cierra el stage anterior
 			stageAnterior.close();
 
@@ -183,6 +183,13 @@ public class GestorVentanas {
 		}
 	}
 
+	/**
+	 * Muestra la pantalla de Buscador por Genero
+	 * 
+	 * @param stageAnterior Stage anterior
+	 * @param id            Id de la pelicula/serie
+	 * @param tipo          Tipo de pelicula/serie
+	 */
 	public void muestraBuscadorGenero(Stage stageAnterior, String tipo, String id) {
 		try {// Cierra el stage anterior
 			stageAnterior.close();
@@ -228,7 +235,7 @@ public class GestorVentanas {
 			e.printStackTrace();
 		}
 	}
-
+	
 	/**
 	 * Muestra la ventana de Cambiar contraseña o nombre y desenfoca la anterior
 	 * para que no se pueda hacer uso de ella hasta que se cierre

@@ -13,11 +13,13 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import models.Pelicula;
 import models.RespuestaApi;
@@ -25,130 +27,238 @@ import models.UsuarioPelicula;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-
 import utilities.GestorVentanas;
+
+/**
+ * Clase Película, donde esta toda la información de las películas
+ * 
+ * @author Doriana dc
+ * 
+ */
 
 public class PeliculaController {
 
+  /**
+   * clave de la api
+   * 
+   */
   public static final String API_KEY =
       "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlYjc0NTA5ZjRiZDBlODJlMTFlYzA2YWM1MDRhMGRlMCIsInN1YiI6IjY1Mzc3ZmRmZjQ5NWVlMDBmZjY1YTEyOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ehIu08LoiMRTccPoD4AfADXOpQPlqNAKUMvGgwY3XU8";
 
+  /**
+   * CheckBox para el género Acción.
+   */
   @FXML
   private CheckBox GeneroAccion;
 
+  /**
+   * CheckBox para el género Animación.
+   */
   @FXML
   private CheckBox GeneroAnimacion;
 
+  /**
+   * CheckBox para el género Aventura.
+   */
   @FXML
   private CheckBox GeneroAventura;
 
+  /**
+   * CheckBox para el género Ciencia Ficción.
+   */
   @FXML
   private CheckBox GeneroCienciaFiccion;
 
+  /**
+   * CheckBox para el género Comedia.
+   */
   @FXML
   private CheckBox GeneroComedia;
 
+  /**
+   * CheckBox para el género Drama.
+   */
   @FXML
   private CheckBox GeneroDrama;
 
+  /**
+   * CheckBox para el género Misterio.
+   */
   @FXML
   private CheckBox GeneroMisterio;
 
+  /**
+   * CheckBox para el género Musical.
+   */
   @FXML
   private CheckBox GeneroMusical;
 
+  /**
+   * CheckBox para el género Suspenso.
+   */
   @FXML
   private CheckBox GeneroSuspenso;
 
+  /**
+   * CheckBox para el género Terror.
+   */
   @FXML
   private CheckBox GeneroTerror;
 
+  /**
+   * ImageView para el logo en la cabecera.
+   */
   @FXML
   private ImageView imagenLogoCabecera;
 
+  /**
+   * HBox para las películas de estreno.
+   */
   @FXML
   private HBox peliculasEstrenos;
 
+  /**
+   * HBox para las películas populares.
+   */
   @FXML
   private HBox peliculasPopulares;
 
-  /** Scene de la ventana de Inicio */
+  /**
+   * Scene de la ventana de Inicio.
+   */
   private Scene scene;
 
-  /** Stage de la ventana de Inicio */
+  /**
+   * Stage de la ventana de Inicio.
+   */
   private Stage stage;
 
-  /** Instancia del gestor de ventanas **/
+  /**
+   * Instancia del gestor de ventanas.
+   */
   private GestorVentanas gestorVentanas;
 
+  /**
+   * MenuItem para la opción Aleatoria.
+   */
   @FXML
   private MenuItem Aleatoria;
 
+  /**
+   * ImageView para el icono de la lupa.
+   */
   @FXML
   private ImageView lupa;
 
+  /**
+   * ImageView para el cartel de la película.
+   */
   @FXML
   private ImageView cartel;
 
+  /**
+   * HBox para las películas en "Mi Lista".
+   */
   @FXML
   private HBox miLista;
 
+  /**
+   * HBox para las películas ya vistas.
+   */
   @FXML
   private HBox peliculasVistas;
 
-  /** Conexion con la base de datos */
+  /**
+   * Sesión para la conexión con la base de datos.
+   */
   private Session session;
 
-  // para los generos
-
-  // Lista para almacenar todas las películas obtenidas de la API
+  /**
+   * Lista para almacenar todas las películas obtenidas de la API.
+   */
   static List<Pelicula> todasLasPeliculas = new ArrayList<>();
 
 
+  /**
+   * Método para manejar el evento de clic en la cabecera para navegar a la página de inicio.
+   * 
+   * @param event El evento del mouse.
+   */
   @FXML
   void inicioClicked(MouseEvent event) {
-    setSceneAndStage();
-    gestorVentanas.muestraVentana(stage, Constants.URL_INICIO_FXML, "Inicio");
-    System.out.println("Mouse clicked en la cabecera de inicio");
+      setSceneAndStage();
+      gestorVentanas.muestraVentana(stage, Constants.URL_INICIO_FXML, "Inicio");
+      System.out.println("Mouse clicked en la cabecera de inicio");
   }
 
+  /**
+   * Método para manejar el evento de clic en la cabecera para navegar a la página de películas.
+   * 
+   * @param event El evento del mouse.
+   */
   @FXML
   void peliculasClicked(MouseEvent event) {
-    setSceneAndStage();
-    gestorVentanas.muestraVentana(stage, Constants.URL_PELICULA_FXML, "Pelicula");
+      setSceneAndStage();
+      gestorVentanas.muestraVentana(stage, Constants.URL_PELICULA_FXML, "Pelicula");
   }
 
+  /**
+   * Método para manejar el evento de clic en la cabecera para navegar a la página de series.
+   * 
+   * @param event El evento del mouse.
+   */
   @FXML
   void seriesClicked(MouseEvent event) {
-    setSceneAndStage();
-    gestorVentanas.muestraVentana(stage, Constants.URL_SERIES_FXML, "Series");
+      setSceneAndStage();
+      gestorVentanas.muestraVentana(stage, Constants.URL_SERIES_FXML, "Series");
   }
 
+  /**
+   * Método para manejar el evento de clic en la cabecera para navegar a la página del buscador.
+   * 
+   * @param event El evento del mouse.
+   */
   @FXML
   void buscadorClicked(MouseEvent event) {
-    setSceneAndStage();
-    gestorVentanas.muestraVentana(stage, Constants.URL_BUSCADOR_FXML, "Buscador");
+      setSceneAndStage();
+      gestorVentanas.muestraVentana(stage, Constants.URL_BUSCADOR_FXML, "Buscador");
   }
 
+  /**
+   * Método para manejar el evento de clic en la cabecera para navegar a la página del perfil del usuario.
+   * 
+   * @param event El evento del mouse.
+   */
   @FXML
   void perfilClicked(MouseEvent event) {
-    setSceneAndStage();
-    gestorVentanas.muestraVentana(stage, Constants.URL_USUARIO_FXML, "Perfil");
+      setSceneAndStage();
+      gestorVentanas.muestraVentana(stage, Constants.URL_USUARIO_FXML, "Perfil");
   }
 
+
+  /**
+   * Método para manejar el evento de clic en una imagen de película para ver los detalles.
+   * 
+   * @param clickedImageView El ImageView de la película clicada.
+   */
   void detallesClicked(ImageView clickedImageView) {
-    // Obtener el identificador de la película desde el ImageView
-    String movieId = getMovieIdFromImageView(clickedImageView);
-
-    // Abrir la ventana de detalles
-    abrirVentanaDetalles(movieId);
+      String movieId = getMovieIdFromImageView(clickedImageView);
+      abrirVentanaDetalles(movieId);
   }
 
+  /**
+   * Método para abrir la ventana de detalles de una película.
+   * 
+   * @param movieId El ID de la película.
+   */
   private void abrirVentanaDetalles(String movieId) {
-    setSceneAndStage();
-    gestorVentanas.muestraDetalles(stage, movieId, "movie");
+      setSceneAndStage();
+      gestorVentanas.muestraDetalles(stage, movieId, "movie");
   }
 
+  /**
+   * Método de inicialización que se ejecuta después de que se carga el archivo FXML.
+   */
   @FXML
   void initialize() {
     // Inicializamos el Gestor de ventanas
@@ -217,6 +327,13 @@ public class PeliculaController {
     }
   }
 
+  /** Método de la llamada a la api para la información de cada película
+   * 
+   * @param client
+   * @param apiUrl
+   * @param targetHBox
+   * @throws IOException
+   */
   private void handleMovieApiCall(OkHttpClient client, String apiUrl, HBox targetHBox)
       throws IOException {
     // Construir la solicitud para la API de películas
@@ -246,7 +363,6 @@ public class PeliculaController {
 
             // Almacena el ID de la película en el userData del ImageView
             imageView.setUserData(String.valueOf(datos.getId()));
-
           }
 
           // Verificar si imageView no es nulo antes de agregarlo al HBox
@@ -266,6 +382,12 @@ public class PeliculaController {
     targetHBox.setSpacing(50.0);
   }
 
+  /**
+   * Crea y configura un ImageView para mostrar la imagen de una película.
+   * 
+   * @param pelicula La película de la que se va a mostrar la imagen.
+   * @return El ImageView configurado.
+   */
   private ImageView getImageViewFromPelicula(Pelicula pelicula) {
     ImageView imageView = new ImageView();
     imageView.setFitHeight(230.0);
@@ -278,14 +400,20 @@ public class PeliculaController {
     // Configurar la imagen en el ImageView
     Image image = new Image(imageUrl);
     imageView.getStyleClass().add("imagenPelicula");
+    imageView.getStyleClass().add("sombraDerecha");
     imageView.setImage(image);
 
     // Configurar el evento de clic para llamar a detallesClicked
     imageView.setOnMouseClicked(event -> detallesClicked(imageView));
-
     return imageView;
   }
 
+  /**
+   * Obtiene el ID de la película a partir de un ImageView.
+   * 
+   * @param imageView El ImageView del que se va a obtener el ID.
+   * @return El ID de la película.
+   */
   private String getMovieIdFromImageView(ImageView imageView) {
     // Obtén el ID de la película almacenado en el userData del ImageView
     Object userData = imageView.getUserData();
@@ -307,17 +435,28 @@ public class PeliculaController {
     stage = (Stage) scene.getWindow();
   }
 
+  /**
+   * Maneja el evento de clic en un género y muestra las películas correspondientes.
+   * 
+   * @param generoId El ID del género seleccionado.
+   */
   void generoClicked(String generoId) {
     setSceneAndStage();
     gestorVentanas.muestraBuscadorGenero(stage, "movie", generoId);
   }
 
-  // para la pelicula aleatoria
+  /** para la pelicula aleatoria
+   * 
+   */
   @FXML
   void peliAleatoriaClicked() {
     abrirVentanaPeliAleatoria();
   }
 
+  
+  /**
+   * Abre la ventana de detalles de una película aleatoria.
+   */
   private void abrirVentanaPeliAleatoria() {
     // Obtener una película aleatoria
     Pelicula peliculaAleatoria = obtenerPeliculaAleatoria();
@@ -334,7 +473,13 @@ public class PeliculaController {
       System.out.println("No se pudo obtener una película aleatoria");
     }
   }
-
+  
+  
+  /**
+   * Obtiene una película aleatoria de la lista de todas las películas.
+   *
+   * @return La película aleatoria, o null si no hay películas disponibles.
+   */
   private Pelicula obtenerPeliculaAleatoria() {
     // Verificar si hay películas disponibles
     if (!todasLasPeliculas.isEmpty()) {
@@ -347,19 +492,39 @@ public class PeliculaController {
       return null;
     }
   }
+  
+  /**
+   * Método para mostrar un mensaje en un HBox.
+   * @param hbox El HBox en el que se mostrará el mensaje.
+   * @param mensaje El mensaje a mostrar.
+   */
+  private void mostrarMensajeEnHBox(HBox hbox, String mensaje) {
+      hbox.getChildren().clear(); // Limpiar cualquier contenido previo
+      Label mensajeLabel = new Label(mensaje); // Crear un Label con el mensaje
+      mensajeLabel.setFont(new Font(16));
+      hbox.getChildren().add(mensajeLabel); // Agregar el Label al HBox
+  }
 
-
+  /**
+   * Agrega imágenes de películas a la sección "Mi Lista".
+   */
   public void agregarImagenAMiLista() {
     UsuarioPeliculaDaoImpl upDao = new UsuarioPeliculaDaoImpl(session);
     List<UsuarioPelicula> listaUsuarioPelicula =
         upDao.searchPeliculasMiLista(UsuarioController.getUsuarioRegistrado().getUser());
+    
+    // Verificar si la lista está vacía y mostrar el mensaje en caso afirmativo
+    if (listaUsuarioPelicula.isEmpty()) {
+        mostrarMensajeEnHBox(miLista, "No hay nada en mi lista");
+        return;
+    }
 
     for (UsuarioPelicula up : listaUsuarioPelicula) {
       // Obtener la imagen de la película
       ImageView imageView = getImageViewFromPelicula(up.getId().getPelicula());
 
       // Establecer el tamaño de la imagen si es necesario
-      imageView.setFitWidth(200); // Ajusta el ancho según tus necesidades
+      imageView.setFitWidth(200); 
       imageView.setPreserveRatio(true); // Mantiene la proporción de la imagen
       // Almacena el ID de la película en el userData del ImageView
       imageView.setUserData(String.valueOf(up.getId().getPelicula().getId()));
@@ -370,23 +535,32 @@ public class PeliculaController {
     }
   }
 
+  /**
+   * Agrega imágenes de películas a la sección "Ya Vistas".
+   */
   public void agregarImagenAYaVistas() {
     UsuarioPeliculaDaoImpl upDao = new UsuarioPeliculaDaoImpl(session);
 
     List<UsuarioPelicula> listaUsuarioPelicula =
         upDao.searchPeliculasYaVistas(UsuarioController.getUsuarioRegistrado().getUser());
+    
+    // Verificar si la lista está vacía y mostrar el mensaje en caso afirmativo
+    if (listaUsuarioPelicula.isEmpty()) {
+        mostrarMensajeEnHBox(peliculasVistas, "No hay nada en ya vistas");
+        return;
+    }
 
     for (UsuarioPelicula up : listaUsuarioPelicula) {
       // Obtener la imagen de la película
       ImageView imageView = getImageViewFromPelicula(up.getId().getPelicula());
 
       // Establecer el tamaño de la imagen si es necesario
-      imageView.setFitWidth(200); // Ajusta el ancho según tus necesidades
+      imageView.setFitWidth(200);
       imageView.setPreserveRatio(true); // Mantiene la proporción de la imagen
       // Almacena el ID de la película en el userData del ImageView
       imageView.setUserData(String.valueOf(up.getId().getPelicula().getId()));
 
-      // Agregar la imagen al HBox de "Mi Lista"
+      // Agregar la imagen al HBox de "ya vistas"
       peliculasVistas.getChildren().add(imageView);
     }
 

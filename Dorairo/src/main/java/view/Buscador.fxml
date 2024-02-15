@@ -35,7 +35,10 @@
 								</HBox>
 							</content>
 						</ScrollPane>
-						<Button fx:id="buscar" layoutX="678.0" layoutY="134.0" mnemonicParsing="false" onMouseClicked="#clickBuscar" prefHeight="45.0" prefWidth="84.0" styleClass="cabeceraBotones" text="Buscar" />
+						<Button fx:id="buscar" layoutX="678.0" layoutY="134.0" mnemonicParsing="false" onMouseClicked="#clickBuscar" prefHeight="45.0" prefWidth="84.0" styleClass="cabeceraBotones" text="Buscar">
+                     <font>
+                        <Font size="17.0" />
+                     </font></Button>
 						<Button fx:id="btnAgregarManualmente" layoutX="1074.0" layoutY="54.0" mnemonicParsing="false" onAction="#agregarManualmenteClicked" styleClass="cabeceraBotones" text="Agregar manualmente">
 							<font>
 								<Font size="18.0" />

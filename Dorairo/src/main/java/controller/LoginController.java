@@ -40,13 +40,13 @@ public class LoginController {
 	private Label lblPulsaAqui;
 
 	@FXML
-	private PasswordField pwContrasena;
+	private PasswordField pwPassword;
 
 	@FXML
 	private StackPane stackPaneLogo;
 
 	@FXML
-	private TextField txtUsuario;
+	private TextField txtUser;
 
 	@FXML
 	private StackPane stackPanePortada;
@@ -91,8 +91,8 @@ public class LoginController {
 	@FXML
 	void handleLoginButtonAction(ActionEvent event) {
 		setSceneAndStage();
-		String usuario = txtUsuario.getText();
-		String contrasena = pwContrasena.getText();
+		String usuario = txtUser.getText();
+		String contrasena = pwPassword.getText();
 
 		// Comprueba que exista un perfil con ese usuario y contraseñas
 		if (comprobarPerfil(usuario, contrasena)) {
@@ -110,8 +110,8 @@ public class LoginController {
 	 * pantalla
 	 */
 	public void vaciarCampos() {
-		txtUsuario.setText("");
-		pwContrasena.setText("");
+		txtUser.setText("");
+		pwPassword.setText("");
 	}
 
 	/**

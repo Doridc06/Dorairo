@@ -107,7 +107,7 @@
                               <Insets left="20.0" top="20.0" />
                            </VBox.margin>
                         </Text>
-                        <ScrollPane hbarPolicy="NEVER" pannable="true" prefHeight="245.0" prefWidth="1513.0" styleClass="fondo" vbarPolicy="NEVER" vmax="0.0">
+                        <ScrollPane hbarPolicy="NEVER" pannable="true" prefHeight="244.0" prefWidth="1513.0" styleClass="fondo" vbarPolicy="NEVER" vmax="0.0">
                            <content>
                               <HBox fx:id="seriesPopulares" prefHeight="244.0" prefWidth="1508.0" styleClass="fondo">
                            <padding>
@@ -132,7 +132,7 @@
                               <Insets top="20.0" />
                            </VBox.margin>
                            <content>
-                              <HBox fx:id="miLista" prefHeight="258.0" prefWidth="1501.0" styleClass="fondo">
+                              <HBox fx:id="miLista" prefHeight="244.0" prefWidth="1508.0" styleClass="fondo">
                            <padding>
                               <Insets left="20.0" />
                            </padding>

@@ -359,6 +359,7 @@ public class BuscadorController {
       imageView.setFitHeight(230.0);
       imageView.setFitWidth(290.0);
       imageView.setPreserveRatio(true);
+      imageView.getStyleClass().add("sombraDerecha");
 
       // Construir la URL del póster de la serie
       String imageUrl = "https://image.tmdb.org/t/p/w500" + serie.getPoster_path();
@@ -383,6 +384,7 @@ public class BuscadorController {
       imageView.setFitHeight(230.0);
       imageView.setFitWidth(290.0);
       imageView.setPreserveRatio(true);
+      imageView.getStyleClass().add("sombraDerecha");
 
       // Construir la URL del póster de la película
       String imageUrl = "https://image.tmdb.org/t/p/w500" + pelicula.getPoster_path();

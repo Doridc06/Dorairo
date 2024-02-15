@@ -23,6 +23,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import models.RespuestaApiSeries;
 import models.Series;
@@ -354,6 +355,7 @@ public class SeriesController {
     imageView.setFitHeight(250.0);
     imageView.setFitWidth(290.0);
     imageView.setPreserveRatio(true);
+    imageView.getStyleClass().add("sombraDerecha");
 
     // Construir la URL del póster de la película
     Image image = new Image(imageUrl);
@@ -471,6 +473,7 @@ public class SeriesController {
   private void mostrarMensajeEnHBox(HBox hbox, String mensaje) {
       hbox.getChildren().clear(); // Limpiar cualquier contenido previo
       Label mensajeLabel = new Label(mensaje); // Crear un Label con el mensaje
+      mensajeLabel.setFont(new Font(16));
       hbox.getChildren().add(mensajeLabel); // Agregar el Label al HBox
   }
 
@@ -493,8 +496,8 @@ public class SeriesController {
       // Obtener la imagen de la película
       ImageView imageView = getImageViewFromSerie(us.getId().getSeries());
       // Establecer el tamaño de la imagen si es necesario
-      imageView.setFitWidth(200); // Ajusta el ancho según tus necesidades
-      imageView.setPreserveRatio(true); // Mantiene la proporción de la imagen
+      imageView.setFitWidth(200); 
+      imageView.setPreserveRatio(true);
       // Almacena el ID de la película en el userData del ImageView
       imageView.setUserData(String.valueOf(us.getId().getSeries().getId()));
       // Agregar la imagen al HBox de "Mi Lista"
@@ -523,8 +526,8 @@ public class SeriesController {
       ImageView imageView = getImageViewFromSerie(us.getId().getSeries());
 
       // Establecer el tamaño de la imagen si es necesario
-      imageView.setFitWidth(200); // Ajusta el ancho según tus necesidades
-      imageView.setPreserveRatio(true); // Mantiene la proporción de la imagen
+      imageView.setFitWidth(200); 
+      imageView.setPreserveRatio(true); 
       // Almacena el ID de la película en el userData del ImageView
       imageView.setUserData(String.valueOf(us.getId().getSeries().getId()));
       // Agregar la imagen al HBox de "ya vistas"
@@ -551,6 +554,7 @@ public class SeriesController {
     // Configurar la imagen en el ImageView
     Image image = new Image(imageUrl);
     imageView.getStyleClass().add("imagenSeries");
+    imageView.getStyleClass().add("sombraDerecha");
     imageView.setImage(image);
 
     // Configurar el evento de clic para llamar a detallesClicked

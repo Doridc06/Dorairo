@@ -283,6 +283,7 @@ public class BuscarGeneroController {
       // Configurar la imagen en el ImageView
       Image image = new Image(imageUrl);
       imageView.getStyleClass().add("imagenPelicula");
+      imageView.getStyleClass().add("sombraDerecha");
       imageView.setImage(image);
 
       // Configurar el evento de clic para llamar a detallesClicked
@@ -308,7 +309,8 @@ public class BuscarGeneroController {
 
       // Configurar la imagen en el ImageView
       Image image = new Image(imageUrl);
-      imageView.getStyleClass().add("imagenPelicula");
+      imageView.getStyleClass().add("imagenSerie");
+      imageView.getStyleClass().add("sombraDerecha");
       imageView.setImage(image);
 
       // Configurar el evento de clic para llamar a detallesClicked

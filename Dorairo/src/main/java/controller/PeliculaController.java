@@ -19,6 +19,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import models.Pelicula;
 import models.RespuestaApi;
@@ -26,7 +27,6 @@ import models.UsuarioPelicula;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-
 import utilities.GestorVentanas;
 
 /**
@@ -363,7 +363,6 @@ public class PeliculaController {
 
             // Almacena el ID de la película en el userData del ImageView
             imageView.setUserData(String.valueOf(datos.getId()));
-
           }
 
           // Verificar si imageView no es nulo antes de agregarlo al HBox
@@ -401,11 +400,11 @@ public class PeliculaController {
     // Configurar la imagen en el ImageView
     Image image = new Image(imageUrl);
     imageView.getStyleClass().add("imagenPelicula");
+    imageView.getStyleClass().add("sombraDerecha");
     imageView.setImage(image);
 
     // Configurar el evento de clic para llamar a detallesClicked
     imageView.setOnMouseClicked(event -> detallesClicked(imageView));
-
     return imageView;
   }
 
@@ -502,6 +501,7 @@ public class PeliculaController {
   private void mostrarMensajeEnHBox(HBox hbox, String mensaje) {
       hbox.getChildren().clear(); // Limpiar cualquier contenido previo
       Label mensajeLabel = new Label(mensaje); // Crear un Label con el mensaje
+      mensajeLabel.setFont(new Font(16));
       hbox.getChildren().add(mensajeLabel); // Agregar el Label al HBox
   }
 
@@ -519,13 +519,12 @@ public class PeliculaController {
         return;
     }
 
-
     for (UsuarioPelicula up : listaUsuarioPelicula) {
       // Obtener la imagen de la película
       ImageView imageView = getImageViewFromPelicula(up.getId().getPelicula());
 
       // Establecer el tamaño de la imagen si es necesario
-      imageView.setFitWidth(200); // Ajusta el ancho según tus necesidades
+      imageView.setFitWidth(200); 
       imageView.setPreserveRatio(true); // Mantiene la proporción de la imagen
       // Almacena el ID de la película en el userData del ImageView
       imageView.setUserData(String.valueOf(up.getId().getPelicula().getId()));
@@ -556,12 +555,12 @@ public class PeliculaController {
       ImageView imageView = getImageViewFromPelicula(up.getId().getPelicula());
 
       // Establecer el tamaño de la imagen si es necesario
-      imageView.setFitWidth(200); // Ajusta el ancho según tus necesidades
+      imageView.setFitWidth(200);
       imageView.setPreserveRatio(true); // Mantiene la proporción de la imagen
       // Almacena el ID de la película en el userData del ImageView
       imageView.setUserData(String.valueOf(up.getId().getPelicula().getId()));
 
-      // Agregar la imagen al HBox de "Mi Lista"
+      // Agregar la imagen al HBox de "ya vistas"
       peliculasVistas.getChildren().add(imageView);
     }
 

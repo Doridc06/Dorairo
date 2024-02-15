@@ -85,6 +85,8 @@ public class UsuarioController {
 		imagen = new Image(getClass().getResourceAsStream(Constants.URL_FOTO_FONDO_PERFIL));
 		imagenFondoPerfil.setImage(imagen);
 
+	    Image imagenLupa = new Image(getClass().getResourceAsStream(Constants.URL_LUPA));
+	    lupa.setImage(imagenLupa);
 		session = HibernateUtil.openSession();
 
 		// Abre la session y crea el dao de usuario

@@ -24,6 +24,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import utilities.GestorVentanas;
+import utilities.Utils;
 
 /**
  * Clase de buscar género que nos ayuda a buscar cada genero seleccionado de la
@@ -145,7 +146,6 @@ public class BuscarGeneroController {
 	void inicioClicked(MouseEvent event) {
 		setStage();
 		gestorVentanas.muestraVentana(stage, Constants.URL_INICIO_FXML, "Inicio");
-		System.out.println("Mouse clicked en la cabecera de inicio");
 	}
 
 	/**
@@ -276,12 +276,12 @@ public class BuscarGeneroController {
 		imageView.setPreserveRatio(true);
 
 		// Construir la URL del póster de la película
-		String imageUrl = "https://image.tmdb.org/t/p/w500" + pelicula.getPoster_path();
+		String imageUrl = Constants.URL_API_IMAGE + pelicula.getPoster_path();
 
 		// Configurar la imagen en el ImageView
 		Image image = new Image(imageUrl);
 		imageView.getStyleClass().add("imagenPelicula");
-		imageView.getStyleClass().add("sombraDerecha");
+		imageView.getStyleClass().add(Constants.SOMBRA_STYLE_CLASS);
 		imageView.setImage(image);
 
 		// Configurar el evento de clic para llamar a detallesClicked
@@ -303,12 +303,12 @@ public class BuscarGeneroController {
 		imageView.setPreserveRatio(true);
 
 		// Construir la URL del póster de la serie
-		String imageUrl = "https://image.tmdb.org/t/p/w500" + serie.getPoster_path();
+		String imageUrl = Constants.URL_API_IMAGE + serie.getPoster_path();
 
 		// Configurar la imagen en el ImageView
 		Image image = new Image(imageUrl);
 		imageView.getStyleClass().add("imagenSerie");
-		imageView.getStyleClass().add("sombraDerecha");
+		imageView.getStyleClass().add(Constants.SOMBRA_STYLE_CLASS);
 		imageView.setImage(image);
 
 		// Configurar el evento de clic para llamar a detallesClicked
@@ -370,7 +370,7 @@ public class BuscarGeneroController {
 						// Configurar la imagen en el ImageView
 						try {
 							// Construir la URL completa de la imagen de la película
-							String imageUrl = "https://image.tmdb.org/t/p/w500" + pelicula.getPoster_path();
+							String imageUrl = Constants.URL_API_IMAGE + pelicula.getPoster_path();
 							Image image = new Image(imageUrl);
 
 							imageView.setImage(image);
@@ -382,24 +382,22 @@ public class BuscarGeneroController {
 							hBoxPeliculas.getChildren().add(imageView);
 
 						} catch (Exception e) {
-							// Manejar cualquier error al cargar la imagen
 							System.out.println("Error al cargar la imagen para la película: " + pelicula.getTitle());
-							e.printStackTrace(); // Imprimir detalles del error
 						}
 					}
-
 				} else {
 					// Informar si no se encontraron películas para el género especificado
-					System.out.println("No se encontraron películas para el género con ID: " + generoId);
+					Utils.mostrarAlerta("No se encontraron películas para el género con ID: " + generoId, Constants.WARNING_TYPE);
 				}
 			} else {
 				// Informar si hubo un error al obtener películas por género (código de estado
 				// no 200)
-				System.out.println("Error al obtener películas por género. Código de estado: " + response.code());
+				Utils.mostrarAlerta("Error al obtener películas por género. Código de estado: " + response.code(),
+						Constants.ERROR_TYPE);
 			}
 		} catch (IOException e) {
 			// Manejar cualquier error de entrada/salida al realizar la solicitud HTTP
-			System.out.println("Error al realizar la solicitud HTTP: " + e.getMessage());
+			Utils.mostrarAlerta("Error al realizar la solicitud HTTP: " + e.getMessage(), Constants.ERROR_TYPE);
 		}
 	}
 
@@ -437,9 +435,9 @@ public class BuscarGeneroController {
 				if (respApi != null && respApi.getResults() != null && respApi.getResults().length > 0) {
 					// Verificar si el controlador de búsqueda de género no es nulo
 
-					// Limpiar el contenedor de imágenes de películas por género
+					// Limpiar el contenedor de imágenes de series por género
 					hBoxPeliculas.getChildren().clear();
-					// Iterar sobre las películas obtenidas y agregar imágenes al contenedor
+					// Iterar sobre las series obtenidas y agregar imágenes al contenedor
 					for (Series serie : respApi.getResults()) {
 						// Crear un nuevo ImageView para la película actual
 						ImageView imageView = new ImageView();
@@ -447,14 +445,14 @@ public class BuscarGeneroController {
 						if (serie.getPoster_path() != null) {
 							imageView = getImageViewFromSerie(serie);
 
-							// Almacena el ID de la película en el userData del ImageView
+							// Almacena el ID de la serie en el userData del ImageView
 							imageView.setUserData(String.valueOf(serie.getId()));
 						}
 
 						// Configurar la imagen en el ImageView
 						try {
-							// Construir la URL completa de la imagen de la película
-							String imageUrl = "https://image.tmdb.org/t/p/w500" + serie.getPoster_path();
+							// Construir la URL completa de la imagen de la serie
+							String imageUrl = Constants.URL_API_IMAGE + serie.getPoster_path();
 							Image image = new Image(imageUrl);
 
 							imageView.setImage(image);
@@ -467,23 +465,22 @@ public class BuscarGeneroController {
 
 						} catch (Exception e) {
 							// Manejar cualquier error al cargar la imagen
-							System.out.println("Error al cargar la imagen para la película: " + serie.getName());
-							e.printStackTrace(); // Imprimir detalles del error
+							System.out.println("Error al cargar la imagen para la serie: " + serie.getName());
 						}
 					}
-
 				} else {
-					// Informar si no se encontraron películas para el género especificado
-					System.out.println("No se encontraron películas para el género con ID: " + generoId);
+					// Informar si no se encontraron series para el género especificado
+					Utils.mostrarAlerta("No se encontraron series para el género con ID: " + generoId, Constants.WARNING_TYPE);
 				}
 			} else {
-				// Informar si hubo un error al obtener películas por género (código de estado
+				// Informar si hubo un error al obtener series por género (código de estado
 				// no 200)
-				System.out.println("Error al obtener películas por género. Código de estado: " + response.code());
+				Utils.mostrarAlerta("Error al obtener series por género. Código de estado: " + response.code(),
+						Constants.ERROR_TYPE);
 			}
 		} catch (IOException e) {
 			// Manejar cualquier error de entrada/salida al realizar la solicitud HTTP
-			System.out.println("Error al realizar la solicitud HTTP: " + e.getMessage());
+			Utils.mostrarAlerta("Error al realizar la solicitud HTTP: " + e.getMessage(), Constants.ERROR_TYPE);
 		}
 	}
 
@@ -506,9 +503,9 @@ public class BuscarGeneroController {
 	 */
 	public void initData(String tipo, String id) {
 		this.tipo = tipo;
-		if (tipo.equals("movie")) {
+		if (tipo.equals(Constants.PELICULA)) {
 			cargarImagenesPeliculasPorGenero(id); // Cargar imágenes de películas por género
-		} else if (tipo.equals("tv")) {
+		} else if (tipo.equals(Constants.SERIES)) {
 			cargarImagenesSeriesPorGenero(id); // Cargar imágenes de series por género
 		}
 	}

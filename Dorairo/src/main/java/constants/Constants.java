@@ -135,6 +135,12 @@ public class Constants {
 	/** Identificador de series en api */
 	public static final String SERIES = "tv";
 
+	/** URL para cargar la imagen de una api */
+	public static final String URL_API_IMAGE = "https://image.tmdb.org/t/p/w500";
+	
+	/** Clase de estilo para la sombra derecha */
+	public static final String SOMBRA_STYLE_CLASS = "sombraDerecha";
+
 	// Metodos
 
 	/**

@@ -27,6 +27,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import utilities.GestorVentanas;
+import utilities.Utils;
 
 /**
  * Clase Película, donde esta toda la información de las películas
@@ -46,61 +47,61 @@ public class PeliculaController {
 	 * CheckBox para el género Acción.
 	 */
 	@FXML
-	private CheckBox GeneroAccion;
+	private CheckBox generoAccion;
 
 	/**
 	 * CheckBox para el género Animación.
 	 */
 	@FXML
-	private CheckBox GeneroAnimacion;
+	private CheckBox generoAnimacion;
 
 	/**
 	 * CheckBox para el género Aventura.
 	 */
 	@FXML
-	private CheckBox GeneroAventura;
+	private CheckBox generoAventura;
 
 	/**
 	 * CheckBox para el género Ciencia Ficción.
 	 */
 	@FXML
-	private CheckBox GeneroCienciaFiccion;
+	private CheckBox generoCienciaFiccion;
 
 	/**
 	 * CheckBox para el género Comedia.
 	 */
 	@FXML
-	private CheckBox GeneroComedia;
+	private CheckBox generoComedia;
 
 	/**
 	 * CheckBox para el género Drama.
 	 */
 	@FXML
-	private CheckBox GeneroDrama;
+	private CheckBox generoDrama;
 
 	/**
 	 * CheckBox para el género Misterio.
 	 */
 	@FXML
-	private CheckBox GeneroMisterio;
+	private CheckBox generoMisterio;
 
 	/**
 	 * CheckBox para el género Musical.
 	 */
 	@FXML
-	private CheckBox GeneroMusical;
+	private CheckBox generoMusical;
 
 	/**
 	 * CheckBox para el género Suspenso.
 	 */
 	@FXML
-	private CheckBox GeneroSuspenso;
+	private CheckBox generoSuspenso;
 
 	/**
 	 * CheckBox para el género Terror.
 	 */
 	@FXML
-	private CheckBox GeneroTerror;
+	private CheckBox generoTerror;
 
 	/**
 	 * ImageView para el logo en la cabecera.
@@ -134,7 +135,7 @@ public class PeliculaController {
 	 * MenuItem para la opción Aleatoria.
 	 */
 	@FXML
-	private MenuItem Aleatoria;
+	private MenuItem aleatoria;
 
 	/**
 	 * ImageView para el icono de la lupa.
@@ -180,7 +181,6 @@ public class PeliculaController {
 	void inicioClicked(MouseEvent event) {
 		setStage();
 		gestorVentanas.muestraVentana(stage, Constants.URL_INICIO_FXML, "Inicio");
-		System.out.println("Mouse clicked en la cabecera de inicio");
 	}
 
 	/**
@@ -249,7 +249,7 @@ public class PeliculaController {
 	 */
 	private void abrirVentanaDetalles(String movieId) {
 		setStage();
-		gestorVentanas.muestraDetalles(stage, movieId, "movie");
+		gestorVentanas.muestraDetalles(stage, movieId, Constants.PELICULA);
 	}
 
 	/**
@@ -274,18 +274,18 @@ public class PeliculaController {
 		session = HibernateUtil.openSession();
 
 		// Configuración de los eventos para los CheckBox de género
-		GeneroAccion.setOnAction(event -> generoClicked("28"));
-		GeneroAventura.setOnAction(event -> generoClicked("12"));
-		GeneroComedia.setOnAction(event -> generoClicked("35"));
-		GeneroTerror.setOnAction(event -> generoClicked("27"));
-		GeneroSuspenso.setOnAction(event -> generoClicked("53"));
-		GeneroDrama.setOnAction(event -> generoClicked("18"));
-		GeneroMisterio.setOnAction(event -> generoClicked("9648"));
-		GeneroMusical.setOnAction(event -> generoClicked("10402"));
-		GeneroCienciaFiccion.setOnAction(event -> generoClicked("878"));
-		GeneroAnimacion.setOnAction(event -> generoClicked("16"));
+		generoAccion.setOnAction(event -> generoClicked("28"));
+		generoAventura.setOnAction(event -> generoClicked("12"));
+		generoComedia.setOnAction(event -> generoClicked("35"));
+		generoTerror.setOnAction(event -> generoClicked("27"));
+		generoSuspenso.setOnAction(event -> generoClicked("53"));
+		generoDrama.setOnAction(event -> generoClicked("18"));
+		generoMisterio.setOnAction(event -> generoClicked("9648"));
+		generoMusical.setOnAction(event -> generoClicked("10402"));
+		generoCienciaFiccion.setOnAction(event -> generoClicked("878"));
+		generoAnimacion.setOnAction(event -> generoClicked("16"));
 
-		Aleatoria.setOnAction(event -> peliAleatoriaClicked());
+		aleatoria.setOnAction(event -> peliAleatoriaClicked());
 
 		try {
 			// Configuración del cliente HTTP (OkHttpClient)
@@ -391,12 +391,12 @@ public class PeliculaController {
 		imageView.setPreserveRatio(true);
 
 		// Construir la URL del póster de la película
-		String imageUrl = "https://image.tmdb.org/t/p/w500" + pelicula.getPoster_path();
+		String imageUrl = Constants.URL_API_IMAGE + pelicula.getPoster_path();
 
 		// Configurar la imagen en el ImageView
 		Image image = new Image(imageUrl);
 		imageView.getStyleClass().add("imagenPelicula");
-		imageView.getStyleClass().add("sombraDerecha");
+		imageView.getStyleClass().add(Constants.SOMBRA_STYLE_CLASS);
 		imageView.setImage(image);
 
 		// Configurar el evento de clic para llamar a detallesClicked
@@ -423,7 +423,7 @@ public class PeliculaController {
 	}
 
 	/**
-	 * Establece el valor del stage -
+	 * Establece el valor del stage
 	 */
 	public void setStage() {
 		stage = (Stage) imagenLogoCabecera.getScene().getWindow();
@@ -437,7 +437,7 @@ public class PeliculaController {
 	 */
 	void generoClicked(String generoId) {
 		setStage();
-		gestorVentanas.muestraBuscadorGenero(stage, "movie", generoId);
+		gestorVentanas.muestraBuscadorGenero(stage, Constants.PELICULA, generoId);
 	}
 
 	/**
@@ -464,8 +464,7 @@ public class PeliculaController {
 			// Abrir la ventana de detalles de la película aleatoria
 			abrirVentanaDetalles(movieId);
 		} else {
-			// Manejar la situación en la que no se pudo obtener una película aleatoria
-			System.out.println("No se pudo obtener una película aleatoria");
+			Utils.mostrarAlerta("No se pudo obtener una película aleatoria", Constants.ERROR_TYPE);
 		}
 	}
 

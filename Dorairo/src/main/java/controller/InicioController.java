@@ -185,11 +185,11 @@ public class InicioController {
 		if (id.startsWith(Constants.PREFIJO_ID_SERIES_MANUALES)) {
 			image = new Image("file:" + series.getPoster_path());
 		} else {
-			String imageUrl = "https://image.tmdb.org/t/p/w500" + series.getPoster_path();
+			String imageUrl = Constants.URL_API_IMAGE + series.getPoster_path();
 			image = new Image(imageUrl);
 		}
 		// Configurar la imagen en el ImageView
-		imageView.getStyleClass().add("sombraDerecha");
+		imageView.getStyleClass().add(Constants.SOMBRA_STYLE_CLASS);
 		imageView.setImage(image);
 
 		return imageView;
@@ -306,10 +306,10 @@ public class InicioController {
 		imageView.setFitWidth(290.0);
 		imageView.setPreserveRatio(true);
 		Image image;
-		String imageUrl = "https://image.tmdb.org/t/p/w500" + item.getPoster_path();
+		String imageUrl = Constants.URL_API_IMAGE + item.getPoster_path();
 		image = new Image(imageUrl);
 		// Configurar la imagen en el ImageView
-		imageView.getStyleClass().add("sombraDerecha");
+		imageView.getStyleClass().add(Constants.SOMBRA_STYLE_CLASS);
 		imageView.setImage(image);
 		return imageView;
 	}
@@ -332,11 +332,11 @@ public class InicioController {
 		if (id.startsWith(Constants.PREFIJO_ID_PELIS_MANUALES)) {
 			image = new Image("file:" + pelicula.getPoster_path());
 		} else {
-			String imageUrl = "https://image.tmdb.org/t/p/w500" + pelicula.getPoster_path();
+			String imageUrl = Constants.URL_API_IMAGE + pelicula.getPoster_path();
 			image = new Image(imageUrl);
 		}
 		// Configurar la imagen en el ImageView
-		imageView.getStyleClass().add("sombraDerecha");
+		imageView.getStyleClass().add(Constants.SOMBRA_STYLE_CLASS);
 		imageView.setImage(image);
 
 		return imageView;

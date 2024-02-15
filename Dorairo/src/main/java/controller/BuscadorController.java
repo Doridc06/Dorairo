@@ -30,6 +30,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import utilities.GestorVentanas;
+import utilities.Utils;
 
 /**
  * Clase buscador que nos ayuda a buscar la película o la serie por su nombre
@@ -229,8 +230,7 @@ public class BuscadorController {
 
 			mostrarResultados(movieResults, tvResults); // Pasar ambas listas como argumentos
 		} catch (IOException e) {
-			e.printStackTrace();
-			System.out.println("Error al conectar con la API: " + e.getMessage());
+			Utils.mostrarAlerta("Error al conectar con la API: " + e.getMessage(), Constants.ERROR_TYPE);
 		}
 	}
 
@@ -246,7 +246,6 @@ public class BuscadorController {
 	private List<Series> getSeriesSearchResults(Response response) throws IOException {
 		List<Series> results = new ArrayList<>();
 		if (!response.isSuccessful()) {
-			System.out.println("Error: " + response.code());
 			return results;
 		}
 
@@ -273,7 +272,6 @@ public class BuscadorController {
 	private List<Pelicula> getSearchResults(Response response) throws IOException {
 		List<Pelicula> results = new ArrayList<>();
 		if (!response.isSuccessful()) {
-			System.out.println("Error: " + response.code());
 			return results;
 		}
 		String responseBody = response.body().string();
@@ -307,7 +305,6 @@ public class BuscadorController {
 					asociarEventoClicPelicula(imageView, pelicula); // Asociar evento de clic para películas
 				}
 			}
-
 			// Procesar series si hay datos disponibles
 			if (datosSeries != null && !datosSeries.isEmpty()) {
 				for (Series serie : datosSeries) {
@@ -329,7 +326,7 @@ public class BuscadorController {
 	private void mostrarDetallesPelicula(Pelicula pelicula) {
 		// Obtener el ID de la película
 		int id = pelicula.getId();
-		abrirVentanaDetalles(id, "movie");
+		abrirVentanaDetalles(id, Constants.PELICULA);
 	}
 
 	/**
@@ -340,7 +337,7 @@ public class BuscadorController {
 	private void mostrarDetallesSerie(Series serie) {
 		// Obtener el ID de la serie
 		int id = serie.getId();
-		abrirVentanaDetalles(id, "tv");
+		abrirVentanaDetalles(id, Constants.SERIES);
 	}
 
 	/**
@@ -376,10 +373,10 @@ public class BuscadorController {
 		imageView.setFitHeight(230.0);
 		imageView.setFitWidth(290.0);
 		imageView.setPreserveRatio(true);
-		imageView.getStyleClass().add("sombraDerecha");
+		imageView.getStyleClass().add(Constants.SOMBRA_STYLE_CLASS);
 
 		// Construir la URL del póster de la serie
-		String imageUrl = "https://image.tmdb.org/t/p/w500" + serie.getPoster_path();
+		String imageUrl = Constants.URL_API_IMAGE + serie.getPoster_path();
 
 		// Configurar la imagen en el ImageView
 		Image image = new Image(imageUrl);
@@ -402,10 +399,10 @@ public class BuscadorController {
 		imageView.setFitHeight(230.0);
 		imageView.setFitWidth(290.0);
 		imageView.setPreserveRatio(true);
-		imageView.getStyleClass().add("sombraDerecha");
+		imageView.getStyleClass().add(Constants.SOMBRA_STYLE_CLASS);
 
 		// Construir la URL del póster de la película
-		String imageUrl = "https://image.tmdb.org/t/p/w500" + pelicula.getPoster_path();
+		String imageUrl = Constants.URL_API_IMAGE + pelicula.getPoster_path();
 
 		// Configurar la imagen en el ImageView
 		Image image = new Image(imageUrl);

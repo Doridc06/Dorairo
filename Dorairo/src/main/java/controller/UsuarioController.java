@@ -104,8 +104,7 @@ public class UsuarioController {
 		lupa.setImage(imagenLupa);
 
 		// Abre la session y crea el dao de usuario
-		usuarioDaoImpl = new UsuarioDaoImpl(session);
-
+		setUsuarioDaoImpl(new UsuarioDaoImpl(session));
 		// Cambiar los datos del perfil
 		setDatosPerfil();
 	}
@@ -306,6 +305,20 @@ public class UsuarioController {
 	 */
 	public static Usuario getUsuarioRegistrado() {
 		return usuarioRegistrado;
+	}
+
+	/**
+	 * @return the usuarioDaoImpl
+	 */
+	public static UsuarioDaoImpl getUsuarioDaoImpl() {
+		return usuarioDaoImpl;
+	}
+
+	/**
+	 * @param usuarioDaoImpl the usuarioDaoImpl to set
+	 */
+	public static void setUsuarioDaoImpl(UsuarioDaoImpl usuarioDaoImpl) {
+		UsuarioController.usuarioDaoImpl = usuarioDaoImpl;
 	}
 
 	/**

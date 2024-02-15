@@ -31,6 +31,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import utilities.GestorVentanas;
+import utilities.Utils;
 
 /**
  * Clase Series, donde esta toda la información de todas las series
@@ -51,43 +52,43 @@ public class SeriesController {
 
 	/** CheckBox para el género de acción */
 	@FXML
-	private CheckBox GeneroAccion;
+	private CheckBox generoAccion;
 
 	/** CheckBox para el género de animación */
 	@FXML
-	private CheckBox GeneroAnimacion;
+	private CheckBox generoAnimacion;
 
 	/** CheckBox para el género de aventura */
 	@FXML
-	private CheckBox GeneroAventura;
+	private CheckBox generoAventura;
 
 	/** CheckBox para el género de ciencia ficción */
 	@FXML
-	private CheckBox GeneroCienciaFiccion;
+	private CheckBox generoCienciaFiccion;
 
 	/** CheckBox para el género de comedia */
 	@FXML
-	private CheckBox GeneroComedia;
+	private CheckBox generoComedia;
 
 	/** CheckBox para el género de drama */
 	@FXML
-	private CheckBox GeneroDrama;
+	private CheckBox generoDrama;
 
 	/** CheckBox para el género de misterio */
 	@FXML
-	private CheckBox GeneroMisterio;
+	private CheckBox generoMisterio;
 
 	/** CheckBox para el género de documental */
 	@FXML
-	private CheckBox GeneroDocumental;
+	private CheckBox generoDocumental;
 
 	/** CheckBox para el género de familia */
 	@FXML
-	private CheckBox GeneroFamilia;
+	private CheckBox generoFamilia;
 
 	/** CheckBox para el género de infantil */
 	@FXML
-	private CheckBox GeneroInfantil;
+	private CheckBox generoInfantil;
 
 	/** ImageView para la imagen del logo en la cabecera */
 	@FXML
@@ -129,7 +130,7 @@ public class SeriesController {
 
 	/** MenuItem para la opción aleatoria */
 	@FXML
-	private MenuItem Aleatoria;
+	private MenuItem aleatoria;
 
 	/** ImageView para la lupa */
 	@FXML
@@ -237,7 +238,6 @@ public class SeriesController {
 	 */
 	@FXML
 	void initialize() {
-
 		// Recogemos la sesion
 		session = HibernateUtil.openSession();
 		// Inicializamos el Gestor de ventanas
@@ -252,17 +252,17 @@ public class SeriesController {
 		miLista.setSpacing(50);
 		yaVisto.setSpacing(50);
 
-		Aleatoria.setOnAction(event -> peliAleatoriaClicked());
+		aleatoria.setOnAction(event -> peliAleatoriaClicked());
 
-		GeneroAccion.setOnAction(event -> generoClicked("10759"));
-		GeneroComedia.setOnAction(event -> generoClicked("35"));
-		GeneroInfantil.setOnAction(event -> generoClicked("10762"));
-		GeneroFamilia.setOnAction(event -> generoClicked("10751"));
-		GeneroDrama.setOnAction(event -> generoClicked("18"));
-		GeneroMisterio.setOnAction(event -> generoClicked("9648"));
-		GeneroDocumental.setOnAction(event -> generoClicked("99"));
-		GeneroCienciaFiccion.setOnAction(event -> generoClicked("10765"));
-		GeneroAnimacion.setOnAction(event -> generoClicked("16"));
+		generoAccion.setOnAction(event -> generoClicked("10759"));
+		generoComedia.setOnAction(event -> generoClicked("35"));
+		generoInfantil.setOnAction(event -> generoClicked("10762"));
+		generoFamilia.setOnAction(event -> generoClicked("10751"));
+		generoDrama.setOnAction(event -> generoClicked("18"));
+		generoMisterio.setOnAction(event -> generoClicked("9648"));
+		generoDocumental.setOnAction(event -> generoClicked("99"));
+		generoCienciaFiccion.setOnAction(event -> generoClicked("10765"));
+		generoAnimacion.setOnAction(event -> generoClicked("16"));
 
 		agregarImagenAMiListaSerie();
 		agregarImagenAYaVistaSerie();
@@ -313,11 +313,10 @@ public class SeriesController {
 			int contador = 0;
 			for (Series datos : respApi.getResults()) {
 				todasLasSeries.add(datos);
-				// System.out.println("Adding image: " + serie.getPoster_path());
 				if (contador < 12) { // Limitar a 10 películas
 					ImageView imageView = null;
 					if (datos.getPoster_path() != null) {
-						imageView = getImageViewFromUrl("https://image.tmdb.org/t/p/w500" + datos.getPoster_path(), datos);
+						imageView = getImageViewFromUrl(Constants.URL_API_IMAGE + datos.getPoster_path(), datos);
 					}
 					// Verificar si imageView no es nulo antes de agregarlo al HBox
 					if (imageView != null) {
@@ -346,7 +345,7 @@ public class SeriesController {
 		imageView.setFitHeight(250.0);
 		imageView.setFitWidth(290.0);
 		imageView.setPreserveRatio(true);
-		imageView.getStyleClass().add("sombraDerecha");
+		imageView.getStyleClass().add(Constants.SOMBRA_STYLE_CLASS);
 
 		// Construir la URL del póster de la película
 		Image image = new Image(imageUrl);
@@ -380,7 +379,7 @@ public class SeriesController {
 	 */
 	private void abrirVentanaDetalles(String serieId) {
 		setStage();
-		gestorVentanas.muestraDetalles(stage, serieId, "tv");
+		gestorVentanas.muestraDetalles(stage, serieId, Constants.SERIES);
 	}
 
 	/**
@@ -409,7 +408,7 @@ public class SeriesController {
 	 */
 	void generoClicked(String generoId) {
 		setStage();
-		gestorVentanas.muestraBuscadorGenero(stage, "tv", generoId);
+		gestorVentanas.muestraBuscadorGenero(stage, Constants.SERIES, generoId);
 	}
 
 	/**
@@ -439,7 +438,7 @@ public class SeriesController {
 			abrirVentanaDetalles(serieId);
 		} else {
 			// Manejar la situación en la que no se pudo obtener una serie aleatoria
-			System.out.println("No se pudo obtener una serie aleatoria");
+			Utils.mostrarAlerta("No se pudo obtener una serie aleatoria", Constants.ERROR_TYPE);
 		}
 	}
 
@@ -551,12 +550,11 @@ public class SeriesController {
 		// Configurar la imagen en el ImageView
 		Image image = new Image(imageUrl);
 		imageView.getStyleClass().add("imagenSeries");
-		imageView.getStyleClass().add("sombraDerecha");
+		imageView.getStyleClass().add(Constants.SOMBRA_STYLE_CLASS);
 		imageView.setImage(image);
 
 		// Configurar el evento de clic para llamar a detallesClicked
 		imageView.setOnMouseClicked(event -> detallesClicked(imageView));
 		return imageView;
 	}
-
 }

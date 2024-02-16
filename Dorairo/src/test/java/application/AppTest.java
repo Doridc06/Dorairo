@@ -28,6 +28,8 @@ import models.Usuario;
 @ExtendWith(ApplicationExtension.class)
 class AppTest {
 
+	/** Stage */
+	private Stage stage;
 	/** Main node */
 	private Parent mainNode;
 	/** Usuario para testear */
@@ -47,6 +49,7 @@ class AppTest {
 		if (user != null) {
 			uDao.delete(user);
 		}
+		stage = primaryStage;
 		// Intenta cargar el login
 		try {
 			mainNode = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));

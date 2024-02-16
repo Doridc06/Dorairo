@@ -80,8 +80,8 @@ public class RegistroController {
 			usuarioDaoImpl.update(new Usuario(usuario, nombre, correo, repeticionContrasena, new Date()));
 			setStage();
 			// Cierra la ventana
-			stage.close();
 			Utils.mostrarAlerta("¡El nuevo perfil se ha creado con éxito!", Constants.INFORMATION_TYPE);
+			stage.close();
 		}
 	}
 

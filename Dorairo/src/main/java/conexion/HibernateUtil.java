@@ -19,6 +19,12 @@ public class HibernateUtil {
 	/** Session instance */
 	private static Session session;
 
+	private static String hibernateConfigPath = "./hibernate.cfg.xml";
+
+	/** Private constructor */
+	private HibernateUtil() {
+	}
+
 	/**
 	 * Construye la SessionFactory
 	 * 
@@ -26,7 +32,7 @@ public class HibernateUtil {
 	public static synchronized void buildSessionFactory() {
 		if (sf == null) {
 			// Generador de sesiones
-			StandardServiceRegistry sr = new StandardServiceRegistryBuilder().configure().build();
+			StandardServiceRegistry sr = new StandardServiceRegistryBuilder().configure(hibernateConfigPath).build();
 			sf = new MetadataSources(sr).buildMetadata().buildSessionFactory();
 		}
 	}

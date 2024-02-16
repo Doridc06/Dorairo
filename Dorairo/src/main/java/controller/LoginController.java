@@ -84,7 +84,7 @@ public class LoginController {
 	 */
 	@FXML
 	void handleLoginButtonAction(ActionEvent event) {
-		setStage();
+		setSceneAndStage();
 		// Recoge los datos introducidos
 		String usuario = txtUser.getText();
 		String contrasena = pwPassword.getText();
@@ -117,7 +117,7 @@ public class LoginController {
 	@FXML
 	void pinchaAquiRegistroPressed(MouseEvent event) {
 		vaciarCampos();
-		setStage();
+		setSceneAndStage();
 		gestorVentanas.muestraRegistro(scene);
 	}
 
@@ -141,9 +141,10 @@ public class LoginController {
 	}
 
 	/**
-	 * Establece el valor de stage
+	 * Establece el valor de stage y scene
 	 */
-	public void setStage() {
-		stage = (Stage) btnLogin.getScene().getWindow();
+	public void setSceneAndStage() {
+		scene = btnLogin.getScene();
+		stage = (Stage) scene.getWindow();
 	}
 }

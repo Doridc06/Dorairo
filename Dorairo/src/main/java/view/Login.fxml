@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
@@ -11,56 +12,76 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane stylesheets="@application.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
-   <children>
-      <AnchorPane prefHeight="611.0" prefWidth="913.0">
-         <children>
-            <Label layoutX="138.0" layoutY="216.0" text="Inicia sesión">
-               <font>
-                  <Font name="Arial Bold" size="22.0" />
-               </font>
-            </Label>
-            <Label layoutX="69.0" layoutY="262.0" text="Usuario">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <Label layoutX="69.0" layoutY="337.0" text="Contraseña">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <TextField fx:id="txtUser" layoutX="69.0" layoutY="297.0" prefHeight="25.0" prefWidth="261.0" />
-            <Button fx:id="btnLogin" layoutX="60.0" layoutY="420.0" mnemonicParsing="false" onAction="#handleLoginButtonAction" prefHeight="41.0" prefWidth="279.0" text="LOG IN">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Button>
-            <Label layoutX="95.0" layoutY="520.0" text="¿Todavia no tienes una cuenta?">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <Label fx:id="lblPulsaAqui" layoutX="164.0" layoutY="545.0" onMouseClicked="#pinchaAquiRegistroPressed" text="Pincha aquí" textFill="#1016c9">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <StackPane fx:id="stackPaneLogo" layoutX="128.0" layoutY="46.0" prefHeight="150.0" prefWidth="150.0">
-               <children>
-                  <ImageView fx:id="imgLogo" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
-               </children>
-            </StackPane>
-            <PasswordField fx:id="pwPassword" layoutX="69.0" layoutY="367.0" prefHeight="25.0" prefWidth="261.0" />
-            <StackPane fx:id="stackPanePortada" layoutX="399.0" prefHeight="619.0" prefWidth="522.0">
-               <children>
-                  <ImageView fx:id="imgPortada" fitHeight="619.0" fitWidth="532.0" pickOnBounds="true" preserveRatio="true" />
-               </children>
-            </StackPane>
-            <Line endX="19.0" layoutX="165.0" layoutY="505.0" startX="-100.0" />
-            <Line endX="19.0" layoutX="322.0" layoutY="506.0" startX="-100.0" />
-            <Circle fill="WHITE" layoutX="205.0" layoutY="506.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
-         </children>
-      </AnchorPane>
-   </children>
+<AnchorPane stylesheets="view/application.css"
+	xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="controller.LoginController">
+	<children>
+		<AnchorPane prefHeight="611.0" prefWidth="913.0">
+			<children>
+				<Label layoutX="138.0" layoutY="216.0" text="Inicia sesión">
+					<font>
+						<Font name="Arial Bold" size="22.0" />
+					</font>
+				</Label>
+				<Label layoutX="69.0" layoutY="262.0" text="Usuario">
+					<font>
+						<Font size="20.0" />
+					</font>
+				</Label>
+				<Label layoutX="69.0" layoutY="337.0" text="Contraseña">
+					<font>
+						<Font size="20.0" />
+					</font>
+				</Label>
+				<TextField fx:id="txtUser" layoutX="69.0" layoutY="297.0"
+					prefHeight="25.0" prefWidth="261.0" />
+				<Button fx:id="btnLogin" layoutX="60.0" layoutY="420.0"
+					mnemonicParsing="false" onAction="#handleLoginButtonAction"
+					prefHeight="41.0" prefWidth="279.0" text="LOG IN">
+					<font>
+						<Font name="System Bold" size="12.0" />
+					</font>
+				</Button>
+				<Label layoutX="95.0" layoutY="520.0"
+					text="¿Todavia no tienes una cuenta?">
+					<font>
+						<Font size="16.0" />
+					</font>
+				</Label>
+				<Label fx:id="lblPulsaAqui" layoutX="164.0" layoutY="545.0"
+					onMouseClicked="#pinchaAquiRegistroPressed" text="Pincha aquí"
+					textFill="#1016c9">
+					<font>
+						<Font size="16.0" />
+					</font>
+				</Label>
+				<StackPane fx:id="stackPaneLogo" layoutX="128.0"
+					layoutY="46.0" prefHeight="150.0" prefWidth="150.0"
+					stylesheets="@application.css">
+					<children>
+						<ImageView fx:id="imgLogo" fitHeight="150.0"
+							fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
+					</children>
+				</StackPane>
+				<PasswordField fx:id="pwPassword" layoutX="69.0"
+					layoutY="367.0" prefHeight="25.0" prefWidth="261.0" />
+				<StackPane fx:id="stackPanePortada" layoutX="399.0"
+					prefHeight="619.0" prefWidth="522.0">
+					<children>
+						<ImageView fx:id="imgPortada" fitHeight="619.0"
+							fitWidth="532.0" pickOnBounds="true" preserveRatio="true" />
+					</children>
+					<effect>
+						<DropShadow blurType="GAUSSIAN" offsetY="-3.0" />
+					</effect>
+				</StackPane>
+				<Line endX="19.0" layoutX="165.0" layoutY="505.0"
+					startX="-100.0" />
+				<Line endX="19.0" layoutX="322.0" layoutY="506.0"
+					startX="-100.0" />
+				<Circle fill="WHITE" layoutX="205.0" layoutY="506.0"
+					radius="7.0" stroke="BLACK" strokeType="INSIDE" />
+			</children>
+		</AnchorPane>
+	</children>
 </AnchorPane>

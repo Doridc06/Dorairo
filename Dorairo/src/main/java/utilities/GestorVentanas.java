@@ -128,7 +128,7 @@ public class GestorVentanas {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Muestra la ventana de Detalles
 	 * 
@@ -235,7 +235,7 @@ public class GestorVentanas {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Muestra la ventana de Cambiar contraseña o nombre y desenfoca la anterior
 	 * para que no se pueda hacer uso de ella hasta que se cierre

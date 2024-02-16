@@ -34,7 +34,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity"
 	minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0"
-	prefWidth="1512.0" stylesheets="@application.css"
+	prefWidth="1512.0" stylesheets="view/application.css"
 	xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="controller.DetallesController">
 

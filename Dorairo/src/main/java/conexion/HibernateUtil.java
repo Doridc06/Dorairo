@@ -19,7 +19,7 @@ public class HibernateUtil {
 	/** Session instance */
 	private static Session session;
 
-	private static String hibernateConfigPath = "./hibernate.cfg.xml";
+	private static String hibernateConfigPath = "hibernate.cfg.xml";
 
 	/** Private constructor */
 	private HibernateUtil() {

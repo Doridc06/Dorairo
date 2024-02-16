@@ -14,237 +14,302 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="982.0" prefWidth="1512.0" styleClass="fondo" stylesheets="@application.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AgregadasManualmenteController">
-   <children>
-      <Pane fx:id="paneFondoBorrosoIzquierdo" layoutX="362.0" layoutY="150.0" prefHeight="832.0" prefWidth="10.0" />
-      <ScrollPane fx:id="paneFondoDatosPerfil" hbarPolicy="NEVER" layoutX="362.0" layoutY="150.0" pannable="true" prefHeight="832.0" prefWidth="788.0" styleClass="fondo" vbarPolicy="NEVER">
-         <content>
-            <AnchorPane prefHeight="1544.0" prefWidth="788.0">
-               <children>
-                  <StackPane fx:id="paneImagenPerfil" layoutX="70.0" layoutY="80.0" prefHeight="310.0" prefWidth="230.0">
-                     <children>
-                        <ImageView fx:id="imagenCartel" fitHeight="300.0" fitWidth="230.0" onMousePressed="#subirFoto" pickOnBounds="true" preserveRatio="true" />
-                     </children>
-                  </StackPane>
-                  <Label layoutX="350.0" layoutY="80.0" prefHeight="36.0" prefWidth="68.0" text="Tipo">
-                     <font>
-                        <Font name="System Bold" size="25.0" />
-                     </font>
-                  </Label>
-                  <ChoiceBox fx:id="choiceTipo" layoutX="350.0" layoutY="130.0" onMousePressed="#compruebaTipo" prefHeight="34.0" prefWidth="380.0" />
-                  <Label layoutX="350.0" layoutY="190.0" prefHeight="36.0" prefWidth="101.0" text="Título">
-                     <font>
-                        <Font name="System Bold" size="25.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="txtTitulo" layoutX="350.0" layoutY="240.0" prefHeight="34.0" prefWidth="380.0">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </TextField>
-                  <Label layoutX="350.0" layoutY="300.0" prefHeight="36.0" prefWidth="125.0" text="Compañía">
-                     <font>
-                        <Font name="System Bold" size="25.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="txtCompañia" layoutX="350.0" layoutY="350.0" prefHeight="34.0" prefWidth="380.0">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </TextField>
-                  <Label layoutX="70.0" layoutY="420.0" prefHeight="36.0" prefWidth="228.0" text="Fecha estreno">
-                     <font>
-                        <Font name="System Bold" size="25.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="txtEstreno" layoutX="70.0" layoutY="470.0" prefHeight="34.0" prefWidth="150.0" promptText="yyyy-MM-dd">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </TextField>
-                  <Label layoutX="350.0" layoutY="420.0" prefHeight="36.0" prefWidth="228.0" text="Guardado en...">
-                     <font>
-                        <Font name="System Bold" size="25.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="txtGuardado" layoutX="350.0" layoutY="470.0" prefHeight="34.0" prefWidth="380.0">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </TextField>
-                  <Label layoutX="70.0" layoutY="530.0" prefHeight="36.0" prefWidth="228.0" text="Valoración">
-                     <font>
-                        <Font name="System Bold" size="25.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="txtValoracionGlobal" layoutX="70.0" layoutY="580.0" prefHeight="34.0" prefWidth="150.0" promptText="9">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </TextField>
-                  <Label layoutX="350.0" layoutY="530.0" prefHeight="36.0" prefWidth="268.0" text="Valoración personal">
-                     <font>
-                        <Font name="System Bold" size="25.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="txtValoracionPersonal" layoutX="350.0" layoutY="580.0" prefHeight="34.0" prefWidth="380.0" promptText="5.5">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </TextField>
-                  <Label layoutX="70.0" layoutY="640.0" prefHeight="36.0" prefWidth="94.0" text="Género">
-                     <font>
-                        <Font name="System Bold" size="25.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="txtGenero" layoutX="70.0" layoutY="690.0" prefHeight="34.0" prefWidth="660.0" promptText="Fantasía, Aventura, Comedia">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </TextField>
-                  <Label layoutX="70.0" layoutY="750.0" prefHeight="36.0" prefWidth="94.0" text="Actores">
-                     <font>
-                        <Font name="System Bold" size="25.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="txtActores" layoutX="70.0" layoutY="800.0" prefHeight="34.0" prefWidth="660.0">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </TextField>
-                  <Label layoutX="70.0" layoutY="860.0" prefHeight="36.0" prefWidth="224.0" text="Director/es">
-                     <font>
-                        <Font name="System Bold" size="25.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="txtDirectores" layoutX="70.0" layoutY="910.0" prefHeight="34.0" prefWidth="660.0">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </TextField>
-                  <Label layoutX="70.0" layoutY="970.0" prefHeight="36.0" prefWidth="220.0" text="Descripción">
-                     <font>
-                        <Font name="System Bold" size="25.0" />
-                     </font>
-                  </Label>
-                  <TextArea fx:id="txtDescripcion" layoutX="70.0" layoutY="1020.0" prefHeight="100.0" prefWidth="660.0">
-                     <font>
-                        <Font size="15.0" />
-                     </font></TextArea>
-                  <Label layoutX="70.0" layoutY="1150.0" prefHeight="36.0" prefWidth="220.0" text="Comentarios">
-                     <font>
-                        <Font name="System Bold" size="25.0" />
-                     </font>
-                  </Label>
-                  <TextArea fx:id="txtComentarios" layoutX="70.0" layoutY="1200.0" prefHeight="100.0" prefWidth="660.0">
-                     <font>
-                        <Font size="15.0" />
-                     </font></TextArea>
-                  <Label layoutX="138.0" layoutY="1320.0" prefHeight="36.0" prefWidth="188.0" text="Nº Temporadas">
-                     <font>
-                        <Font name="System Bold" size="25.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="txtTemporadas" disable="true" layoutX="138.0" layoutY="1370.0" prefHeight="34.0" prefWidth="150.0">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </TextField>
-                  <Label layoutX="500.0" layoutY="1320.0" prefHeight="36.0" prefWidth="150.0" text="Nº Episodios">
-                     <font>
-                        <Font name="System Bold" size="25.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="txtEpisodios" disable="true" layoutX="500.0" layoutY="1370.0" prefHeight="34.0" prefWidth="150.0">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </TextField>
-                  <Button contentDisplay="CENTER" layoutX="294.0" layoutY="1450.0" minHeight="50.0" mnemonicParsing="false" onAction="#guardarPressed" prefWidth="200.0" text="Guardar" textAlignment="CENTER">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Button>
-                  <Label layoutX="170.0" layoutY="640.0" prefHeight="36.0" prefWidth="147.0" text="(Separar por comas)">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="220.0" layoutY="860.0" prefHeight="36.0" prefWidth="147.0" text="(Separar por comas)">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="180.0" layoutY="750.0" prefHeight="36.0" prefWidth="147.0" text="(Separar por comas)">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Label>
-               </children>
-            </AnchorPane>
-         </content>
-      </ScrollPane>
-      <Pane fx:id="paneCabecera" prefHeight="150.0" prefWidth="1512.0">
-         <children>
-            <StackPane fx:id="stackPaneLogoCabecera" layoutX="50.0" layoutY="14.0" prefHeight="125.0" prefWidth="125.0">
-               <children>
-                  <ImageView fx:id="imagenLogoCabecera" fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" />
-               </children>
-            </StackPane>
-            <StackPane fx:id="stackPaneInicioCabecera" layoutX="215.0" layoutY="53.0" onMouseClicked="#inicioClicked" prefHeight="44.0" prefWidth="200.0" styleClass="cabeceraBotones">
-               <children>
-                  <Label text="Inicio">
-                     <font>
-                        <Font size="30.0" />
-                     </font>
-                  </Label>
-               </children>
-            </StackPane>
-            <StackPane layoutX="675.0" layoutY="53.0" onMouseClicked="#seriesClicked" prefHeight="44.0" prefWidth="200.0" styleClass="cabeceraBotones">
-               <children>
-                  <Label text="Series">
-                     <font>
-                        <Font size="30.0" />
-                     </font>
-                  </Label>
-               </children>
-            </StackPane>
-            <StackPane layoutX="905.0" layoutY="53.0" onMouseClicked="#perfilClicked" prefHeight="44.0" prefWidth="200.0" styleClass="cabeceraBotones">
-               <children>
-                  <Label text="Perfil">
-                     <font>
-                        <Font size="30.0" />
-                     </font>
-                  </Label>
-               </children>
-            </StackPane>
-            <StackPane layoutX="1225.0" layoutY="53.0" onMouseClicked="#buscadorClicked" prefHeight="44.0" prefWidth="250.0" styleClass="cabeceraBotones">
-               <children>
-                  <Label text="Buscador">
-                     <font>
-                        <Font size="30.0" />
-                     </font>
-                  </Label>
-                  <ImageView fx:id="lupa" fitHeight="35.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../resources/application/images/lupa.png" />
-                     </image>
-                     <StackPane.margin>
-                        <Insets left="180.0" />
-                     </StackPane.margin>
-                  </ImageView>
-               </children>
-            </StackPane>
-            <StackPane fx:id="stackPanePeliculasCabecera" layoutX="442.0" layoutY="53.0" onMouseClicked="#peliculasClicked" prefHeight="44.0" prefWidth="200.0" styleClass="cabeceraBotones">
-               <children>
-                  <Label text="Películas">
-                     <font>
-                        <Font size="30.0" />
-                     </font>
-                  </Label>
-               </children>
-            </StackPane>
-         </children>
-      </Pane>
-   </children>
+<AnchorPane prefHeight="982.0" prefWidth="1512.0"
+	styleClass="fondo" stylesheets="@application.css"
+	xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="controller.AgregadasManualmenteController">
+	<children>
+		<Pane fx:id="paneFondoBorrosoIzquierdo" layoutX="362.0"
+			layoutY="150.0" prefHeight="832.0" prefWidth="10.0" />
+		<ScrollPane fx:id="paneFondoDatosPerfil" hbarPolicy="NEVER"
+			layoutX="362.0" layoutY="150.0" pannable="true" prefHeight="832.0"
+			prefWidth="788.0" styleClass="fondo" vbarPolicy="NEVER">
+			<content>
+				<AnchorPane prefHeight="1544.0" prefWidth="788.0">
+					<children>
+						<StackPane fx:id="paneImagenPerfil" layoutX="70.0"
+							layoutY="80.0" prefHeight="310.0" prefWidth="230.0">
+							<children>
+								<ImageView fx:id="imagenCartel" fitHeight="300.0"
+									fitWidth="230.0" onMousePressed="#subirFoto"
+									pickOnBounds="true" preserveRatio="true" />
+							</children>
+						</StackPane>
+						<Label layoutX="350.0" layoutY="80.0" prefHeight="36.0"
+							prefWidth="68.0" text="Tipo">
+							<font>
+								<Font name="System Bold" size="25.0" />
+							</font>
+						</Label>
+						<ChoiceBox fx:id="choiceTipo" layoutX="350.0"
+							layoutY="130.0" onMousePressed="#compruebaTipo" prefHeight="34.0"
+							prefWidth="380.0" />
+						<Label layoutX="350.0" layoutY="190.0" prefHeight="36.0"
+							prefWidth="101.0" text="Título">
+							<font>
+								<Font name="System Bold" size="25.0" />
+							</font>
+						</Label>
+						<TextField fx:id="txtTitulo" layoutX="350.0"
+							layoutY="240.0" prefHeight="34.0" prefWidth="380.0">
+							<font>
+								<Font size="15.0" />
+							</font>
+						</TextField>
+						<Label layoutX="350.0" layoutY="300.0" prefHeight="36.0"
+							prefWidth="125.0" text="Compañía">
+							<font>
+								<Font name="System Bold" size="25.0" />
+							</font>
+						</Label>
+						<TextField fx:id="txtCompany" layoutX="350.0"
+							layoutY="350.0" prefHeight="34.0" prefWidth="380.0">
+							<font>
+								<Font size="15.0" />
+							</font>
+						</TextField>
+						<Label layoutX="70.0" layoutY="420.0" prefHeight="36.0"
+							prefWidth="228.0" text="Fecha estreno">
+							<font>
+								<Font name="System Bold" size="25.0" />
+							</font>
+						</Label>
+						<TextField fx:id="txtEstreno" layoutX="70.0"
+							layoutY="470.0" prefHeight="34.0" prefWidth="150.0"
+							promptText="yyyy-MM-dd">
+							<font>
+								<Font size="15.0" />
+							</font>
+						</TextField>
+						<Label layoutX="350.0" layoutY="420.0" prefHeight="36.0"
+							prefWidth="228.0" text="Guardado en...">
+							<font>
+								<Font name="System Bold" size="25.0" />
+							</font>
+						</Label>
+						<TextField fx:id="txtGuardado" layoutX="350.0"
+							layoutY="470.0" prefHeight="34.0" prefWidth="380.0">
+							<font>
+								<Font size="15.0" />
+							</font>
+						</TextField>
+						<Label layoutX="70.0" layoutY="530.0" prefHeight="36.0"
+							prefWidth="228.0" text="Valoración">
+							<font>
+								<Font name="System Bold" size="25.0" />
+							</font>
+						</Label>
+						<TextField fx:id="txtValoracionGlobal" layoutX="70.0"
+							layoutY="580.0" prefHeight="34.0" prefWidth="150.0"
+							promptText="9">
+							<font>
+								<Font size="15.0" />
+							</font>
+						</TextField>
+						<Label layoutX="350.0" layoutY="530.0" prefHeight="36.0"
+							prefWidth="268.0" text="Valoración personal">
+							<font>
+								<Font name="System Bold" size="25.0" />
+							</font>
+						</Label>
+						<TextField fx:id="txtValoracionPersonal" layoutX="350.0"
+							layoutY="580.0" prefHeight="34.0" prefWidth="380.0"
+							promptText="5.5">
+							<font>
+								<Font size="15.0" />
+							</font>
+						</TextField>
+						<Label layoutX="70.0" layoutY="640.0" prefHeight="36.0"
+							prefWidth="94.0" text="Género">
+							<font>
+								<Font name="System Bold" size="25.0" />
+							</font>
+						</Label>
+						<TextField fx:id="txtGenero" layoutX="70.0"
+							layoutY="690.0" prefHeight="34.0" prefWidth="660.0"
+							promptText="Fantasía, Aventura, Comedia">
+							<font>
+								<Font size="15.0" />
+							</font>
+						</TextField>
+						<Label layoutX="70.0" layoutY="750.0" prefHeight="36.0"
+							prefWidth="94.0" text="Actores">
+							<font>
+								<Font name="System Bold" size="25.0" />
+							</font>
+						</Label>
+						<TextField fx:id="txtActores" layoutX="70.0"
+							layoutY="800.0" prefHeight="34.0" prefWidth="660.0">
+							<font>
+								<Font size="15.0" />
+							</font>
+						</TextField>
+						<Label layoutX="70.0" layoutY="860.0" prefHeight="36.0"
+							prefWidth="224.0" text="Director/es">
+							<font>
+								<Font name="System Bold" size="25.0" />
+							</font>
+						</Label>
+						<TextField fx:id="txtDirectores" layoutX="70.0"
+							layoutY="910.0" prefHeight="34.0" prefWidth="660.0">
+							<font>
+								<Font size="15.0" />
+							</font>
+						</TextField>
+						<Label layoutX="70.0" layoutY="970.0" prefHeight="36.0"
+							prefWidth="220.0" text="Descripción">
+							<font>
+								<Font name="System Bold" size="25.0" />
+							</font>
+						</Label>
+						<TextArea fx:id="txtDescripcion" layoutX="70.0"
+							layoutY="1020.0" prefHeight="100.0" prefWidth="660.0">
+							<font>
+								<Font size="15.0" />
+							</font>
+						</TextArea>
+						<Label layoutX="70.0" layoutY="1150.0" prefHeight="36.0"
+							prefWidth="220.0" text="Comentarios">
+							<font>
+								<Font name="System Bold" size="25.0" />
+							</font>
+						</Label>
+						<TextArea fx:id="txtComentarios" layoutX="70.0"
+							layoutY="1200.0" prefHeight="100.0" prefWidth="660.0">
+							<font>
+								<Font size="15.0" />
+							</font>
+						</TextArea>
+						<Label layoutX="138.0" layoutY="1320.0" prefHeight="36.0"
+							prefWidth="188.0" text="Nº Temporadas">
+							<font>
+								<Font name="System Bold" size="25.0" />
+							</font>
+						</Label>
+						<TextField fx:id="txtTemporadas" disable="true"
+							layoutX="138.0" layoutY="1370.0" prefHeight="34.0"
+							prefWidth="150.0">
+							<font>
+								<Font size="15.0" />
+							</font>
+						</TextField>
+						<Label layoutX="500.0" layoutY="1320.0" prefHeight="36.0"
+							prefWidth="150.0" text="Nº Episodios">
+							<font>
+								<Font name="System Bold" size="25.0" />
+							</font>
+						</Label>
+						<TextField fx:id="txtEpisodios" disable="true"
+							layoutX="500.0" layoutY="1370.0" prefHeight="34.0"
+							prefWidth="150.0">
+							<font>
+								<Font size="15.0" />
+							</font>
+						</TextField>
+						<Button contentDisplay="CENTER" layoutX="294.0"
+							layoutY="1450.0" minHeight="50.0" mnemonicParsing="false"
+							onAction="#guardarPressed" prefWidth="200.0" text="Guardar"
+							textAlignment="CENTER">
+							<font>
+								<Font size="20.0" />
+							</font>
+						</Button>
+						<Label layoutX="170.0" layoutY="640.0" prefHeight="36.0"
+							prefWidth="147.0" text="(Separar por comas)">
+							<font>
+								<Font size="15.0" />
+							</font>
+						</Label>
+						<Label layoutX="220.0" layoutY="860.0" prefHeight="36.0"
+							prefWidth="147.0" text="(Separar por comas)">
+							<font>
+								<Font size="15.0" />
+							</font>
+						</Label>
+						<Label layoutX="180.0" layoutY="750.0" prefHeight="36.0"
+							prefWidth="147.0" text="(Separar por comas)">
+							<font>
+								<Font size="15.0" />
+							</font>
+						</Label>
+					</children>
+				</AnchorPane>
+			</content>
+		</ScrollPane>
+		<Pane fx:id="paneCabecera" prefHeight="150.0" prefWidth="1512.0">
+			<children>
+				<StackPane fx:id="stackPaneLogoCabecera" layoutX="50.0"
+					layoutY="14.0" prefHeight="125.0" prefWidth="125.0">
+					<children>
+						<ImageView fx:id="imagenLogoCabecera" fitHeight="90.0"
+							fitWidth="90.0" pickOnBounds="true" preserveRatio="true" />
+					</children>
+				</StackPane>
+				<StackPane fx:id="stackPaneInicioCabecera" layoutX="215.0"
+					layoutY="53.0" onMouseClicked="#inicioClicked" prefHeight="44.0"
+					prefWidth="200.0" styleClass="cabeceraBotones">
+					<children>
+						<Label text="Inicio">
+							<font>
+								<Font size="30.0" />
+							</font>
+						</Label>
+					</children>
+				</StackPane>
+				<StackPane layoutX="675.0" layoutY="53.0"
+					onMouseClicked="#seriesClicked" prefHeight="44.0" prefWidth="200.0"
+					styleClass="cabeceraBotones">
+					<children>
+						<Label text="Series">
+							<font>
+								<Font size="30.0" />
+							</font>
+						</Label>
+					</children>
+				</StackPane>
+				<StackPane layoutX="905.0" layoutY="53.0"
+					onMouseClicked="#perfilClicked" prefHeight="44.0" prefWidth="200.0"
+					styleClass="cabeceraBotones">
+					<children>
+						<Label text="Perfil">
+							<font>
+								<Font size="30.0" />
+							</font>
+						</Label>
+					</children>
+				</StackPane>
+				<StackPane layoutX="1225.0" layoutY="53.0"
+					onMouseClicked="#buscadorClicked" prefHeight="44.0"
+					prefWidth="250.0" styleClass="cabeceraBotones">
+					<children>
+						<Label text="Buscador">
+							<font>
+								<Font size="30.0" />
+							</font>
+						</Label>
+						<ImageView fx:id="lupa" fitHeight="35.0" fitWidth="44.0"
+							pickOnBounds="true" preserveRatio="true">
+							<image>
+								<Image url="@../../resources/application/images/lupa.png" />
+							</image>
+							<StackPane.margin>
+								<Insets left="180.0" />
+							</StackPane.margin>
+						</ImageView>
+					</children>
+				</StackPane>
+				<StackPane fx:id="stackPanePeliculasCabecera"
+					layoutX="442.0" layoutY="53.0" onMouseClicked="#peliculasClicked"
+					prefHeight="44.0" prefWidth="200.0" styleClass="cabeceraBotones">
+					<children>
+						<Label text="Películas">
+							<font>
+								<Font size="30.0" />
+							</font>
+						</Label>
+					</children>
+				</StackPane>
+			</children>
+		</Pane>
+	</children>
 </AnchorPane>

@@ -15,12 +15,14 @@ import dao.UsuarioPeliculaDaoImpl;
 import dao.UsuarioSerieDaoImpl;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import models.Pelicula;
 import models.RespuestaApi;
@@ -124,6 +126,13 @@ public class InicioController {
 		String user = UsuarioController.getUsuarioRegistrado().getUser();
 		// Trae las peliculas guardadas en mi lista
 		List<UsuarioPelicula> upLista = upDao.searchPeliculasMiLista(user);
+		
+		 // Verificar si la lista está vacía y mostrar el mensaje en caso afirmativo
+        if (upLista.isEmpty()) {
+            mostrarMensajeEnHBox(miLista, "No hay nada en mi lista");
+            return;
+        }
+       
 		for (UsuarioPelicula up : upLista) {
 			// Obtener la imagen de la película
 			ImageView imageView = getImageViewFromPelicula(up.getId().getPelicula());
@@ -142,11 +151,18 @@ public class InicioController {
 	private void mostrarMiListaSeries() {
 		UsuarioSerieDaoImpl usDao = new UsuarioSerieDaoImpl(session);
 		String user = UsuarioController.getUsuarioRegistrado().getUser();
+		List<UsuarioSerie> listaUS = usDao.searchSeriesMiLista(user);
+		 // Verificar si la lista está vacía y mostrar el mensaje en caso afirmativo
+	    if (listaUS.isEmpty()) {
+	        mostrarMensajeEnHBox(miLista, "No hay nada en mi lista");
+	        return;
+	    }
+		
 		// Trae las series guardadas en mi lista
-		for (UsuarioSerie us : usDao.searchSeriesMiLista(user)) {
+		for (UsuarioSerie us : listaUS) {
 			// Obtener la imagen de la serie
 			ImageView imageView = getImageViewFromSeries(us.getId().getSeries());
-
+			
 			// Establecer el tamaño de la imagen si es necesario
 			imageView.setFitWidth(200);
 			imageView.setPreserveRatio(true); // Mantiene la proporción de la imagen
@@ -360,5 +376,18 @@ public class InicioController {
 		scene = imagenLogoCabecera.getScene();
 		stage = (Stage) scene.getWindow();
 	}
+	
+	  /**
+	   * Método para mostrar un mensaje en un HBox.
+	   * @param hbox El HBox en el que se mostrará el mensaje.
+	   * @param mensaje El mensaje a mostrar.
+	   */
+	  private void mostrarMensajeEnHBox(HBox hbox, String mensaje) {
+	      hbox.getChildren().clear(); // Limpiar cualquier contenido previo
+	      Label mensajeLabel = new Label(mensaje); // Crear un Label con el mensaje
+	      mensajeLabel.setFont(new Font(16));
+	      hbox.getChildren().add(mensajeLabel); // Agregar el Label al HBox
+	  }
+
 
 }

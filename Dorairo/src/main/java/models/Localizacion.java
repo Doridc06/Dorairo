@@ -35,7 +35,6 @@ public class Localizacion implements Serializable {
 	 * @param lugar
 	 */
 	public Localizacion(String lugar) {
-		this.id = id;
 		this.lugar = lugar;
 	}
 	

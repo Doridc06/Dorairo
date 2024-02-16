@@ -6,7 +6,6 @@ import conexion.HibernateUtil;
 import constants.Constants;
 import dao.UsuarioDaoImpl;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -18,29 +17,33 @@ import utilities.Utils;
 /**
  * Clase con las funciones del registro
  * 
+ * @author JairoAB
  */
 public class RegistroController {
 
+	/** Botón para registrarse */
 	@FXML
 	private Button btnRegistrarse;
 
+	/** Campo para contraseña */
 	@FXML
 	private PasswordField pwContrasena;
 
+	/** Campo para repeticion de contraseña */
 	@FXML
 	private PasswordField pwRepetirContrasena;
 
+	/** Campo para el correo */
 	@FXML
 	private TextField txtCorreo;
 
+	/** Campo para el nombre */
 	@FXML
 	private TextField txtNombre;
 
+	/** Campo para el usuario */
 	@FXML
 	private TextField txtUsuario;
-
-	/** Scene de la ventana de Inicio */
-	private Scene scene;
 
 	/** Stage de la ventana de Inicio */
 	private Stage stage;
@@ -61,6 +64,7 @@ public class RegistroController {
 	 */
 	@FXML
 	void buttonRegistrarsePressed(MouseEvent event) {
+		// Recoge los valores
 		String usuario = txtUsuario.getText();
 		String correo = txtCorreo.getText();
 		String nombre = txtNombre.getText();
@@ -74,16 +78,18 @@ public class RegistroController {
 				&& Utils.compruebaContrasenas(contrasena, repeticionContrasena) && !isPerfil(usuario, correo)) {
 			// Crea el nuevo perfil
 			usuarioDaoImpl.update(new Usuario(usuario, nombre, correo, repeticionContrasena, new Date()));
-			setSceneAndStage();
+			setStage();
 			// Cierra la ventana
-			stage.close();
 			Utils.mostrarAlerta("¡El nuevo perfil se ha creado con éxito!", Constants.INFORMATION_TYPE);
+			stage.close();
 		}
 	}
 
 	/**
-	 * @param correo
-	 * @return
+	 * Comprueba que el correo cumpla con el formatos
+	 * 
+	 * @param correo Correo a comprobar
+	 * @return True si cumple; False si no cumple
 	 */
 	public boolean compruebaCorreo(String correo) {
 		if (!correo.matches(Constants.FORMATO_CORREO)) {
@@ -96,16 +102,16 @@ public class RegistroController {
 	/**
 	 * Comprueba que todos los campos estén llenos y cumplen con las medidas exactas
 	 * 
-	 * @param usuario
-	 * @param correo
-	 * @param nombre
-	 * @param contrasena
-	 * @param repeticionContrasena
-	 * @return true si están llenos; false si hay alguno vacío.
+	 * @param usuario              Usuario a comprobar
+	 * @param correo               Correo a comprobar
+	 * @param nombre               Nombre a comprobar
+	 * @param contrasena           Contraseña a comprobar
+	 * @param repeticionContrasena RepeticionContraseña a comprobar
+	 * @return True si están llenos; false si hay alguno vacío.
 	 */
 	private boolean camposLlenos(String usuario, String correo, String nombre, String contrasena,
 			String repeticionContrasena) {
-		// Comprueba si hay añgún campo vacío
+		// Comprueba si hay algún campo vacío
 		if (usuario.isBlank() || correo.isBlank() || nombre.isBlank() || contrasena.isBlank()
 				|| repeticionContrasena.isBlank()) {
 			Utils.mostrarAlerta("Alguno de los campos se encuentra vacío.", Constants.WARNING_TYPE);
@@ -143,12 +149,10 @@ public class RegistroController {
 	}
 
 	/**
-	 * Asigna los valores correspondientes del stage y el scene
-	 * 
+	 * Establece el valor de stage
 	 */
-	public void setSceneAndStage() {
-		scene = btnRegistrarse.getScene();
-		stage = (Stage) scene.getWindow();
+	public void setStage() {
+		stage = (Stage) btnRegistrarse.getScene().getWindow();
 	}
 
 }

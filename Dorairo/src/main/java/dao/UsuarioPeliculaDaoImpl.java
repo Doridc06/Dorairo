@@ -5,7 +5,6 @@ import java.util.List;
 import org.hibernate.Session;
 
 import models.UsuarioPelicula;
-import models.UsuarioSerie;
 
 public class UsuarioPeliculaDaoImpl extends CommonDaoImpl<UsuarioPelicula> implements UsuarioPeliculaDaoI {
 
@@ -58,6 +57,7 @@ public class UsuarioPeliculaDaoImpl extends CommonDaoImpl<UsuarioPelicula> imple
 		return session.createQuery("FROM UsuarioPelicula WHERE id.usuario = '" + usuario + "' and miLista = true").list();
 	}
 
+	@Override
 	public List<UsuarioPelicula> searchPeliculasYaVistas(String usuario) {
 		activeTransaction();
 

@@ -4,6 +4,12 @@ import org.hibernate.Session;
 
 import models.Localizacion;
 
+/**
+ * Localizacion dao interface implementation
+ * 
+ * @author JairoAB
+ *
+ */
 public class LocalizacionDaoImpl extends CommonDaoImpl<Localizacion> implements LocalizacionDaoI {
 
 	/** Database connection */
@@ -34,10 +40,5 @@ public class LocalizacionDaoImpl extends CommonDaoImpl<Localizacion> implements 
 		// Searches for the Localizacion with the id
 		return (Localizacion) session.createQuery("FROM Localizacion WHERE id = " + id).uniqueResult();
 	}
-	
-	
-	
-	
-	
 
 }

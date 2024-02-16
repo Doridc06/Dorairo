@@ -7,13 +7,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import models.Usuario;
 import utilities.GestorVentanas;
@@ -27,29 +25,25 @@ import utilities.Utils;
  */
 public class LoginController {
 
+	/** Botón de login */
 	@FXML
 	private Button btnLogin;
 
+	/** ImageView para el logo */
 	@FXML
 	private ImageView imgLogo;
 
+	/** ImageView para la portada */
 	@FXML
 	private ImageView imgPortada;
 
-	@FXML
-	private Label lblPulsaAqui;
-
+	/** Campo de la contraseña */
 	@FXML
 	private PasswordField pwPassword;
 
-	@FXML
-	private StackPane stackPaneLogo;
-
+	/** Campo del usuario */
 	@FXML
 	private TextField txtUser;
-
-	@FXML
-	private StackPane stackPanePortada;
 
 	/** Scene de la ventana de Login */
 	private Scene scene;
@@ -91,6 +85,7 @@ public class LoginController {
 	@FXML
 	void handleLoginButtonAction(ActionEvent event) {
 		setSceneAndStage();
+		// Recoge los datos introducidos
 		String usuario = txtUser.getText();
 		String contrasena = pwPassword.getText();
 
@@ -106,7 +101,7 @@ public class LoginController {
 	}
 
 	/**
-	 * Elimina todo el contenido que se hubiera introducido en los campos de la
+	 * Elimina todos el contenido que se hubiera introducido en los campos de la
 	 * pantalla
 	 */
 	public void vaciarCampos() {
@@ -127,11 +122,11 @@ public class LoginController {
 	}
 
 	/**
-	 * Verifica que exista un perfil con el usuario y contrasena proporcionados
+	 * Verifica que exista un perfil con el usuario y contraseña proporcionados
 	 * 
-	 * @param user       a comprobar
-	 * @param contrasena a comprobar
-	 * @return true si existe o false si no existe
+	 * @param user       Usuario a comprobar
+	 * @param contrasena Contraseña a comprobar
+	 * @return True si existe o false si no existe
 	 */
 	public boolean comprobarPerfil(String user, String contrasena) {
 		// Busca y recoge el perfil con dicho usuario y contraseña
@@ -146,12 +141,10 @@ public class LoginController {
 	}
 
 	/**
-	 * Asigna los valores correspondientes del stage y el scene
-	 * 
+	 * Establece el valor de stage y scene
 	 */
 	public void setSceneAndStage() {
 		scene = btnLogin.getScene();
 		stage = (Stage) scene.getWindow();
 	}
-
 }

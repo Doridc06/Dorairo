@@ -1,11 +1,9 @@
 package dao;
 
-import java.util.List;
 
 import org.hibernate.Session;
 
 import models.Usuario;
-import models.UsuarioSerie;
 
 /**
  * Usuario Dao Interface Implementation

@@ -29,47 +29,47 @@
                                     <Font size="29.0" />
                                  </font>
                               </Text>
-                              <CheckBox fx:id="GeneroDrama" layoutX="31.0" layoutY="49.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="91.0" text="Drama">
+                              <CheckBox fx:id="generoDrama" layoutX="31.0" layoutY="49.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="91.0" text="Drama">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </CheckBox>
-                              <CheckBox fx:id="GeneroFamilia" layoutX="150.0" layoutY="51.0" mnemonicParsing="false" text="Familia">
+                              <CheckBox fx:id="generoFamilia" layoutX="150.0" layoutY="51.0" mnemonicParsing="false" text="Familia">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </CheckBox>
-                              <CheckBox fx:id="GeneroMisterio" layoutX="275.0" layoutY="51.0" mnemonicParsing="false" text="Misterio">
+                              <CheckBox fx:id="generoMisterio" layoutX="275.0" layoutY="51.0" mnemonicParsing="false" text="Misterio">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </CheckBox>
-                              <CheckBox fx:id="GeneroDocumental" layoutX="402.0" layoutY="51.0" mnemonicParsing="false" text="Documental">
+                              <CheckBox fx:id="generoDocumental" layoutX="402.0" layoutY="51.0" mnemonicParsing="false" text="Documental">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </CheckBox>
-                              <CheckBox fx:id="GeneroInfantil" layoutX="694.0" layoutY="51.0" mnemonicParsing="false" text="Infantil">
+                              <CheckBox fx:id="generoInfantil" layoutX="694.0" layoutY="51.0" mnemonicParsing="false" text="Infantil">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </CheckBox>
-                              <CheckBox fx:id="GeneroCienciaFiccion" layoutX="805.0" layoutY="50.0" mnemonicParsing="false" text="Ciencia Ficción">
+                              <CheckBox fx:id="generoCienciaFiccion" layoutX="805.0" layoutY="50.0" mnemonicParsing="false" text="Ciencia Ficción">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </CheckBox>
-                              <CheckBox fx:id="GeneroAnimacion" layoutX="981.0" layoutY="48.0" mnemonicParsing="false" text="Animación">
+                              <CheckBox fx:id="generoAnimacion" layoutX="981.0" layoutY="48.0" mnemonicParsing="false" text="Animación">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </CheckBox>
-                              <CheckBox fx:id="GeneroAccion" layoutX="1122.0" layoutY="49.0" mnemonicParsing="false" text="Acción y Aventura">
+                              <CheckBox fx:id="generoAccion" layoutX="1122.0" layoutY="49.0" mnemonicParsing="false" text="Acción y Aventura">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </CheckBox>
-                              <CheckBox fx:id="GeneroComedia" layoutX="559.0" layoutY="51.0" mnemonicParsing="false" text="Comedia">
+                              <CheckBox fx:id="generoComedia" layoutX="559.0" layoutY="51.0" mnemonicParsing="false" text="Comedia">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -208,7 +208,7 @@
             </StackPane>
             <MenuButton layoutX="670.0" layoutY="53.0" minHeight="44.0" mnemonicParsing="false" prefWidth="200.0" styleClass="cabeceraBotones" text="Series">
                <items>
-                  <MenuItem fx:id="Aleatoria" mnemonicParsing="false" text="Aleatoria" />
+                  <MenuItem fx:id="aleatoria" mnemonicParsing="false" text="Aleatoria" />
                </items>
                <font>
                   <Font size="20.0" />

@@ -1,7 +1,5 @@
 package models;
 
-import java.util.List;
-
 /**
  * Clase que representa la respuesta de la API de generos
  * 

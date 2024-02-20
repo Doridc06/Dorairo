@@ -128,7 +128,8 @@ public class UsuarioController {
 		// Comprueba si tiene una imagen asignada
 		if (usuarioRegistrado.getImagenPerfil() == null || usuarioRegistrado.getImagenPerfil().isBlank()) {
 			// si no tiene una asignada se pone la por defecto
-			imagen = new Image(getClass().getResourceAsStream(Constants.URL_FOTO_PERFIL_DEFAULT), 190, 190, false, true);
+			imagen = new Image(getClass().getResourceAsStream(Constants.URL_FOTO_PERFIL_DEFAULT), 190, 190, false,
+					true);
 		} else {
 			imagen = new Image("file:" + usuarioRegistrado.getImagenPerfil());
 		}
@@ -143,7 +144,7 @@ public class UsuarioController {
 	 */
 	@FXML
 	void inicioClicked(MouseEvent event) {
-		setStage();
+		setSceneAndStage();
 		gestorVentanas.muestraVentana(stage, Constants.URL_INICIO_FXML, "Inicio");
 	}
 
@@ -154,7 +155,7 @@ public class UsuarioController {
 	 */
 	@FXML
 	void peliculasClicked(MouseEvent event) {
-		setStage();
+		setSceneAndStage();
 		gestorVentanas.muestraVentana(stage, Constants.URL_PELICULA_FXML, "Pelicula");
 	}
 
@@ -165,7 +166,7 @@ public class UsuarioController {
 	 */
 	@FXML
 	void seriesClicked(MouseEvent event) {
-		setStage();
+		setSceneAndStage();
 		gestorVentanas.muestraVentana(stage, Constants.URL_SERIES_FXML, "Series");
 	}
 
@@ -176,7 +177,7 @@ public class UsuarioController {
 	 */
 	@FXML
 	void buscadorClicked(MouseEvent event) {
-		setStage();
+		setSceneAndStage();
 		gestorVentanas.muestraVentana(stage, Constants.URL_BUSCADOR_FXML, "Buscador");
 	}
 
@@ -187,7 +188,7 @@ public class UsuarioController {
 	 */
 	@FXML
 	void perfilClicked(MouseEvent event) {
-		setStage();
+		setSceneAndStage();
 		gestorVentanas.muestraVentana(stage, Constants.URL_USUARIO_FXML, "Perfil");
 	}
 
@@ -207,7 +208,7 @@ public class UsuarioController {
 	 * Muestra la pantalla de login
 	 */
 	public void muestraLogin() {
-		setStage();
+		setSceneAndStage();
 		gestorVentanas.muestraVentana(stage, Constants.URL_LOGIN_FXML, "Dorairo");
 	}
 
@@ -218,7 +219,7 @@ public class UsuarioController {
 	 */
 	@FXML
 	void cambiarFotoPerfil(MouseEvent event) {
-		setStage();
+		setSceneAndStage();
 		// Coge la url de la nueva foto
 		String fotoUrl = Utils.buscarFotoArchivos(stage);
 		// La establece para el usuario registrado
@@ -250,7 +251,7 @@ public class UsuarioController {
 	 */
 	@FXML
 	void modificarPassword(MouseEvent event) {
-		setStage();
+		setSceneAndStage();
 		gestorVentanas.muestraCambiarPasswordNombre(scene, "Cambiar Contraseña");
 	}
 
@@ -261,7 +262,7 @@ public class UsuarioController {
 	 */
 	@FXML
 	void modificarNombre(MouseEvent event) {
-		setStage();
+		setSceneAndStage();
 		gestorVentanas.muestraCambiarPasswordNombre(scene, "Cambiar Nombre");
 		setDatosPerfil();
 	}
@@ -283,10 +284,11 @@ public class UsuarioController {
 	}
 
 	/**
-	 * Establece el valor del stage
+	 * Establece el valor del stage y scene
 	 */
-	public void setStage() {
-		stage = (Stage) imagenLogoCabecera.getScene().getWindow();
+	public void setSceneAndStage() {
+		scene = imagenLogoCabecera.getScene();
+		stage = (Stage) scene.getWindow();
 	}
 
 	/**
